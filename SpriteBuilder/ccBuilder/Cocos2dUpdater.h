@@ -16,11 +16,11 @@ typedef enum {
 
 @class AppDelegate;
 @class ProjectSettings;
-@protocol SBCocos2dUpdateDelegate;
+@protocol Cocos2dUpdateDelegate;
 
 @interface Cocos2dUpdater : NSObject
 
-@property (nonatomic, weak) id <SBCocos2dUpdateDelegate> delegate;
+@property (nonatomic, weak) id <Cocos2dUpdateDelegate> delegate;
 @property (nonatomic, weak, readonly) AppDelegate *appDelegate;
 @property (nonatomic, weak, readonly) ProjectSettings *projectSettings;
 

@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 #import "ProjectSettings.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "NSString+Packages.h"
 #import "RMPackage.h"
 #import "PackageExporter.h"

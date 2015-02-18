@@ -4,15 +4,15 @@
 #import "ResourcePropertyKeys.h"
 #import "BackupFileCommand.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 
 @interface ProjectSettingsMigrator ()
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, copy) NSString *backupFilePath;
-
 @property (nonatomic, strong) BackupFileCommand *backupFileCommand;
+
 @end
 
 

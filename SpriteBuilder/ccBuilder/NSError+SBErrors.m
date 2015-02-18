@@ -1,5 +1,5 @@
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 
 @implementation NSError (SBErrors)

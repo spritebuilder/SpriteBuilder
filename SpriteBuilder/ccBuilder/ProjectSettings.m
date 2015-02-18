@@ -31,7 +31,7 @@
 #import "AppDelegate.h"
 #import "ResourceManagerOutlineHandler.h"
 #import "CCBWarnings.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "ResourceTypes.h"
 #import "NSError+SBErrors.h"
 #import "MiscConstants.h"

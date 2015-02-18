@@ -109,10 +109,10 @@
 #import <objc/message.h>
 #import <MacTypes.h>
 #import "PlugInNodeCollectionView.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "NSArray+Query.h"
 #import "OALSimpleAudio.h"
-#import "SBUserDefaultsKeys.h"
+#import "UserDefaultsKeys.h"
 #import "MiscConstants.h"
 #import "FeatureToggle.h"
 #import "AnimationPlaybackManager.h"
@@ -133,7 +133,7 @@
 #import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
-#import "SBOpenPathsController.h"
+#import "OpenPathsController.h"
 #import "LightingHandler.h"
 #import "NSAlert+Convenience.h"
 #import "SecurityScopedBookmarksStore.h"

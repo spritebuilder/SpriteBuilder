@@ -11,7 +11,7 @@
 #import <OCMock/OCMock.h>
 #import "MigrationController.h"
 #import "FileSystemTestCase.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "MigratorProtocol.h"
 #import "MigrationControllerDelegate.h"
 

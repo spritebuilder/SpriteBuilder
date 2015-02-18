@@ -44,7 +44,7 @@
 #import "RMPackage.h"
 #import "ResourcePropertyKeys.h"
 #import "NotificationNames.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "ResourceManager+Publishing.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
@@ -857,7 +857,7 @@
 - (float)srcScaleForResource:(RMResource *)resource projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings
 {
     id srcScaleSetting = [projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
-    SBPackageSettings *aPackageSettings = [self packageSettingsForResource:resource packageSettings:packageSettings];
+    PackageSettings *aPackageSettings = [self packageSettingsForResource:resource packageSettings:packageSettings];
 
     if (srcScaleSetting)
     {
@@ -875,9 +875,9 @@
     }
 }
 
-- (SBPackageSettings *)packageSettingsForResource:(RMResource *)resource packageSettings:(NSArray *)packageSettings
+- (PackageSettings *)packageSettingsForResource:(RMResource *)resource packageSettings:(NSArray *)packageSettings
 {
-    for (SBPackageSettings *aPackageSettings in packageSettings)
+    for (PackageSettings *aPackageSettings in packageSettings)
     {
         if ([resource.filePath rangeOfString:aPackageSettings.package.dirPath].location != NSNotFound)
         {

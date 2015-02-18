@@ -17,7 +17,7 @@
 #import "RMPackage.h"
 #import "FileSystemTestCase+Images.h"
 #import "ResourcePropertyKeys.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "ResourceManager+Publishing.h"
 
 @interface ResourceManager_Tests : FileSystemTestCase
@@ -221,7 +221,7 @@
     NSArray *allPackages = [_resourceManager allPackages];
     for (RMPackage *aPackage in allPackages)
     {
-        SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:aPackage];
+        PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:aPackage];
         [packageSettings loadWithError:nil];
 
         packageSettings.resourceAutoScaleFactor = autoScaling;

@@ -47,7 +47,7 @@
 #import "NSArray+Query.h"
 #import "CCBPhysicsJoint.h"
 #import "PlugInManager.h"
-#import "SBPasteboardTypes.h"
+#import "PasteboardTypes.h"
 #import "EffectsManager.h"
 #import "InspectorController.h"
 #import "NotificationNames.h"

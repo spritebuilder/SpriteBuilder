@@ -1,6 +1,6 @@
 #import "PackageRemover.h"
 
-#import "SBErrors.h"
+#import "Errors.h"
 #import "PackageUtil.h"
 #import "ProjectSettings.h"
 #import "NotificationNames.h"

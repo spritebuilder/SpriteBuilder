@@ -10,12 +10,12 @@
 #import "CCBModalSheetController.h"
 
 @class ProjectSettings;
-@class SBPackageSettings;
+@class PackageSettings;
 
 @interface ProjectSettingsWindowController : CCBModalSheetController <NSTableViewDelegate, NSOpenSavePanelDelegate>
 
 @property (nonatomic, weak) ProjectSettings* projectSettings;
-@property (nonatomic, strong) SBPackageSettings *currentPackageSettings;
+@property (nonatomic, strong) PackageSettings *currentPackageSettings;
 @property (nonatomic, strong) NSMutableArray *settingsList;
 
 @property (nonatomic, strong) IBOutlet NSArrayController *arrayController;

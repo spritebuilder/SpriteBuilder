@@ -5,7 +5,7 @@
 #import <Foundation/Foundation.h>
 
 
-@interface SBAssertions : NSObject
+@interface AssertionAddons : NSObject
 
 + (void)assertArraysAreEqualIgnoringOrder:(NSArray *)arrayA arrayB:(NSArray *)arrayB;
 

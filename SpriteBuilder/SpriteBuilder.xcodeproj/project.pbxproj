@@ -138,7 +138,7 @@
 		830F4E9B192F5263002B832D /* Package.icns in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E9A192F5263002B832D /* Package.icns */; };
 		830F4EB21934706C002B832D /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
 		830F4ECB193486E5002B832D /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
-		832705A019E5389100A311A0 /* SBPasteboardTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC052AEB516FE8A3E3EA /* SBPasteboardTypes.m */; };
+		832705A019E5389100A311A0 /* PasteboardTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC052AEB516FE8A3E3EA /* PasteboardTypes.m */; };
 		833A5C4C192B48CB001837B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833A5C4B192B48CB001837B3 /* XCTest.framework */; };
 		833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 833A5C50192B48CB001837B3 /* InfoPlist.strings */; };
 		8341326B18DADF9E0088FFAB /* optipng in Resources */ = {isa = PBXBuildFile; fileRef = 8341326A18DADF9E0088FFAB /* optipng */; };
@@ -146,14 +146,14 @@
 		83599E9A1975470D008283EC /* photoshop.psd in Resources */ = {isa = PBXBuildFile; fileRef = 83599E991975470D008283EC /* photoshop.psd */; };
 		835C50DA1A5D44BE000DB185 /* SecurityScopedBookmarksStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 835C50D91A5D44BE000DB185 /* SecurityScopedBookmarksStore.m */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
-		8363D7901A1CD451003F163E /* SBOpenPathsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8363D78F1A1CD451003F163E /* SBOpenPathsController.m */; };
+		8363D7901A1CD451003F163E /* OpenPathsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8363D78F1A1CD451003F163E /* OpenPathsController.m */; };
 		837D2E731A0D07F0009918B7 /* greyscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 837D2E721A0D07F0009918B7 /* greyscale.png */; };
 		837E940019815C8D00A9F90B /* ProjectSettingsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */; };
 		8392006F18ED91BC00B6C429 /* Cocos2dUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 8392006C18ED91BC00B6C429 /* Cocos2dUpdater.m */; };
 		83993DB019360A28001C228B /* FeatureToggle.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DAE19360A28001C228B /* FeatureToggle.m */; };
 		83993DB519361305001C228B /* FeatureToggle_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DB419361305001C228B /* FeatureToggle_Tests.m */; };
 		83CD449A193F35C50086E9E7 /* ResourceContextMenu_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83CD4499193F35C50086E9E7 /* ResourceContextMenu_Tests.m */; };
-		83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */; };
+		83DC65EA18D898D50028EF72 /* UserDefaultsKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 83DC65E918D898D50028EF72 /* UserDefaultsKeys.m */; };
 		83EDACF5193DB70200327B86 /* ProjectSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 83993DA81935D6EC001C228B /* ProjectSettings_Tests.m */; };
 		83EDACF9193DC99100327B86 /* Features.plist in Resources */ = {isa = PBXBuildFile; fileRef = 83EDACF8193DC99100327B86 /* Features.plist */; };
 		83F3C9621A4229DB003D8659 /* OpenPaths.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 83F3C9611A4229DB003D8659 /* OpenPaths.scpt */; };
@@ -250,7 +250,7 @@
 		83F3CAA21A423BBA003D8659 /* CCBPEffectColorChannelOffset.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F3CAA11A423BBA003D8659 /* CCBPEffectColorChannelOffset.m */; };
 		83F3CAA61A423BC2003D8659 /* EffectColorChannelOffsetControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F3CAA41A423BC2003D8659 /* EffectColorChannelOffsetControl.m */; };
 		83F3CAA71A423BC2003D8659 /* EffectColorChannelOffsetControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F3CAA51A423BC2003D8659 /* EffectColorChannelOffsetControl.xib */; };
-		83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* SBErrors.m */; };
+		83F8673418D1DCEA007441E4 /* Errors.m in Sources */ = {isa = PBXBuildFile; fileRef = 83F8673318D1DCEA007441E4 /* Errors.m */; };
 		83FC410C1981391600799B6C /* PackageSettingsDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */; };
 		83FC411319815B8600799B6C /* ProjectSettingsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */; };
 		92053DB4197F096000AA93AD /* EffectBloomControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92053DAF197F096000AA93AD /* EffectBloomControl.xib */; };
@@ -863,8 +863,9 @@
 		E525F2137095DF73409AC768 /* PublishGeneratedFilesOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */; };
 		E525F22885027391913A1DDE /* CCBDictionaryKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F5AA65AD42BDB7CFD208 /* CCBDictionaryKeys.m */; };
 		E525F23E087823CF3A7BAAD6 /* CCBDictionaryMigrationStepVersion4_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF1A156E5EA62580F43D /* CCBDictionaryMigrationStepVersion4_Tests.m */; };
+		E525F24AE598B99913585741 /* PackageSettingsMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9CB802175C011983AFE /* PackageSettingsMigrator.m */; };
 		E525F256F90C8CD3CA91EE63 /* InspectorFntFile.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FC07B4C148EF7CC6B650 /* InspectorFntFile.xib */; };
-		E525F27407F616219DEC5FE3 /* SBPackageSettingsMigrator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F507DA36AE1DF91DD224 /* SBPackageSettingsMigrator_Tests.m */; };
+		E525F27407F616219DEC5FE3 /* PackageSettingsMigrator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F507DA36AE1DF91DD224 /* PackageSettingsMigrator_Tests.m */; };
 		E525F286B618F1CF744097FD /* InspectorFloatVar.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FCD378F72265F9AFF6A0 /* InspectorFloatVar.m */; };
 		E525F28AC6A7BCDDE7048BA8 /* InspectorPoint.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F167F988C167E79971B8 /* InspectorPoint.xib */; };
 		E525F2938670750314B81156 /* CCBPublisher_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC042369604B80B893DB /* CCBPublisher_Tests.m */; };
@@ -872,7 +873,7 @@
 		E525F2A694302DC02377F3E1 /* PublishIntermediateFilesLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */; };
 		E525F2ABDE13060F0A7C718A /* PackageRenamer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */; };
 		E525F2B77CFD1B6D7D74A102 /* ResourcePropertyKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9AA53E265BACF3D77CD /* ResourcePropertyKeys.m */; };
-		E525F2BDAA821C31ED25BD2A /* SBAssertions.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB52CF4AD28BDA9AB48D /* SBAssertions.m */; };
+		E525F2BDAA821C31ED25BD2A /* AssertionAddons.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB52CF4AD28BDA9AB48D /* AssertionAddons.m */; };
 		E525F2BED7C8468DEDF82A7A /* InspectorPopoverByte.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F13251AC905E5A0F52EF /* InspectorPopoverByte.xib */; };
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
 		E525F2C9C91A3D038C8D4A10 /* CCBDictionaryMigrationStepVersion4.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE2E3B6493E5F16DA6F9 /* CCBDictionaryMigrationStepVersion4.m */; };
@@ -882,7 +883,7 @@
 		E525F30359F75816D1F178F1 /* PublishUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE25558D5B40E8284D62 /* PublishUtil.m */; };
 		E525F3051C62E3CBA69E877A /* InspectorIntegerLabeled.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F90E4BCE3BA5130B8E9D /* InspectorIntegerLabeled.xib */; };
 		E525F308447A45DFEE6C23EE /* MigrationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9C63E463EE451384EBB /* MigrationController.m */; };
-		E525F30A9EE36DBB3B363EE8 /* SBPackageSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC9B1AB11FC59D613AA1 /* SBPackageSettings_Tests.m */; };
+		E525F30A9EE36DBB3B363EE8 /* PackageSettings_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC9B1AB11FC59D613AA1 /* PackageSettings_Tests.m */; };
 		E525F310D9DF45E96DCBAA31 /* ResourceShowInFinderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDDD5A720D91B11798A4 /* ResourceShowInFinderCommand.m */; };
 		E525F3186617D31B66CDFBEF /* NSAlert+Convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F48CD0F42A2D56A68444 /* NSAlert+Convenience.m */; };
 		E525F32A0B8495A50314A1BD /* CreateDirectoryFileCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F849059B8F5243C1C0C3 /* CreateDirectoryFileCommand.m */; };
@@ -904,7 +905,7 @@
 		E525F42E79883265138AB116 /* InspectorColor3.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA41F314DDA60057099D /* InspectorColor3.m */; };
 		E525F4326AF2614C4F4FAD29 /* ResourceOpenInExternalEditorCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FD8E1D01D1EDBB7B7E5E /* ResourceOpenInExternalEditorCommand.m */; };
 		E525F435DB3AA1EDAEA9DCC5 /* InspectorValue.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F58973387D7457A5387B /* InspectorValue.m */; };
-		E525F4515E9C83C1E7655C11 /* SBPackageSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBEA7BBBE5081391D9E0 /* SBPackageSettings.m */; };
+		E525F4515E9C83C1E7655C11 /* PackageSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBEA7BBBE5081391D9E0 /* PackageSettings.m */; };
 		E525F455AC1D4C9B7F74596E /* FormatConvert_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F0E08A79DE5698E23CD6 /* FormatConvert_Tests.m */; };
 		E525F45C0B173D2FF63B9573 /* InspectorFlip.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F0021A81F90852D0875E /* InspectorFlip.xib */; };
 		E525F45EAC76C2CF0CAA2DFA /* test_ccbreader_sprite.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FA8C46273CCDDB0B9B91 /* test_ccbreader_sprite.ccb */; };
@@ -1032,7 +1033,6 @@
 		E525FC83AD6818E028635AC9 /* MailingListWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FD2158199F3168E4AD1E /* MailingListWindow.xib */; };
 		E525FC88A571A9D6A1DA7482 /* test_ccbreader_particlesystem_radial.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F7E311C08B1F3B5BCA6E /* test_ccbreader_particlesystem_radial.ccb */; };
 		E525FC8E53C200B5CBB844BF /* RMPackage_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FDD3F471141E09E46C88 /* RMPackage_Tests.m */; };
-		E525FCA949DC664848F932FA /* SBPackageSettingsMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC67003F1E4B11BE348A /* SBPackageSettingsMigrator.m */; };
 		E525FCCB0F98F23FF4F4A83B /* MiscConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F60141EECA8FC9DF3034 /* MiscConstants.m */; };
 		E525FCD21C3519D61A86ACEF /* PackageRenamer.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB678B5AF8D31E5EA1C1 /* PackageRenamer.m */; };
 		E525FCE3F78C45137345C537 /* NSString+Publishing_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FBCE967B17EDFEA5EDB8 /* NSString+Publishing_Tests.m */; };
@@ -1068,7 +1068,7 @@
 		E525FF63460A0C637890856F /* InspectorString.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F441BF8BA2627B1411F5 /* InspectorString.xib */; };
 		E525FF7AD7E8BFE584A8BBDE /* NSString+Packages.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FA15437B8CAB27509534 /* NSString+Packages.m */; };
 		E525FF7BFA996BCCCE146C24 /* RemoveFileCommand_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F4E2F17ADF7C24EE84DF /* RemoveFileCommand_Tests.m */; };
-		E525FF8FC58DB5584201E9DC /* SBPasteboardTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC052AEB516FE8A3E3EA /* SBPasteboardTypes.m */; };
+		E525FF8FC58DB5584201E9DC /* PasteboardTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC052AEB516FE8A3E3EA /* PasteboardTypes.m */; };
 		E525FF949D54CFB8CD7B9F55 /* RMResourceBase.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F001371D1628D87FFF3E /* RMResourceBase.m */; };
 		E525FFAE9618673CD9592B56 /* InspectorFloatVar.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F97B42CB22F37DA97CE5 /* InspectorFloatVar.xib */; };
 		E525FFCC2C4C3A9E49F87D64 /* InspectorSeparator.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F563B38B9F934F699449 /* InspectorSeparator.m */; };
@@ -1533,8 +1533,8 @@
 		835C50D81A5D44BE000DB185 /* SecurityScopedBookmarksStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityScopedBookmarksStore.h; sourceTree = "<group>"; };
 		835C50D91A5D44BE000DB185 /* SecurityScopedBookmarksStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityScopedBookmarksStore.m; sourceTree = "<group>"; };
 		835DB0CA17156421003A2F7B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		8363D78E1A1CD451003F163E /* SBOpenPathsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBOpenPathsController.h; sourceTree = "<group>"; };
-		8363D78F1A1CD451003F163E /* SBOpenPathsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBOpenPathsController.m; sourceTree = "<group>"; };
+		8363D78E1A1CD451003F163E /* OpenPathsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenPathsController.h; sourceTree = "<group>"; };
+		8363D78F1A1CD451003F163E /* OpenPathsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenPathsController.m; sourceTree = "<group>"; };
 		8369838F19AC834F00110D82 /* PreviewGenericViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewGenericViewController.h; sourceTree = "<group>"; };
 		8369839019AC834F00110D82 /* PreviewGenericViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewGenericViewController.m; sourceTree = "<group>"; };
 		8369839219AC836700110D82 /* PreviewGenericView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewGenericView.xib; sourceTree = "<group>"; };
@@ -1561,8 +1561,8 @@
 		83993DAE19360A28001C228B /* FeatureToggle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureToggle.m; sourceTree = "<group>"; };
 		83993DB419361305001C228B /* FeatureToggle_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeatureToggle_Tests.m; sourceTree = "<group>"; };
 		83CD4499193F35C50086E9E7 /* ResourceContextMenu_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceContextMenu_Tests.m; sourceTree = "<group>"; };
-		83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUserDefaultsKeys.h; sourceTree = "<group>"; };
-		83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUserDefaultsKeys.m; sourceTree = "<group>"; };
+		83DC65E818D898D50028EF72 /* UserDefaultsKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultsKeys.h; sourceTree = "<group>"; };
+		83DC65E918D898D50028EF72 /* UserDefaultsKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultsKeys.m; sourceTree = "<group>"; };
 		83EDACF8193DC99100327B86 /* Features.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Features.plist; sourceTree = "<group>"; };
 		83F3C9611A4229DB003D8659 /* OpenPaths.scpt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OpenPaths.scpt; sourceTree = "<group>"; };
 		83F3C96F1A422C0E003D8659 /* notes-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "notes-bg@2x.png"; sourceTree = "<group>"; };
@@ -1686,8 +1686,8 @@
 		83F3CAA31A423BC2003D8659 /* EffectColorChannelOffsetControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectColorChannelOffsetControl.h; path = ccBuilder/EffectColorChannelOffsetControl.h; sourceTree = "<group>"; };
 		83F3CAA41A423BC2003D8659 /* EffectColorChannelOffsetControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectColorChannelOffsetControl.m; path = ccBuilder/EffectColorChannelOffsetControl.m; sourceTree = "<group>"; };
 		83F3CAA51A423BC2003D8659 /* EffectColorChannelOffsetControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectColorChannelOffsetControl.xib; path = ccBuilder/EffectColorChannelOffsetControl.xib; sourceTree = "<group>"; };
-		83F8673218D1DCEA007441E4 /* SBErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBErrors.h; sourceTree = "<group>"; };
-		83F8673318D1DCEA007441E4 /* SBErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBErrors.m; sourceTree = "<group>"; };
+		83F8673218D1DCEA007441E4 /* Errors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Errors.h; sourceTree = "<group>"; };
+		83F8673318D1DCEA007441E4 /* Errors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Errors.m; sourceTree = "<group>"; };
 		83FC410B1981391600799B6C /* PackageSettingsDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PackageSettingsDetailView.xib; sourceTree = "<group>"; };
 		83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectSettingsWindow.xib; sourceTree = "<group>"; };
 		92053DAF197F096000AA93AD /* EffectBloomControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = EffectBloomControl.xib; path = ccBuilder/EffectBloomControl.xib; sourceTree = "<group>"; };
@@ -2609,8 +2609,9 @@
 		E525F4E062545A8BB45D80D5 /* InspectorCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorCheck.h; sourceTree = "<group>"; };
 		E525F4E2F17ADF7C24EE84DF /* RemoveFileCommand_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemoveFileCommand_Tests.m; sourceTree = "<group>"; };
 		E525F4ECDD9E2DC6EAA0B47C /* InspectorSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorSpriteFrame.h; sourceTree = "<group>"; };
+		E525F4FECA028F8CA926EE02 /* PackageSettingsMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageSettingsMigrator.h; sourceTree = "<group>"; };
 		E525F50315A73CE3734277F2 /* InspectorFloatXY.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorFloatXY.h; sourceTree = "<group>"; };
-		E525F507DA36AE1DF91DD224 /* SBPackageSettingsMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPackageSettingsMigrator_Tests.m; sourceTree = "<group>"; };
+		E525F507DA36AE1DF91DD224 /* PackageSettingsMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageSettingsMigrator_Tests.m; sourceTree = "<group>"; };
 		E525F510AE325C5A3DF41DA3 /* FileSystemTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystemTestCase.h; sourceTree = "<group>"; };
 		E525F51E61767602F66107B1 /* InspectorIntegerLabeled.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorIntegerLabeled.m; sourceTree = "<group>"; };
 		E525F531AB1A136BD0D0F6F8 /* test_ccbreader_nodegradient.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_nodegradient.ccb; sourceTree = "<group>"; };
@@ -2625,7 +2626,7 @@
 		E525F5AA65AD42BDB7CFD208 /* CCBDictionaryKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBDictionaryKeys.m; path = "SpriteBuilder Tests/CCBDictionaryKeys.m"; sourceTree = SOURCE_ROOT; };
 		E525F5AB3F6A794F313DBF98 /* PreviewBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewBaseViewController.m; sourceTree = "<group>"; };
 		E525F5EA95FBBDE05FCBE2E3 /* InspectorPropertyPaneBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPropertyPaneBuilder.h; sourceTree = "<group>"; };
-		E525F5FEC6B4AEDEC9E53CBC /* SBPackageSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPackageSettings.h; sourceTree = "<group>"; };
+		E525F5FEC6B4AEDEC9E53CBC /* PackageSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageSettings.h; sourceTree = "<group>"; };
 		E525F6003BA5880BF6F81C9E /* RMPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPackage.h; sourceTree = "<group>"; };
 		E525F60141EECA8FC9DF3034 /* MiscConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscConstants.m; sourceTree = "<group>"; };
 		E525F6023279D13A2334AB33 /* ResourceContextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceContextMenu.h; sourceTree = "<group>"; };
@@ -2708,7 +2709,7 @@
 		E525F95978BB9D67B4BE9934 /* CCBDictionaryMigrationProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBDictionaryMigrationProtocol.h; sourceTree = "<group>"; };
 		E525F95A18A7B31162213635 /* InspectorSeparatorSub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorSeparatorSub.h; sourceTree = "<group>"; };
 		E525F961ECB9CD7C5453D1A7 /* InspectorString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorString.h; sourceTree = "<group>"; };
-		E525F974DB16879323D48656 /* SBPasteboardTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPasteboardTypes.h; sourceTree = "<group>"; };
+		E525F974DB16879323D48656 /* PasteboardTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PasteboardTypes.h; sourceTree = "<group>"; };
 		E525F97B42CB22F37DA97CE5 /* InspectorFloatVar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFloatVar.xib; sourceTree = "<group>"; };
 		E525F984FC2B05C07E7991CD /* ResourceManager+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ResourceManager+Publishing.m"; sourceTree = "<group>"; };
 		E525F9A34E77A46FA5370AB0 /* Cocos2dUpdater_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cocos2dUpdater_Tests.m; sourceTree = "<group>"; };
@@ -2719,6 +2720,7 @@
 		E525F9BF09923348CFBEFC6C /* PublishGeneratedFilesOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishGeneratedFilesOperation.m; sourceTree = "<group>"; };
 		E525F9C14C875B0656796AE2 /* ResourceExportPackageCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceExportPackageCommand.h; sourceTree = "<group>"; };
 		E525F9C63E463EE451384EBB /* MigrationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MigrationController.m; sourceTree = "<group>"; };
+		E525F9CB802175C011983AFE /* PackageSettingsMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageSettingsMigrator.m; sourceTree = "<group>"; };
 		E525F9CFF6156F3EFAE4B6EA /* MigratorProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MigratorProtocol.h; sourceTree = "<group>"; };
 		E525F9DCAC90DFA3438D22FD /* ResourceCommandController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceCommandController.m; sourceTree = "<group>"; };
 		E525FA00AEF4915C54A12755 /* PublishResolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishResolutions.h; sourceTree = "<group>"; };
@@ -2726,7 +2728,7 @@
 		E525FA15437B8CAB27509534 /* NSString+Packages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Packages.m"; sourceTree = "<group>"; };
 		E525FA2687DAA762E0CF0430 /* ResourceCreateKeyframesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCreateKeyframesCommand.h; sourceTree = "<group>"; };
 		E525FA2C90028FB3D047213C /* PublishUtil_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishUtil_Tests.m; sourceTree = "<group>"; };
-		E525FA2DB9FC03AD337E980F /* SBAssertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAssertions.h; sourceTree = "<group>"; };
+		E525FA2DB9FC03AD337E980F /* AssertionAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssertionAddons.h; sourceTree = "<group>"; };
 		E525FA39177A6B3C303B9DA6 /* InspectorFontTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFontTTF.m; sourceTree = "<group>"; };
 		E525FA41F314DDA60057099D /* InspectorColor3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor3.m; sourceTree = "<group>"; };
 		E525FA43EE7D1C6B7C52E601 /* InspectorStringSimple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorStringSimple.m; sourceTree = "<group>"; };
@@ -2759,7 +2761,7 @@
 		E525FB2C511229C00D261998 /* InspectorEnabledFloat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorEnabledFloat.xib; sourceTree = "<group>"; };
 		E525FB3851A1B28013282F4C /* PublishOSSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishOSSettings_Tests.m; sourceTree = "<group>"; };
 		E525FB412FD4D7DCB9F0F248 /* InspectorPointLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorPointLock.m; sourceTree = "<group>"; };
-		E525FB52CF4AD28BDA9AB48D /* SBAssertions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAssertions.m; sourceTree = "<group>"; };
+		E525FB52CF4AD28BDA9AB48D /* AssertionAddons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssertionAddons.m; sourceTree = "<group>"; };
 		E525FB678B5AF8D31E5EA1C1 /* PackageRenamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer.m; sourceTree = "<group>"; };
 		E525FB7E6FD9CB089D4D1B03 /* CCBDictionaryWriter_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDictionaryWriter_Tests.m; sourceTree = "<group>"; };
 		E525FB84B7161C23D44036DB /* InspectorTexture.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorTexture.xib; sourceTree = "<group>"; };
@@ -2768,12 +2770,12 @@
 		E525FBCE967B17EDFEA5EDB8 /* NSString+Publishing_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Publishing_Tests.m"; sourceTree = "<group>"; };
 		E525FBD96C7FD372B58D4FD8 /* test_ccbreader_slider.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_slider.ccb; sourceTree = "<group>"; };
 		E525FBE5FAF723517CC25B22 /* MigrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MigrationViewController.h; sourceTree = "<group>"; };
-		E525FBEA7BBBE5081391D9E0 /* SBPackageSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPackageSettings.m; sourceTree = "<group>"; };
+		E525FBEA7BBBE5081391D9E0 /* PackageSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageSettings.m; sourceTree = "<group>"; };
 		E525FBEDE030873F8A1A3A0B /* RMSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMSpriteFrame.h; sourceTree = "<group>"; };
 		E525FBFAF37ED551810B58A5 /* PackageImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PackageImporter.h; sourceTree = "<group>"; };
 		E525FC007BC96FC532967575 /* ZipDirectoryOperation_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipDirectoryOperation_Tests.m; sourceTree = "<group>"; };
 		E525FC042369604B80B893DB /* CCBPublisher_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBPublisher_Tests.m; sourceTree = "<group>"; };
-		E525FC052AEB516FE8A3E3EA /* SBPasteboardTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPasteboardTypes.m; sourceTree = "<group>"; };
+		E525FC052AEB516FE8A3E3EA /* PasteboardTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasteboardTypes.m; sourceTree = "<group>"; };
 		E525FC054F765C06313A3385 /* InspectorAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorAnimation.m; sourceTree = "<group>"; };
 		E525FC0748A1D4167E3DDF18 /* BackupFileCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackupFileCommand.h; sourceTree = "<group>"; };
 		E525FC07B4C148EF7CC6B650 /* InspectorFntFile.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorFntFile.xib; sourceTree = "<group>"; };
@@ -2787,14 +2789,13 @@
 		E525FC430296CE5DD37F7A7F /* ProjectMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectMigrator_Tests.m; sourceTree = "<group>"; };
 		E525FC4D802C18FBD44DE5D1 /* PropertyInspectorTemplateHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplateHandler.h; sourceTree = "<group>"; };
 		E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectoreController_Tests.m; sourceTree = "<group>"; };
-		E525FC67003F1E4B11BE348A /* SBPackageSettingsMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPackageSettingsMigrator.m; sourceTree = "<group>"; };
 		E525FC6BCE5D5EDF7BB77A9D /* NSNumber+ImageResolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+ImageResolutions.h"; sourceTree = "<group>"; };
 		E525FC764043B778E59DF538 /* InspectorCodeConnections.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorCodeConnections.xib; sourceTree = "<group>"; };
 		E525FC789866B6FA119F827F /* PluginNode_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PluginNode_Tests.m; sourceTree = "<group>"; };
 		E525FC7DE2AC8E54CEBAD194 /* FileSystemTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSystemTestCase.m; sourceTree = "<group>"; };
 		E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishImageOperation.m; sourceTree = "<group>"; };
 		E525FC85C53D54A8364A43F9 /* ProjectSettingsMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsMigrator.m; sourceTree = "<group>"; };
-		E525FC9B1AB11FC59D613AA1 /* SBPackageSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPackageSettings_Tests.m; sourceTree = "<group>"; };
+		E525FC9B1AB11FC59D613AA1 /* PackageSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageSettings_Tests.m; sourceTree = "<group>"; };
 		E525FCB3C5115B9C66A80E1D /* InspectorText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorText.h; sourceTree = "<group>"; };
 		E525FCBAB30BFC587662B8E6 /* ProjectSettingsMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectSettingsMigrator.h; sourceTree = "<group>"; };
 		E525FCBBB1841F3115718AD0 /* ResourceManager_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResourceManager_Tests.m; path = ccBuilder/ResourceManager_Tests.m; sourceTree = SOURCE_ROOT; };
@@ -2832,7 +2833,6 @@
 		E525FE05E5E4D72C7A63437A /* PackageRemover_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRemover_Tests.m; sourceTree = "<group>"; };
 		E525FE0A3AA113A1EB758EAC /* PackageCreator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageCreator_Tests.m; sourceTree = "<group>"; };
 		E525FE172110670E7686DDE3 /* MailingListWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailingListWindow.h; sourceTree = "<group>"; };
-		E525FE21A011747CCC7965FD /* SBPackageSettingsMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPackageSettingsMigrator.h; sourceTree = "<group>"; };
 		E525FE21A2662188C1454FEB /* InspectorNodeReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorNodeReference.h; sourceTree = "<group>"; };
 		E525FE25558D5B40E8284D62 /* PublishUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishUtil.m; sourceTree = "<group>"; };
 		E525FE2E3B6493E5F16DA6F9 /* CCBDictionaryMigrationStepVersion4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDictionaryMigrationStepVersion4.m; sourceTree = "<group>"; };
@@ -2856,7 +2856,7 @@
 		E525FEBFE86C6D193DBB8D1E /* ResourceDeleteCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceDeleteCommand.h; sourceTree = "<group>"; };
 		E525FED28257D82C09E2EB7B /* InspectorPopoverDegrees.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPopoverDegrees.xib; sourceTree = "<group>"; };
 		E525FEDBFC68A96C09F6BCC9 /* test_ccbreader_node_customClass_customProperties.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_node_customClass_customProperties.ccb; sourceTree = "<group>"; };
-		E525FEE3806A0098CA045D95 /* SBCocos2dUpdateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBCocos2dUpdateDelegate.h; sourceTree = "<group>"; };
+		E525FEE3806A0098CA045D95 /* Cocos2dUpdateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdateDelegate.h; sourceTree = "<group>"; };
 		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
 		E525FEFBAEFBE0162647D84C /* NSNumber+ImageResolutions_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ImageResolutions_Tests.m"; sourceTree = "<group>"; };
 		E525FF18D2784BB119B2882A /* RMResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource.m; sourceTree = "<group>"; };
@@ -3987,12 +3987,10 @@
 				E525F20B1403AD6F5FCAD713 /* PackageExporter.h */,
 				E525F8763FF7B0C58E25B128 /* PackageCreator.m */,
 				E525F743A9F069A88BFDCE66 /* PackageCreator.h */,
-				E525F5FEC6B4AEDEC9E53CBC /* SBPackageSettings.h */,
-				E525FBEA7BBBE5081391D9E0 /* SBPackageSettings.m */,
+				E525F5FEC6B4AEDEC9E53CBC /* PackageSettings.h */,
+				E525FBEA7BBBE5081391D9E0 /* PackageSettings.m */,
 				E525F3CFE241FFCE80D11336 /* PublishOSSettings.m */,
 				E525FDFA61800BFD2178571A /* PublishOSSettings.h */,
-				E525FC67003F1E4B11BE348A /* SBPackageSettingsMigrator.m */,
-				E525FE21A011747CCC7965FD /* SBPackageSettingsMigrator.h */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -4005,9 +4003,9 @@
 				E525FE05E5E4D72C7A63437A /* PackageRemover_Tests.m */,
 				E525FD702E268242A41C54F4 /* PackageExporter_Tests.m */,
 				E525F7C98F4B58F4520B89FC /* PackageImporter_Tests.m */,
-				E525FC9B1AB11FC59D613AA1 /* SBPackageSettings_Tests.m */,
+				E525FC9B1AB11FC59D613AA1 /* PackageSettings_Tests.m */,
 				E525FB3851A1B28013282F4C /* PublishOSSettings_Tests.m */,
-				E525F507DA36AE1DF91DD224 /* SBPackageSettingsMigrator_Tests.m */,
+				E525F507DA36AE1DF91DD224 /* PackageSettingsMigrator_Tests.m */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -4106,8 +4104,8 @@
 		8363D78D1A1CD420003F163E /* Open Paths */ = {
 			isa = PBXGroup;
 			children = (
-				8363D78E1A1CD451003F163E /* SBOpenPathsController.h */,
-				8363D78F1A1CD451003F163E /* SBOpenPathsController.m */,
+				8363D78E1A1CD451003F163E /* OpenPathsController.h */,
+				8363D78F1A1CD451003F163E /* OpenPathsController.m */,
 			);
 			name = "Open Paths";
 			sourceTree = "<group>";
@@ -4161,7 +4159,7 @@
 				E525F0662ED78DDE9C8DFFBB /* SemanticVersioning.m */,
 				E525F342F96C1A77096D98FE /* Cocos2dUpdaterController.m */,
 				E525F0F7B723C51202207B07 /* Cocos2dUpdaterController.h */,
-				E525FEE3806A0098CA045D95 /* SBCocos2dUpdateDelegate.h */,
+				E525FEE3806A0098CA045D95 /* Cocos2dUpdateDelegate.h */,
 			);
 			name = Cocos2dUpdater;
 			sourceTree = "<group>";
@@ -4295,16 +4293,16 @@
 		83F8672F18D1DCBD007441E4 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				83DC65E818D898D50028EF72 /* SBUserDefaultsKeys.h */,
-				83DC65E918D898D50028EF72 /* SBUserDefaultsKeys.m */,
-				83F8673218D1DCEA007441E4 /* SBErrors.h */,
-				83F8673318D1DCEA007441E4 /* SBErrors.m */,
+				83DC65E818D898D50028EF72 /* UserDefaultsKeys.h */,
+				83DC65E918D898D50028EF72 /* UserDefaultsKeys.m */,
+				83F8673218D1DCEA007441E4 /* Errors.h */,
+				83F8673318D1DCEA007441E4 /* Errors.m */,
 				E525F60141EECA8FC9DF3034 /* MiscConstants.m */,
 				E525FB122597817578F84A85 /* MiscConstants.h */,
 				4DB7C95319083ACF00ECE19F /* NotificationNames.h */,
 				4DB7C95419083ACF00ECE19F /* NotificationNames.m */,
-				E525F974DB16879323D48656 /* SBPasteboardTypes.h */,
-				E525FC052AEB516FE8A3E3EA /* SBPasteboardTypes.m */,
+				E525F974DB16879323D48656 /* PasteboardTypes.h */,
+				E525FC052AEB516FE8A3E3EA /* PasteboardTypes.m */,
 				E525F1F0E0BA4C7DA80E6CC4 /* ResourcePropertyKeys.h */,
 				E525F9AA53E265BACF3D77CD /* ResourcePropertyKeys.m */,
 			);
@@ -5606,6 +5604,8 @@
 				E525F705997969F8B9E1F7FD /* AllPackageSettingsMigrator.m */,
 				E525F26FE297AB70F4C468D2 /* AllPackageSettingsMigrator.h */,
 				E525FB06643684D00E0749B2 /* CCBMigration */,
+				E525F9CB802175C011983AFE /* PackageSettingsMigrator.m */,
+				E525F4FECA028F8CA926EE02 /* PackageSettingsMigrator.h */,
 			);
 			name = Migrators;
 			sourceTree = "<group>";
@@ -5819,8 +5819,8 @@
 				E525F510AE325C5A3DF41DA3 /* FileSystemTestCase.h */,
 				E525F2F32EC9F70210361E7D /* FileSystemTestCase+Images.m */,
 				E525F82263C2129471643FFD /* FileSystemTestCase+Images.h */,
-				E525FB52CF4AD28BDA9AB48D /* SBAssertions.m */,
-				E525FA2DB9FC03AD337E980F /* SBAssertions.h */,
+				E525FB52CF4AD28BDA9AB48D /* AssertionAddons.m */,
+				E525FA2DB9FC03AD337E980F /* AssertionAddons.h */,
 			);
 			name = TestHelpers;
 			sourceTree = "<group>";
@@ -7342,7 +7342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92B792D318C92FEF007DF895 /* CCBPhysicsTwoBodyJoint.m in Sources */,
-				832705A019E5389100A311A0 /* SBPasteboardTypes.m in Sources */,
+				832705A019E5389100A311A0 /* PasteboardTypes.m in Sources */,
 				92B792D218C92FE7007DF895 /* CCBPhysicsSpringJoint.m in Sources */,
 				9294EC8E18C65EC10059014C /* CCBPhysicsPinJoint.m in Sources */,
 				9294EC8F18C65EC10059014C /* CCBPhysicsPivotJoint.m in Sources */,
@@ -7405,7 +7405,7 @@
 				5BA3DC35192110B90055DD96 /* GuideGridSizeWindow.m in Sources */,
 				83F3CA9E1A423B8A003D8659 /* EffectLightingControl.m in Sources */,
 				E3B4223214E5CF97004547D6 /* NodeInfo.m in Sources */,
-				83DC65EA18D898D50028EF72 /* SBUserDefaultsKeys.m in Sources */,
+				83DC65EA18D898D50028EF72 /* UserDefaultsKeys.m in Sources */,
 				E3C3660114EA0507007CD5FF /* TexturePropertySetter.m in Sources */,
 				92CB085E19BA2E4300EFDCE3 /* EffectBlurControl.m in Sources */,
 				E3C3660414EB2C1B007CD5FF /* CCBDictionaryReader.m in Sources */,
@@ -7540,7 +7540,7 @@
 				B747E60E19CB3C0F00F692A2 /* EffectHueControl.m in Sources */,
 				B7AC69BA17A2F4470041B8BD /* PlugInNodeViewHandler.m in Sources */,
 				B7AC69C017A3129C0041B8BD /* PlugInNodeCollectionView.m in Sources */,
-				8363D7901A1CD451003F163E /* SBOpenPathsController.m in Sources */,
+				8363D7901A1CD451003F163E /* OpenPathsController.m in Sources */,
 				B7AC69C317A320E30041B8BD /* CCBColorView.m in Sources */,
 				920994D0198717D20006F38D /* EffectGlassControl.m in Sources */,
 				B7083DF617B1CB88006628C7 /* LocalizationEditorWindow.m in Sources */,
@@ -7553,7 +7553,7 @@
 				B7083E0717B32DAD006628C7 /* LocalizationEditorTranslationTableView.m in Sources */,
 				B7083E0A17B567E5006628C7 /* StringPropertySetter.m in Sources */,
 				920994DB198719F10006F38D /* EffectReflectionControl.m in Sources */,
-				83F8673418D1DCEA007441E4 /* SBErrors.m in Sources */,
+				83F8673418D1DCEA007441E4 /* Errors.m in Sources */,
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
 				E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */,
 				E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */,
@@ -7609,7 +7609,7 @@
 				E525FA53ED13870D020579B8 /* CCBPublisher.m in Sources */,
 				E525FE4E98094590DEF34EF8 /* CCBPublisherCacheCleaner.m in Sources */,
 				E525FA948965CBD67857C6F6 /* CCBPublisherController.m in Sources */,
-				E525F4515E9C83C1E7655C11 /* SBPackageSettings.m in Sources */,
+				E525F4515E9C83C1E7655C11 /* PackageSettings.m in Sources */,
 				E525FE05101964D26EF42978 /* ZipDirectoryOperation.m in Sources */,
 				E525F96B119C330AE0D2C20E /* PublishOSSettings.m in Sources */,
 				E525F50E27715B344266949A /* ResourceManager+Publishing.m in Sources */,
@@ -7673,7 +7673,6 @@
 				E525F22885027391913A1DDE /* CCBDictionaryKeys.m in Sources */,
 				E525F660A85907D167CC85CF /* NSNumber+ImageResolutions.m in Sources */,
 				E525F002C25180FC44EE37FC /* PublishResolutions.m in Sources */,
-				E525FCA949DC664848F932FA /* SBPackageSettingsMigrator.m in Sources */,
 				E525FE03A7747A682F47DE14 /* BackupFileCommand.m in Sources */,
 				E525F814A1B40A92F27D0D06 /* Cocos2dUpdaterController.m in Sources */,
 				E525FE44E8C282C36D8E34B8 /* ResourcePathToPackageMigrator.m in Sources */,
@@ -7683,6 +7682,7 @@
 				E525F2C9C91A3D038C8D4A10 /* CCBDictionaryMigrationStepVersion4.m in Sources */,
 				E525F1F306482CB9644A5BB9 /* CCBDictionaryMigrator.m in Sources */,
 				E525F9E311810A83792DAE05 /* MigrationControllerFactory.m in Sources */,
+				E525F24AE598B99913585741 /* PackageSettingsMigrator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7708,7 +7708,7 @@
 				E525F2938670750314B81156 /* CCBPublisher_Tests.m in Sources */,
 				E525F72F2963947D91C8567B /* FileSystemTestCase+Images.m in Sources */,
 				E525F455AC1D4C9B7F74596E /* FormatConvert_Tests.m in Sources */,
-				E525F30A9EE36DBB3B363EE8 /* SBPackageSettings_Tests.m in Sources */,
+				E525F30A9EE36DBB3B363EE8 /* PackageSettings_Tests.m in Sources */,
 				E525F4F4F15D32310BBCA63D /* CCBPublisherController_Tests.m in Sources */,
 				E525FFF21919490B3568DC1F /* ZipDirectoryOperation_Tests.m in Sources */,
 				E525FBFD616A1BE9F86C2312 /* PublishOSSettings_Tests.m in Sources */,
@@ -7717,7 +7717,7 @@
 				E525F1F613802694CC6F12C4 /* RMResource_Tests.m in Sources */,
 				E525FC8E53C200B5CBB844BF /* RMPackage_Tests.m in Sources */,
 				E525F55709C7B6FCB64695FA /* RMDirectory_Tests.m in Sources */,
-				E525FF8FC58DB5584201E9DC /* SBPasteboardTypes.m in Sources */,
+				E525FF8FC58DB5584201E9DC /* PasteboardTypes.m in Sources */,
 				E525FC0A0C9C32BEF65F349A /* ImageFormatAndPropertiesHelper_Tests.m in Sources */,
 				E525F93359F8368EAE1A2EB8 /* PreviewView_Tests.m in Sources */,
 				E525F622A96F0C31CACF1883 /* InspectoreController_Tests.m in Sources */,
@@ -7732,8 +7732,8 @@
 				E525F23E087823CF3A7BAAD6 /* CCBDictionaryMigrationStepVersion4_Tests.m in Sources */,
 				E525FB8491D3CC4B8B0D536F /* NSNumber+ImageResolutions_Tests.m in Sources */,
 				E525FC2074BBA7D2059010CE /* PublishResolutions_Tests.m in Sources */,
-				E525F27407F616219DEC5FE3 /* SBPackageSettingsMigrator_Tests.m in Sources */,
-				E525F2BDAA821C31ED25BD2A /* SBAssertions.m in Sources */,
+				E525F27407F616219DEC5FE3 /* PackageSettingsMigrator_Tests.m in Sources */,
+				E525F2BDAA821C31ED25BD2A /* AssertionAddons.m in Sources */,
 				E525FD8F3CE1ADFA4F339575 /* NSString+Misc_Tests.m in Sources */,
 				E525F87F72E34064F5E8E706 /* BackupFileCommand_Tests.m in Sources */,
 				E525F29B43334C824B686F46 /* Cocos2dUpdater_Tests.m in Sources */,

@@ -5,7 +5,7 @@
 #import "CCBDictionaryKeys.h"
 #import "NSString+Misc.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 
 @interface CCBDictionaryMigrator()

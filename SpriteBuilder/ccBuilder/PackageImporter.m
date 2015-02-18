@@ -3,13 +3,13 @@
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
 #import "NSString+Packages.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "PackageUtil.h"
 #import "NotificationNames.h"
 #import "NSError+SBErrors.h"
 #import "MiscConstants.h"
 #import "RMPackage.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 
 @implementation PackageImporter
 
@@ -116,7 +116,7 @@
     RMPackage *newPackage = [[RMPackage alloc] init];
     newPackage.dirPath = newPathInPackagesFolder;
 
-    SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:newPackage];
+    PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:newPackage];
     NSError *loadError;
     if (![packageSettings loadWithError:&loadError])
     {

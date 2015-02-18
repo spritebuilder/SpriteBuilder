@@ -8,7 +8,7 @@ extern NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
 @class PublishOSSettings;
 @class PublishResolutions;
 
-@interface SBPackageSettings : NSObject
+@interface PackageSettings : NSObject
 
 @property (nonatomic, strong) RMPackage *package;
 @property (nonatomic, copy, readonly) NSString *fullPath;

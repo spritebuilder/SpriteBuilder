@@ -1,6 +1,6 @@
 #import "PackageExporter.h"
 #import "RMPackage.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "NSError+SBErrors.h"
 
 @implementation PackageExporter

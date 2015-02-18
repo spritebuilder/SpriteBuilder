@@ -12,7 +12,7 @@
 #import "CreateDirectoryFileCommand.h"
 #import "RemoveFileCommand.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 
 NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";

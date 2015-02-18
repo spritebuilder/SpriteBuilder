@@ -7,7 +7,7 @@
 //
 
 #import <Carbon/Carbon.h>
-#import "SBOpenPathsController.h"
+#import "OpenPathsController.h"
 #import "ProjectSettings.h"
 #import "NSAlert+Convenience.h"
 #import "MiscConstants.h"
@@ -32,7 +32,7 @@ typedef enum
 } SBOpenPathType;
 
 
-@interface SBOpenPathsController ()
+@interface OpenPathsController ()
 
 @property (nonatomic, strong) NSArray *additionalAppsToOpenPaths;
 @property (nonatomic, strong) NSMutableArray *packageMenuItems;
@@ -43,7 +43,7 @@ typedef enum
 @end
 
 
-@implementation SBOpenPathsController
+@implementation OpenPathsController
 
 - (id)init
 {

@@ -6,7 +6,7 @@
 #import "CCRenderer_Private.h"
 
 
-@interface SBPackageSettingsMigrator : NSObject
+@interface PackageSettingsMigrator : NSObject
 
 - (instancetype)initWithDictionary:(NSDictionary *)packageSettings toVersion:(NSUInteger)toVersion;
 

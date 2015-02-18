@@ -10,7 +10,7 @@
 #import <XCTest/XCTest.h>
 #import "CCBDictionaryMigrationStepVersion4.h"
 #import "CCBDictionaryKeys.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 @interface CCBDictionaryMigrationStepVersion4_Tests : XCTestCase
 

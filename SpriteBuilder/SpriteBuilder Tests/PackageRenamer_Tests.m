@@ -11,7 +11,7 @@
 
 #import "ProjectSettings.h"
 #import "NSString+Packages.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "RMPackage.h"
 #import "ResourceManager.h"
 #import "PackageRenamer.h"

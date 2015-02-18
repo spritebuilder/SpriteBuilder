@@ -42,8 +42,8 @@
 #import "MainWindow.h"
 #import "CCBGLView.h"
 #import "InspectorController.h"
-#import "SBPasteboardTypes.h"
 #import "SequencerHandler.h"
+#import "PasteboardTypes.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5

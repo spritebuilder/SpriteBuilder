@@ -8,15 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
-#import "SBPackageSettingsMigrator.h"
-#import "SBErrors.h"
-#import "SBAssertions.h"
+#import "PackageSettingsMigrator.h"
+#import "Errors.h"
+#import "AssertionAddons.h"
 
-@interface SBPackageSettingsMigrator_Tests : XCTestCase
+@interface PackageSettingsMigrator_Tests : XCTestCase
 
 @end
 
-@implementation SBPackageSettingsMigrator_Tests
+@implementation PackageSettingsMigrator_Tests
 
 - (void)testCannotDowngrade
 {
@@ -24,7 +24,7 @@
         @"version" : @4
     };
 
-    SBPackageSettingsMigrator *migrator = [[SBPackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:3];
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:3];
 
     NSError *error;
     XCTAssertNil([migrator migrate:&error]);
@@ -39,7 +39,7 @@
         @"version" : @1
     };
 
-    SBPackageSettingsMigrator *migrator = [[SBPackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:100];
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:100];
 
     NSError *error;
     XCTAssertNil([migrator migrate:&error]);
@@ -70,7 +70,7 @@
         @"outputDir" : @""
     };
 
-    SBPackageSettingsMigrator *migrator = [[SBPackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:2];
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:2];
 
 
     NSError *error;
@@ -116,7 +116,7 @@
         @"outputDir" : @"asd"
     };
 
-    SBPackageSettingsMigrator *migrator = [[SBPackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:3];
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:3];
 
     NSError *error;
     NSDictionary *migratedSettings = [migrator migrate:&error];
@@ -131,8 +131,8 @@
     NSArray *mainProjectResolutions = @[ @4 ];
     XCTAssertEqualObjects(migratedSettings[@"mainProjectResolutions"], mainProjectResolutions);
 
-    [SBAssertions assertArraysAreEqualIgnoringOrder:migratedSettings[@"osSettings"][@"ios"][@"resolutions"] arrayB:@[@1, @2, @4]];
-    [SBAssertions assertArraysAreEqualIgnoringOrder:migratedSettings[@"osSettings"][@"android"][@"resolutions"] arrayB:@[@1, @4]];
+    [AssertionAddons assertArraysAreEqualIgnoringOrder:migratedSettings[@"osSettings"][@"ios"][@"resolutions"] arrayB:@[@1, @2, @4]];
+    [AssertionAddons assertArraysAreEqualIgnoringOrder:migratedSettings[@"osSettings"][@"android"][@"resolutions"] arrayB:@[@1, @4]];
 
     // Values that should stay the same
     XCTAssertEqualObjects(migratedSettings[@"osSettings"][@"ios"][@"audio_quality"], @7);

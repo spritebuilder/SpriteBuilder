@@ -3,7 +3,7 @@
 #import "ResourcePathToPackageMigrator.h"
 #import "MigrationViewController.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 
 @implementation MigrationController

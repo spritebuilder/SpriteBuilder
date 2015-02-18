@@ -2,7 +2,7 @@
 #import "CCBDictionaryMigrationStepVersion4.h"
 #import "CCBDictionaryKeys.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 
 /*
