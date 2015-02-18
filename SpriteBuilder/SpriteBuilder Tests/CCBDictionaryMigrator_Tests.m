@@ -12,6 +12,7 @@
 #import "CCBDictionaryKeys.h"
 #import "CCBDictionaryMigrationProtocol.h"
 #import "NSError+SBErrors.h"
+#import "CCBDictionaryReader.h"
 
 @interface CCBDictionaryMigrator_Tests : XCTestCase
 
@@ -22,7 +23,7 @@
 
 - (void)testMigrateCCBWithoutVersion
 {
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:@{}];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:@{} toVersion:kCCBDictionaryFormatVersion];
 
     NSError *error;
     NSDictionary *migratedCCB = [migrator migrate:&error];
@@ -34,7 +35,7 @@
 
 - (void)testMigrateCCBWithEmptyMigrationStepClassPrefixError
 {
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:@{}];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:@{} toVersion:kCCBDictionaryFormatVersion];
     migrator.migrationStepClassPrefix = nil;
 
     NSError *error;
@@ -51,9 +52,8 @@
         CCB_DICTIONARY_KEY_FILEVERSION : @2
     };
 
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb toVersion:5];
     migrator.migrationStepClassPrefix = @"SurelyNotExistingButThatsOk";
-    migrator.ccbMigrationVersionTarget = 5;
 
     NSError *error;
     NSDictionary *migratedCCB = [migrator migrate:&error];
@@ -72,10 +72,9 @@
         }
     };
 
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb toVersion:3];
     // See below for class stub
     migrator.migrationStepClassPrefix = @"CCBTestMigrationStep";
-    migrator.ccbMigrationVersionTarget = 3;
 
     NSError *error;
     NSDictionary *migratedCCB = [migrator migrate:&error];
@@ -92,10 +91,9 @@
         CCB_DICTIONARY_KEY_FILEVERSION : @4
     };
 
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb toVersion:5];
     // See below for class stub
     migrator.migrationStepClassPrefix = @"CCBTestMigrationFailingStep";
-    migrator.ccbMigrationVersionTarget = 5;
 
     NSError *error;
     NSDictionary *migratedCCB = [migrator migrate:&error];

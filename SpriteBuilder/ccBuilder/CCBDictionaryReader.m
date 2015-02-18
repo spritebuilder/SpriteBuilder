@@ -637,7 +637,7 @@ __strong NSDictionary* renamedProperties = nil;
         return nil;
     }
 
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:documentData];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:documentData toVersion:kCCBDictionaryFormatVersion];
 
     NSError *migrationError;
     NSDictionary *migratedCCB = [migrator migrate:&migrationError];
