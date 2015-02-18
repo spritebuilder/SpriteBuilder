@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "Cocos2dTestHelpers.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 
 @interface CCBReader_EffectsTest : XCTestCase
 

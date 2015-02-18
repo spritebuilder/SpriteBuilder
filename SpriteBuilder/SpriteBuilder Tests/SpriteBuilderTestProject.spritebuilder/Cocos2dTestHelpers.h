@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CCDeprecated.h"
 
 @interface Cocos2dTestHelpers : NSObject
 

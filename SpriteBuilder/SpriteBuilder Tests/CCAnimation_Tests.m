@@ -11,10 +11,10 @@
 #import "CCBXCocos2diPhone.h"
 #import "PlugInManager.h"
 #import "PlugInExport.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "CCAnimationManager.h"
 #import "CCAnimationManager_Private.h"
-#import "CCBSequence.h"
+#import "CCSequence.h"
 #import "Cocos2dTestHelpers.h"
 
 #define IS_NEAR(a,b,accuracy) (fabsf(a - b) < kAccuracy)
@@ -25,7 +25,7 @@ const CGFloat kAccuracy = 0.01f;
 
 @implementation CCAnimationManager (Test)
 
--(CCBSequence*)runningSequence
+-(CCSequence*)runningSequence
 {
 	return _runningSequence;
 }
@@ -33,7 +33,7 @@ const CGFloat kAccuracy = 0.01f;
 @end
 
 typedef void (^CallbackBlock) ();
-@interface CCAnimationDelegateTester : NSObject<CCBAnimationManagerDelegate>
+@interface CCAnimationDelegateTester : NSObject<CCAnimationManagerDelegate>
 {
 	CallbackBlock _sequenceFinished;
 }
@@ -148,7 +148,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	float totalElapsed = 0.0f;
 	__block float currentAnimElapsed = 0.0f;
 	
-	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	CCSequence * seq = rootNode.animationManager.sequences[0];
 	
 	[rootNode.animationManager setCompletedAnimationCallbackBlock:^(CCAnimationManager * manager) {
 		XCTAssertTrue(fabsf(currentAnimElapsed - seq.duration) < kAccuracy, @"The animation should have taken 4 seconds. Possible divergenc.");
@@ -193,7 +193,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	CCBReader * reader = [CCBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
 	
-	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	CCSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackTest;
 	
 	
@@ -252,7 +252,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
 	
-	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	CCSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackTest;
 	
 	const CGFloat kXTranslation = 500.0f;
@@ -392,7 +392,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
 	
-	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	CCSequence * seq = rootNode.animationManager.sequences[0];
 	rootNode.animationManager.delegate = callbackHelper;
 	
 	const CGFloat kXTranslation = 500.0f;
@@ -455,7 +455,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	
 	XCTAssertTrue([node0.name isEqualToString:@"node0"]);
 	
-	CCBSequence * seq = rootNode.animationManager.sequences[0];
+	CCSequence * seq = rootNode.animationManager.sequences[0];
 	
 	const CGFloat kXTranslation = 500.0f;
 	
