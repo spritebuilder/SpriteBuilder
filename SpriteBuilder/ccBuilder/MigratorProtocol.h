@@ -6,7 +6,7 @@
 
 @class ProjectSettings;
 
-@protocol ProjectMigratorProtocol <NSObject>
+@protocol MigratorProtocol <NSObject>
 
 - (NSString *)htmlInfoText;
 
@@ -15,5 +15,8 @@
 - (BOOL)migrateWithError:(NSError **)error;
 
 - (void)rollback;
+
+@optional
+- (void)tidyUp;
 
 @end

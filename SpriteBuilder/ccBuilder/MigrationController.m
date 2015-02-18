@@ -1,12 +1,12 @@
-#import "ProjectMigrationController.h"
+#import "MigrationController.h"
 
 #import "ResourcePathToPackageMigrator.h"
-#import "ProjectMigrationViewController.h"
+#import "MigrationViewController.h"
 #import "NSError+SBErrors.h"
 #import "SBErrors.h"
 
 
-@implementation ProjectMigrationController
+@implementation MigrationController
 
 - (BOOL)migrateWithError:(NSError **)error
 {
@@ -26,19 +26,37 @@
         return NO;
     }
 
-    return [self migrateProject:error];
+    if (![self migrateProject:error])
+    {
+        return NO;
+    }
+
+    [self tidyUp];
+
+    return YES;
+}
+
+- (void)tidyUp
+{
+    for (id <MigratorProtocol> migrator in _migrators)
+    {
+        if ([migrator respondsToSelector:@selector(tidyUp)])
+        {
+            [migrator tidyUp];
+        }
+    }
 }
 
 - (BOOL)migrateProject:(NSError **)error
 {
     NSMutableArray *stepsTpRollback = [NSMutableArray array];
 
-    for (id <ProjectMigratorProtocol> migrator in _migrators)
+    for (id <MigratorProtocol> migrator in _migrators)
     {
         [stepsTpRollback addObject:migrator];
         if (![migrator migrateWithError:error])
         {
-            for (id <ProjectMigratorProtocol> migrationStepToRollback in stepsTpRollback)
+            for (id <MigratorProtocol> migrationStepToRollback in stepsTpRollback)
             {
                 [migrationStepToRollback rollback];
             }
@@ -61,20 +79,27 @@
 
 - (NSString *)infoTextsAsHtmlOfAllMigrationSteps
 {
-    NSMutableArray *steps = [NSMutableArray array];
-    for (id <ProjectMigratorProtocol> migrationStep in _migrators)
+    NSMutableString *result = [NSMutableString string];
+
+    [result appendString:@"<small><ul>"];
+
+    for (id <MigratorProtocol> migrationStep in _migrators)
     {
         if ([migrationStep migrationRequired])
         {
-            [steps addObject:[migrationStep htmlInfoText]];
+            [result appendString:@"<li>"];
+            [result appendString:[migrationStep htmlInfoText]];
+            [result appendString:@"</li>"];
         }
     }
-    return [steps componentsJoinedByString:@"<br><br>"];
+    [result appendString:@"</ul></small>"];
+
+    return result;
 }
 
 - (BOOL)needsMigration
 {
-    for (id <ProjectMigratorProtocol> migrationStep in _migrators)
+    for (id <MigratorProtocol> migrationStep in _migrators)
     {
         if ([migrationStep migrationRequired])
         {

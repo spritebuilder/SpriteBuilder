@@ -3,10 +3,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ProjectMigratorProtocol.h"
+#import "MigratorProtocol.h"
 
 
-@interface AllPackageSettingsMigrator : NSObject <ProjectMigratorProtocol>
+@interface AllPackageSettingsMigrator : NSObject <MigratorProtocol>
 
 - (id)initWithProjectSettings:(ProjectSettings *)projectSettings;
 

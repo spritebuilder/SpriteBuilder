@@ -4,7 +4,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol ProjectMigrationControllerDelegate <NSObject>
+@protocol MigrationControllerDelegate <NSObject>
 
 - (BOOL)migrateWithMigrationDetails:(NSString *)migrationDetails;
 

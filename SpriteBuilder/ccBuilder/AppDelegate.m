@@ -124,7 +124,7 @@
 #import "PackageImporter.h"
 #import "PackageCreator.h"
 #import "ResourceCommandController.h"
-#import "ProjectMigrationController.h"
+#import "MigrationController.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
@@ -139,7 +139,8 @@
 #import "SecurityScopedBookmarksStore.h"
 #import "CCDirector_Private.h"
 #import "Cocos2dUpdaterController.h"
-#import "ProjectMigrationViewController.h"
+#import "MigrationViewController.h"
+#import "MigrationControllerFactory.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -611,7 +612,7 @@ typedef enum
 	
 
     // Open registration window
-    BOOL alreadyRegistered = (BOOL)([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail]);
+    BOOL alreadyRegistered = YES;//(BOOL)([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail]);
 
     if(!alreadyRegistered && ![self openRegistration])
 	{
@@ -1687,7 +1688,6 @@ typedef enum
     self.securityScopedProjectFolderResource = nil;
 }
 
-
 - (BOOL)openProjectWithProjectPath:(NSString *)projectPath
 {
     [self closeProject];
@@ -1710,9 +1710,9 @@ typedef enum
         return NO;
     }
 
-    ProjectMigrationViewController *projectMigrationViewController = [[ProjectMigrationViewController alloc] initWithProjectSettings:prjctSettings];
-    projectMigrationViewController.cancelButtonTitle = @"Close Project";
-    if (![projectMigrationViewController migrate])
+    MigrationViewController *migrationViewController = [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:projectSettings]];
+    migrationViewController.cancelButtonTitle = @"Close Project";
+    if (![migrationViewController migrate])
     {
         [self closeProject];
         return NO;

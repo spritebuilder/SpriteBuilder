@@ -9,16 +9,16 @@
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
-#import "ProjectMigrationController.h"
+#import "MigrationController.h"
 #import "FileSystemTestCase.h"
 #import "SBErrors.h"
-#import "ProjectMigratorProtocol.h"
-#import "ProjectMigrationControllerDelegate.h"
+#import "MigratorProtocol.h"
+#import "MigrationControllerDelegate.h"
 
 
-@interface ProjectMigrationController_Tests : FileSystemTestCase <ProjectMigrationControllerDelegate>
+@interface ProjectMigrationController_Tests : FileSystemTestCase <MigrationControllerDelegate>
 
-@property (nonatomic, strong) ProjectMigrationController *migrationController;
+@property (nonatomic, strong) MigrationController *migrationController;
 @property (nonatomic) BOOL migrationControllerDelegateResult;
 
 @end
@@ -30,7 +30,7 @@
 {
     [super setUp];
 
-    self.migrationController = [[ProjectMigrationController alloc] init];
+    self.migrationController = [[MigrationController alloc] init];
 }
 
 - (void)testMigrationWithoutMigrators
@@ -46,8 +46,8 @@
 
 - (void)testMigrationWithNoMigrationNeeded
 {
-    id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(ProjectMigratorProtocol)];
-    id migratorMock2 = [OCMockObject niceMockForProtocol:@protocol(ProjectMigratorProtocol)];
+    id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
+    id migratorMock2 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
 
     _migrationController.migrators = @[migratorMock1, migratorMock2];
 
@@ -66,8 +66,8 @@
 {
     self.migrationControllerDelegateResult = YES;
 
-    id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(ProjectMigratorProtocol)];
-    id migratorMock2 = [OCMockObject niceMockForProtocol:@protocol(ProjectMigratorProtocol)];
+    id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
+    id migratorMock2 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
 
     _migrationController.migrators = @[migratorMock1, migratorMock2];
     _migrationController.delegate = self;
@@ -91,8 +91,8 @@
 {
     self.migrationControllerDelegateResult = YES;
 
-    id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(ProjectMigratorProtocol)];
-    id migratorMock2 = [OCMockObject niceMockForProtocol:@protocol(ProjectMigratorProtocol)];
+    id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
+    id migratorMock2 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
 
     _migrationController.migrators = @[migratorMock1, migratorMock2];
     _migrationController.delegate = self;
