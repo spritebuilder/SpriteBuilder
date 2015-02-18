@@ -176,12 +176,12 @@
                                                                               sequenceId:0];
 
     NSMutableDictionary *doc = [documentCreator createData];
-    [doc writeToFile:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack/mainScene.ccb"] atomically:YES];
+    [doc writeToFile:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack/mainScene.sb"] atomically:YES];
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
-    [self assertFileExists:@"Published-iOS/mainScene.ccbi"];
+    [self assertFileExists:@"Published-iOS/mainScene.sbi"];
 }
 
 - (void)testCustomScalingFactorsForImages
