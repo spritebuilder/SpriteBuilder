@@ -14,6 +14,7 @@
 #import "MiscConstants.h"
 #import "Errors.h"
 #import "AssertionAddons.h"
+#import "PackageSettings.h"
 
 @interface AllPackageSettingsMigrator_Tests : FileSystemTestCase
 
@@ -38,17 +39,18 @@
     [_projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"] error:nil];
     [_projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil];
 
-    self.migrator = [[AllPackageSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
+    self.migrator = [[AllPackageSettingsMigrator alloc] initWithProjectSettings:_projectSettings toVersion:PACKAGE_SETTINGS_VERSION];
 }
 
 - (void)testCreateDefaultPackageSettingsIfNoneExists
 {
     NSError *error;
     XCTAssertTrue([_migrator migrateWithError:&error]);
+    XCTAssertNil(error);
 
     [self assertFilesExistRelativeToDirectory:@"foo.spritebuilder/Packages" filesPaths:@[
-        [@"package_a.sbpack/" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME],
-        [@"package_b.sbpack/" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]
+        [@"package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME],
+        [@"package_b.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]
     ]];
 }
 

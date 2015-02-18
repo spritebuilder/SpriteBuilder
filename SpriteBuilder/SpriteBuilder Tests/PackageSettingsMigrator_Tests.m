@@ -11,8 +11,9 @@
 #import "PackageSettingsMigrator.h"
 #import "Errors.h"
 #import "AssertionAddons.h"
+#import "FileSystemTestCase.h"
 
-@interface PackageSettingsMigrator_Tests : XCTestCase
+@interface PackageSettingsMigrator_Tests : FileSystemTestCase
 
 @end
 
@@ -20,30 +21,28 @@
 
 - (void)testCannotDowngrade
 {
-    NSDictionary *packageSettings = @{
-        @"version" : @4
-    };
+    [self createPackageSettingsOnDisk:@{
+            @"version" : @4
+    }];
 
-    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:3];
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithFilepath:[self fullPathForFile:@"Package.plist"] toVersion:3];
 
     NSError *error;
-    XCTAssertNil([migrator migrate:&error]);
-
+    XCTAssertFalse([migrator migrateWithError:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBPackageSettingsMigrationCannotDowngraderError);
 };
 
 - (void)testNoMigrationRule
 {
-    NSDictionary *packageSettings = @{
-        @"version" : @1
-    };
+    [self createPackageSettingsOnDisk:@{
+            @"version" : @1
+    }];
 
-    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:100];
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithFilepath:[self fullPathForFile:@"Package.plist"] toVersion:100];
 
     NSError *error;
-    XCTAssertNil([migrator migrate:&error]);
-
+    XCTAssertFalse([migrator migrateWithError:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBPackageSettingsMigrationNoRuleError);
 }
@@ -51,7 +50,7 @@
 - (void)testMigrateVersion_1_to_2
 {
     // Version 1 was never tagged, so the key is not set
-    NSDictionary *packageSettings = @{
+    [self createPackageSettingsOnDisk:@{
         @"publishToCustomDirectory" : @NO,
         @"publishToZip" : @NO,
         @"osSettings" : @{
@@ -68,16 +67,16 @@
         @"publishEnv" : @0,
         @"publishToMainProject" : @NO,
         @"outputDir" : @""
-    };
+    }];
 
-    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:2];
-
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithFilepath:[self fullPathForFile:@"Package.plist"] toVersion:2];
 
     NSError *error;
-    NSDictionary *migratedSettings = [migrator migrate:&error];
-
-    XCTAssertNotNil(migratedSettings);
+    XCTAssertTrue([migrator migrateWithError:&error]);
     XCTAssertNil(error);
+
+    NSDictionary *migratedSettings = [NSDictionary dictionaryWithContentsOfFile:[self fullPathForFile:@"Package.plist"]];
+    XCTAssertNotNil(migratedSettings);
 
     // Migrated values
     XCTAssertEqualObjects(migratedSettings[@"version"], @2);
@@ -96,7 +95,7 @@
 
 - (void)testMigrateVersion_2_to_3
 {
-    NSDictionary *packageSettings = @{
+    [self createPackageSettingsOnDisk:@{
         @"publishToCustomDirectory" : @YES,
         @"publishToZip" : @YES,
         @"osSettings" : @{
@@ -114,15 +113,16 @@
         @"resourceAutoScaleFactor" : @-1,
         @"publishToMainProject" : @YES,
         @"outputDir" : @"asd"
-    };
+    }];
 
-    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:packageSettings toVersion:3];
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithFilepath:[self fullPathForFile:@"Package.plist"] toVersion:3];
 
     NSError *error;
-    NSDictionary *migratedSettings = [migrator migrate:&error];
-
-    XCTAssertNotNil(migratedSettings);
+    XCTAssertTrue([migrator migrateWithError:&error]);
     XCTAssertNil(error);
+
+    NSDictionary *migratedSettings = [NSDictionary dictionaryWithContentsOfFile:[self fullPathForFile:@"Package.plist"]];
+    XCTAssertNotNil(migratedSettings);
 
     // Migrated values
     XCTAssertEqualObjects(migratedSettings[@"version"], @3);
@@ -144,5 +144,53 @@
     XCTAssertEqualObjects(migratedSettings[@"publishToMainProject"], @YES);
     XCTAssertEqualObjects(migratedSettings[@"outputDir"], @"asd");
 }
+
+- (void)testRollback
+{
+    NSDictionary *packageSettings = @{
+        @"publishToCustomDirectory" : @YES,
+        @"publishToZip" : @YES,
+        @"osSettings" : @{
+            @"ios": @{
+                @"audio_quality":@7,
+                @"resolutions":@[@"phone", @"phonehd", @"tablet", @"tablethd"]
+
+            },
+            @"android": @{
+                @"audio_quality":@2,
+                @"resolutions":@[@"phone", @"tablethd"]
+            }
+        },
+        @"publishEnv" : @1,
+        @"resourceAutoScaleFactor" : @-1,
+        @"publishToMainProject" : @YES,
+        @"outputDir" : @"asd"
+    };
+
+    [self createPackageSettingsOnDisk:packageSettings];
+
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithFilepath:[self fullPathForFile:@"Package.plist"] toVersion:3];
+
+    NSError *error;
+    XCTAssertTrue([migrator migrateWithError:&error]);
+    XCTAssertNil(error);
+
+    [migrator rollback];
+
+    NSDictionary *migratedSettings = [NSDictionary dictionaryWithContentsOfFile:[self fullPathForFile:@"Package.plist"]];
+    XCTAssertNotNil(migratedSettings);
+
+    XCTAssertEqualObjects(packageSettings, migratedSettings);
+}
+
+
+#pragma mark - helpers
+
+- (void)createPackageSettingsOnDisk:(NSDictionary *)contentsOfFile
+{
+    [contentsOfFile writeToFile:[self fullPathForFile:@"Package.plist"] atomically:YES];
+    [self assertFileExists:@"Package.plist"];
+}
+
 
 @end

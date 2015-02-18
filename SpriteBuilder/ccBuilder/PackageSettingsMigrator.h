@@ -4,12 +4,11 @@
 
 #import <Foundation/Foundation.h>
 #import "CCRenderer_Private.h"
+#import "MigratorProtocol.h"
 
 
-@interface PackageSettingsMigrator : NSObject
+@interface PackageSettingsMigrator : NSObject <MigratorProtocol>
 
-- (instancetype)initWithDictionary:(NSDictionary *)packageSettings toVersion:(NSUInteger)toVersion;
-
-- (NSDictionary *)migrate:(NSError **)error;
+- (instancetype)initWithFilepath:(NSString *)filepath toVersion:(NSUInteger)toVersion;
 
 @end

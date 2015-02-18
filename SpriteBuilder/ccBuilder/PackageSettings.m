@@ -109,24 +109,17 @@ NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING = 4;
         return NO;
     }
 
-    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithDictionary:dict toVersion:PACKAGE_SETTINGS_VERSION];
-    NSDictionary *migratedDict = [migrator migrate:error];
-    if (!migratedDict)
-    {
-        return NO;
-    }
+    self.mainProjectResolutions = [[PublishResolutions alloc] initWithData:dict[KEY_MAINPROJECT_RESOLUTIONS]];
+    self.publishToCustomOutputDirectory = [dict[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] boolValue];
+    self.publishToZip = [dict[KEY_PUBLISH_TO_ZIP] boolValue];
+    self.publishToMainProject = [dict[KEY_PUBLISH_TO_MAINPROJECT] boolValue];
+    self.customOutputDirectory = dict[KEY_OUTPUTDIR];
+    self.publishEnvironment = (CCBPublishEnvironment) [dict[KEY_PUBLISH_ENV] integerValue];
+    self.resourceAutoScaleFactor = [dict[KEY_DEFAULT_SCALE] integerValue];
 
-    self.mainProjectResolutions = [[PublishResolutions alloc] initWithData:migratedDict[KEY_MAINPROJECT_RESOLUTIONS]];
-    self.publishToCustomOutputDirectory = [migratedDict[KEY_PUBLISH_TO_CUSTOM_DIRECTORY] boolValue];
-    self.publishToZip = [migratedDict[KEY_PUBLISH_TO_ZIP] boolValue];
-    self.publishToMainProject = [migratedDict[KEY_PUBLISH_TO_MAINPROJECT] boolValue];
-    self.customOutputDirectory = migratedDict[KEY_OUTPUTDIR];
-    self.publishEnvironment = (CCBPublishEnvironment) [migratedDict[KEY_PUBLISH_ENV] integerValue];
-    self.resourceAutoScaleFactor = [migratedDict[KEY_DEFAULT_SCALE] integerValue];
-
-    for (NSString *osType in migratedDict[KEY_OS_SETTINGS])
+    for (NSString *osType in dict[KEY_OS_SETTINGS])
     {
-        NSDictionary *dictOsSettings = migratedDict[KEY_OS_SETTINGS][osType];
+        NSDictionary *dictOsSettings = dict[KEY_OS_SETTINGS][osType];
         PublishOSSettings *publishOSSettings = [[PublishOSSettings alloc] initWithDictionary:dictOsSettings];
         _publishSettingsForOsType[osType] = publishOSSettings;
     }

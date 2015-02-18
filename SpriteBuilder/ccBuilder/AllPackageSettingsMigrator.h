@@ -8,6 +8,6 @@
 
 @interface AllPackageSettingsMigrator : NSObject <MigratorProtocol>
 
-- (id)initWithProjectSettings:(ProjectSettings *)projectSettings;
+- (id)initWithProjectSettings:(ProjectSettings *)projectSettings toVersion:(NSUInteger)toVersion;
 
 @end

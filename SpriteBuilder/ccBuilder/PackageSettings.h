@@ -3,6 +3,7 @@
 
 
 extern NSInteger const DEFAULT_TAG_VALUE_GLOBAL_DEFAULT_SCALING;
+extern NSUInteger const PACKAGE_SETTINGS_VERSION;
 
 @class RMPackage;
 @class PublishOSSettings;

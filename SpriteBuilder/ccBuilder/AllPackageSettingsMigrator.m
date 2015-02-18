@@ -7,29 +7,33 @@
 #import "NSError+SBErrors.h"
 #import "Errors.h"
 #import "BackupFileCommand.h"
+#import "PackageSettingsMigrator.h"
 
 
 @interface AllPackageSettingsMigrator ()
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) NSMutableArray *packageSettingsCreated;
-@property (nonatomic, strong) NSMutableArray *backupFileCommands;
+@property (nonatomic, strong) NSMutableArray *packageSettingsMigrators;
+@property (nonatomic) NSUInteger migrationVersionTarget;
 
 @end
 
 
 @implementation AllPackageSettingsMigrator
 
-- (id)initWithProjectSettings:(ProjectSettings *)projectSettings
+- (id)initWithProjectSettings:(ProjectSettings *)projectSettings toVersion:(NSUInteger)toVersion
 {
     NSAssert(projectSettings != nil, @"projectSettings must not be nil");
+    NSAssert(toVersion > 0, @"toVersion must be greate than 0");
     self = [super init];
 
     if (self)
     {
+        self.migrationVersionTarget = toVersion;
         self.projectSettings = projectSettings;
         self.packageSettingsCreated = [NSMutableArray array];
-        self.backupFileCommands = [NSMutableArray array];
+        self.packageSettingsMigrators = [NSMutableArray array];
     }
 
     return self;
@@ -89,69 +93,22 @@
         return NO;
     }
 
-    if (![self migrateAllPackageSettingsWithError:error])
-    {
-        return NO;
-    }
-
-    return YES;
+    return [self migrateAllPackageSettingsWithError:error];
 }
 
 - (BOOL)migrateAllPackageSettingsWithError:(NSError **)error
 {
     for (NSMutableDictionary *resourcePathDict in _projectSettings.resourcePaths)
     {
-        NSString *fullPackagePath = [_projectSettings fullPathForResourcePathDict:resourcePathDict];
+        NSString *fullPackagePath = [[_projectSettings fullPathForResourcePathDict:resourcePathDict] stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
+        PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:fullPackagePath toVersion:_migrationVersionTarget];
+        [_packageSettingsMigrators addObject:packageSettingsMigrator];
 
-        RMPackage *package = [[RMPackage alloc] init];
-        package.dirPath = fullPackagePath;
-        PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
-
-        if (![self createBackupfileOfPackageSettings:packageSettings error:error])
+        if (![packageSettingsMigrator migrateWithError:error])
         {
             return NO;
         }
-
-        if (![self migratePackageSettings:packageSettings error:NULL])
-        {
-            return NO;
-        }
-
-        [packageSettings store];
     }
-    return YES;
-}
-
-- (BOOL)migratePackageSettings:(PackageSettings *)packageSettings error:(NSError **)error
-{
-    NSError *underlyingError;
-    if (![packageSettings loadWithError:&underlyingError])
-    {
-        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError userInfo:@{
-                NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Could not open or migrate package settings: \"%@\"", packageSettings
-                        .fullPath],
-                NSUnderlyingErrorKey : underlyingError
-        }];
-        return NO;
-    };
-    return YES;
-}
-
-- (BOOL)createBackupfileOfPackageSettings:(PackageSettings *)packageSettings error:(NSError **)error
-{
-    BackupFileCommand *backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:packageSettings.fullPath];
-    NSError *backupError;
-    if (![backupFileCommand execute:&backupError])
-    {
-        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError userInfo:@{
-            NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Could not create backup file of package settings: \"%@\"", packageSettings.fullPath],
-            NSUnderlyingErrorKey : backupError
-        }];
-        return NO;
-    }
-
-    [_backupFileCommands addObject:backupFileCommand];
-
     return YES;
 }
 
@@ -186,13 +143,9 @@
 
 - (void)rollback
 {
-    for (BackupFileCommand *backupFileCommand in _backupFileCommands)
+    for (id<MigratorProtocol>migrator in _packageSettingsMigrators)
     {
-        NSError *undoError;
-        if (![backupFileCommand undo:&undoError])
-        {
-            NSLog(@"[MIGRATOR] Error Rollback - Could not rollback package settings: \"%@\" : %@", backupFileCommand.filePath, undoError);
-        }
+        [migrator rollback];
     }
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -208,9 +161,12 @@
 
 - (void)tidyUp
 {
-    for (BackupFileCommand *backupFileCommand in _backupFileCommands)
+    for (id<MigratorProtocol>migrator in _packageSettingsMigrators)
     {
-        [backupFileCommand tidyUp];
+        if ([migrator respondsToSelector:@selector(tidyUp)])
+        {
+            [migrator tidyUp];
+        }
     }
 }
 
