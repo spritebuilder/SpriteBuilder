@@ -73,11 +73,8 @@
 
 - (void) disableAutoPlayForAllItems
 {
-    NSLog(@"disableAutoPlay %@", self.sequences);
-    
     for (SequencerSequence* seq in self.sequences)
     {
-        NSLog(@" -");
         [seq willChangeValueForKey:@"autoPlay"];
         seq->autoPlay = NO;
         [seq didChangeValueForKey:@"autoPlay"];
