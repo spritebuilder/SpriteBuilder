@@ -11,22 +11,24 @@
 @interface CCBDictionaryMigrator()
 
 @property (nonatomic, readwrite) NSDictionary *ccb;
+@property (nonatomic) NSUInteger ccbMigrationVersionTarget;
 
 @end
 
 
 @implementation CCBDictionaryMigrator
 
-- (instancetype)initWithCCB:(NSDictionary *)ccb
+- (instancetype)initWithCCB:(NSDictionary *)ccb toVersion:(NSUInteger)toVersion
 {
     NSAssert(ccb != nil, @"ccb must not be nil");
+    NSAssert(toVersion > 0, @"toVersion must greater than 0");
 
     self = [super init];
     if (self)
     {
         self.ccb = ccb;
         self.migrationStepClassPrefix = @"CCBDictionaryMigrationStepVersion";
-        self.ccbMigrationVersionTarget = kCCBDictionaryFormatVersion;
+        self.ccbMigrationVersionTarget = toVersion;
     }
 
     return self;

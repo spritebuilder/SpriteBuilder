@@ -9,13 +9,10 @@
 
 @property (nonatomic, readonly) NSDictionary *ccb;
 
-// Default is kCCBDictionaryFormatVersion but can be set to any value if needed
-@property (nonatomic) NSUInteger ccbMigrationVersionTarget;
-
 // Default is CCBDictionaryMigrationStepVersion
 @property (nonatomic, copy) NSString *migrationStepClassPrefix;
 
-- (instancetype)initWithCCB:(NSDictionary *)ccb;
+- (instancetype)initWithCCB:(NSDictionary *)ccb toVersion:(NSUInteger)toVersion;
 
 - (NSDictionary *)migrate:(NSError **)error;
 
