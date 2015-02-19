@@ -146,7 +146,7 @@ namespace :package do
 
         app = built_files.max {|a,b| File.mtime(a) <=> File.mtime(b)}
         symbols = "#{app}.dSYM"
-        versioned_app_name = "#{DEFAULT_PRODUCT_NAME}-#{ENV["VERSION"]}.app"
+        versioned_app_name = "#{DEFAULT_PRODUCT_NAME}-#{DEFAULT_SB_VERSION}.app"
 
         unless File.exists? app and File.exists? symbols
             fail "Built products don't exist at #{app} and #{symbols}"
