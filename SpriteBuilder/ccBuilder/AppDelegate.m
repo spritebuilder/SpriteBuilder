@@ -1696,7 +1696,7 @@ typedef enum
 
     //Find .ccbproj file
     NSArray *projectContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:projectPath error:nil];
-    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj'"];
+    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj' OR SELF ENDSWITH '.sbproj'"];
     NSString *ccbprojFileName = (NSString*)[[projectContents filteredArrayUsingPredicate:ccbprojExtension] firstObject];
 
     projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
@@ -1705,7 +1705,7 @@ typedef enum
     NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
     if (!projectDict)
     {
-        [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File may be missing or invalid."];
+        [self modalDialogTitle:@"Invalid Project File" message:[NSString stringWithFormat:@"Failed to open the project. File may be missing or invalid. Attempted to open: %@", projectPath]];
         return NO;
     }
 
