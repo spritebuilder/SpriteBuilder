@@ -1246,33 +1246,15 @@ typedef enum
 
 - (void) replaceDocumentData:(NSMutableDictionary*)doc
 {
-//    SceneGraph* g = [SceneGraph instance];
-    
     [loadedSelectedNodes removeAllObjects];
-    
-    BOOL centered = [[doc objectForKey:@"centeredOrigin"] boolValue];
-    
+
     // Check for jsControlled
     jsControlled = [doc[@"jsControlled"] boolValue];
     
     int docDimType = [doc[@"docDimensionsType"] intValue];
-    if (docDimType == kCCBDocDimensionsTypeNode)
-    {
-        centered = YES;
-    }
-    else
-    {
-        centered = NO;
-    }
+    BOOL centered = docDimType == kCCBDocDimensionsTypeNode ? YES : NO;
 
-    if (docDimType == kCCBDocDimensionsTypeLayer)
-    {
-        self.canEditStageSize = YES;
-    }
-    else
-    {
-        self.canEditStageSize = NO;
-    }
+    self.canEditStageSize = docDimType == kCCBDocDimensionsTypeLayer ? YES : NO;
 
     // Setup stage & resolutions
     NSMutableArray* serializedResolutions = doc[@"resolutions"];
@@ -1291,17 +1273,15 @@ typedef enum
         currentDocument.docDimensionsType = docDimType;
         int currentResolution = [doc[@"currentResolution"] intValue];
         currentResolution = (int) clampf(currentResolution, 0, resolutions.count - 1);
-        ResolutionSetting* resolution = resolutions[currentResolution];
+        ResolutionSetting* resolution = resolutions[(NSUInteger) currentResolution];
         
         // Save in current document
         currentDocument.resolutions = resolutions;
         currentDocument.currentResolution = currentResolution;
         
         [self updatePositionScaleFactor];
-        
-        // Update CocosScene
+
         [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
-        
     }
     else
     {
@@ -1323,7 +1303,7 @@ typedef enum
     }
     [self updateResolutionMenu];
     
-    ResolutionSetting* resolution = currentDocument.resolutions[currentDocument.currentResolution];
+    ResolutionSetting* resolution = currentDocument.resolutions[(NSUInteger) currentDocument.currentResolution];
     
     // Stage border
     [[CocosScene cocosScene] setStageBorder:[doc[@"stageBorder"] intValue]];
@@ -1337,25 +1317,20 @@ typedef enum
     }
     else
     {
-        if (currentDocument.docDimensionsType == kCCBDocDimensionsTypeNode)
-        {
-            stageColor = kCCBCanvasColorGray;
-        }
-        else
-        {
-            stageColor = kCCBCanvasColorBlack;
-        }
+        stageColor = currentDocument.docDimensionsType == kCCBDocDimensionsTypeNode
+            ? kCCBCanvasColorGray
+            : kCCBCanvasColorBlack;
     }
     currentDocument.stageColor = stageColor;
     [self updateCanvasColor];
     [menuItemStageColor setEnabled: currentDocument.docDimensionsType != kCCBDocDimensionsTypeFullScreen];
 
     // Setup sequencer timelines
-    NSMutableArray* serializedSequences = [doc objectForKey:@"sequences"];
+    NSMutableArray* serializedSequences = doc[@"sequences"];
     if (serializedSequences)
     {
         // Load from the file
-        int currentSequenceId = [[doc objectForKey:@"currentSequenceId"] intValue];
+        int currentSequenceId = [doc[@"currentSequenceId"] intValue];
         SequencerSequence* currentSeq = NULL;
         
         NSMutableArray* sequences = [NSMutableArray array];
@@ -1482,7 +1457,10 @@ typedef enum
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
 {
-    if (!forceReload && [document.filePath isEqualToString:currentDocument.filePath]) return;
+    if (!forceReload && [document.filePath isEqualToString:currentDocument.filePath])
+    {
+        return;
+    }
 
     [animationPlaybackManager stop];
 
@@ -1496,7 +1474,6 @@ typedef enum
     
     [self updateResolutionMenu];
     [self updateTimelineMenu];
-    //[self updateStateOriginCenteredMenu];
     
     CocosScene* cs = [CocosScene cocosScene];
     [cs setStageZoom:document.stageZoom];
@@ -1571,23 +1548,29 @@ typedef enum
 - (CCBDocument*) findDocumentFromFile:(NSString*)file
 {
     NSArray* items = [tabView tabViewItems];
-    for (int i = 0; i < [items count]; i++)
+    for (NSUInteger i = 0; i < [items count]; i++)
     {
         CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if ([doc.filePath isEqualToString:file]) return doc;
+        if ([doc.filePath isEqualToString:file])
+        {
+            return doc;
+        }
     }
-    return NULL;
+    return nil;
 }
 
 - (NSTabViewItem*) tabViewItemFromDoc:(CCBDocument*)docRef
 {
     NSArray* items = [tabView tabViewItems];
-    for (int i = 0; i < [items count]; i++)
+    for (NSUInteger i = 0; i < [items count]; i++)
     {
-        CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if (doc == docRef) return [items objectAtIndex:i];
+        CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
+        if (doc == docRef)
+        {
+            return [items objectAtIndex:i];
+        }
     }
-    return NULL;
+    return nil;
 }
 
 // A path can be a folder not only a file. Set includeViewWithinFolderPath to YES to return
@@ -1849,7 +1832,7 @@ typedef enum
 
 - (void) openFile:(NSString*)filePath
 {
-	[(CCViewMacGL *)[[CCDirector sharedDirector] view] lockOpenGLContext];
+	[[[CCDirector currentDirector] view] lockOpenGLContext];
     
     // Check if file is already open
     CCBDocument* openDoc = [self findDocumentFromFile:filePath];
@@ -1860,7 +1843,15 @@ typedef enum
     }
     
     [self prepareForDocumentSwitch];
-    
+
+    MigrationViewController *migrationViewController = [[MigrationViewController alloc]
+                                                                                 initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilepath:nil]];
+    migrationViewController.cancelButtonTitle = @"Cancel (Do not open)";
+    if (![migrationViewController migrate])
+    {
+        return;
+    }
+
     CCBDocument *newDoc = [[CCBDocument alloc] initWithContentsOfFile:filePath];
 
     [self switchToDocument:newDoc];
@@ -1874,7 +1865,7 @@ typedef enum
     physicsHandler.selectedNodePhysicsBody = NULL;
     [self setSelectedNodes:NULL];
     
-	[(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
+	[[[CCDirector currentDirector] view] unlockOpenGLContext];
 }
 
 - (void) saveFile:(NSString*) fileName

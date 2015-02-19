@@ -3,17 +3,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MigratorProtocol.h"
+
+@class ProjectSettings;
 
 
-@interface CCBDictionaryMigrator : NSObject
-
-@property (nonatomic, readonly) NSDictionary *ccb;
+@interface CCBDictionaryMigrator : NSObject <MigratorProtocol>
 
 // Default is CCBDictionaryMigrationStepVersion
 @property (nonatomic, copy) NSString *migrationStepClassPrefix;
 
-- (instancetype)initWithCCB:(NSDictionary *)ccb toVersion:(NSUInteger)toVersion;
-
-- (NSDictionary *)migrate:(NSError **)error;
+- (id)initWithFilepath:(NSString *)filepath toVersion:(NSUInteger)toVersion;
 
 @end
