@@ -11,6 +11,7 @@
 #import "ProjectSettingsMigrator.h"
 #import "FileSystemTestCase.h"
 #import "ResourcePropertyKeys.h"
+#import "AssertionAddons.h"
 
 @interface ProjectMigrator_Tests : FileSystemTestCase
 
@@ -42,6 +43,8 @@
     [_projectSettings setProperty:@3 forRelPath:@"background.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [_projectSettings clearDirtyMarkerOfRelPath:@"background.png"];
 
+    XCTAssertTrue([_migrator isMigrationRequired]);
+
     NSError *error;
     XCTAssertTrue([_migrator migrateWithError:&error]);
     XCTAssertNil(error);
@@ -59,6 +62,26 @@
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"background.png"]);
 }
 
+- (void)testHtmlInfoText
+{
+    XCTAssertNotNil([_migrator htmlInfoText]);
+}
+
+- (void)testMigrationNotRequired
+{
+    NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
+
+    XCTAssertFalse([_migrator isMigrationRequired]);
+
+    NSError *error;
+    XCTAssertTrue([_migrator migrateWithError:&error]);
+    XCTAssertNil(error);
+
+    NSString *hopefullyNotMigratedFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
+
+    [AssertionAddons assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:hopefullyNotMigratedFile];
+}
+
 - (void)testRollback
 {
     [_projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
@@ -67,6 +90,8 @@
     [_projectSettings store];
 
     NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
+
+    XCTAssertTrue([_migrator isMigrationRequired]);
 
     NSError *error;
     XCTAssertTrue([_migrator migrateWithError:&error]);
@@ -78,38 +103,7 @@
 
     NSString *newPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
-    BOOL equal = [originalPrjSettingsFile isEqualToString:newPrjSettingsFile];
-    XCTAssertTrue(equal);
-    if (!equal)
-    {
-        NSLog(@"Diff:");
-        [self diff:originalPrjSettingsFile stringB:newPrjSettingsFile];
-    }
+    [AssertionAddons assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:newPrjSettingsFile];
 }
-
-
-
-#pragma mark - helpers
-
-- (void)diff:(NSString *)stringA stringB:(NSString *)stringB
-{
-    NSTask *task = [[NSTask alloc] init];
-    [task setCurrentDirectoryPath:NSTemporaryDirectory()];
-    [task setLaunchPath:@"/bin/bash"];
-
-    NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/diff <(echo \"%@\") <(echo \"%@\")", stringA, stringB]];
-    [task setArguments:args];
-
-    @try
-    {
-        [task launch];
-        [task waitUntilExit];
-    }
-    @catch (NSException *exception)
-    {
-        NSLog(@"[COCO2D-UPDATER] [ERROR] unzipping failed: %@", exception);
-    }
-}
-
 
 @end

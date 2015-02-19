@@ -156,7 +156,7 @@
     return @"Document requires migration to a newer version.";
 }
 
-- (BOOL)migrationRequired
+- (BOOL)isMigrationRequired
 {
     NSDictionary *dict = self.document;
 
@@ -177,7 +177,7 @@
 
 - (BOOL)migrateWithError:(NSError **)error
 {
-    if (![self migrationRequired])
+    if (![self isMigrationRequired])
     {
         return YES;
     }

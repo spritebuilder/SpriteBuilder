@@ -56,7 +56,7 @@
     return [result componentsJoinedByString:@"<br/>"];
 }
 
-- (BOOL)migrationRequired
+- (BOOL)isMigrationRequired
 {
     return [self missingPackageSettings]
            || [self packagesNeedMigration];
@@ -64,6 +64,16 @@
 
 - (BOOL)packagesNeedMigration
 {
+    for (NSMutableDictionary *resourcePathDict in _projectSettings.resourcePaths)
+    {
+        NSString *fullPackagePath = [[_projectSettings fullPathForResourcePathDict:resourcePathDict] stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
+        PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:fullPackagePath toVersion:_migrationVersionTarget];
+
+        if ([packageSettingsMigrator isMigrationRequired])
+        {
+            return YES;
+        }
+    }
     return NO;
 }
 
@@ -83,7 +93,7 @@
 
 - (BOOL)migrateWithError:(NSError **)error
 {
-    if (![self migrationRequired])
+    if (![self isMigrationRequired])
     {
         return YES;
     }

@@ -15,6 +15,7 @@
 #import "Errors.h"
 #import "AssertionAddons.h"
 #import "PackageSettings.h"
+#import "RMPackage.h"
 
 @interface AllPackageSettingsMigrator_Tests : FileSystemTestCase
 
@@ -44,6 +45,8 @@
 
 - (void)testCreateDefaultPackageSettingsIfNoneExists
 {
+    XCTAssertTrue([_migrator isMigrationRequired]);
+
     NSError *error;
     XCTAssertTrue([_migrator migrateWithError:&error]);
     XCTAssertNil(error);
@@ -54,11 +57,42 @@
     ]];
 }
 
+- (void)testMigrateOnlyPackageSettings
+{
+    XCTAssertTrue([_projectSettings removeResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil]);
+
+    // The full test is in the PackageSettings_Tests, this is only needed to get isMigrationRequired to return YES
+    NSDictionary *dict = @{
+        @"publishToCustomDirectory" : @NO,
+        @"publishToZip" : @NO,
+        @"osSettings" : @{
+            @"ios": @{
+                @"audio_quality":@3,
+                @"resolutions":@[@"phone", @"phonehd", @"tablet", @"tablethd"]
+
+            },
+            @"android": @{
+                @"audio_quality":@5,
+                @"resolutions":@[@"phone", @"phonehd", @"tablet", @"tablethd"]
+            }
+        },
+        @"publishEnv" : @0,
+        @"publishToMainProject" : @NO,
+        @"outputDir" : @""
+    };
+
+    XCTAssertTrue([dict writeToFile:[self fullPathForFile:[self fullPathForFile:[@"foo.spritebuilder/Packages/package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]]] atomically:YES]);
+
+    XCTAssertTrue([_migrator isMigrationRequired]);
+}
+
 - (void)testCannotCreateDefaultPackageSettingsIfNoneExists
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager removeItemAtPath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"] error:nil];
     [fileManager removeItemAtPath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil];
+
+    XCTAssertTrue([_migrator isMigrationRequired]);
 
     NSError *error;
     XCTAssertFalse([_migrator migrateWithError:&error]);
@@ -66,13 +100,37 @@
     XCTAssertEqual(error.code, SBProjectMigrationError);
 
     [self assertFilesDoNotExistRelativeToDirectory:@"foo.spritebuilder/Packages" filesPaths:@[
-        [@"package_a.sbpack/" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME],
-        [@"package_b.sbpack/" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]
+        [@"package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME],
+        [@"package_b.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]
     ]];
+}
+
+- (void)testHtmlInfoText
+{
+    XCTAssertNotNil([_migrator htmlInfoText]);
+}
+
+- (void)testMigrationNotRequired
+{
+    XCTAssertTrue([_projectSettings removeResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil]);
+
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = [self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"];
+
+    PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
+    XCTAssertTrue([packageSettings store]);
+
+    XCTAssertFalse([_migrator isMigrationRequired]);
+
+    NSError *error;
+    XCTAssertTrue([_migrator migrateWithError:&error]);
+    XCTAssertNil(error);
 }
 
 - (void)testRollBackPackageSettingsCreated
 {
+    XCTAssertTrue([_migrator isMigrationRequired]);
+
     NSError *error;
     XCTAssertTrue([_migrator migrateWithError:&error]);
 
@@ -91,14 +149,17 @@
 
 - (void)testRollBackPackgeSettingsChanges
 {
+    XCTAssertTrue([_migrator isMigrationRequired]);
+
     NSError *error;
     XCTAssertTrue([_migrator migrateWithError:&error]);
-
 }
 
 - (void)testMigrateAllPackagesThatRequireMigration
 {
-    // This test mainly ensure that all packages' settings are touched
+    XCTAssertTrue([_migrator isMigrationRequired]);
+
+    // This test mainly ensure that all packages' settings are touched and differ after migration
     // Details are tests in SBPackageSettingsMigrator_Tests
     NSDictionary *packageSettings = @{
         @"publishToCustomDirectory" : @YES,
@@ -136,8 +197,8 @@
     XCTAssertNotNil(settings_a);
     XCTAssertNotNil(settings_b);
 
-    [AssertionAddons assertEqualObjectsWithDiff:settings_a objectB:packageSettings];
-    [AssertionAddons assertEqualObjectsWithDiff:settings_b objectB:packageSettings];
+    XCTAssertNotEqualObjects(settings_a, packageSettings);
+    XCTAssertNotEqualObjects(settings_b, packageSettings);
 }
 
 @end

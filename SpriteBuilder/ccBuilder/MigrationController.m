@@ -85,7 +85,7 @@
 
     for (id <MigratorProtocol> migrationStep in _migrators)
     {
-        if ([migrationStep migrationRequired])
+        if ([migrationStep isMigrationRequired])
         {
             [result appendString:@"<li>"];
             [result appendString:[migrationStep htmlInfoText]];
@@ -101,7 +101,7 @@
 {
     for (id <MigratorProtocol> migrationStep in _migrators)
     {
-        if ([migrationStep migrationRequired])
+        if ([migrationStep isMigrationRequired])
         {
             return YES;
         }

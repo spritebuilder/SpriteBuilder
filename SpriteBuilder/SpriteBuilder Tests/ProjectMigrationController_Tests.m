@@ -51,8 +51,8 @@
 
     _migrationController.migrators = @[migratorMock1, migratorMock2];
 
-    [[[migratorMock1 expect] andReturnValue:@(NO)] migrationRequired];
-    [[[migratorMock2 expect] andReturnValue:@(NO)] migrationRequired];
+    [[[migratorMock1 expect] andReturnValue:@(NO)] isMigrationRequired];
+    [[[migratorMock2 expect] andReturnValue:@(NO)] isMigrationRequired];
 
     NSError *error;
     XCTAssertTrue([_migrationController migrateWithError:&error]);
@@ -72,8 +72,8 @@
     _migrationController.migrators = @[migratorMock1, migratorMock2];
     _migrationController.delegate = self;
 
-    [OCMStub([migratorMock1 migrationRequired]) andReturnValue:@(NO)];
-    [OCMStub([migratorMock2 migrationRequired]) andReturnValue:@(YES)];
+    [OCMStub([migratorMock1 isMigrationRequired]) andReturnValue:@(NO)];
+    [OCMStub([migratorMock2 isMigrationRequired]) andReturnValue:@(YES)];
     [OCMStub([migratorMock2 htmlInfoText]) andReturn:@"2"];
 
     [[[migratorMock1 expect] andReturnValue:@(YES)] migrateWithError:[OCMArg anyObjectRef]];
@@ -97,8 +97,8 @@
     _migrationController.migrators = @[migratorMock1, migratorMock2];
     _migrationController.delegate = self;
 
-    [OCMStub([migratorMock1 migrationRequired]) andReturnValue:@(YES)];
-    [OCMStub([migratorMock2 migrationRequired]) andReturnValue:@(YES)];
+    [OCMStub([migratorMock1 isMigrationRequired]) andReturnValue:@(YES)];
+    [OCMStub([migratorMock2 isMigrationRequired]) andReturnValue:@(YES)];
     [OCMStub([migratorMock1 htmlInfoText]) andReturn:@"1"];
     [OCMStub([migratorMock2 htmlInfoText]) andReturn:@"2"];
 

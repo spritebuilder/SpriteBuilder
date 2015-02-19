@@ -137,7 +137,7 @@ Version 3
     return @"Package Settings are of an older version.";
 }
 
-- (BOOL)migrationRequired
+- (BOOL)isMigrationRequired
 {
     NSDictionary *dict = self.packageSettings;
 
@@ -157,7 +157,7 @@ Version 3
 
 - (BOOL)migrateWithError:(NSError **)error
 {
-    if (![self migrationRequired])
+    if (![self isMigrationRequired])
     {
         return YES;
     }

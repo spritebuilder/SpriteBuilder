@@ -10,7 +10,6 @@
 @interface ProjectSettingsMigrator ()
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, copy) NSString *backupFilePath;
 @property (nonatomic, strong) BackupFileCommand *backupFileCommand;
 
 @end
@@ -36,7 +35,7 @@
     return @"Old property setting for untrimmed Sprite Sheets found. Project settings file will change after migration.";
 }
 
-- (BOOL)migrationRequired
+- (BOOL)isMigrationRequired
 {
     for (NSString *relativePath in [_projectSettings allResourcesRelativePaths])
     {
@@ -52,7 +51,7 @@
 
 - (BOOL)migrateWithError:(NSError **)error
 {
-    if (![self migrationRequired])
+    if (![self isMigrationRequired])
     {
         return YES;
     }
