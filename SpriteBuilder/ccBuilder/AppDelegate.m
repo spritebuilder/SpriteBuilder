@@ -609,10 +609,8 @@ typedef enum
 #ifdef TESTING
 	return;
 #endif
-	
-
     // Open registration window
-    BOOL alreadyRegistered = YES;//(BOOL)([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail]);
+    BOOL alreadyRegistered = (BOOL)([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail]);
 
     if(!alreadyRegistered && ![self openRegistration])
 	{
