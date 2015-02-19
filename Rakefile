@@ -102,7 +102,9 @@ file "Generated/Version.txt" => "Generated" do |task|
     version_info["version"] = DEFAULT_SB_VERSION
     version_info["revision"] = ENV["REVISION"] || `git rev-parse --short=10 HEAD`.chomp
 
-    File.open("Generated/Version.txt","w") << JSON.pretty_generate(version_info)
+    f = File.open("Generated/Version.txt","w")
+    f.write JSON.pretty_generate(version_info)
+    f.close
 end
 
 file "Generated/cocos2d_version.txt" => 'SpriteBuilder/libs/cocos2d-iphone/VERSION' do |task|
@@ -173,10 +175,10 @@ end
 desc "Build SpriteBuilder distribution"
 task :package => [:clobber, BUILD_DIR, :build_requirements] do
 
-    #force generation of a new Version.txt with commandline value
+    #force generation of a new Version.txt 
     Rake::Task["build:generated"].invoke
-
     Rake::Task["package:app"].invoke
+
     Rake::Task["clean"].invoke
     Rake::Task["package:archive"].invoke
 
