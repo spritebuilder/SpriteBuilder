@@ -1613,7 +1613,8 @@ static SequencerHandler* sharedSequencerHandler;
 
     return !(!node
              || !prop
-             || [node shouldDisableProperty:prop])
+             || [node shouldDisableProperty:prop]
+             || [node shouldDisableKeyframe:prop])
            && [[node.plugIn animatablePropertiesForNode:node] containsObject:prop];
 
 }
