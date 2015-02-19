@@ -12,4 +12,6 @@
 
 + (MigrationController *)fullProjectMigrationControllerWithProjectSettings:(ProjectSettings *)projectSettings;
 
++ (MigrationController *)documentMigrationControllerWithFilepath:(NSString *)filepath;
+
 @end
