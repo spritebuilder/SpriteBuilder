@@ -1789,12 +1789,13 @@ typedef enum
 - (void)openProject:(NSString *)fileName
 {
     if (![fileName hasSuffix:@".spritebuilder"]
-        && ![fileName hasSuffix:@".ccbproj"])
+        && ![fileName hasSuffix:@".ccbproj"]
+        && ![fileName hasSuffix:@".sbproj"])
     {
         return;
     }
 
-    if ([fileName hasSuffix:@".ccbproj"])
+    if ([fileName hasSuffix:@".ccbproj"] || [fileName hasSuffix:@".sbproj"])
     {
         NSURL *projectPathURL = [NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent] isDirectory:YES];
         NSURL *projectPathURLResolved = [SecurityScopedBookmarksStore resolveBookmarkForURL:projectPathURL];
@@ -2048,7 +2049,7 @@ typedef enum
 	NSArray* files = [fm contentsOfDirectoryAtPath:path error:NULL];
 	for( NSString* file in files )
 	{
-		if( [file hasSuffix:@".ccbproj"] )
+		if( [file hasSuffix:@".ccbproj"] || [file hasSuffix:@".sbproj"] )
 		{
 			projectFile = [path stringByAppendingPathComponent:file];
 			break;
@@ -3023,6 +3024,7 @@ typedef enum
 - (IBAction)menuOpenProjectInXCode:(id)sender
 {
     NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
+    xcodePrjPath = [xcodePrjPath stringByReplacingOccurrencesOfString:@".sbproj" withString:@".xcodeproj"];
     
     [[NSWorkspace sharedWorkspace] openFile:xcodePrjPath withApplication:@"Xcode"];
 }
@@ -3159,7 +3161,7 @@ typedef enum
                 
                 // Create project file
                 NSString* projectName = [fileNameRaw lastPathComponent];
-                fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
+                fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"sbproj"];
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_main_queue(), ^{

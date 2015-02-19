@@ -74,6 +74,20 @@
 			<key>CFBundleTypeRole</key>
 			<string>None</string>
 		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>sbproj</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>ccbproj.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>SpriteBuilder Project</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>AppDelegate</string>
+		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
