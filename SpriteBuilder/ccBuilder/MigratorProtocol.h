@@ -10,7 +10,7 @@
 
 - (NSString *)htmlInfoText;
 
-- (BOOL)migrationRequired;
+- (BOOL)isMigrationRequired;
 
 - (BOOL)migrateWithError:(NSError **)error;
 

@@ -12,6 +12,8 @@
 #import "Errors.h"
 #import "AssertionAddons.h"
 #import "FileSystemTestCase.h"
+#import "RMPackage.h"
+#import "PackageSettings.h"
 
 @interface PackageSettingsMigrator_Tests : FileSystemTestCase
 
@@ -183,6 +185,30 @@
     XCTAssertEqualObjects(packageSettings, migratedSettings);
 }
 
+- (void)testHtmlInfoText
+{
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithFilepath:[self fullPathForFile:@"Package.plist"] toVersion:3];
+    XCTAssertNotNil([migrator htmlInfoText]);
+}
+
+- (void)testMigrationNotRequired
+{
+    [self createFolders:@[@"foo.spritebuilder/Packages/package_a.sbpack"]];
+
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = [self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"];
+
+    PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
+    XCTAssertTrue([packageSettings store]);
+
+    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithFilepath:packageSettings.fullPath toVersion:PACKAGE_SETTINGS_VERSION];
+
+    XCTAssertFalse([migrator isMigrationRequired]);
+
+    NSError *error;
+    XCTAssertTrue([migrator migrateWithError:&error]);
+    XCTAssertNil(error);
+}
 
 #pragma mark - helpers
 

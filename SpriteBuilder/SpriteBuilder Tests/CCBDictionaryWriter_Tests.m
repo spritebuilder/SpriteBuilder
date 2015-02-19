@@ -10,6 +10,7 @@
 #import "FileSystemTestCase.h"
 #import "PlugInManager.h"
 #import "CCBDictionaryWriter.h"
+#import "AssertionAddons.h"
 
 @interface CCBDictionaryWriter_Tests : FileSystemTestCase
 
@@ -129,33 +130,7 @@
         ]
     };
 
-    BOOL equal = [result isEqualTo:expectedDict];
-    XCTAssertTrue(equal);
-    if (!equal)
-    {
-        NSLog(@"Diff:");
-        [self diff:result dictB:expectedDict];
-    }
+    [AssertionAddons assertEqualObjectsWithDiff:result objectB:expectedDict];
 };
-
-- (void)diff:(NSDictionary *)dictA dictB:(NSDictionary *)dictB
-{
-    NSTask *task = [[NSTask alloc] init];
-    [task setCurrentDirectoryPath:NSTemporaryDirectory()];
-    [task setLaunchPath:@"/bin/bash"];
-
-    NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/diff <(echo \"%@\") <(echo \"%@\")", dictA, dictB]];
-    [task setArguments:args];
-
-    @try
-    {
-        [task launch];
-        [task waitUntilExit];
-    }
-    @catch (NSException *exception)
-    {
-        NSLog(@"[COCO2D-UPDATER] [ERROR] unzipping failed: %@", exception);
-    }
-}
 
 @end

@@ -58,7 +58,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return [NSString stringWithFormat:@"Convert old resource paths to Packages."];
 }
 
-- (BOOL)migrationRequired
+- (BOOL)isMigrationRequired
 {
     for (NSMutableDictionary *dict in _projectSettings.resourcePaths)
     {
@@ -75,7 +75,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)migrateWithError:(NSError **)error
 {
-    if (![self migrationRequired])
+    if (![self isMigrationRequired])
     {
         return YES;
     }
