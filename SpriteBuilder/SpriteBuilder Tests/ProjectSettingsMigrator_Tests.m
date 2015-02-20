@@ -11,16 +11,15 @@
 #import "ProjectSettingsMigrator.h"
 #import "FileSystemTestCase.h"
 #import "ResourcePropertyKeys.h"
-#import "AssertionAddons.h"
 
-@interface ProjectMigrator_Tests : FileSystemTestCase
+@interface ProjectSettingsMigrator_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) ProjectSettingsMigrator *migrator;
 
 @end
 
-@implementation ProjectMigrator_Tests
+@implementation ProjectSettingsMigrator_Tests
 
 - (void)setUp
 {
@@ -79,7 +78,7 @@
 
     NSString *hopefullyNotMigratedFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
-    [AssertionAddons assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:hopefullyNotMigratedFile];
+    [self assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:hopefullyNotMigratedFile];
 }
 
 - (void)testRollback
@@ -103,7 +102,14 @@
 
     NSString *newPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
-    [AssertionAddons assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:newPrjSettingsFile];
+    [self
+            assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:newPrjSettingsFile];
+}
+
+- (void)testRemovalOfKeys
+{
+    // onlyPublishCCBs -> remove
+    XCTFail(@"Implement me");
 }
 
 @end

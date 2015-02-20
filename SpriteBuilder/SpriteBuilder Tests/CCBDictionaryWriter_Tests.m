@@ -10,7 +10,6 @@
 #import "FileSystemTestCase.h"
 #import "PlugInManager.h"
 #import "CCBDictionaryWriter.h"
-#import "AssertionAddons.h"
 
 @interface CCBDictionaryWriter_Tests : FileSystemTestCase
 
@@ -130,7 +129,7 @@
         ]
     };
 
-    [AssertionAddons assertEqualObjectsWithDiff:result objectB:expectedDict];
+    [self assertEqualObjectsWithDiff:result objectB:expectedDict];
 };
 
 @end

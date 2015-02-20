@@ -89,7 +89,7 @@
 
     [_cocos2dUpdater updateAndBypassIgnore:NO];
 
-    [self assertContentsOfTextFiles:@{
+    [self assertContentsOfFilesEqual:@{
             @"baa.spritebuilder/Source/libs/cocos2d-iphone/VERSION" : @"3.3"
     }];
 
@@ -161,7 +161,7 @@
         XCTAssertTrue(successBlockCalled);
         XCTAssertTrue(updateActionBlockCalled);
 
-        [self assertContentsOfTextFiles:@{
+        [self assertContentsOfFilesEqual:@{
                 @"baa.spritebuilder/Source/libs/cocos2d-iphone/VERSION" : @"3.4.3"
         }];
     };
@@ -202,7 +202,7 @@
 
     XCTAssertTrue(failedBlockCalled);
 
-    [self assertContentsOfTextFiles:@{
+    [self assertContentsOfFilesEqual:@{
             @"baa.spritebuilder/Source/libs/cocos2d-iphone/VERSION" : @"3.3"
     }];
 }

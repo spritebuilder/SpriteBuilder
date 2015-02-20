@@ -872,7 +872,6 @@
 		E525F2A694302DC02377F3E1 /* PublishIntermediateFilesLookup.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */; };
 		E525F2ABDE13060F0A7C718A /* PackageRenamer_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F6283189BE8662669F16 /* PackageRenamer_Tests.m */; };
 		E525F2B77CFD1B6D7D74A102 /* ResourcePropertyKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F9AA53E265BACF3D77CD /* ResourcePropertyKeys.m */; };
-		E525F2BDAA821C31ED25BD2A /* AssertionAddons.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FB52CF4AD28BDA9AB48D /* AssertionAddons.m */; };
 		E525F2BED7C8468DEDF82A7A /* InspectorPopoverByte.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525F13251AC905E5A0F52EF /* InspectorPopoverByte.xib */; };
 		E525F2C0B3311DCAEC86C6B0 /* PublishImageOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC7FEB1B9D2A5F7FFEA5 /* PublishImageOperation.m */; };
 		E525F2C9C91A3D038C8D4A10 /* CCBDictionaryMigrationStepVersion4.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE2E3B6493E5F16DA6F9 /* CCBDictionaryMigrationStepVersion4.m */; };
@@ -952,7 +951,7 @@
 		E525F737F211D45673D7BC62 /* PackageImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FF96D86C4DDC63B9BF63 /* PackageImporter.m */; };
 		E525F73E5E09F387AE34D519 /* InspectorPosition.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FF473922B627A6A884A7 /* InspectorPosition.xib */; };
 		E525F7417672EF139D91F2BB /* test_ccbreader_slider.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525FBD96C7FD372B58D4FD8 /* test_ccbreader_slider.ccb */; };
-		E525F741BC8F5824EE86C26B /* ProjectMigrator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC430296CE5DD37F7A7F /* ProjectMigrator_Tests.m */; };
+		E525F741BC8F5824EE86C26B /* ProjectSettingsMigrator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC430296CE5DD37F7A7F /* ProjectSettingsMigrator_Tests.m */; };
 		E525F76F40CE2A23E80DC6D9 /* test_ccbreader_migration_version_4_to_5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = E525F4A8257E15BC525C169B /* test_ccbreader_migration_version_4_to_5.ccb */; };
 		E525F7955AC7103E961D6553 /* PluginNode_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC789866B6FA119F827F /* PluginNode_Tests.m */; };
 		E525F7A003FECE9F026E6272 /* InspectorFntFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2BBA2DFE1F0E3A4E3A4 /* InspectorFntFile.m */; };
@@ -2738,7 +2737,6 @@
 		E525FA15437B8CAB27509534 /* NSString+Packages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Packages.m"; sourceTree = "<group>"; };
 		E525FA2687DAA762E0CF0430 /* ResourceCreateKeyframesCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceCreateKeyframesCommand.h; sourceTree = "<group>"; };
 		E525FA2C90028FB3D047213C /* PublishUtil_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishUtil_Tests.m; sourceTree = "<group>"; };
-		E525FA2DB9FC03AD337E980F /* AssertionAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssertionAddons.h; sourceTree = "<group>"; };
 		E525FA39177A6B3C303B9DA6 /* InspectorFontTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFontTTF.m; sourceTree = "<group>"; };
 		E525FA41F314DDA60057099D /* InspectorColor3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorColor3.m; sourceTree = "<group>"; };
 		E525FA43EE7D1C6B7C52E601 /* InspectorStringSimple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorStringSimple.m; sourceTree = "<group>"; };
@@ -2770,7 +2768,6 @@
 		E525FB2C511229C00D261998 /* InspectorEnabledFloat.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorEnabledFloat.xib; sourceTree = "<group>"; };
 		E525FB3851A1B28013282F4C /* PublishOSSettings_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishOSSettings_Tests.m; sourceTree = "<group>"; };
 		E525FB412FD4D7DCB9F0F248 /* InspectorPointLock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorPointLock.m; sourceTree = "<group>"; };
-		E525FB52CF4AD28BDA9AB48D /* AssertionAddons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssertionAddons.m; sourceTree = "<group>"; };
 		E525FB678B5AF8D31E5EA1C1 /* PackageRenamer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageRenamer.m; sourceTree = "<group>"; };
 		E525FB7E6FD9CB089D4D1B03 /* CCBDictionaryWriter_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBDictionaryWriter_Tests.m; sourceTree = "<group>"; };
 		E525FB84B7161C23D44036DB /* InspectorTexture.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorTexture.xib; sourceTree = "<group>"; };
@@ -2795,7 +2792,7 @@
 		E525FC2C6864DF91BA1712E2 /* NSAlert+Convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAlert+Convenience.h"; sourceTree = "<group>"; };
 		E525FC30968813B67FE4F531 /* InspectorByte.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorByte.m; sourceTree = "<group>"; };
 		E525FC364E405C9D52A7325D /* ResourcePathToPackageMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourcePathToPackageMigrator_Tests.m; sourceTree = "<group>"; };
-		E525FC430296CE5DD37F7A7F /* ProjectMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectMigrator_Tests.m; sourceTree = "<group>"; };
+		E525FC430296CE5DD37F7A7F /* ProjectSettingsMigrator_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectSettingsMigrator_Tests.m; sourceTree = "<group>"; };
 		E525FC4D802C18FBD44DE5D1 /* PropertyInspectorTemplateHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PropertyInspectorTemplateHandler.h; sourceTree = "<group>"; };
 		E525FC53AA00AC664A9E5D75 /* InspectoreController_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectoreController_Tests.m; sourceTree = "<group>"; };
 		E525FC6BCE5D5EDF7BB77A9D /* NSNumber+ImageResolutions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+ImageResolutions.h"; sourceTree = "<group>"; };
@@ -5830,8 +5827,6 @@
 				E525F510AE325C5A3DF41DA3 /* FileSystemTestCase.h */,
 				E525F2F32EC9F70210361E7D /* FileSystemTestCase+Images.m */,
 				E525F82263C2129471643FFD /* FileSystemTestCase+Images.h */,
-				E525FB52CF4AD28BDA9AB48D /* AssertionAddons.m */,
-				E525FA2DB9FC03AD337E980F /* AssertionAddons.h */,
 			);
 			name = TestHelpers;
 			sourceTree = "<group>";
@@ -5893,7 +5888,7 @@
 		E525FA0702C9CF8BE0DB2975 /* Migrators */ = {
 			isa = PBXGroup;
 			children = (
-				E525FC430296CE5DD37F7A7F /* ProjectMigrator_Tests.m */,
+				E525FC430296CE5DD37F7A7F /* ProjectSettingsMigrator_Tests.m */,
 				E525FC364E405C9D52A7325D /* ResourcePathToPackageMigrator_Tests.m */,
 				E525F120D4CF3968BB0F3ED1 /* AllPackageSettingsMigrator_Tests.m */,
 				E525F9179DAFE387EF6AF7AB /* CCBMigration */,
@@ -7753,11 +7748,10 @@
 				E525F9DDCDAD0C1AD78029F0 /* CCBDictionaryReader_Tests.m in Sources */,
 				E525FB8491D3CC4B8B0D536F /* NSNumber+ImageResolutions_Tests.m in Sources */,
 				E525FC2074BBA7D2059010CE /* PublishResolutions_Tests.m in Sources */,
-				E525F2BDAA821C31ED25BD2A /* AssertionAddons.m in Sources */,
 				E525FD8F3CE1ADFA4F339575 /* NSString+Misc_Tests.m in Sources */,
 				E525F87F72E34064F5E8E706 /* BackupFileCommand_Tests.m in Sources */,
 				E525F29B43334C824B686F46 /* Cocos2dUpdater_Tests.m in Sources */,
-				E525F741BC8F5824EE86C26B /* ProjectMigrator_Tests.m in Sources */,
+				E525F741BC8F5824EE86C26B /* ProjectSettingsMigrator_Tests.m in Sources */,
 				E525F4EE64ABB86D3E1F43CA /* ResourcePathToPackageMigrator_Tests.m in Sources */,
 				E525FF2FF7ED2902CB7ECCD2 /* ProjectMigrationController_Tests.m in Sources */,
 				E525FCEB636E420B9ED759EF /* AllPackageSettingsMigrator_Tests.m in Sources */,

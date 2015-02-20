@@ -14,7 +14,6 @@
 #import "NSError+SBErrors.h"
 #import "CCBDictionaryReader.h"
 #import "FileSystemTestCase.h"
-#import "AssertionAddons.h"
 
 
 static NSString *DOCUMENT_FILENAME = @"document.ccb";
@@ -38,7 +37,7 @@ static NSString *DOCUMENT_FILENAME = @"document.ccb";
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBCCBMigrationNoVersionFoundError);
 
-    [AssertionAddons assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
+    [self assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
 }
 
 - (void)testMigrateCCBWithEmptyMigrationStepClassPrefixError
@@ -55,7 +54,7 @@ static NSString *DOCUMENT_FILENAME = @"document.ccb";
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBCCBMigrationNoMigrationStepClassPrefixError);
 
-    [AssertionAddons assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
+    [self assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
 }
 
 - (void)testMigrateUpdatingVersionOnly
@@ -128,7 +127,7 @@ static NSString *DOCUMENT_FILENAME = @"document.ccb";
     // Error code generated in class stub CCBTestMigrationFailingStep below
     XCTAssertEqual(underlyingError.code, 1234567);
 
-    [AssertionAddons assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
+    [self assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
 }
 
 - (void)testRollback
@@ -149,7 +148,7 @@ static NSString *DOCUMENT_FILENAME = @"document.ccb";
 
     [migrator rollback];
 
-    [AssertionAddons assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
+    [self assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
 }
 
 

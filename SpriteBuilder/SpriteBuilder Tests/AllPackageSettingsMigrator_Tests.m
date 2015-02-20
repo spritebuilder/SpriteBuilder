@@ -6,14 +6,13 @@
 //
 //
 
-#import <Cocoa/Cocoa.h>
+
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "ProjectSettings.h"
 #import "AllPackageSettingsMigrator.h"
 #import "MiscConstants.h"
 #import "Errors.h"
-#import "AssertionAddons.h"
 #import "PackageSettings.h"
 #import "RMPackage.h"
 
@@ -81,10 +80,12 @@
         @"outputDir" : @""
     };
 
-    XCTAssertTrue([dict writeToFile:[self fullPathForFile:[self fullPathForFile:[@"foo.spritebuilder/Packages/package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]]] atomically:YES]);
+    [self createFilesWithContents:@{
+            [@"foo.spritebuilder/Packages/package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME] : dict
+    }];
 
     XCTAssertTrue([_migrator isMigrationRequired]);
-}
+};
 
 - (void)testCannotCreateDefaultPackageSettingsIfNoneExists
 {
@@ -181,24 +182,19 @@
         @"outputDir" : @"asd"
     };
 
-    NSString *path_a = [self fullPathForFile:[@"foo.spritebuilder/Packages/package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]];
-    NSString *path_b = [self fullPathForFile:[@"foo.spritebuilder/Packages/package_b.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]];
-
-    [packageSettings writeToFile:path_a atomically:YES];
-    [packageSettings writeToFile:path_b atomically:YES];
+    [self createFilesWithContents:@{
+            [@"foo.spritebuilder/Packages/package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME] : packageSettings,
+            [@"foo.spritebuilder/Packages/package_b.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME] : packageSettings,
+    }];
 
     NSError *error;
     XCTAssertTrue([_migrator migrateWithError:&error]);
     XCTAssertNil(error);
 
-    NSDictionary *settings_a = [NSDictionary dictionaryWithContentsOfFile:path_a];
-    NSDictionary *settings_b = [NSDictionary dictionaryWithContentsOfFile:path_b];
-
-    XCTAssertNotNil(settings_a);
-    XCTAssertNotNil(settings_b);
-
-    XCTAssertNotEqualObjects(settings_a, packageSettings);
-    XCTAssertNotEqualObjects(settings_b, packageSettings);
-}
+    [self assertContentsOfFilesNotEqual:@{
+            [@"foo.spritebuilder/Packages/package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME] : packageSettings,
+            [@"foo.spritebuilder/Packages/package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME] : packageSettings
+    }];
+};
 
 @end

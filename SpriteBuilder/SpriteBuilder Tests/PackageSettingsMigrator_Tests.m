@@ -10,7 +10,6 @@
 #import <XCTest/XCTest.h>
 #import "PackageSettingsMigrator.h"
 #import "Errors.h"
-#import "AssertionAddons.h"
 #import "FileSystemTestCase.h"
 #import "RMPackage.h"
 #import "PackageSettings.h"
@@ -133,8 +132,8 @@
     NSArray *mainProjectResolutions = @[ @4 ];
     XCTAssertEqualObjects(migratedSettings[@"mainProjectResolutions"], mainProjectResolutions);
 
-    [AssertionAddons assertArraysAreEqualIgnoringOrder:migratedSettings[@"osSettings"][@"ios"][@"resolutions"] arrayB:@[@1, @2, @4]];
-    [AssertionAddons assertArraysAreEqualIgnoringOrder:migratedSettings[@"osSettings"][@"android"][@"resolutions"] arrayB:@[@1, @4]];
+    [self assertArraysAreEqualIgnoringOrder:migratedSettings[@"osSettings"][@"ios"][@"resolutions"] arrayB:@[@1, @2, @4]];
+    [self assertArraysAreEqualIgnoringOrder:migratedSettings[@"osSettings"][@"android"][@"resolutions"] arrayB:@[@1, @4]];
 
     // Values that should stay the same
     XCTAssertEqualObjects(migratedSettings[@"osSettings"][@"ios"][@"audio_quality"], @7);
