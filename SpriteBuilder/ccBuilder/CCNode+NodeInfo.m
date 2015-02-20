@@ -248,7 +248,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     }
     
     // Do not add keyframes for disabled properties
-    if ([self shouldDisableProperty:name])
+    if ([self shouldDisableProperty:name] || [self shouldDisableKeyframe:name])
         return nil;
     
     // Create keyframe
@@ -851,7 +851,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
 - (BOOL) shouldDisableProperty:(NSString*) prop
 {
     // Disable properties on root node
-    if (self == [CocosScene cocosScene].rootNode || self.nodePhysicsBody.dynamic)
+    if (self == [CocosScene cocosScene].rootNode)
     {
         if ([prop isEqualToString:@"position"]) return YES;
         else if ([prop isEqualToString:@"scale"]) return YES;
@@ -879,7 +879,19 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     return NO;
 }
 
-
+- (BOOL)shouldDisableKeyframe:(NSString*) prop
+{
+    // Disable properties on root node
+    if (self.nodePhysicsBody.dynamic)
+    {
+        if ([prop isEqualToString:@"position"]) return YES;
+        else if ([prop isEqualToString:@"scale"]) return YES;
+        else if ([prop isEqualToString:@"rotation"]) return YES;
+        else if ([prop isEqualToString:@"skew"]) return YES;
+    }
+    
+    return NO;
+}
 
 - (CGAffineTransform) startTransform;
 {
