@@ -1,6 +1,4 @@
 #import "AllPackageSettingsMigrator.h"
-#import "ProjectSettings.h"
-#import "ProjectSettings+Packages.h"
 #import "MiscConstants.h"
 #import "PackageSettings.h"
 #import "RMPackage.h"
@@ -12,26 +10,27 @@
 
 @interface AllPackageSettingsMigrator ()
 
-@property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) NSMutableArray *packageSettingsCreated;
 @property (nonatomic, strong) NSMutableArray *packageSettingsMigrators;
 @property (nonatomic) NSUInteger migrationVersionTarget;
 
+@property (nonatomic, strong) NSArray *packagePaths;
 @end
 
 
 @implementation AllPackageSettingsMigrator
 
-- (id)initWithProjectSettings:(ProjectSettings *)projectSettings toVersion:(NSUInteger)toVersion
+- (id)initWithPackagePaths:(NSArray *)packagePaths toVersion:(NSUInteger)toVersion
 {
-    NSAssert(projectSettings != nil, @"projectSettings must not be nil");
+    NSAssert(packagePaths != nil, @"dirPaths must not be nil");
+    NSAssert([packagePaths count] > 0, @"dirPaths should at least contain one path");
     NSAssert(toVersion > 0, @"toVersion must be greate than 0");
     self = [super init];
 
     if (self)
     {
+        self.packagePaths = packagePaths;
         self.migrationVersionTarget = toVersion;
-        self.projectSettings = projectSettings;
         self.packageSettingsCreated = [NSMutableArray array];
         self.packageSettingsMigrators = [NSMutableArray array];
     }
@@ -64,9 +63,9 @@
 
 - (BOOL)packagesNeedMigration
 {
-    for (NSMutableDictionary *resourcePathDict in _projectSettings.resourcePaths)
+    for (NSString *packagePath in _packagePaths)
     {
-        NSString *fullPackagePath = [[_projectSettings fullPathForResourcePathDict:resourcePathDict] stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
+        NSString *fullPackagePath = [packagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
         PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:fullPackagePath toVersion:_migrationVersionTarget];
 
         if ([packageSettingsMigrator isMigrationRequired])
@@ -79,11 +78,11 @@
 
 - (BOOL)missingPackageSettings
 {
-    for (NSMutableDictionary *resourcePathDict in _projectSettings.resourcePaths)
+    for (NSString *packagePath in _packagePaths)
     {
-        NSString *fullSettingsPath = [[_projectSettings fullPathForResourcePathDict:resourcePathDict] stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
+        NSString *fullPackagePath = [packagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        if (![fileManager fileExistsAtPath:fullSettingsPath])
+        if (![fileManager fileExistsAtPath:fullPackagePath])
         {
             return YES;
         }
@@ -108,10 +107,10 @@
 
 - (BOOL)migrateAllPackageSettingsWithError:(NSError **)error
 {
-    for (NSMutableDictionary *resourcePathDict in _projectSettings.resourcePaths)
+    for (NSString *packagePath in _packagePaths)
     {
-        NSString *fullPackagePath = [[_projectSettings fullPathForResourcePathDict:resourcePathDict] stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
-        PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:fullPackagePath toVersion:_migrationVersionTarget];
+        NSString *fullPackagePath = [packagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
+        PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:fullPackagePath  toVersion:_migrationVersionTarget];
         [_packageSettingsMigrators addObject:packageSettingsMigrator];
 
         if (![packageSettingsMigrator migrateWithError:error])
@@ -124,10 +123,9 @@
 
 - (BOOL)addMissingPackageSettingsWithError:(NSError **)error
 {
-    for (NSMutableDictionary *resourcePathDict in _projectSettings.resourcePaths)
+    for (NSString *packagePath in _packagePaths)
     {
-        NSString *fullPackagePath = [_projectSettings fullPathForResourcePathDict:resourcePathDict];
-        NSString *fullSettingsPath = [fullPackagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
+        NSString *fullSettingsPath = [packagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:fullSettingsPath])
         {
@@ -135,14 +133,14 @@
         }
 
         RMPackage *package = [[RMPackage alloc] init];
-        package.dirPath = fullPackagePath;
+        package.dirPath = packagePath;
 
         PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
         if (![packageSettings store])
         {
             [NSError setNewErrorWithErrorPointer:error
                                             code:SBProjectMigrationError
-                                         message:[NSString stringWithFormat:@"Could not create default package settings file for package \"%@\"", fullPackagePath]];
+                                         message:[NSString stringWithFormat:@"Could not create default package settings file for package \"%@\"", packagePath]];
             return NO;
         }
 
