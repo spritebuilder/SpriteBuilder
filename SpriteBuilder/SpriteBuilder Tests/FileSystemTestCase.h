@@ -28,12 +28,6 @@
 // NSDictionary *foo = @{@"path/to/file.txt": [NSData data]};
 - (void)createFilesWithContents:(NSDictionary *)filesWithContents;
 
-// create files, dictionary structure: key: relativeFilePath
-// value has to be of type NSString
-// Example for parameter:
-// NSDictionary *foo = @{@"path/to/file.txt": @""};
-- (void)createFilesWithTextContents:(NSDictionary *)filesWithTextContents;
-
 // Creates a .ccbproj file with default initialized values in testDirecotoryPath
 // Returns an instance of the newly created project Setitngs
 - (ProjectSettings *)createProjectSettingsFileWithName:(NSString *)name;

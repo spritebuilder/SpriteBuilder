@@ -221,7 +221,7 @@
 - (void)testUpdateWithKnownOlderVersion
 {
     // The updater should not be interferred by the existence of this file
-    [self createFilesWithTextContents:@{
+    [self createFilesWithContents:@{
             @"baa.spritebuilder/.gitmodules" : @"just some stuff in here"
     }];
 
@@ -244,7 +244,7 @@
 
 - (void)testUpdateWithCocos2dAsSubmodule_oldIphoneGitRepo
 {
-    [self createFilesWithTextContents:@{
+    [self createFilesWithContents:@{
             @"baa.spritebuilder/.gitmodules" :
                    @"[submodule \"SpriteBuilder/libs/cocos2d-iphone\"]\n"
                     "\tpath = SpriteBuilder/libs/cocos2d-iphone\n"
@@ -258,7 +258,7 @@
 
 - (void)testUpdateWithCocos2dAsSubmodule_swiftRepo
 {
-    [self createFilesWithTextContents:@{
+    [self createFilesWithContents:@{
             @"baa.spritebuilder/.gitmodules" :
                    @"[submodule \"SpriteBuilder/libs/cocos2d-swift\"]\n"
                     "\tpath = SpriteBuilder/libs/cocos2d-iphone\n"
@@ -317,7 +317,7 @@
 {
     NSString *versionFilePath = [[NSBundle mainBundle] pathForResource:@"cocos2d_version" ofType:@"txt" inDirectory:@"Generated"];
 
-    [self createFilesWithTextContents:@{
+    [self createFilesWithContents:@{
             @"baa.spritebuilder/Source/libs/cocos2d-iphone/VERSION" : projectsVersion,
             versionFilePath : sbVersion
     }];
