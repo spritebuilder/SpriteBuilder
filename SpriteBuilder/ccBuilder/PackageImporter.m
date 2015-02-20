@@ -11,6 +11,8 @@
 #import "RMPackage.h"
 #import "PackageSettings.h"
 #import "PackageSettingsMigrator.h"
+#import "MigrationControllerFactory.h"
+#import "MigrationViewController.h"
 
 @implementation PackageImporter
 
@@ -101,6 +103,18 @@
         {
             return NO;
         }
+
+/*
+        MigrationViewController *migrationViewController =
+                [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory packageImportingMigrationController:newPathInPackagesFolder]];
+
+        migrationViewController.cancelButtonTitle = @"Do not import";
+        if (![migrationViewController migrate])
+        {
+            return NO;
+        }
+*/
+
 
         if (![self migrateOrCreatePackageSettings:localError newPathInPackagesFolder:newPathInPackagesFolder])
         {

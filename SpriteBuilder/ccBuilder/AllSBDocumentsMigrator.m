@@ -1,4 +1,4 @@
-#import "AllDocumentsMigrator.h"
+#import "AllSBDocumentsMigrator.h"
 #import "ProjectSettings.h"
 #import "CCRenderer_Private.h"
 #import "CCBDictionaryMigrator.h"
@@ -6,7 +6,7 @@
 #import "CCBDictionaryReader.h"
 #import "NSString+Misc.h"
 
-@interface AllDocumentsMigrator()
+@interface AllSBDocumentsMigrator ()
 
 @property (nonatomic, strong) NSString *dirPath;
 @property (nonatomic) NSUInteger migrationVersionTarget;
@@ -16,7 +16,7 @@
 @end
 
 
-@implementation AllDocumentsMigrator
+@implementation AllSBDocumentsMigrator
 
 - (instancetype)initWithDirPath:(NSString *)dirPath toVersion:(NSUInteger)toVersion
 {

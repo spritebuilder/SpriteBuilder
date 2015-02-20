@@ -19,7 +19,6 @@
 @interface AllPackageSettingsMigrator_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) AllPackageSettingsMigrator *migrator;
-@property (nonatomic, strong) ProjectSettings *projectSettings;
 
 @end
 
@@ -33,13 +32,11 @@
         @"foo.spritebuilder/Packages/package_a.sbpack",
         @"foo.spritebuilder/Packages/package_b.sbpack"]];
 
-    // Create some test packages
-    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
+    NSArray *packagePaths = @[
+            [self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"],
+            [self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"]];
 
-    [_projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"] error:nil];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil];
-
-    self.migrator = [[AllPackageSettingsMigrator alloc] initWithProjectSettings:_projectSettings toVersion:PACKAGE_SETTINGS_VERSION];
+    self.migrator = [[AllPackageSettingsMigrator alloc] initWithPackagePaths:packagePaths toVersion:PACKAGE_SETTINGS_VERSION];
 }
 
 - (void)testCreateDefaultPackageSettingsIfNoneExists
@@ -58,8 +55,6 @@
 
 - (void)testMigrateOnlyPackageSettings
 {
-    XCTAssertTrue([_projectSettings removeResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil]);
-
     // The full test is in the PackageSettings_Tests, this is only needed to get isMigrationRequired to return YES
     NSDictionary *dict = @{
         @"publishToCustomDirectory" : @NO,
@@ -113,7 +108,9 @@
 
 - (void)testMigrationNotRequired
 {
-    XCTAssertTrue([_projectSettings removeResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil]);
+    NSArray *packagePaths = @[[self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"]];
+
+    self.migrator = [[AllPackageSettingsMigrator alloc] initWithPackagePaths:packagePaths toVersion:PACKAGE_SETTINGS_VERSION];
 
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"];

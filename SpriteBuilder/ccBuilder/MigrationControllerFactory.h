@@ -14,4 +14,5 @@
 
 + (MigrationController *)documentMigrationControllerWithFilepath:(NSString *)filepath;
 
++ (MigrationController *)packageImportingMigrationController:(NSString *)dirPath;
 @end
