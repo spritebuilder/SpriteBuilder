@@ -192,7 +192,7 @@
 
     [_cocos2dUpdater updateAndBypassIgnore:NO];
 
-    [self waitForExpectationsWithTimeout:3 handler:^(NSError *error)
+    [self waitForExpectationsWithTimeout:2 handler:^(NSError *error)
     {
         if (error != nil)
         {
