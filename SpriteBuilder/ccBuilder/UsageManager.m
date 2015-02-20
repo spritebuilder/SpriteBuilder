@@ -132,6 +132,10 @@ static NSString *urlEncode(id object) {
 
 - (void) sendEvent:(NSString*)evt data:(NSDictionary*)data;
 {
+    #if TESTING
+    return;
+    #endif
+
 	NSMutableDictionary * mutableData = [NSMutableDictionary dictionaryWithDictionary:[self usageDetails]];
 	[mutableData addEntriesFromDictionary:data];
 	
