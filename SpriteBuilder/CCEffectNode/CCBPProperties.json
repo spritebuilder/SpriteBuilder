@@ -1,0 +1,34 @@
+{
+  "displayName": "Effect Node",
+  "ordering": 4000,
+  "editorClassName": "CCBPEffectNode",
+  "className": "CCEffectNode",
+  "inheritsFrom": "CCNode",
+  "spriteFrameDrop": {
+    "className": "CCSprite",
+    "property": "spriteFrame"
+  },
+  "canHaveChildren": true,
+  "description": "Performs rendering effects on all its children..",
+  "properties": [
+    {
+      "displayName": "CCEffectNode",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCEffectNode"
+    },
+    {
+      "displayName": "Effects",
+      "type": "EffectControl",
+      "name": "effects"
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize",
+      "default": [100, 100]
+    }
+  ]
+}

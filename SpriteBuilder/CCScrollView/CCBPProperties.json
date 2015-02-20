@@ -1,0 +1,51 @@
+{
+  "displayName": "Scroll view",
+  "ordering": 14000,
+  "editorClassName": "CCScrollView",
+  "className": "CCScrollView",
+  "inheritsFrom": "CCNode",
+  "canHaveChildren": false,
+  "description": "References a containing node, which becomes a scrollable layer.",
+  "properties": [
+    {
+      "displayName": "CCScrollView",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCScrollView"
+    },
+    {
+      "displayName": "Content node",
+      "affectsProperties": ["contentSize"],
+      "type": "CCBFile",
+      "name": "contentNode"
+    },
+    {
+      "displayName": "Horizontal scroll enabled",
+      "type": "Check",
+      "name": "horizontalScrollEnabled"
+    },
+    {
+      "displayName": "Vertical scroll enabled",
+      "type": "Check",
+      "name": "verticalScrollEnabled"
+    },
+    {
+      "displayName": "Bounces",
+      "type": "Check",
+      "name": "bounces"
+    },
+    {
+      "displayName": "Paging enabled",
+      "type": "Check",
+      "name": "pagingEnabled"
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize",
+      "default": [1, 1, 2, 2]
+    }
+  ]
+}

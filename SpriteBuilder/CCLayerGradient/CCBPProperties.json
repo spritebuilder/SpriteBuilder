@@ -1,0 +1,74 @@
+{
+  "displayName": "Gradient Node",
+  "ordering": 5000,
+  "editorClassName": "CCBPNodeGradient",
+  "className": "CCNodeGradient",
+  "inheritsFrom": "CCNode",
+  "spriteFrameDrop": {
+    "className": "CCSprite",
+    "property": "spriteFrame"
+  },
+  "canHaveChildren": true,
+  "description": "Draws a rectangular area filled with a gradient.",
+  "properties": [
+    {
+      "displayName": "CCNodeGradient",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCNodeGradient"
+    },
+    {
+      "displayName": "Start color",
+      "type": "Color3",
+      "name": "startColor",
+      "default": [0.21, 0.65, 0.87, 1]
+    },
+    {
+      "displayName": "Start opacity",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "startOpacity",
+      "default": 1
+    },
+    {
+      "displayName": "End color",
+      "type": "Color3",
+      "name": "endColor",
+      "default": [0.13, 0.5, 0.8, 1]
+    },
+    {
+      "displayName": "End opacity",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "endOpacity",
+      "default": 1
+    },
+    {
+      "displayName": "",
+      "defaultSerialization": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 771
+      },
+      "type": "Blendmode",
+      "name": "blendMode",
+      "default": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 771
+      }
+    },
+    {
+      "displayName": "Vector",
+      "type": "Point",
+      "name": "vector",
+      "default": [0, -1]
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize",
+      "default": [100, 100]
+    }
+  ]
+}

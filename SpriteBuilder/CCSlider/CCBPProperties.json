@@ -1,0 +1,94 @@
+{
+  "displayName": "Slider",
+  "ordering": 13000,
+  "editorClassName": "CCBPSlider",
+  "className": "CCSlider",
+  "inheritsFrom": "CCControl",
+  "canHaveChildren": false,
+  "description": "Allows the user to visually select a value",
+  "properties": [
+    {
+      "displayName": "CCSlider",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCSlider"
+    },
+    {
+      "displayName": "Background",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "backgroundSpriteFrame|Normal",
+      "default": ["", "ccbResources/ccbSliderBgNormal.png"]
+    },
+    {
+      "displayName": "Handle",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "handleSpriteFrame|Normal",
+      "default": ["", "ccbResources/ccbSliderHandle.png"]
+    },
+    {
+      "displayName": "Highlighted state",
+      "type": "SeparatorSub",
+      "dontSetInEditor": true,
+      "name": "Highlighted state"
+    },
+    {
+      "displayName": "Background",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "backgroundSpriteFrame|Highlighted",
+      "default": ["", "ccbResources/ccbSliderBgHighlighted.png"]
+    },
+    {
+      "displayName": "Handle",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "handleSpriteFrame|Highlighted",
+      "default": ["", ""]
+    },
+    {
+      "displayName": "Disabled state",
+      "type": "SeparatorSub",
+      "dontSetInEditor": true,
+      "name": "Disabled state"
+    },
+    {
+      "displayName": "Background",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "backgroundSpriteFrame|Disabled",
+      "default": ["", ""]
+    },
+    {
+      "displayName": "Handle",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "handleSpriteFrame|Disabled",
+      "default": ["", ""]
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    },
+    {
+      "readOnly": false,
+      "displayName": "Preferred size",
+      "affectsProperties": ["maxSize", "contentSize"],
+      "type": "Size",
+      "name": "preferredSize",
+      "default": [200, 10, 0, 0]
+    },
+    {
+      "readOnly": true,
+      "displayName": "Max size",
+      "affectsProperties": ["preferredSize", "contentSize"],
+      "type": "Size",
+      "name": "maxSize"
+    }
+  ]
+}

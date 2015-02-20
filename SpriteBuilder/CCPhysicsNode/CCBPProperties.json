@@ -1,0 +1,34 @@
+{
+  "displayName": "Physics Node",
+  "ordering": 16000,
+  "editorClassName": "CCBPPhysicsNode",
+  "className": "CCPhysicsNode",
+  "inheritsFrom": "CCNode",
+  "spriteFrameDrop": {
+    "className": "CCSprite",
+    "property": "spriteFrame"
+  },
+  "canHaveChildren": true,
+  "description": "Applies physics to all nodes with physics bodies below the physics node.",
+  "properties": [
+    {
+      "displayName": "CCPhysicsNode",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCPhysicsNode"
+    },
+    {
+      "displayName": "Gravity",
+      "type": "Point",
+      "name": "gravity",
+      "default": [0, -100]
+    },
+    {
+      "displayName": "Sleep time threshold",
+      "type": "Float",
+      "name": "sleepTimeThreshold"
+    }
+  ],
+  "canBeRootNode": true,
+  "propertiesOverridden": [ ]
+}

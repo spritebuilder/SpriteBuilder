@@ -1,0 +1,85 @@
+{
+  "displayName": "Physics Distance Joint",
+  "ordering": 16200,
+  "editorClassName": "CCBPhysicsPinJoint",
+  "className": "CCPhysicsPinJoint",
+  "inheritsFrom": "NSObject",
+  "isJoint": true,
+  "canHaveChildren": false,
+  "description": "Keeps two physics bodies at a fixed distance.",
+  "properties": [
+    {
+      "displayName": "CCPhysicsDistanceJoint",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCPhysicsPinJoint"
+    },
+    {
+      "displayName": "Position",
+      "defaultSerialization": [0, 0, 0],
+      "animatable": false,
+      "type": "Position",
+      "name": "position",
+      "inspectorDisabled": true
+    },
+    {
+      "displayName": "Body A",
+      "affectsProperties": ["bodyA"],
+      "type": "NodeReference",
+      "name": "bodyA",
+      "default": 0
+    },
+    {
+      "displayName": "Body B",
+      "affectsProperties": ["bodyB"],
+      "type": "NodeReference",
+      "name": "bodyB",
+      "default": 0
+    },
+    {
+      "displayName": "Collide bodies",
+      "type": "Check",
+      "name": "collideBodies"
+    },
+    {
+      "displayName": "Anchor A",
+      "defaultSerialization": [0, 0, 0],
+      "animatable": false,
+      "type": "Point",
+      "name": "anchorA"
+    },
+    {
+      "displayName": "Anchor B",
+      "defaultSerialization": [0, 0, 0],
+      "animatable": false,
+      "type": "Point",
+      "name": "anchorB"
+    },
+    {
+      "displayName": "Breaking force",
+      "defaultSerialization": 0,
+      "type": "FloatCheck",
+      "name": "breakingForce"
+    },
+    {
+      "displayName": "Max force",
+      "defaultSerialization": 0,
+      "type": "FloatCheck",
+      "name": "maxForce"
+    },
+    {
+      "displayName": "Minimum distance",
+      "defaultSerialization": 1,
+      "type": "EnabledFloat",
+      "name": "minDistance"
+    },
+    {
+      "displayName": "Maximum distance",
+      "defaultSerialization": 1,
+      "type": "EnabledFloat",
+      "name": "maxDistance"
+    }
+  ],
+  "canBeRootNode": false,
+  "propertiesOverridden": [ ]
+}

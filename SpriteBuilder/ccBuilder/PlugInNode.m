@@ -137,10 +137,24 @@
 
     bundle = aBundle;
     self.mainBundle = mainBundle;
-
-    // Load properties
-    NSURL* propsURL = [bundle URLForResource:@"CCBPProperties" withExtension:@"plist"];
-    NSMutableDictionary* props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
+    
+    // Load properties via .json then fallback to .plist
+    NSURL* propsURL = [bundle URLForResource:@"CCBPProperties" withExtension:@"json"];
+    NSMutableDictionary* props = nil;
+    if (propsURL != nil) {
+        NSError *error;
+        props = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:propsURL]
+                                                 options:NSJSONReadingMutableContainers
+                                                   error:&error];
+        if (error) {
+            NSLog(@"error reading properties file '%@'; %@", propsURL, error);
+        }
+    }
+    
+    if (!props) {
+        propsURL = [bundle URLForResource:@"CCBPProperties" withExtension:@"plist"];
+        props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
+    }
     
 	_targetEngine = CCBTargetEngineCocos2d;
 

@@ -1,0 +1,55 @@
+{
+  "displayName": "Sprite 9 Slice",
+  "ordering": 7000,
+  "editorClassName": "CCBPSprite9Slice",
+  "className": "CCSprite9Slice",
+  "inheritsFrom": "CCSprite",
+  "spriteFrameDrop": {
+    "className": "CCSprite",
+    "property": "spriteFrame"
+  },
+  "canHaveChildren": true,
+  "description": "Displays stretchable 9-sliced texture with configurable margins.",
+  "properties": [
+    {
+      "displayName": "CCSprite9Slice",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCSprite"
+    },
+    {
+      "displayName": "Margin left",
+      "type": "Float",
+      "name": "marginLeft",
+      "default": 0.33
+    },
+    {
+      "displayName": "Margin right",
+      "type": "Float",
+      "name": "marginRight",
+      "default": 0.33
+    },
+    {
+      "displayName": "Margin top",
+      "type": "Float",
+      "name": "marginTop",
+      "default": 0.33
+    },
+    {
+      "displayName": "Margin bottom",
+      "type": "Float",
+      "name": "marginBottom",
+      "default": 0.33
+    }
+  ],
+  "canBeRootNode": true,
+  "propertiesOverridden": [
+    {
+      "readOnly": false,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    },
+    { "type": "None", "name": "effects" }
+  ]
+}

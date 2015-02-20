@@ -1,0 +1,316 @@
+{
+  "displayName": "Button",
+  "ordering": 11000,
+  "editorClassName": "CCBPButton",
+  "className": "CCButton",
+  "inheritsFrom": "CCControl",
+  "canHaveChildren": false,
+  "description": "Generates events when touched, can have a stretchable backround and a label.",
+  "properties": [
+    {
+      "displayName": "CCButton",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCButton"
+    },
+    {
+      "displayName": "Title",
+      "affectsProperties": ["contentSize"],
+      "type": "String",
+      "name": "title",
+      "default": "Title"
+    },
+    {
+      "displayName": "Zoom when highlighted",
+      "defaultSerialization": false,
+      "dontSetInEditor": true,
+      "type": "Check",
+      "name": "zoomWhenHighlighted",
+      "default": false
+    },
+    {
+      "displayName": "Toggles selected state",
+      "defaultSerialization": false,
+      "dontSetInEditor": true,
+      "type": "Check",
+      "name": "togglesSelectedState",
+      "default": false
+    },
+    {
+      "displayName": "Reset to default size",
+      "type": "Button",
+      "name": "onSetSizeFromTexture"
+    },
+    {
+      "displayName": "Normal State",
+      "type": "SeparatorSub",
+      "dontSetInEditor": true,
+      "name": "Normal State"
+    },
+    {
+      "displayName": "Sprite frame",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "backgroundSpriteFrame|Normal",
+      "default": ["", "ccbResources/ccbButtonNormal.png"]
+    },
+    {
+      "displayName": "Background opacity",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "backgroundOpacity|Normal",
+      "default": 1
+    },
+    {
+      "displayName": "Background color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "type": "Color3",
+      "name": "backgroundColor|Normal",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Label opacity",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "labelOpacity|Normal",
+      "default": 1
+    },
+    {
+      "displayName": "Label color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "type": "Color3",
+      "name": "labelColor|Normal",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Highlighted State",
+      "type": "SeparatorSub",
+      "dontSetInEditor": true,
+      "name": "Highlighted State"
+    },
+    {
+      "displayName": "Sprite frame",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "backgroundSpriteFrame|Highlighted",
+      "default": ["", "ccbResources/ccbButtonHighlighted.png"]
+    },
+    {
+      "displayName": "Background opacity",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "backgroundOpacity|Highlighted",
+      "default": 1
+    },
+    {
+      "displayName": "Background color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "type": "Color3",
+      "name": "backgroundColor|Highlighted",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Label opacity",
+      "defaultSerialization": 1,
+      "type": "Float",
+      "name": "labelOpacity|Highlighted",
+      "default": 1
+    },
+    {
+      "displayName": "Label color",
+      "type": "Color3",
+      "name": "labelColor|Highlighted",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Disabled State",
+      "type": "SeparatorSub",
+      "dontSetInEditor": true,
+      "name": "Disabled State"
+    },
+    {
+      "displayName": "Sprite frame",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "backgroundSpriteFrame|Disabled",
+      "default": ["", "ccbResources/ccbButtonNormal.png"]
+    },
+    {
+      "displayName": "Background opacity",
+      "defaultSerialization": 0.5,
+      "type": "Float",
+      "name": "backgroundOpacity|Disabled",
+      "default": 0.5
+    },
+    {
+      "displayName": "Background color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "type": "Color3",
+      "name": "backgroundColor|Disabled",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Label opacity",
+      "type": "Float",
+      "name": "labelOpacity|Disabled",
+      "default": 1
+    },
+    {
+      "displayName": "Label color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "type": "Color3",
+      "name": "labelColor|Disabled",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Selected State",
+      "type": "SeparatorSub",
+      "dontSetInEditor": true,
+      "name": "Selected State"
+    },
+    {
+      "displayName": "Sprite frame",
+      "affectsProperties": ["contentSize"],
+      "type": "SpriteFrame",
+      "name": "backgroundSpriteFrame|Selected",
+      "default": ["", "ccbResources/ccbButtonNormal.png"]
+    },
+    {
+      "displayName": "Background opacity",
+      "defaultSerialization": 0.5,
+      "type": "Float",
+      "name": "backgroundOpacity|Selected",
+      "default": 0.5
+    },
+    {
+      "displayName": "Background color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "type": "Color3",
+      "name": "backgroundColor|Selected",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "Label opacity",
+      "type": "Float",
+      "name": "labelOpacity|Selected",
+      "default": 1
+    },
+    {
+      "displayName": "Label color",
+      "defaultSerialization": [1, 1, 1, 1],
+      "type": "Color3",
+      "name": "labelColor|Selected",
+      "default": [1, 1, 1, 1]
+    },
+    {
+      "displayName": "CCLabelTTF",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCLabelTTF"
+    },
+    {
+      "displayName": "Font name",
+      "affectsProperties": ["contentSize"],
+      "type": "FontTTF",
+      "name": "fontName",
+      "default": "Helvetica"
+    },
+    {
+      "displayName": "Font size",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "fontSize",
+      "default": [17, 0]
+    },
+    {
+      "displayName": "Alignment",
+      "extra": "Left|0|Center|1|Right|2",
+      "type": "IntegerLabeled",
+      "name": "horizontalAlignment"
+    },
+    {
+      "displayName": "",
+      "extra": "Top|0|Center|1|Bottom|2",
+      "type": "IntegerLabeled",
+      "name": "verticalAlignment"
+    },
+    {
+      "displayName": "Horizontal padding",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "horizontalPadding",
+      "default": [10, 0]
+    },
+    {
+      "displayName": "Vertical padding",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "verticalPadding"
+    },
+    {
+      "displayName": "Font Effects",
+      "type": "SeparatorSub",
+      "dontSetInEditor": true,
+      "name": "Font Effects"
+    },
+    {
+      "displayName": "Draw Color",
+      "defaultSerialization": [255, 255, 255, 255],
+      "type": "Color4",
+      "name": "fontColor",
+      "default": [255, 255, 255, 255]
+    },
+    {
+      "displayName": "Outline color",
+      "defaultSerialization": [0, 0, 0, 0],
+      "affectsProperties": ["contentSize"],
+      "type": "Color4",
+      "name": "outlineColor",
+      "default": [0, 0, 0, 0]
+    },
+    {
+      "displayName": "Outline width",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "outlineWidth"
+    },
+    {
+      "displayName": "Shadow color",
+      "defaultSerialization": [0, 0, 0, 0],
+      "affectsProperties": ["contentSize"],
+      "type": "Color4",
+      "name": "shadowColor",
+      "default": [0, 0, 0, 127]
+    },
+    {
+      "displayName": "Shadow blur radius",
+      "affectsProperties": ["contentSize"],
+      "type": "FloatScale",
+      "name": "shadowBlurRadius",
+      "default": [2, 0]
+    },
+    {
+      "displayName": "Shadow offset",
+      "defaultSerialization": [0, 0, 0],
+      "type": "Position",
+      "name": "shadowOffset",
+      "default": [0, -2, 0]
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    },
+    {
+      "readOnly": false,
+      "displayName": "Preferred size",
+      "affectsProperties": ["maxSize", "contentSize"],
+      "type": "Size",
+      "name": "preferredSize",
+      "default": [40, 40, 0, 0]
+    }
+  ]
+}

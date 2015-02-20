@@ -1,0 +1,52 @@
+{
+  "displayName": "Color Node",
+  "ordering": 4000,
+  "editorClassName": "CCBPNodeColor",
+  "className": "CCNodeColor",
+  "inheritsFrom": "CCNode",
+  "spriteFrameDrop": {
+    "className": "CCSprite",
+    "property": "spriteFrame"
+  },
+  "canHaveChildren": true,
+  "description": "Draws a rectangular area filled with a color.",
+  "properties": [
+    {
+      "displayName": "CCNodeColor",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCNodeColor"
+    },
+    {
+      "displayName": "Color",
+      "animatable": true,
+      "type": "Color3",
+      "name": "color",
+      "default": [0.21, 0.65, 0.87, 1]
+    },
+    {
+      "displayName": "Opacity",
+      "animatable": true,
+      "type": "Float",
+      "name": "opacity",
+      "default": 1
+    },
+    {
+      "displayName": "",
+      "defaultSerialization": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 771
+      },
+      "type": "Blendmode",
+      "name": "blendMode"
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize",
+      "default": [100, 100]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "displayName": "Sub File",
+  "ordering": 2000,
+  "editorClassName": "CCBPCCBFile",
+  "className": "CCBFile",
+  "inheritsFrom": "CCNode",
+  "canHaveChildren": false,
+  "description": "Embeds another SpriteBuilder CCB file by reference.",
+  "properties": [
+    {
+      "displayName": "CCB File",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCBFile"
+    },
+    {
+      "displayName": "CCB File",
+      "affectsProperties": ["anchorPoint", "contentSize"],
+      "type": "CCBFile",
+      "name": "ccbFile"
+    }
+  ],
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Anchor point",
+      "defaultSerialization": [0, 0],
+      "type": "Point",
+      "name": "anchorPoint"
+    },
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "editorClassName": "CCControl",
+  "className": "CCControl",
+  "inheritsFrom": "CCNode",
+  "properties": [
+    {
+      "displayName": "CCControl",
+      "codeConnection": true,
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCControl"
+    },
+    {
+      "displayName": "Selector",
+      "codeConnection": true,
+      "type": "Block",
+      "name": "block",
+      "default": ["", 1]
+    },
+    {
+      "displayName": "Continuous",
+      "codeConnection": true,
+      "defaultSerialization": false,
+      "dontSetInEditor": true,
+      "type": "Check",
+      "name": "continuous",
+      "default": false
+    },
+    {
+      "displayName": "CCControl",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCControl"
+    },
+    {
+      "readOnly": false,
+      "displayName": "Preferred size",
+      "affectsProperties": ["maxSize", "contentSize"],
+      "type": "Size",
+      "name": "preferredSize"
+    },
+    {
+      "readOnly": false,
+      "displayName": "Max size",
+      "affectsProperties": ["preferredSize", "contentSize"],
+      "type": "Size",
+      "name": "maxSize"
+    },
+    {
+      "displayName": "User Interaction Enabled",
+      "dontSetInEditor": true,
+      "type": "Check",
+      "name": "userInteractionEnabled",
+      "default": true
+    }
+  ],
+  "isAbstract": true
+}

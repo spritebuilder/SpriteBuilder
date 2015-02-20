@@ -1,0 +1,207 @@
+{
+  "displayName": "Particle System",
+  "ordering": 8000,
+  "supportsTemplates": true,
+  "className": "CCParticleSystem",
+  "editorClassName": "CCBPParticleSystem",
+  "inheritsFrom": "CCNode",
+  "canHaveChildren": false,
+  "description": "Emits particles for effects such as smoke, fire and rain.",
+  "properties": [
+    {
+      "displayName": "CCParticleSystemQuad",
+      "type": "Separator",
+      "dontSetInEditor": true,
+      "name": "CCParticleSystemQuad"
+    },
+    {
+      "displayName": "Start Particles|Stop Particles",
+      "extra": "resetSystem|stopSystem",
+      "type": "StartStop"
+    },
+    {
+      "displayName": "Mode",
+      "saveInTemplate": true,
+      "extra": "Gravity mode|0|Radius mode|1",
+      "type": "IntegerLabeled",
+      "name": "emitterMode"
+    },
+    {
+      "displayName": "Position Type",
+      "saveInTemplate": true,
+      "extra": "Free|0|Relative|1|Grouped|2",
+      "type": "IntegerLabeled",
+      "name": "particlePositionType",
+      "default": 2
+    },
+    {
+      "displayName": "Position var",
+      "saveInTemplate": true,
+      "type": "Point",
+      "name": "posVar",
+      "default": [40, 20]
+    },
+    {
+      "displayName": "Emit rate",
+      "saveInTemplate": true,
+      "type": "Float",
+      "name": "emissionRate",
+      "default": 80
+    },
+    {
+      "displayName": "Duration",
+      "saveInTemplate": true,
+      "type": "Float",
+      "name": "duration",
+      "default": -1
+    },
+    {
+      "displayName": "Total particles",
+      "saveInTemplate": true,
+      "type": "Integer",
+      "name": "totalParticles",
+      "default": 250
+    },
+    {
+      "displayName": "Life",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "life",
+      "default": [3, 0.25]
+    },
+    {
+      "displayName": "Start size",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "startSize",
+      "default": [54, 10]
+    },
+    {
+      "displayName": "End size",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "endSize"
+    },
+    {
+      "displayName": "Start spin",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "startSpin"
+    },
+    {
+      "displayName": "End spin",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "endSpin"
+    },
+    {
+      "displayName": "Angle",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "angle",
+      "default": [90, 10]
+    },
+    {
+      "displayName": "Start color",
+      "saveInTemplate": true,
+      "type": "Color4FVar",
+      "name": "startColor",
+      "default": [[0.76, 0.25, 0.12, 255], [0, 0, 0, 0]]
+    },
+    {
+      "displayName": "End color",
+      "saveInTemplate": true,
+      "type": "Color4FVar",
+      "name": "endColor",
+      "default": [[0, 0, 0, 255], [0, 0, 0, 0]]
+    },
+    {
+      "displayName": "",
+      "saveInTemplate": true,
+      "type": "Blendmode",
+      "name": "blendMode",
+      "default": {
+        "CCBlendFuncSrcColor": 1,
+        "CCBlendFuncDstColor": 1
+      }
+    },
+    {
+      "displayName": "reset on visibility toggle",
+      "saveInTemplate": true,
+      "type": "Check",
+      "name": "resetOnVisibilityToggle",
+      "default": 1
+    },
+    {
+      "displayName": "Gravity mode",
+      "type": "SeparatorSub"
+    },
+    {
+      "displayName": "Gravity",
+      "saveInTemplate": true,
+      "type": "Point",
+      "name": "gravity"
+    },
+    {
+      "displayName": "Speed",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "speed",
+      "default": [60, 20]
+    },
+    {
+      "displayName": "Tang. acc",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "tangentialAccel"
+    },
+    {
+      "displayName": "Radial acc",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "radialAccel"
+    },
+    {
+      "displayName": "Radial mode",
+      "type": "SeparatorSub"
+    },
+    {
+      "displayName": "Start radius",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "startRadius"
+    },
+    {
+      "displayName": "End radius",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "endRadius"
+    },
+    {
+      "displayName": "Rotate",
+      "saveInTemplate": true,
+      "type": "FloatVar",
+      "name": "rotatePerSecond"
+    },
+    {
+      "displayName": "Particle texture",
+      "type": "SeparatorSub"
+    },
+    {
+      "displayName": "Texture",
+      "saveInTemplate": true,
+      "type": "Texture",
+      "name": "texture",
+      "default": "ccbResources/ccbParticleFire.png"
+    }
+  ],
+  "canBeRootNode": true,
+  "propertiesOverridden": [
+    {
+      "readOnly": true,
+      "displayName": "Content size",
+      "type": "Size",
+      "name": "contentSize"
+    }
+  ]
+}
