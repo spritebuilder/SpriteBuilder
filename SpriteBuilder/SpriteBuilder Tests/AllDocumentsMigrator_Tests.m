@@ -6,12 +6,10 @@
 //
 //
 
-#import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 #import "AllDocumentsMigrator.h"
 #import "FileSystemTestCase.h"
 #import "CCBDictionaryKeys.h"
-#import "AssertionAddons.h"
 
 @interface AllDocumentsMigrator_Tests : FileSystemTestCase
 
@@ -35,7 +33,7 @@
     ]];
 
     NSString *path1 = [self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack/folder/deeper/deepest/abc.ccb"];
-    NSString *path2 = [self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack/folder/deeper/def.sb"];
+    NSString *path2 = [self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack/folder/deeper/uptodate.sb"];
     NSString *path3 = [self fullPathForFile:@"foo.spritebuilder/packages/baa.sbpack/scenes/xyz.ccb"];
     NSString *path4 = [self fullPathForFile:@"donotmigrate.ccb"];
 
@@ -85,8 +83,8 @@
 
     [migrator rollback];
 
-    [AssertionAddons assertEqualObjectsWithDiff:dict1 objectB:[NSDictionary dictionaryWithContentsOfFile:path1]];
-    [AssertionAddons assertEqualObjectsWithDiff:dict2 objectB:[NSDictionary dictionaryWithContentsOfFile:path2]];
+    [self assertEqualObjectsWithDiff:dict1 objectB:[NSDictionary dictionaryWithContentsOfFile:path1]];
+    [self assertEqualObjectsWithDiff:dict2 objectB:[NSDictionary dictionaryWithContentsOfFile:path2]];
 }
 
 - (void)testMigrationNotRequired
@@ -104,7 +102,7 @@
     XCTAssertTrue([migrator migrateWithError:&error]);
     XCTAssertNil(error);
 
-    [AssertionAddons assertEqualObjectsWithDiff:dict1 objectB:[NSDictionary dictionaryWithContentsOfFile:path1]];
+    [self assertEqualObjectsWithDiff:dict1 objectB:[NSDictionary dictionaryWithContentsOfFile:path1]];
 }
 
 @end

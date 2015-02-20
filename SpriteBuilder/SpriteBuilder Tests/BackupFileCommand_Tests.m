@@ -33,7 +33,7 @@
 
     NSString *backupFilePath = [backupFileCommand.backupFilePath copy];
 
-    [self assertContentsOfTextFiles:@{ backupFileCommand.backupFilePath : @"original" }];
+    [self assertContentsOfFilesEqual:@{ backupFileCommand.backupFilePath : @"original" }];
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager removeItemAtPath:[self fullPathForFile:@"foo.txt"] error:nil];
@@ -48,7 +48,7 @@
 
     [self assertFileExists:@"foo.txt"];
 
-    [self assertContentsOfTextFiles:@{ @"foo.txt" : @"original" }];
+    [self assertContentsOfFilesEqual:@{ @"foo.txt" : @"original" }];
 
     XCTAssertFalse([fileManager fileExistsAtPath:backupFilePath]);
 };
@@ -78,7 +78,7 @@
             @"test/baa.txt",
     ]];
 
-    [self assertContentsOfTextFiles:@{
+    [self assertContentsOfFilesEqual:@{
             @"folder/foo.txt" : @"foo",
             @"folder/test/baa.txt" : @"baa"
     }];

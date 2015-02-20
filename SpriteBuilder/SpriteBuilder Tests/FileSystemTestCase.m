@@ -158,30 +158,52 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     return projectSettings;
 }
 
-- (void)assertContentsOfFiles:(NSDictionary *)contentsOfFiles
+- (void)assertContentsOfFilesNotEqual:(NSDictionary *)filenameAndExpectation
 {
-    for (NSString *filePath in contentsOfFiles)
+    for (NSString *filePath in filenameAndExpectation)
     {
         NSError *error;
-        NSData *data = [NSData dataWithContentsOfFile:[self fullPathForFile:filePath] options:0 error:&error];
-        XCTAssertNotNil(data);
+        id contentsOfFile = [self contentsOfFilePath:[self fullPathForFile:filePath] inferTypeFromData:filenameAndExpectation[filePath] error:&error];
+
+        XCTAssertNotNil(contentsOfFile);
         XCTAssertNil(error);
 
-        XCTAssertEqualObjects(contentsOfFiles[filePath], data);
+        XCTAssertNotEqualObjects(filenameAndExpectation[filePath], contentsOfFile);
     }
 }
 
-- (void)assertContentsOfTextFiles:(NSDictionary *)contentsOfTextFiles
+- (void)assertContentsOfFilesEqual:(NSDictionary *)filenameAndExpectation
 {
-    for (NSString *filePath in contentsOfTextFiles)
+    for (NSString *filePath in filenameAndExpectation)
     {
         NSError *error;
-        NSString *text = [NSString stringWithContentsOfFile:[self fullPathForFile:filePath] encoding:NSUTF8StringEncoding error:&error];
-        XCTAssertNotNil(text);
+        id contentsOfFile = [self contentsOfFilePath:[self fullPathForFile:filePath] inferTypeFromData:filenameAndExpectation[filePath] error:&error];
+
+        XCTAssertNotNil(contentsOfFile);
         XCTAssertNil(error);
 
-        XCTAssertEqualObjects(contentsOfTextFiles[filePath], text);
+        [self assertEqualObjectsWithDiff:filenameAndExpectation[filePath] objectB:contentsOfFile];
     }
+}
+
+- (id)contentsOfFilePath:(NSString *)filepath inferTypeFromData:(id)data error:(NSError **)error
+{
+    if ([data isKindOfClass:[NSString class]])
+    {
+        return [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:error];
+    }
+
+    if ([data isKindOfClass:[NSDictionary class]])
+    {
+        return [NSDictionary dictionaryWithContentsOfFile:filepath];
+    }
+
+    if ([data isKindOfClass:[NSArray class]])
+    {
+        return [NSArray arrayWithContentsOfFile:filepath];
+    }
+
+    return [NSData dataWithContentsOfFile:[self fullPathForFile:filepath] options:0 error:error];
 }
 
 - (void)copyTestingResource:(NSString *)resourceName toRelPath:(NSString *)toRelPath
@@ -262,6 +284,45 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     }
 
     return filePath;
+}
+
+- (void)assertEqualObjectsWithDiff:(id)objectA objectB:(id)objectB
+{
+    BOOL equal = [objectA isEqualTo:objectB];
+    XCTAssertTrue(equal);
+    if (equal)
+    {
+        return;
+    }
+
+    NSTask *task = [[NSTask alloc] init];
+    [task setCurrentDirectoryPath:NSTemporaryDirectory()];
+    [task setLaunchPath:@"/bin/bash"];
+
+    NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/diff <(echo \"%@\") <(echo \"%@\")", objectA, objectB]];
+    [task setArguments:args];
+
+    @try
+    {
+        [task launch];
+        [task waitUntilExit];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"assertEqualObjectsWithDiff failed with exception %@", exception);
+    }
+}
+
+- (void)assertArraysAreEqualIgnoringOrder:(NSArray *)arrayA arrayB:(NSArray *)arrayB
+{
+    NSMutableArray *arrayAMutable = [arrayA mutableCopy];
+    NSMutableArray *arrayBMutable = [arrayB mutableCopy];
+
+    NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+    [arrayAMutable sortUsingDescriptors:@[highestToLowest]];
+    [arrayBMutable sortUsingDescriptors:@[highestToLowest]];
+
+    XCTAssertEqualObjects(arrayAMutable, arrayBMutable);
 }
 
 @end
