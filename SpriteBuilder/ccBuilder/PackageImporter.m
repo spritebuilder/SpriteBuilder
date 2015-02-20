@@ -13,6 +13,7 @@
 #import "PackageSettingsMigrator.h"
 #import "MigrationControllerFactory.h"
 #import "MigrationViewController.h"
+#import "MigrationController.h"
 
 @implementation PackageImporter
 
@@ -104,19 +105,8 @@
             return NO;
         }
 
-/*
-        MigrationViewController *migrationViewController =
-                [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory packageImportingMigrationController:newPathInPackagesFolder]];
-
-        migrationViewController.cancelButtonTitle = @"Do not import";
-        if (![migrationViewController migrate])
-        {
-            return NO;
-        }
-*/
-
-
-        if (![self migrateOrCreatePackageSettings:localError newPathInPackagesFolder:newPathInPackagesFolder])
+        MigrationController *migrationController = [MigrationControllerFactory packageImportingMigrationController:newPathInPackagesFolder];
+        if (![migrationController migrateWithError:localError])
         {
             return NO;
         }
@@ -124,48 +114,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
         return YES;
     };
-}
-
-- (BOOL)migrateOrCreatePackageSettings:(NSError **)localError newPathInPackagesFolder:(NSString *)newPathInPackagesFolder
-{
-    NSString *packageSettingsPath = [newPathInPackagesFolder stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if ([fileManager fileExistsAtPath:packageSettingsPath])
-    {
-        return [self migratePackageSettings:localError packageSettingsPath:packageSettingsPath];
-    }
-    else
-    {
-        [self createPackageSettingsFile:newPathInPackagesFolder];
-        return YES;
-    }
-}
-
-- (BOOL)migratePackageSettings:(NSError **)localError packageSettingsPath:(NSString *)packageSettingsPath
-{
-    PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:packageSettingsPath toVersion:PACKAGE_SETTINGS_VERSION];
-
-    NSError *underlyingError;
-    if (![packageSettingsMigrator migrateWithError:&underlyingError])
-    {
-        [NSError setNewErrorWithErrorPointer:localError code:SBMigrationError userInfo:@{
-                NSLocalizedDescriptionKey : @"Error importing package: Could not migrate package settings.",
-                NSUnderlyingErrorKey : underlyingError
-        }];
-        return NO;
-    };
-    return YES;
-}
-
-- (void)createPackageSettingsFile:(NSString *)newPathInPackagesFolder
-{
-    RMPackage *newPackage = [[RMPackage alloc] init];
-    newPackage.dirPath = newPathInPackagesFolder;
-
-    PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:newPackage];
-
-    [packageSettings store];
 }
 
 @end

@@ -8,6 +8,7 @@
 
 @implementation MigrationController
 
+
 - (BOOL)migrateWithError:(NSError **)error
 {
     if ([_migrators count] == 0)
@@ -21,7 +22,7 @@
         return YES;
     }
 
-    if (![self showMigrationNeededDialogAndAskToProceed])
+    if (![self askDelegateHowToProceed])
     {
         return NO;
     }
@@ -67,11 +68,11 @@
     return YES;
 }
 
-- (BOOL)showMigrationNeededDialogAndAskToProceed
+- (BOOL)askDelegateHowToProceed
 {
     if (!_delegate)
     {
-        return NO;
+        return YES;
     }
     
     return [_delegate migrateWithMigrationDetails:[self infoTextsAsHtmlOfAllMigrationSteps]];

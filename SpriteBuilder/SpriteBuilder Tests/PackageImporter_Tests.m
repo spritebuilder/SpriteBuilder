@@ -44,6 +44,8 @@
 
 - (void)testImportPackageWithName
 {
+    [self createFolders:@[@"foo.spritebuilder/Packages/foo.sbpack"]];
+
     [[[_fileManagerMock expect] andReturnValue:@(YES)] copyItemAtPath:OCMOCK_ANY toPath:OCMOCK_ANY error:[OCMArg anyObjectRef]];
 
     NSError *error;
@@ -55,6 +57,8 @@
 // The other one already is in the project
 - (void)testImportPackagesWithTwoPackages
 {
+    [self createFolders:@[@"foo.spritebuilder/Packages/notYetInProject.sbpack"]];
+
     id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePathNotInProject = [@"/notYetInProject" stringByAppendingPackageSuffix];
@@ -80,6 +84,8 @@
 
 - (void)testImportPackageSuccessfully
 {
+    [self createFolders:@[@"foo.spritebuilder/Packages/foo.sbpack"]];
+
     id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePath = [@"/somewhere/foo" stringByAppendingPackageSuffix];
@@ -118,6 +124,8 @@
 
 - (void)testReImportPackageInPackageFolderButNotInProject
 {
+    [self createFolders:@[@"foo.spritebuilder/Packages/foo.sbpack"]];
+
     _fileManagerMock = [OCMockObject mockForClass:[NSFileManager class]];
 
     NSString *toImportPackagePath = [_projectSettings fullPathForPackageName:@"foo"];
