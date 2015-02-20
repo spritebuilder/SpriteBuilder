@@ -28,6 +28,4 @@
 
 - (instancetype)initWithFilePath:(NSString *)filePath;
 
-- (void)tidyUp;
-
 @end
