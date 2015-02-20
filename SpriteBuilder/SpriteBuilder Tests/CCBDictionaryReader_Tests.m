@@ -537,8 +537,8 @@
 
 - (NSDictionary *)loadCCBFile:(NSString *)ccbName
 {
-    NSString *path = [self fullPathForFile:[NSString stringWithFormat:@"tests/%@.ccb", ccbName]];
-    [self copyTestingResource:[ccbName stringByAppendingPathExtension:@"ccb"] toFolder:@"tests"];
+    NSString *path = [self fullPathForFile:[NSString stringWithFormat:@"tests/%@.sb", ccbName]];
+    [self copyTestingResource:[ccbName stringByAppendingPathExtension:@"sb"] toFolder:@"tests"];
 
     [self assertFileExists:path];
 
