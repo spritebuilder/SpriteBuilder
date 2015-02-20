@@ -1,4 +1,5 @@
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 #import "FileSystemTestCase.h"
 #import "ProjectSettings.h"
 
@@ -117,24 +118,19 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     {
         [self createIntermediateDirectoriesForFilPath:relFilePath];
 
-        NSData *content = filesWithContents[relFilePath];
+        id content = filesWithContents[relFilePath];
         NSString *fullPathForFile = [self fullPathForFile:relFilePath];
 
-        NSError *error;
-        XCTAssertTrue([content writeToFile:fullPathForFile options:NSDataWritingAtomic error:&error],
-                              @"Could not create file \"%@\", error: %@", fullPathForFile, error);
+        if ([content isKindOfClass:[NSString class]])
+        {
+            NSError *error;
+            XCTAssertTrue([content writeToFile:fullPathForFile atomically:YES encoding:NSUTF8StringEncoding error:&error], @"Error writing string: %@", error);
+        }
+        else
+        {
+            XCTAssertTrue([content writeToFile:fullPathForFile atomically:YES]);
+        }
     }
-}
-
-- (void)createFilesWithTextContents:(NSDictionary *)filesWithTextContents
-{
-    NSMutableDictionary *texts = [filesWithTextContents mutableCopy];
-    for (NSString *key in filesWithTextContents)
-    {
-        texts[key] = [filesWithTextContents[key] dataUsingEncoding:NSUTF8StringEncoding];
-    }
-
-    [self createFilesWithContents:texts];
 }
 
 - (void)createIntermediateDirectoriesForFilPath:(NSString *)relPath

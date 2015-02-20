@@ -20,7 +20,7 @@
 
 - (void)testBackupFileAndUndo
 {
-    [self createFilesWithTextContents:@{ @"foo.txt" : @"original" }];
+    [self createFilesWithContents:@{ @"foo.txt" : @"original" }];
 
     BackupFileCommand *backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:[self fullPathForFile:@"foo.txt"]];
 
@@ -39,7 +39,7 @@
     [fileManager removeItemAtPath:[self fullPathForFile:@"foo.txt"] error:nil];
     [self assertFileDoesNotExist:@"foo.txt"];
 
-    [self createFilesWithTextContents:@{ @"foo.txt" : @"replacement" }];
+    [self createFilesWithContents:@{ @"foo.txt" : @"replacement" }];
 
     NSError *undoError;
     XCTAssertTrue([backupFileCommand undo:&undoError]);
@@ -55,7 +55,7 @@
 
 - (void)testBackupFolder
 {
-    [self createFilesWithTextContents:@{
+    [self createFilesWithContents:@{
         @"folder/foo.txt" : @"foo",
         @"folder/test/baa.txt" : @"baa"
     }];
