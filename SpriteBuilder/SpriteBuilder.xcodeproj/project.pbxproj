@@ -2832,7 +2832,6 @@
 		E525FD5B0F64DC8D7BC147CF /* InspectorCodeConnectionsJS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorCodeConnectionsJS.m; sourceTree = "<group>"; };
 		E525FD702E268242A41C54F4 /* PackageExporter_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageExporter_Tests.m; sourceTree = "<group>"; };
 		E525FD7A50FBA15D21819682 /* PublishBaseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublishBaseOperation.h; sourceTree = "<group>"; };
-		E525FD7B16D1386D7031A87E /* test_ccbreader_sprite9slice.ccb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; name = test_ccbreader_sprite9slice.ccb; path = "Testing Resources/test_ccbreader_sprite9slice.ccb"; sourceTree = "<group>"; };
 		E525FD8E1D01D1EDBB7B7E5E /* ResourceOpenInExternalEditorCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceOpenInExternalEditorCommand.m; sourceTree = "<group>"; };
 		E525FD97778D165E7455E7F6 /* InspectorScaleLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorScaleLock.h; sourceTree = "<group>"; };
 		E525FDB29C5EE936AB40BE96 /* DateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateCache.h; sourceTree = "<group>"; };
@@ -6010,7 +6009,6 @@
 			children = (
 				E525FB7E6FD9CB089D4D1B03 /* CCBDictionaryWriter_Tests.m */,
 				E525F10140E3181E71A2CEF6 /* CCBDictionaryReader_Tests.m */,
-				E525FD7B16D1386D7031A87E /* test_ccbreader_sprite9slice.ccb */,
 			);
 			name = "Document Readers & Writers";
 			sourceTree = "<group>";

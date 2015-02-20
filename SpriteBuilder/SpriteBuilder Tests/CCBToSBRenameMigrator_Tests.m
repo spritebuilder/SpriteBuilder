@@ -45,12 +45,12 @@
         @"foo.spritebuilder/packages/baa.sbpack/docs/universe001/milkyway/sol/earth/ocean/marianatrench/treasurechest.ccb"
     ]];
 
-    [self assertContentsOfFilesEqual:@{
-        @"foo.spritebuilder/packages/foo.sbpack/scenes/level1/renameonly.sb" : ccbDefaultContents,
-        @"foo.spritebuilder/packages/foo.sbpack/scenes/level1/donothing.pdf" : @"nothing in here",
-        @"foo.spritebuilder/packages/foo.sbpack/scenes/somcenestedfolder/level1/whoa.sb" : [self migratedCCBContents],
-        @"foo.spritebuilder/packages/baa.sbpack/docs/universe001/milkyway/sol/earth/ocean/marianatrench/not_in_dir_path_of_migrator.ccb" : [self ccBContentsThatCanBeMigrated],
-    }];
+    [self assertFilesExistRelativeToDirectory:@"foo.spritebuilder/packages" filesPaths:@[
+       @"foo.sbpack/scenes/level1/renameonly.sb",
+       @"foo.sbpack/scenes/level1/donothing.pdf",
+       @"foo.sbpack/scenes/somcenestedfolder/level1/whoa.sb",
+       @"baa.sbpack/docs/universe001/milkyway/sol/earth/ocean/marianatrench/not_in_dir_path_of_migrator.ccb"
+    ]];
 };
 
 - (void)testHtmlInfoText

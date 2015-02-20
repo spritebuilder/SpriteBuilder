@@ -65,28 +65,6 @@
     return [self.allDocuments count] > 0;
 }
 
-- (NSDictionary *)replaceCCBReferencesWithSBInDictionary:(NSDictionary *)dictionary
-{
-    NSMutableDictionary *mutableCCB = CFBridgingRelease(CFPropertyListCreateDeepCopy(NULL, (__bridge CFPropertyListRef)(dictionary), kCFPropertyListMutableContainersAndLeaves));
-
-    CCBDocumentManipulator *manipulator = [[CCBDocumentManipulator alloc] initWithDocument:mutableCCB];
-    [manipulator processAllProperties:^NSDictionary *(NSDictionary *property, NSDictionary *child)
-    {
-        if ([property[@"name"] isEqualToString:@"ccbFile"])
-        {
-            return @{
-                @"name" : @"sbFile",
-                @"type" : @"SBFile",
-                @"value" : [property[@"value"] replaceExtension:@"sb"]
-            };
-        }
-
-        return property;
-    }];
-
-    return mutableCCB;
-}
-
 - (BOOL)migrateWithError:(NSError **)error
 {
     if (![self isMigrationRequired])
@@ -96,11 +74,6 @@
 
     for (NSString *documentPath in self.allDocuments)
     {
-        if (![self renameCCBReferencesToSBWithinDocumentFile:documentPath error:error])
-        {
-            return NO;
-        }
-
         if (![self renameCCBFileToSB:documentPath error:error])
         {
             return NO;
@@ -123,33 +96,6 @@
 
     [_commands addObject:moveFileCommand];
 
-    return YES;
-}
-
-- (BOOL)renameCCBReferencesToSBWithinDocumentFile:(NSString *)docPath error:(NSError **)error
-{
-    BackupFileCommand *backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:docPath];
-    if (![backupFileCommand execute:error])
-    {
-        return NO;
-    }
-
-    [_commands addObject:backupFileCommand];
-
-    NSDictionary *ccbFileContents = [NSDictionary dictionaryWithContentsOfFile:docPath];
-    NSDictionary *replacedReferences = [self replaceCCBReferencesWithSBInDictionary:ccbFileContents];
-
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager removeItemAtPath:docPath error:error])
-    {
-        return NO;
-    }
-
-    if (![replacedReferences writeToFile:docPath atomically:YES])
-    {
-        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError message:@"Could not overwrite ccb document with migrated version."];
-        return NO;
-    }
     return YES;
 }
 
