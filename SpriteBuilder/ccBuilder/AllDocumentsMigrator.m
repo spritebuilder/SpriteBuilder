@@ -4,6 +4,7 @@
 #import "CCBDictionaryMigrator.h"
 #import "CCBReader_Private.h"
 #import "CCBDictionaryReader.h"
+#import "NSString+Misc.h"
 
 @interface AllDocumentsMigrator()
 
@@ -38,45 +39,26 @@
 {
     if (!_allDocuments)
     {
-        self.allDocuments = [self allDocumentsInFilePath];
+        self.allDocuments = [_dirPath allFilesInDirWithFilterBlock:^BOOL(NSURL *fileURL)
+        {
+            NSString *filename;
+            [fileURL getResourceValue:&filename forKey:NSURLNameKey error:nil];
+
+            NSNumber *isDirectory;
+            [fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
+
+            return [self isDocumentFile:fileURL isDirectory:isDirectory];
+        }];
     }
 
     return _allDocuments;
 }
 
-- (NSArray *)allDocumentsInFilePath
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:[NSURL fileURLWithPath:_dirPath]
-                                          includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
-                                                             options:NSDirectoryEnumerationSkipsHiddenFiles
-                                                        errorHandler:^BOOL(NSURL *url, NSError *error)
-    {
-        return YES;
-    }];
-
-    NSMutableArray *mutableFileURLs = [NSMutableArray array];
-    for (NSURL *fileURL in enumerator)
-    {
-        NSString *filename;
-        [fileURL getResourceValue:&filename forKey:NSURLNameKey error:nil];
-
-        NSNumber *isDirectory;
-        [fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
-
-        if ([self isDocumentFile:fileURL isDirectory:isDirectory])
-        {
-            [mutableFileURLs addObject:fileURL.path];
-        }
-    }
-
-    return mutableFileURLs;
-}
-
 - (BOOL)isDocumentFile:(NSURL *)fileURL isDirectory:(NSNumber *)isDirectory
 {
     return ![isDirectory boolValue]
-            && ([[fileURL relativeString] hasSuffix:@"ccb"] || [[fileURL relativeString] hasSuffix:@"sb"]);
+            && ([[fileURL relativeString] hasSuffix:@"ccb"]
+                || [[fileURL relativeString] hasSuffix:@"sb"]);
 }
 
 - (NSString *)htmlInfoText
