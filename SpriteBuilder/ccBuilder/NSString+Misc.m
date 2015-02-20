@@ -69,4 +69,57 @@
     return nil;
 }
 
+- (NSArray *)allFilesInDirWithFilterBlock:(FileFilterBlock)block
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    if (![fileManager fileExistsAtPath:self])
+    {
+        return nil;
+    }
+
+    NSDirectoryEnumerator *enumerator = [fileManager enumeratorAtURL:[NSURL fileURLWithPath:self]
+                                          includingPropertiesForKeys:@[NSURLNameKey, NSURLIsDirectoryKey]
+                                                             options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                        errorHandler:^BOOL(NSURL *url, NSError *error)
+    {
+        return YES;
+    }];
+
+    NSMutableArray *mutableFileURLs = [NSMutableArray array];
+    for (NSURL *fileURL in enumerator)
+    {
+        if (!block)
+        {
+            [mutableFileURLs addObject:fileURL.path];
+        }
+
+        if (block(fileURL))
+        {
+            [mutableFileURLs addObject:fileURL.path];
+        }
+    }
+
+    return mutableFileURLs;
+
+}
+
+- (NSString *)replaceExtension:(NSString *)newExtension
+{
+    NSRange range = [self rangeOfString:@"." options:NSBackwardsSearch];
+
+    if (range.location != NSNotFound)
+    {
+        NSRange newRange = NSMakeRange(range.location + 1, [self length] - range.location - 1);
+        if (newRange.location + newRange.length > [self length])
+        {
+            return self;
+        }
+
+        return [self stringByReplacingCharactersInRange:newRange withString:newExtension];
+    }
+
+    return self;
+}
+
 @end
