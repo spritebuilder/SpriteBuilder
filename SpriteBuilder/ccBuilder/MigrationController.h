@@ -6,6 +6,7 @@
 
 @interface MigrationController : NSObject
 
+// If nil the migration will proceed
 @property (nonatomic, weak) id <MigrationControllerDelegate> delegate;
 @property (nonatomic, copy) NSArray *migrators;
 

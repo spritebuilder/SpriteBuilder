@@ -68,7 +68,7 @@
 {
     [self createEmptyFiles:@[
             @"SpriteBuilder Resources/asset.png",
-            @"SpriteBuilder Resources/scene.ccb"]];
+            @"SpriteBuilder Resources/song.wav"]];
 
     [self setProjectsResourcePaths:@[@"SpriteBuilder Resources"]];
 
@@ -90,7 +90,7 @@
 {
     [self createEmptyFiles:@[
             @"Packages/asset.png",
-            @"Packages/scene.ccb"]];
+            @"Packages/song.wav"]];
 
     [self setProjectsResourcePaths:@[@"Packages"]];
 
@@ -169,7 +169,7 @@
 {
     [self createEmptyFiles:@[
             @"SpriteBuilder Resources/asset.png",
-            @"SpriteBuilder Resources/scene.ccb"]];
+            @"SpriteBuilder Resources/song.wav"]];
 
     [self setProjectsResourcePaths:@[@"SpriteBuilder Resources"]];
 
@@ -182,7 +182,7 @@
     [_packageMigrator rollback];
 
     [self assertFileExists:@"SpriteBuilder Resources/asset.png"];
-    [self assertFileExists:@"SpriteBuilder Resources/scene.ccb"];
+    [self assertFileExists:@"SpriteBuilder Resources/song.wav"];
     [self assertFileDoesNotExist:@"packages"];
     [self assertResourcePathsInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]]];
     XCTAssertTrue(_projectSettings.resourcePaths.count == 1, @"There should be only 1 resourcepath but %lu found: %@", _projectSettings.resourcePaths.count, _projectSettings.resourcePaths);
