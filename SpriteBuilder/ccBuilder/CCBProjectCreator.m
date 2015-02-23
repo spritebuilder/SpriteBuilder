@@ -202,30 +202,6 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     }
 }
 
-- (void)replace:(NSDictionary *)substitutions in:(NSString *)fileName
-{
-    NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *resultFilename = [NSString stringWithString:fileName];
-
-    for( NSString*key in substitutions.allKeys)
-    {
-        resultFilename = [resultFilename stringByReplacingOccurrencesOfString:key withString:substitutions[key]];
-    }
-
-    BOOL renameRequired = ![resultFilename isEqualToString:fileName];
-    if(renameRequired)
-    {
-        NSError *error;
-        [fm moveItemAtPath:fileName toPath:resultFilename error:&error];
-        NSAssert(!error, @"error occurred renaming %@ - %@", fileName, [error description]);
-    }
-
-    for( NSString*key in substitutions.allKeys)
-    {
-        [self setName:substitutions[key] inFile:resultFilename search:key];
-    }
-}
-
 - (void)setName:(NSString *)name inFile:(NSString *)fileName search:(NSString *)searchStr
 {
     NSMutableData *fileData = [NSMutableData dataWithContentsOfFile:fileName];
