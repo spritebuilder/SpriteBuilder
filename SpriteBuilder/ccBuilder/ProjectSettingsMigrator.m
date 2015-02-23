@@ -5,6 +5,10 @@
 #import "BackupFileCommand.h"
 #import "NSError+SBErrors.h"
 #import "Errors.h"
+#import "MoveFileCommand.h"
+#import "MiscConstants.h"
+#import "MoveFileCommand.h"
+#import "NSString+Misc.h"
 
 
 @interface ProjectSettingsMigrator ()
@@ -12,6 +16,7 @@
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) BackupFileCommand *backupFileCommand;
 
+@property (nonatomic, strong) MoveFileCommand *renameCommand;
 @end
 
 
@@ -46,6 +51,11 @@
         }
     }
 
+    if ([[_projectSettings.projectPath pathExtension] isEqualToString:PROJECT_FILE_CCB_EXTENSION])
+    {
+        return YES;
+    }
+
     return NO;
 }
 
@@ -57,7 +67,42 @@
     }
     
     [_projectSettings store];
-    
+
+    if (![self backupProjectFile:error])
+    {
+        return NO;
+    }
+
+    // At the moment there is nothing that can go wrong here
+    [self migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites];
+
+    if (![self renameProjectFile:error])
+    {
+        return NO;
+    }
+
+    [_projectSettings store];
+
+    return YES;
+}
+
+- (BOOL)renameProjectFile:(NSError **)error
+{
+    NSString *newFileName = [_projectSettings.projectPath replaceExtension:PROJECT_FILE_SB_EXTENSION];
+
+    self.renameCommand = [[MoveFileCommand alloc] initWithFromPath:_projectSettings.projectPath toPath:newFileName];
+
+    if ([_renameCommand execute:error])
+    {
+        _projectSettings.projectPath = newFileName;
+        return YES;
+    }
+
+    return NO;
+}
+
+- (BOOL)backupProjectFile:(NSError **)error
+{
     self.backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:_projectSettings.projectPath];
 
     NSError *errorBackup;
@@ -69,9 +114,6 @@
         }];
         return NO;
     };
-
-    [self migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites];
-
     return YES;
 }
 
@@ -82,6 +124,17 @@
     {
         NSLog(@"[MIGRATION] Error while rolling back project settings migration step: %@", error);
     }
+
+    // The backup is already reinstating the old ccbproj in case it was one
+    // Just remove the renamed file.
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager removeItemAtPath:_renameCommand.toPath error:&error]
+        && error.code != NSFileNoSuchFileError)
+    {
+        NSLog(@"[MIGRATION] Error while rolling back renaming of project settings: %@", error);
+    }
+
+    _projectSettings.projectPath = [_projectSettings.projectPath replaceExtension:PROJECT_FILE_CCB_EXTENSION];
 }
 
 // Note: To refactor the whole setValue redundancies the convention to name the properties the

@@ -1691,7 +1691,8 @@ typedef enum
         return NO;
     }
 
-    MigrationViewController *migrationViewController = [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:projectSettings]];
+    MigrationViewController *migrationViewController =
+            [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:projectSettings]];
     migrationViewController.cancelButtonTitle = @"Close Project";
     if (![migrationViewController migrate])
     {
@@ -1724,7 +1725,7 @@ typedef enum
     localizationEditorHandler.managedFile = langFile;
 
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[prjctSettings.projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
 
     // Open ccb file for project if there is only one
     NSArray* resPaths = prjctSettings.absoluteResourcePaths;
@@ -1760,7 +1761,7 @@ typedef enum
     Cocos2dUpdaterController *cocos2dUpdaterController = [[Cocos2dUpdaterController alloc] initWithAppDelegate:self projectSettings:projectSettings];
     [cocos2dUpdaterController updateAndBypassIgnore:NO];
 
-    self.window.representedFilename = [projectPath stringByDeletingLastPathComponent];
+    self.window.representedFilename = [projectSettings.projectPath stringByDeletingLastPathComponent];
 
     return YES;
 }
@@ -1844,8 +1845,9 @@ typedef enum
     
     [self prepareForDocumentSwitch];
 
-    MigrationViewController *migrationViewController = [[MigrationViewController alloc]
-                                                                                 initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilepath:nil]];
+    MigrationViewController *migrationViewController =
+            [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilepath:filePath]];
+
     migrationViewController.cancelButtonTitle = @"Cancel (Do not open)";
     if (![migrationViewController migrate])
     {

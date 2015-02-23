@@ -25,7 +25,7 @@
 {
     [super setUp];
 
-    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
+    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
 
     self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
 }
@@ -48,6 +48,10 @@
     XCTAssertTrue([_migrator migrateWithError:&error]);
     XCTAssertNil(error);
 
+    XCTAssertEqualObjects([_projectSettings.projectPath pathExtension], @"sbproj");
+    [self assertFileExists:@"foo.spritebuilder/foo.sbproj"];
+    [self assertFileDoesNotExist:@"foo.spritebuilder/foo.ccbproj"];
+
     XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertTrue([_projectSettings isDirtyRelPath:@"flowers"]);
@@ -68,6 +72,9 @@
 
 - (void)testMigrationNotRequired
 {
+    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
+    self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
+
     NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
     XCTAssertFalse([_migrator isMigrationRequired]);
@@ -96,20 +103,30 @@
     XCTAssertTrue([_migrator migrateWithError:&error]);
     XCTAssertNil(error);
 
-    [_projectSettings store];
+    XCTAssertEqualObjects([_projectSettings.projectPath pathExtension], @"sbproj");
+    [self assertFileExists:@"foo.spritebuilder/foo.sbproj"];
+    [self assertFileDoesNotExist:@"foo.spritebuilder/foo.ccbproj"];
 
     [_migrator rollback];
 
+    XCTAssertEqualObjects([_projectSettings.projectPath pathExtension], @"ccbproj");
+    [self assertFileExists:@"foo.spritebuilder/foo.ccbproj"];
+    [self assertFileDoesNotExist:@"foo.spritebuilder/foo.sbproj"];
+
     NSString *newPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
-    [self
-            assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:newPrjSettingsFile];
+    [self assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:newPrjSettingsFile];
 }
 
 - (void)testRemovalOfKeys
 {
     // onlyPublishCCBs -> remove
     // XCTFail(@"Implement me");
+}
+
+- (void)testRenamingOfProjectSettingsFile
+{
+
 }
 
 @end

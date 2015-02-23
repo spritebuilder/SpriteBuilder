@@ -15,12 +15,7 @@
 
 + (MigrationController *)fullProjectMigrationControllerWithProjectSettings:(ProjectSettings *)projectSettings
 {
-    NSMutableArray *packagePaths = [NSMutableArray array];
-    for (NSMutableDictionary *resourcePathDict in projectSettings.resourcePaths)
-    {
-        NSString *fullPackagePath = [projectSettings fullPathForResourcePathDict:resourcePathDict];
-        [packagePaths addObject:fullPackagePath];
-    }
+    NSArray *packagePaths = [self allPackagePathsInProject:projectSettings];
 
     MigrationController *migrationController = [[MigrationController alloc] init];
     migrationController.migrators = @[
@@ -31,6 +26,17 @@
         [[CCBToSBRenameMigrator alloc] initWithDirPath:projectSettings.projectPathDir];
 
     return migrationController;
+}
+
++ (NSArray *)allPackagePathsInProject:(ProjectSettings *)projectSettings
+{
+    NSMutableArray *packagePaths = [NSMutableArray array];
+    for (NSMutableDictionary *resourcePathDict in projectSettings.resourcePaths)
+    {
+        NSString *fullPackagePath = [projectSettings fullPathForResourcePathDict:resourcePathDict];
+        [packagePaths addObject:fullPackagePath];
+    }
+    return packagePaths;
 }
 
 + (MigrationController *)documentMigrationControllerWithFilepath:(NSString *)filepath

@@ -5,6 +5,9 @@ NSInteger const EFFECTS_MAXIMUM_PER_NODE = 5;
 NSString *const PACKAGE_NAME_SUFFIX = @"sbpack";
 NSString *const PACKAGES_FOLDER_NAME = @"Packages";
 
+NSString *const PROJECT_FILE_CCB_EXTENSION = @"ccbproj";
+NSString *const PROJECT_FILE_SB_EXTENSION = @"sbproj";
+
 NSString *const PNG_PREVIEW_IMAGE_SUFFIX = @"ppng";
 
 NSString *const INTERMEDIATE_FILE_LOOKUP_NAME = @"intermediateFileLookup.plist";
@@ -21,7 +24,6 @@ NSString *const PACKAGE_PUBLISH_SETTINGS_FILE_NAME = @"Package.plist";
 NSString *const RESOLUTION_DIR_AUTO = @"auto";
 NSString *const RESOLUTION_DIR_1X = @"phone";
 NSString *const RESOLUTION_DIR_2X = @"phonehd";
-NSString *const RESOLUTION_TABLET = @"tablet";
 NSString *const RESOLUTION_DIR_4X = @"tablethd";
 
 NSUInteger const RESOLUTION_1X = 1;
