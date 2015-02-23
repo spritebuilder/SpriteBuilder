@@ -8,8 +8,8 @@
 
 #import <XCTest/XCTest.h>
 #import "CCBBinaryWriter.h"
-#import "CCBReader_Private.h"
 #import "Cocos2dTestHelpers.h"
+#import "CCSBReader_Private.h"
 
 @interface CCBReader_Tests : XCTestCase
 
@@ -31,7 +31,7 @@
 
 - (void)testCCBVersionCompatibility
 {
-    XCTAssertEqual(kCCBVersion, kCCBBinaryVersion, @"CCB version %d read by CCBReader is incompatible with version %d written by SpriteBuilder. Is cocos2d up to date?", kCCBVersion, kCCBBinaryVersion);
+    XCTAssertEqual(kCCVersion, kCCBBinaryVersion, @"SB version %d read by CCSBReader is incompatible with version %d written by SpriteBuilder. Is cocos2d up to date?", kCCVersion, kCCBBinaryVersion);
 }
 
 @end

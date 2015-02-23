@@ -26,7 +26,10 @@
 #import "CCBPublisherTypes.h"
 
 #define kCCBProjectSettingsVersion 1
-#define kCCBDefaultExportPlugIn @"ccbi"
+#define kCCBDefaultExportPlugIn @"sbi"
+#define kCCBDefaultExtension @"sb"
+#define kCCBDefaultExtensionWithDot @".sb"
+
 
 typedef enum
 {

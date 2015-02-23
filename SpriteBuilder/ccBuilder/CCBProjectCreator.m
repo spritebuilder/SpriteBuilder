@@ -70,7 +70,7 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     [zipTask waitUntilExit];
 
     // Rename ccbproj
-    NSString *ccbproj = [NSString stringWithFormat:@"%@.ccbproj", substitutableProjectName];
+    NSString *ccbproj = [NSString stringWithFormat:@"%@.sbproj", substitutableProjectName];
     [fm moveItemAtPath:[parentPath stringByAppendingPathComponent:ccbproj] toPath:fileName error:NULL];
 
     // Update the Xcode project
@@ -155,7 +155,6 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
 
     NSMutableArray *filesNeedingInterpolation = [NSMutableArray arrayWithArray: @[xibFileName, macAppDelegateMFileName,
             iosAppDelegateMFileName, controllerHName,controllerMName]];
-
     //Add android files if they exist
     NSString *activityMFileName = [parentPath stringByAppendingPathComponent:
             [NSString stringWithFormat:@"Source/Platforms/Android/%@Activity.m", substitutableProjectIdentifier]];

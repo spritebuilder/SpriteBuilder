@@ -24,12 +24,13 @@
 
 #import "CCBXCocos2diPhone.h"
 #import "CCBBinaryWriter.h"
+#import "ProjectSettings.h"
 
 @implementation CCBXCocos2diPhone
 
 - (NSString*) extension
 {
-    return @"ccbi";
+    return kCCBDefaultExportPlugIn;
 }
 
 - (NSData *)exportDocument:(NSDictionary *)doc

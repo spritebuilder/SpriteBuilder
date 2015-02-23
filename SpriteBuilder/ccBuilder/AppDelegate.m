@@ -1696,7 +1696,7 @@ typedef enum
 
     //Find .ccbproj file
     NSArray *projectContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:projectPath error:nil];
-    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj'"];
+    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj' OR SELF ENDSWITH '.sbproj'"];
     NSString *ccbprojFileName = (NSString*)[[projectContents filteredArrayUsingPredicate:ccbprojExtension] firstObject];
 
     projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
@@ -1705,7 +1705,7 @@ typedef enum
     NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
     if (!projectDict)
     {
-        [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File may be missing or invalid."];
+        [self modalDialogTitle:@"Invalid Project File" message:[NSString stringWithFormat:@"Failed to open the project. File may be missing or invalid. Attempted to open: %@", projectPath]];
         return NO;
     }
 
@@ -1759,7 +1759,7 @@ typedef enum
         NSString* ccbFile = NULL;
         for (NSString* file in resDir)
         {
-            if ([file hasSuffix:@".ccb"])
+            if ([file hasSuffix:kCCBDefaultExtensionWithDot])
             {
                 ccbFile = file;
                 numCCBFiles++;
@@ -1789,12 +1789,13 @@ typedef enum
 - (void)openProject:(NSString *)fileName
 {
     if (![fileName hasSuffix:@".spritebuilder"]
-        && ![fileName hasSuffix:@".ccbproj"])
+        && ![fileName hasSuffix:@".ccbproj"]
+        && ![fileName hasSuffix:@".sbproj"])
     {
         return;
     }
 
-    if ([fileName hasSuffix:@".ccbproj"])
+    if ([fileName hasSuffix:@".ccbproj"] || [fileName hasSuffix:@".sbproj"])
     {
         NSURL *projectPathURL = [NSURL fileURLWithPath:[fileName stringByDeletingLastPathComponent] isDirectory:YES];
         NSURL *projectPathURLResolved = [SecurityScopedBookmarksStore resolveBookmarkForURL:projectPathURL];
@@ -2048,7 +2049,7 @@ typedef enum
 	NSArray* files = [fm contentsOfDirectoryAtPath:path error:NULL];
 	for( NSString* file in files )
 	{
-		if( [file hasSuffix:@".ccbproj"] )
+		if( [file hasSuffix:@".ccbproj"] || [file hasSuffix:@".sbproj"] )
 		{
 			projectFile = [path stringByAppendingPathComponent:file];
 			break;
@@ -2800,7 +2801,7 @@ typedef enum
     if (!currentDocument) return;
     
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
-    [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"ccb"]];
+    [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:kCCBDefaultExtension]];
 	__block SavePanelLimiter* limiter = [[SavePanelLimiter alloc] initWithPanel:saveDlg];
     
     [saveDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
@@ -3003,7 +3004,7 @@ typedef enum
                     NSArray* arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dirName error:NULL];
                     for(NSString* file in arr)
                     {
-                        if ([file hasSuffix:@".ccb"])
+                        if ([file hasSuffix:kCCBDefaultExtensionWithDot])
                         {
                             NSString* absPath = [dirName stringByAppendingPathComponent:file];
                             [self openFile:absPath];
@@ -3023,6 +3024,7 @@ typedef enum
 - (IBAction)menuOpenProjectInXCode:(id)sender
 {
     NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
+    xcodePrjPath = [xcodePrjPath stringByReplacingOccurrencesOfString:@".sbproj" withString:@".xcodeproj"];
     
     [[NSWorkspace sharedWorkspace] openFile:xcodePrjPath withApplication:@"Xcode"];
 }
@@ -3159,7 +3161,7 @@ typedef enum
                 
                 // Create project file
                 NSString* projectName = [fileNameRaw lastPathComponent];
-                fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
+                fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"sbproj"];
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_main_queue(), ^{

@@ -1,5 +1,5 @@
 #import "CCBDictionaryMigrator.h"
-#import "CCBReader_Private.h"
+#import "CCSBReader_Private.h"
 #import "CCBDictionaryReader.h"
 #import "CCBDictionaryMigrationProtocol.h"
 #import "CCBDictionaryKeys.h"
