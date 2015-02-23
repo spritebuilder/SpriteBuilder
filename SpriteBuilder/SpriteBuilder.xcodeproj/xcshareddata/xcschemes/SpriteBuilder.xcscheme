@@ -20,6 +20,20 @@
                ReferencedContainer = "container:SpriteBuilder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B77582FD1A76D25800C8589F"
+               BuildableName = "cocos2dTests.xctest"
+               BlueprintName = "cocos2dTests"
+               ReferencedContainer = "container:SpriteBuilder.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -35,6 +49,16 @@
                BlueprintIdentifier = "833A5C49192B48CA001837B3"
                BuildableName = "SpriteBuilder Tests.xctest"
                BlueprintName = "SpriteBuilder Tests"
+               ReferencedContainer = "container:SpriteBuilder.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B77582FD1A76D25800C8589F"
+               BuildableName = "cocos2dTests.xctest"
+               BlueprintName = "cocos2dTests"
                ReferencedContainer = "container:SpriteBuilder.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -54,7 +78,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">

@@ -96,15 +96,21 @@
     
     self.resourceProperties = [NSMutableDictionary dictionary];
     
+    NSLog(@"load exporters");
+    
     // Load available exporters
     self.availableExporters = [NSMutableArray array];
     for (PlugInExport* plugIn in [[PlugInManager sharedManager] plugInsExporters])
     {
+        if (!plugIn.extension) NSLog(@"plugIn.extension is NULL");
+        
         [_availableExporters addObject: plugIn.extension];
     }
 
     self.versionStr = [self getVersion];
     self.needRepublish = NO;
+    
+    NSLog(@"exporters loaded");
 
     return self;
 }

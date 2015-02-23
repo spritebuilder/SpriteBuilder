@@ -11,7 +11,7 @@
 extern const float kMargin;
 extern const float kEdgeRadius;
 
-
+__attribute__((visibility("default")))
 @interface CCBPhysicsTwoBodyJoint : CCBPhysicsPivotJoint
 {
     CCSprite9Slice  * jointBody;

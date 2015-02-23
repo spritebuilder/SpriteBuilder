@@ -48,20 +48,20 @@
 			<key>NSDocumentClass</key>
 			<string></string>
 		</dict>
-        <dict>
-            <key>CFBundleTypeExtensions</key>
-            <array>
-                <string>ccbproj</string>
-            </array>
-            <key>CFBundleTypeIconFile</key>
-            <string>ccbproj.icns</string>
-            <key>CFBundleTypeName</key>
-            <string>SpriteBuilder Project</string>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>NSDocumentClass</key>
-            <string>AppDelegate</string>
-        </dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>ccbproj</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>ccbproj.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>SpriteBuilder Project</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>NSDocumentClass</key>
+			<string>AppDelegate</string>
+		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
@@ -88,11 +88,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>${SB_VERSION}</string>
+	<string>1.4.7</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>${SB_VERSION}</string>
+	<string>1.4.7</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.developer-tools</string>
 	<key>LSMinimumSystemVersion</key>
@@ -101,6 +101,8 @@
 	<true/>
 	<key>NSHighResolutionCapable</key>
 	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright 2011-2015 Apportable. All rights reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

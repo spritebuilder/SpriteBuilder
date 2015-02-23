@@ -27,6 +27,7 @@
 @class PlugInNode;
 @class SequencerNodeProperty;
 
+__attribute__((visibility("default")))
 @interface NodeInfo : NSObject
 {
     PlugInNode* __weak plugIn;

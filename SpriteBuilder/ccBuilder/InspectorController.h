@@ -5,7 +5,7 @@
 @class SequencerHandler;
 @class PropertyInspectorTemplateHandler;
 
-
+__attribute__((visibility("default")))
 @interface InspectorController : NSObject
 
 @property (nonatomic, weak) AppDelegate *appDelegate;

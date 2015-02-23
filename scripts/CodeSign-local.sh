@@ -43,6 +43,7 @@ codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsPinJoint.c
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsPivotJoint.ccbPlugNode"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCPhysicsSpringJoint.ccbPlugNode"
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCEffectNode.ccbPlugNode"
+codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/CCLightNode.ccbPlugNode"
 
 codesign --entitlements $ENT -s "$ID" "$APP/Contents/PlugIns/Cocos2d iPhone.ccbPlugExport"
 

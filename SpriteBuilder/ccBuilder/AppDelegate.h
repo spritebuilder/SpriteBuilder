@@ -135,6 +135,7 @@ typedef void (^CompletionCallback) (BOOL success);
 - (void) oldVisit:(__unsafe_unretained CCRenderer *)renderer parentTransform:(const GLKMatrix4 *)parentTransform;
 @end
 
+__attribute__((visibility("default")))
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, SMTabBarDelegate, BITHockeyManagerDelegate, PublishingFinishedDelegate>
 {
     // Panel Views
