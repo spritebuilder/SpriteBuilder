@@ -15,8 +15,12 @@
 
 @property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) BackupFileCommand *backupFileCommand;
-
 @property (nonatomic, strong) MoveFileCommand *renameCommand;
+
+@property (nonatomic) BOOL requiresRenamingOfFile;
+@property (nonatomic) BOOL requiresMigrationOfProperties;
+@property (nonatomic) BOOL requiresRemovalOfObsoleteKeys;
+
 @end
 
 
@@ -30,32 +34,79 @@
     if (self)
     {
         self.projectSettings = projectSettings;
+
+        [self figureOutWhatNeedsMigration];
     }
 
     return self;
 }
 
-- (NSString *)htmlInfoText
+- (void)figureOutWhatNeedsMigration
 {
-    return @"Old property setting for untrimmed Sprite Sheets found. Project settings file will change after migration.";
-}
+    if ([self rootKeysSet:@[@"onlyPublishCCBs"]])
+    {
+        self.requiresRemovalOfObsoleteKeys = YES;
+    }
 
-- (BOOL)isMigrationRequired
-{
     for (NSString *relativePath in [_projectSettings allResourcesRelativePaths])
     {
         NSNumber *trimSpritesValue = [_projectSettings propertyForRelPath:relativePath andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
         if (trimSpritesValue)
         {
-            return YES;
+            self.requiresMigrationOfProperties = YES;
+            break;
         }
     }
 
     if ([[_projectSettings.projectPath pathExtension] isEqualToString:PROJECT_FILE_CCB_EXTENSION])
     {
-        return YES;
+        self.requiresRenamingOfFile = YES;
+    }
+}
+
+- (NSString *)htmlInfoText
+{
+    NSMutableString *result = [NSMutableString string];
+    [result appendString:@"<ul>"];
+
+    if (_requiresMigrationOfProperties)
+    {
+        [result appendString:@"<li>Some properties are of an older version.</li>"];
     }
 
+    if (_requiresRenamingOfFile)
+    {
+        [result appendString:@"<li>Project file has ccbproj extension. Extension will be renamed to sbproj.</li>"];
+    }
+
+    if (_requiresRemovalOfObsoleteKeys)
+    {
+        [result appendString:@"<li>Obsolete settings detected. Those will be removed.</li>"];
+    }
+
+    [result appendString:@"</ul>"];
+
+    return result;
+}
+
+- (BOOL)isMigrationRequired
+{
+    return _requiresMigrationOfProperties
+        || _requiresRemovalOfObsoleteKeys
+        || _requiresRenamingOfFile;
+}
+
+- (BOOL)rootKeysSet:(NSArray *)rootKeys
+{
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_projectSettings.projectPath];
+
+    for (NSString *rootKey in rootKeys)
+    {
+        if (dict[rootKey])
+        {
+            return YES;
+        }
+    }
     return NO;
 }
 

@@ -84,7 +84,6 @@
     self.publishDirectory = @"Published-iOS";
     self.publishDirectoryAndroid = @"Published-Android";
 
-    self.onlyPublishCCBs = NO;
     self.publishToZipFile = NO;
 
     self.deviceOrientationLandscapeLeft = YES;
@@ -143,7 +142,6 @@
     self.publishEnabledAndroid = [[dict objectForKey:@"publishEnabledAndroid"] boolValue];
 
     self.publishToZipFile = [[dict objectForKey:@"publishToZipFile"] boolValue];
-    self.onlyPublishCCBs = [[dict objectForKey:@"onlyPublishCCBs"] boolValue];
     self.exporter = [dict objectForKey:@"exporter"];
     self.deviceOrientationPortrait = [[dict objectForKey:@"deviceOrientationPortrait"] boolValue];
     self.deviceOrientationUpsideDown = [[dict objectForKey:@"deviceOrientationUpsideDown"] boolValue];
@@ -216,7 +214,6 @@
     dict[@"publishEnabledAndroid"] = @(_publishEnabledAndroid);
 
     dict[@"publishToZipFile"] = @(_publishToZipFile);
-    dict[@"onlyPublishCCBs"] = @(_onlyPublishCCBs);
     dict[@"exporter"] = self.exporter;
     
     dict[@"deviceOrientationPortrait"] = @(_deviceOrientationPortrait);

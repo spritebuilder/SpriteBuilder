@@ -26,12 +26,15 @@
     [super setUp];
 
     self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
-
     self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
 }
 
 - (void)testMigration
 {
+    NSMutableDictionary *project = [[NSDictionary dictionaryWithContentsOfFile:_projectSettings.projectPath] mutableCopy];
+    project[@"onlyPublishCCBs"] = @NO;
+    [project writeToFile:_projectSettings.projectPath atomically:YES];
+
     [_projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
     [_projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [_projectSettings markAsDirtyRelPath:@"flowers"];
@@ -63,11 +66,34 @@
     XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"background.png"]);
+
+    NSDictionary *newProject = [NSDictionary dictionaryWithContentsOfFile:_projectSettings.projectPath];
+    XCTAssertNil(newProject[@"onlyPublishCCBs"]);
 }
 
 - (void)testHtmlInfoText
 {
     XCTAssertNotNil([_migrator htmlInfoText]);
+}
+
+- (void)testMigrationRequired_oldCCBProjName
+{
+    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
+    self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
+
+    XCTAssertTrue([_migrator isMigrationRequired]);
+}
+
+- (void)testMigrationRequired_obsoleteKeysSetInPropertyList
+{
+    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
+    NSMutableDictionary *project = [[NSDictionary dictionaryWithContentsOfFile:[self fullPathForFile:@"foo.spritebuilder/foo.sbproj"]] mutableCopy];
+    project[@"onlyPublishCCBs"] = @NO;
+    [project writeToFile:[self fullPathForFile:@"foo.spritebuilder/foo.sbproj"] atomically:YES];
+
+    self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
+
+    XCTAssertTrue([_migrator isMigrationRequired]);
 }
 
 - (void)testMigrationNotRequired
