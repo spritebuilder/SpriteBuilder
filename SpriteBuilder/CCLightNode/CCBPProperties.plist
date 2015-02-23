@@ -198,11 +198,11 @@
 		</dict>
 		<dict>
 			<key>defaultSerialization</key>
-			<integer>1</integer>
+			<integer>100</integer>
 			<key>animatable</key>
 			<true/>
 			<key>default</key>
-			<integer>1</integer>
+			<integer>100</integer>
 			<key>displayName</key>
 			<string>Depth</string>
 			<key>type</key>

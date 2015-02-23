@@ -43,6 +43,7 @@
 #import "CCBGLView.h"
 #import "InspectorController.h"
 #import "SBPasteboardTypes.h"
+#import "SequencerHandler.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
@@ -94,6 +95,9 @@
     
     // Update physics body
     self.selectedNodePhysicsBody = [AppDelegate appDelegate].selectedNode.nodePhysicsBody;
+    
+    // Refresh Timeline
+    [[SequencerHandler sharedHandler] redrawTimeline];
 }
 
 - (BOOL) selectedNodePhysicsEnabled
@@ -101,7 +105,7 @@
     return [AppDelegate appDelegate].selectedNode.nodePhysicsBody != nil;
 }
 
--(BOOL)selectedNodeHasKeyframes
+- (BOOL)selectedNodeHasKeyframes
 {
     if([AppDelegate appDelegate].selectedNode==nil) return FALSE;
     
@@ -110,7 +114,6 @@
        [[AppDelegate appDelegate].selectedNode hasKeyframesForProperty:@"rotation"] ||
        [[AppDelegate appDelegate].selectedNode hasKeyframesForProperty:@"skew"]) {
         
-        [[AppDelegate appDelegate].selectedNode.physicsBody setType:CCPhysicsBodyTypeStatic];
         return TRUE;
     }
     

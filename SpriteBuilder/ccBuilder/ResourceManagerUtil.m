@@ -162,6 +162,7 @@
                     [menu setSubmenu:subMenu forItem:menuItem];
                 }
                 
+                count++;
             }
         }
     }

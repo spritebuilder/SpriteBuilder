@@ -91,6 +91,7 @@ NSString * kAnimationOfPhysicsWarning;
 - (void) loadCustomPropertiesFromSerialization:(id)ser;
 - (void) loadCustomPropertyValuesFromSerialization:(id)ser;
 - (BOOL) shouldDisableProperty:(NSString*) prop;
+- (BOOL)shouldDisableKeyframe:(NSString*) prop;
 
 - (void) setUsesFlashSkew:(BOOL)seqExpanded;
 - (BOOL) usesFlashSkew;
