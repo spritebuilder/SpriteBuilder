@@ -3,6 +3,7 @@
 
 @class ProjectSettings;
 @class BackupFileCommand;
+@class MoveFileCommand;
 
 
 @interface ProjectSettingsMigrator : NSObject <MigratorProtocol>

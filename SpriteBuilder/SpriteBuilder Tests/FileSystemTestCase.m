@@ -148,8 +148,18 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 
 - (ProjectSettings *)createProjectSettingsFileWithName:(NSString *)name
 {
+    NSString *filename;
+    if ([[name pathExtension] isEqualToString:@"ccbproj"] || [[name pathExtension] isEqualToString:@"sbproj"])
+    {
+        filename = name;
+    }
+    else
+    {
+        filename = [NSString stringWithFormat:@"%@.ccbproj", name];
+    }
+
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
-    projectSettings.projectPath = [_testDirecotoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.ccbproj", name]];
+    projectSettings.projectPath = [_testDirecotoryPath stringByAppendingPathComponent:filename];
 
     [self createIntermediateDirectoriesForFilPath:projectSettings.projectPath];
 
