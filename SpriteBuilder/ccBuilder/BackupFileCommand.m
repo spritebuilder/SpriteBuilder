@@ -92,6 +92,10 @@
     return result;
 }
 
-
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"[BackupFileCommand] - Backed up file: '%@', backup file: '%@'. Executed: %d, undone: %d",
+                     _filePath, _backupFilePath, _executed, _undone];
+}
 
 @end

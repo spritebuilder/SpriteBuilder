@@ -7,7 +7,12 @@
 #import "NSError+SBErrors.h"
 #import "Errors.h"
 #import "BackupFileCommand.h"
+#import "MigrationLogger.h"
 
+
+static NSString *const LOGGER_SECTION = @"DocumentDictionaryMigrator";
+static NSString *const LOGGER_ERROR = @"Error";
+static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 @interface CCBDictionaryMigrator()
 
@@ -17,8 +22,8 @@
 @property (nonatomic, copy) NSDictionary *document;
 @property (nonatomic, copy, readwrite) NSDictionary *migratedDocument;
 @property (nonatomic, strong) NSError *migrationError;
-
 @property (nonatomic) BackupFileCommand *backupFileCommand;
+@property (nonatomic, strong) MigrationLogger *logger;
 
 @end
 
@@ -39,6 +44,11 @@
     }
 
     return self;
+}
+
+- (void)setLogger:(MigrationLogger *)migrationLogger
+{
+    _logger = migrationLogger;
 }
 
 - (NSDictionary *)document
@@ -182,15 +192,24 @@
         return YES;
     }
 
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION]];
+
+
     if (![self createBackupWithError:error])
     {
         return NO;
     }
 
-    return [self migrate__:error];
+    if (![self doMigrateWithError:error])
+    {
+        return NO;
+    }
+    [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
+
+    return YES;
 }
 
-- (BOOL)migrate__:(NSError **)error
+- (BOOL)doMigrateWithError:(NSError **)error
 {
     if (self.migratedDocument == nil)
     {
@@ -201,6 +220,8 @@
     NSError *overwriteError;
     if (![self overwriteDocument:&overwriteError])
     {
+        [_logger log:[NSString stringWithFormat:@"overwriting document with migrated version failed: %@", *error] section:@[LOGGER_SECTION, LOGGER_ERROR]];
+
         [NSError setNewErrorWithErrorPointer:error
                                         code:SBMigrationError
                                     userInfo:@{
@@ -234,6 +255,8 @@
     NSError *backupError;
     if (![_backupFileCommand execute:&backupError])
     {
+        [_logger log:[NSString stringWithFormat:@"creating backup of '%@' failed: %@", _filepath, backupError] section:@[LOGGER_SECTION, LOGGER_ERROR]];
+
         [NSError setNewErrorWithErrorPointer:error code:SBMigrationError userInfo:@{
                 NSLocalizedDescriptionKey : [NSString stringWithFormat:@"Could not create backup file of package settings at \"%@\"", _filepath],
                 NSUnderlyingErrorKey : backupError
@@ -245,7 +268,15 @@
 
 - (void)rollback
 {
-    [_backupFileCommand undo:nil];
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
+
+    NSError *error;
+    if (![_backupFileCommand undo:&error])
+    {
+        [_logger log:[NSString stringWithFormat:@"reinstating backup failed: %@", error] section:@[LOGGER_SECTION, LOGGER_ROLLBACK, LOGGER_ERROR]];
+    }
+
+    [_logger log:@"Finished" section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 }
 
 - (void)tidyUp

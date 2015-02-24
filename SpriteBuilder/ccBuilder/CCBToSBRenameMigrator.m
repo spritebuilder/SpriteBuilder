@@ -7,13 +7,18 @@
 #import "NSError+SBErrors.h"
 #import "Errors.h"
 #import "MoveFileCommand.h"
+#import "MigrationLogger.h"
 
+static NSString *const LOGGER_SECTION = @"CCBToSBRenameMigrator";
+static NSString *const LOGGER_ERROR = @"Error";
+static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 @interface CCBToSBRenameMigrator()
 
 @property (nonatomic, strong) NSString *dirPath;
 @property (nonatomic, strong) NSMutableArray *commands;
 @property (nonatomic, strong) NSArray *allDocuments;
+@property (nonatomic, strong) MigrationLogger *logger;
 
 @end
 
@@ -33,6 +38,11 @@
     }
 
     return self;
+}
+
+- (void)setLogger:(MigrationLogger *)migrationLogger
+{
+    _logger = migrationLogger;
 }
 
 - (NSArray *)allDocuments
@@ -72,6 +82,8 @@
         return YES;
     }
 
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION]];
+
     for (NSString *documentPath in self.allDocuments)
     {
         if (![self renameCCBFileToSB:documentPath error:error])
@@ -79,6 +91,8 @@
             return NO;
         }
     }
+
+    [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
 
     return YES;
 }
@@ -91,8 +105,11 @@
 
     if (![moveFileCommand execute:error])
     {
+        [_logger log:[NSString stringWithFormat:@"ccb to sb renaming failed: %@", *error] section:@[LOGGER_SECTION, LOGGER_ERROR]];
         return NO;
     }
+
+    [_logger log:[NSString stringWithFormat:@"ccb to sb renaming successful from '%@' to '%@'", path, newPath] section:@[LOGGER_SECTION]];
 
     [_commands addObject:moveFileCommand];
 
@@ -101,14 +118,18 @@
 
 - (void)rollback
 {
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
+
     for (id <FileCommandProtocol> command in _commands)
     {
         NSError *error;
         if (![command undo:&error])
         {
-            NSLog(@"[MIGRATION] Could not rollback ccb to sb renaming command: %@", error);
+            [_logger log:[NSString stringWithFormat:@"Could not rollback ccb to sb renaming : %@", error] section:@[LOGGER_SECTION, LOGGER_ROLLBACK, LOGGER_ERROR]];
         }
     }
+
+    [_logger log:@"Finished" section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 }
 
 - (void)tidyUp

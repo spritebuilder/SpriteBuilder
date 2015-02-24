@@ -107,7 +107,6 @@
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
-#import <MacTypes.h>
 #import "PlugInNodeCollectionView.h"
 #import "Errors.h"
 #import "NSArray+Query.h"
@@ -141,6 +140,7 @@
 #import "Cocos2dUpdaterController.h"
 #import "MigrationViewController.h"
 #import "MigrationControllerFactory.h"
+#import "MigrationLogWindowController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1692,7 +1692,10 @@ typedef enum
     }
 
     MigrationViewController *migrationViewController =
-            [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:projectSettings]];
+            [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:prjctSettings]
+                                                                  window:window];
+
+    migrationViewController.projectName = [[projectPath lastPathComponent] stringByDeletingPathExtension];
     migrationViewController.cancelButtonTitle = @"Close Project";
     if (![migrationViewController migrate])
     {
@@ -1750,8 +1753,7 @@ typedef enum
 
         if (numCCBFiles == 1)
         {
-            // Open the ccb file
-            [self openFile:[resPath stringByAppendingPathComponent:ccbFile]];
+            [self openFile:[resPath stringByAppendingPathComponent:ccbFile] migrate:NO];
         }
     }
 
@@ -1831,7 +1833,7 @@ typedef enum
     }];
 }
 
-- (void) openFile:(NSString*)filePath
+- (void)openFile:(NSString *)filePath migrate:(BOOL)migrate
 {
 	[[[CCDirector currentDirector] view] lockOpenGLContext];
     
@@ -1845,13 +1847,16 @@ typedef enum
     
     [self prepareForDocumentSwitch];
 
-    MigrationViewController *migrationViewController =
-            [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilepath:filePath]];
-
-    migrationViewController.cancelButtonTitle = @"Cancel (Do not open)";
-    if (![migrationViewController migrate])
+    if (migrate)
     {
-        return;
+        MigrationViewController *migrationViewController =
+                [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilepath:filePath] window:window];
+
+        migrationViewController.cancelButtonTitle = @"Cancel (Do not open)";
+        if (![migrationViewController migrate])
+        {
+            return;
+        }
     }
 
     CCBDocument *newDoc = [[CCBDocument alloc] initWithContentsOfFile:filePath];
@@ -2794,7 +2799,7 @@ typedef enum
                 [tabView removeTabViewItem:[self tabViewItemFromDoc:currentDocument]];
                 
                 // Open newly created document
-                [self openFile:filename];
+                [self openFile:filename migrate:NO];
                 
                 [(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
@@ -2954,46 +2959,6 @@ typedef enum
 - (IBAction) menuCleanCacheDirectories:(id)sender
 {
     [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
-}
-
-// Temporary utility function until new publish system is in place
-- (IBAction)menuUpdateCCBsInDirectory:(id)sender
-{
-    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
-    [openDlg setCanChooseFiles:NO];
-    [openDlg setCanChooseDirectories:YES];
-    
-    [openDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
-        if (result == NSOKButton)
-        {
-            NSArray* files = [openDlg URLs];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_main_queue(), ^{
-                [(CCViewMacGL *)[[CCDirector sharedDirector] view] lockOpenGLContext];
-                
-                for (int i = 0; i < [files count]; i++)
-                {
-                    NSString* dirName = [[files objectAtIndex:i] path];
-                    
-                    NSArray* arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dirName error:NULL];
-                    for(NSString* file in arr)
-                    {
-                        if ([file hasSuffix:@".ccb"])
-                        {
-                            NSString* absPath = [dirName stringByAppendingPathComponent:file];
-                            [self openFile:absPath];
-                            [self saveFile:absPath];
-                            //[self publishDocument:NULL];
-                            [self performClose:sender];
-                        }
-                    }
-                }
-                
-                [(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
-            });
-        }
-    }];
 }
 
 - (IBAction)menuOpenProjectInXCode:(id)sender

@@ -5,6 +5,12 @@
 #import "CCBReader_Private.h"
 #import "CCBDictionaryReader.h"
 #import "NSString+Misc.h"
+#import "MigrationLogger.h"
+
+static NSString *const LOGGER_SECTION = @"AllDocumentsMigrator";
+static NSString *const LOGGER_ERROR = @"Error";
+static NSString *const LOGGER_ROLLBACK = @"Rollback";
+
 
 @interface AllSBDocumentsMigrator ()
 
@@ -12,6 +18,7 @@
 @property (nonatomic) NSUInteger migrationVersionTarget;
 @property (nonatomic, strong) NSMutableArray *documentMigrators;
 @property (nonatomic, strong) NSArray *allDocuments;
+@property (nonatomic, strong) MigrationLogger *logger;
 
 @end
 
@@ -33,6 +40,11 @@
     }
 
     return self;
+}
+
+- (void)setLogger:(MigrationLogger *)migrationLogger
+{
+    _logger = migrationLogger;
 }
 
 - (NSArray *)allDocuments
@@ -88,6 +100,8 @@
         return YES;
     }
 
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION]];
+
     for (NSString *documentPath in self.allDocuments)
     {
         CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithFilepath:documentPath
@@ -100,15 +114,19 @@
         }
     }
 
+    [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
+
     return YES;
 }
 
 - (void)rollback
 {
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
     for (id<MigratorProtocol> migrator in _documentMigrators)
     {
         [migrator rollback];
     }
+    [_logger log:@"Finished" section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 }
 
 - (void)tidyUp

@@ -514,7 +514,7 @@
         RMResource* res = (RMResource*) item;
         if (res.type == kCCBResTypeCCBFile)
         {
-            [[AppDelegate appDelegate] openFile: res.filePath];
+            [[AppDelegate appDelegate] openFile:res.filePath migrate:YES];
         }
     }
 }

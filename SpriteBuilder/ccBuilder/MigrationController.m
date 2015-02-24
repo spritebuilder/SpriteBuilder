@@ -4,6 +4,7 @@
 #import "MigrationViewController.h"
 #import "NSError+SBErrors.h"
 #import "Errors.h"
+#import "MigrationLogger.h"
 
 
 @implementation MigrationController
@@ -27,7 +28,7 @@
         return NO;
     }
 
-    if (![self migrateProject:error])
+    if (![self doMigrateWithError:error])
     {
         return NO;
     }
@@ -48,12 +49,17 @@
     }
 }
 
-- (BOOL)migrateProject:(NSError **)error
+- (BOOL)doMigrateWithError:(NSError **)error
 {
     NSMutableArray *stepsTpRollback = [NSMutableArray array];
 
     for (id <MigratorProtocol> migrator in _migrators)
     {
+        if ([migrator respondsToSelector:@selector(setLogger:)])
+        {
+            [migrator setLogger:_logger];
+        }
+
         [stepsTpRollback addObject:migrator];
         if (![migrator migrateWithError:error])
         {

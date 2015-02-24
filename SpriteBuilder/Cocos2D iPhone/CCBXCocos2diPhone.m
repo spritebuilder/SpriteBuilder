@@ -29,7 +29,7 @@
 
 - (NSString*) extension
 {
-    return @"ccbi";
+    return @"sbi";
 }
 
 - (NSData *)exportDocument:(NSDictionary *)doc

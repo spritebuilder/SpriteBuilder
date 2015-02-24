@@ -11,6 +11,7 @@
 #import "ProjectSettingsMigrator.h"
 #import "FileSystemTestCase.h"
 #import "ResourcePropertyKeys.h"
+#import "MigrationLogger.h"
 
 @interface ProjectSettingsMigrator_Tests : FileSystemTestCase
 
@@ -66,6 +67,8 @@
     XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([_projectSettings isDirtyRelPath:@"background.png"]);
+
+    XCTAssertEqualObjects(_projectSettings.exporter, @"sbi");
 
     NSDictionary *newProject = [NSDictionary dictionaryWithContentsOfFile:_projectSettings.projectPath];
     XCTAssertNil(newProject[@"onlyPublishCCBs"]);
