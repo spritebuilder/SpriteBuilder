@@ -3,6 +3,7 @@
 #import "Errors.h"
 #import "PackageSettings.h"
 #import "BackupFileCommand.h"
+#import "MigrationLogger.h"
 
 /*
 
@@ -80,6 +81,11 @@ Version 3
  */
 
 
+static NSString *const LOGGER_SECTION = @"PackageSettings";
+static NSString *const LOGGER_ERROR = @"Error";
+static NSString *const LOGGER_ROLLBACK = @"Rollback";
+
+
 @interface PackageSettingsMigrator ()
 
 @property (nonatomic, copy) NSDictionary *packageSettings;
@@ -88,6 +94,7 @@ Version 3
 @property (nonatomic) NSUInteger migrationVersionTarget;
 @property (nonatomic) BackupFileCommand *backupFileCommand;
 @property (nonatomic, copy) NSString *filepath;
+@property (nonatomic, strong) MigrationLogger *logger;
 
 @end
 
@@ -108,6 +115,11 @@ Version 3
     }
 
     return self;
+}
+
+- (void)setLogger:(MigrationLogger *)migrationLogger
+{
+    _logger = migrationLogger;
 }
 
 - (NSDictionary *)migratedPackageSettings
@@ -162,12 +174,21 @@ Version 3
         return YES;
     }
 
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION]];
+
     if (![self createBackupWithError:error])
     {
         return NO;
     }
 
-    return [self migrate__:error];
+    if (![self migrate__:error])
+    {
+        return NO;
+    }
+
+    [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
+
+    return YES;
 }
 
 - (BOOL)migrate__:(NSError **)error
@@ -225,7 +246,10 @@ Version 3
 
 - (void)rollback
 {
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
+    [_logger log:[NSString stringWithFormat:@"Undoing %@", _backupFileCommand] section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
     [_backupFileCommand undo:nil];
+    [_logger log:@"Finished" section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 }
 
 - (void)tidyUp
@@ -237,6 +261,7 @@ Version 3
 {
     if (!dict || [dict count] == 0)
     {
+        [_logger log:@"dictionary to migrate is empty or does not exist" section:@[LOGGER_SECTION, LOGGER_ERROR]];
         [NSError setNewErrorWithErrorPointer:error
                                         code:SBPackageSettingsEmptyOrDoesNotExist
                                      message:[NSString stringWithFormat:@"Dictionary at \"%@\" does not exist or is empty", _filepath]];
@@ -248,18 +273,22 @@ Version 3
     if (_packageSettings[@"version"])
     {
         currentVersion = [_packageSettings[@"version"] unsignedIntegerValue];
+        [_logger log:[NSString stringWithFormat:@"package settings version detected: %lu", currentVersion] section:@[LOGGER_SECTION]];
     }
 
     if (currentVersion == _migrationVersionTarget)
     {
+        [_logger log:@"versions are up to date" section:@[LOGGER_SECTION]];
         return _packageSettings;
     }
 
     if (_migrationVersionTarget < currentVersion)
     {
+        NSString *message = [NSString stringWithFormat:@"Cannot downgrade version %lu to version %lu", currentVersion, _migrationVersionTarget];
+        [_logger log:message section:@[LOGGER_SECTION, LOGGER_ERROR]];
         [NSError setNewErrorWithErrorPointer:error
                                         code:SBPackageSettingsMigrationCannotDowngraderError
-                                     message:[NSString stringWithFormat:@"Cannot downgrade version %lu to version %lu", currentVersion, _migrationVersionTarget]];
+                                     message:message];
         return nil;
     }
 
@@ -278,12 +307,17 @@ Version 3
     NSUInteger currentVersion = fromVersion;
     while (currentVersion < _migrationVersionTarget)
     {
+        [_logger log:[NSString stringWithFormat:@"migrating from version %lu to %lu...", currentVersion, currentVersion+1] section:@[LOGGER_SECTION]];
+
         currentVersion++;
+
         result = [self migrate:result toVersion:currentVersion withError:error];
         if (!result)
         {
             return nil;
         }
+
+        [_logger log:[NSString stringWithFormat:@"migrating from version %lu to %lu DONE", currentVersion, currentVersion+1] section:@[LOGGER_SECTION]];
     }
 
     return result;
@@ -306,9 +340,11 @@ Version 3
 {
     if (!dict[@"resourceAutoScaleFactor"])
     {
+        [_logger log:[NSString stringWithFormat:@"key 'resourceAutoScaleFactor' not found setting with value -1"] section:@[LOGGER_SECTION]];
         dict[@"resourceAutoScaleFactor"] = @-1;
     }
 
+    [_logger log:[NSString stringWithFormat:@"version set to 2"] section:@[LOGGER_SECTION]];
     dict[@"version"] = @2;
 
     return dict;
@@ -318,13 +354,18 @@ Version 3
 {
     if (!dict[@"resourceAutoScaleFactor"] || [dict[@"resourceAutoScaleFactor"] unsignedIntegerValue] == -1)
     {
+        [_logger log:[NSString stringWithFormat:@"key 'resourceAutoScaleFactor' not found or is set to -1, setting value 4"] section:@[LOGGER_SECTION]];
         dict[@"resourceAutoScaleFactor"] = @4;
     }
 
+    [_logger log:[NSString stringWithFormat:@"adding key 'mainProjectResolutions' set to 4"] section:@[LOGGER_SECTION]];
     dict[@"mainProjectResolutions"] = @[ @4 ];
 
     dict[@"osSettings"][@"ios"][@"resolutions"] = [self migrateOldDeviceTagsToResolutions:dict[@"osSettings"][@"ios"][@"resolutions"]];
+    [_logger log:[NSString stringWithFormat:@"migrated iOS device tags %@ to resolutions %@", dict[@"osSettings"][@"ios"][@"resolutions"], dict[@"osSettings"][@"ios"][@"resolutions"]] section:@[LOGGER_SECTION]];
+
     dict[@"osSettings"][@"android"][@"resolutions"] = [self migrateOldDeviceTagsToResolutions:dict[@"osSettings"][@"android"][@"resolutions"]];
+    [_logger log:[NSString stringWithFormat:@"migrated android device tags %@ to resolutions %@", dict[@"osSettings"][@"android"][@"resolutions"], dict[@"osSettings"][@"android"][@"resolutions"]] section:@[LOGGER_SECTION]];
 
     dict[@"version"] = @3;
 
@@ -352,6 +393,7 @@ Version 3
             [resolutions addObject:@4];
         }
     }
+
     return [resolutions allObjects];
 }
 

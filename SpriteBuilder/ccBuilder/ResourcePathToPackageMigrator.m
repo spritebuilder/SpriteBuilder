@@ -13,7 +13,12 @@
 #import "RemoveFileCommand.h"
 #import "NSError+SBErrors.h"
 #import "Errors.h"
+#import "MigrationLogger.h"
 
+
+static NSString *const LOGGER_SECTION = @"ResourcePathToPackage";
+static NSString *const LOGGER_ERROR = @"Error";
+static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
@@ -26,6 +31,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 @property (nonatomic, strong) NSMutableArray *migrationCommandsStack;
 @property (nonatomic, strong) NSMutableArray *resourePathsBackup;
+@property (nonatomic, strong) MigrationLogger *logger;
 
 @end
 
@@ -51,6 +57,11 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     }
 
     return self;
+}
+
+- (void)setLogger:(MigrationLogger *)migrationLogger
+{
+    _logger = migrationLogger;
 }
 
 - (NSString *)htmlInfoText
@@ -80,7 +91,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         return YES;
     }
 
-    [self logMigrationStep:@"Starting..."];
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION]];
 
     [self backupResourcePaths];
 
@@ -105,24 +116,15 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         return NO;
     }
 
-    [self logMigrationStep:@"successful!"];
+    [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
     return YES;
 }
 
 - (NSError *)standardError
 {
-    NSString *message = [NSString stringWithFormat:@
-            "Migration of project to new packages structure failed. "
-            "<b>The different migration steps have been rolled back.</b><br/><br/> "
-            "The project will be opened as usual, however you can help us by creating an <a href=\"https://github.com/spritebuilder/SpriteBuilder/issues/new\">issue on github</a> and posting the content of the log, see below. "
-            "You can use the <a href=\"file:///Applications/Utilities/Console.app\">Console app</a> to view the system log. "
-            "Search for <b>%@.</b><br/><br/> "
-            "There is more information about package migration on the <a href=\"%@\">forums.</a> "
-            , @"link", PACKAGES_LOG_HASHTAG];
-
     return [NSError errorWithDomain:SBErrorDomain
                                code:SBMigrationError
-                           userInfo:@{NSLocalizedDescriptionKey : message}];
+                           userInfo:@{NSLocalizedDescriptionKey : @"Migration of project to new packages structure failed."}];
 }
 
 - (void)backupResourcePaths
@@ -177,7 +179,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         NSError *error;
         if (![_projectSettings removeResourcePath:resourcePath error:&error])
         {
-            [self logMigrationStep:@"#error removing resource path %@ - %@", resourcePath, error.localizedDescription];
+            [_logger log:[NSString stringWithFormat:@"removing resource path %@ - %@", resourcePath, error.localizedDescription] section:@[LOGGER_SECTION, LOGGER_ERROR]];
             return NO;
         }
     }
@@ -223,7 +225,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         }
         else
         {
-            [self logMigrationStep:@"#error Package importing \"%@\" failed: %@", pathToImport, error.localizedDescription];
+            [_logger log:[NSString stringWithFormat:@"Package importing '%@' failed: %@", pathToImport, error.localizedDescription] section:@[LOGGER_SECTION, LOGGER_ERROR]];
             return NO;
         }
     }
@@ -245,7 +247,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         BOOL success = [packageRenamer renamePackage:package toName:PACKAGES_FOLDER_NAME error:&error];
         if (!success)
         {
-            [self logMigrationStep:@"#error Package renaming failed: %@", error.localizedDescription];
+            [_logger log:[NSString stringWithFormat:@"Package renaming failed: %@", error.localizedDescription] section:@[LOGGER_SECTION, LOGGER_ERROR]];
         }
 
         return success;
@@ -255,12 +257,9 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)createPackagesFolderIfNotExisting
 {
-    if ([self packageFolderExists])
-    {
-        return YES;
-    }
+    return [self packageFolderExists]
+           || [self tryToCreatePackagesFolder];
 
-    return [self tryToCreatePackagesFolder];
 }
 
 - (BOOL)tryToCreatePackagesFolder
@@ -356,28 +355,32 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)executeCommandAndAddToStackOnSuccess:(id <FileCommandProtocol>)command
 {
-    [self logMigrationStep:@"#Filesystem %@", [command description]];
-
     NSError *error;
     BOOL success = [command execute:&error];
     if (success)
     {
+        [_logger log:[NSString stringWithFormat:@"Executed successfully - %@", [command description]]
+             section:@[LOGGER_SECTION]];
+
         [_migrationCommandsStack addObject:command];
     }
     else
     {
-        [self logMigrationStep:@"#error %@ - %@", [command description], error.localizedDescription];
+        [_logger log:[NSString stringWithFormat:@"%@ - %@", [command description], error.localizedDescription]
+             section:@[LOGGER_SECTION, LOGGER_ERROR]];
     }
     return success;
 }
 
 - (void)rollback
 {
-    [self logMigrationStep:@"#rollback ..."];
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 
     [self rollbackResourcePathChanges];
 
     [self rollbackFileSystemChanges];
+
+    [_logger log:@"Finished" section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 }
 
 - (void)rollbackFileSystemChanges
@@ -385,28 +388,23 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     NSArray *reversedStack = [[_migrationCommandsStack reverseObjectEnumerator] allObjects];
     for (id<FileCommandProtocol> command in reversedStack)
     {
-        [self logMigrationStep:@"#rollback #Filesystem Undoing %@", command];
+        [_logger log:[NSString stringWithFormat:@"Undoing %@", command]
+             section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
+
         NSError *error;
         if (![command undo:&error])
         {
-            [self logMigrationStep:@"#rollback #Filesystem #error Undoing %@ - %@", command, error];
+            [_logger log:[NSString stringWithFormat:@"Undoing %@ - %@", command, error]
+                 section:@[LOGGER_SECTION, LOGGER_ROLLBACK, LOGGER_ERROR]];
         }
     }
 }
 
 - (void)rollbackResourcePathChanges
 {
-    _projectSettings.resourcePaths = [_resourePathsBackup copy];
-}
+    [_logger log:[NSString stringWithFormat:@"Resource paths reinstated: %@", _resourePathsBackup] section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 
-- (void)logMigrationStep:(NSString *)format, ...
-{
-    va_list args;
-    va_start(args, format);
-    #ifndef TESTING
-    NSLogv([NSString stringWithFormat:@"%@ %@", PACKAGES_LOG_HASHTAG, format], args);
-    #endif
-    va_end(args);
+    _projectSettings.resourcePaths = [_resourePathsBackup copy];
 }
 
 @end

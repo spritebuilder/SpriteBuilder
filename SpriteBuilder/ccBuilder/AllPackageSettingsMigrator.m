@@ -6,15 +6,21 @@
 #import "Errors.h"
 #import "BackupFileCommand.h"
 #import "PackageSettingsMigrator.h"
+#import "MigrationLogger.h"
 
+
+static NSString *const LOGGER_SECTION = @"AllPackageSettingsMigrator";
+static NSString *const LOGGER_ERROR = @"Error";
+static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 @interface AllPackageSettingsMigrator ()
 
 @property (nonatomic, strong) NSMutableArray *packageSettingsCreated;
 @property (nonatomic, strong) NSMutableArray *packageSettingsMigrators;
 @property (nonatomic) NSUInteger migrationVersionTarget;
-
 @property (nonatomic, strong) NSArray *packagePaths;
+@property (nonatomic, strong) MigrationLogger *logger;
+
 @end
 
 
@@ -36,6 +42,11 @@
     }
 
     return self;
+}
+
+- (void)setLogger:(MigrationLogger *)migrationLogger
+{
+    _logger = migrationLogger;
 }
 
 - (NSString *)htmlInfoText
@@ -97,12 +108,21 @@
         return YES;
     }
 
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION]];
+
     if (![self addMissingPackageSettingsWithError:error])
     {
         return NO;
     }
 
-    return [self migrateAllPackageSettingsWithError:error];
+    if (![self migrateAllPackageSettingsWithError:error])
+    {
+        return NO;
+    }
+
+    [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
+
+    return YES;
 }
 
 - (BOOL)migrateAllPackageSettingsWithError:(NSError **)error
@@ -141,8 +161,13 @@
             [NSError setNewErrorWithErrorPointer:error
                                             code:SBProjectMigrationError
                                          message:[NSString stringWithFormat:@"Could not create default package settings file for package \"%@\"", packagePath]];
+
+            [_logger log:@"Creating missing Package.plist failed." section:@[LOGGER_SECTION, LOGGER_ERROR]];
+
             return NO;
         }
+
+        [_logger log:[NSString stringWithFormat:@"Creating missing Package.plist file at package '%@'", fullSettingsPath] section:@[LOGGER_SECTION]];
 
         [_packageSettingsCreated addObject:packageSettings];
     }
@@ -151,6 +176,7 @@
 
 - (void)rollback
 {
+    [_logger log:@"Starting..." section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
     for (id<MigratorProtocol>migrator in _packageSettingsMigrators)
     {
         [migrator rollback];
@@ -162,9 +188,11 @@
         NSError *error;
         if (![fileManager removeItemAtPath:packageSettings.fullPath error:&error])
         {
-            NSLog(@"[MIGRATOR] Error Rollback - Could not remove package settings: \"%@\" : %@", packageSettings.fullPath, error);
+            [_logger log:[NSString stringWithFormat:@"Could not remove package settings: '%@' : %@", packageSettings.fullPath, error] section:@[LOGGER_SECTION, LOGGER_ROLLBACK, LOGGER_ERROR]];
         }
     }
+
+    [_logger log:@"Finished" section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 }
 
 - (void)tidyUp

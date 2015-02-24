@@ -374,7 +374,8 @@ typedef void (^CompletionCallback) (BOOL success);
 - (void) gotoAutoplaySequence;
 - (void) switchToDocument:(CCBDocument*) document;
 - (void) closeLastDocument;
-- (void) openFile:(NSString*)filePath;
+
+- (void)openFile:(NSString *)filePath migrate:(BOOL)migrate;
 
 - (void)newFile:(NSString *)fileName type:(int)type resolutions:(NSMutableArray *)resolutions;
 

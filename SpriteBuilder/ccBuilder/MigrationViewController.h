@@ -16,7 +16,9 @@
 // Default is Cancel
 @property (nonatomic, copy) NSString *cancelButtonTitle;
 
-- (instancetype)initWithMigrationController:(MigrationController *)migrationController;
+@property (nonatomic, copy) NSString *projectName;
+
+- (instancetype)initWithMigrationController:(MigrationController *)migrationController window:(NSWindow *)window;
 
 - (BOOL)migrate;
 

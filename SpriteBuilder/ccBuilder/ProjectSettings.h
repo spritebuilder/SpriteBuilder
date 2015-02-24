@@ -25,8 +25,8 @@
 #import <Foundation/Foundation.h>
 #import "CCBPublisherTypes.h"
 
-#define kCCBProjectSettingsVersion 1
-#define kCCBDefaultExportPlugIn @"ccbi"
+#define kCCBProjectSettingsVersion 2
+#define kCCBDefaultExportPlugIn @"sbi"
 
 typedef enum
 {

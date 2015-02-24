@@ -181,7 +181,7 @@
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
-    [self assertFileExists:@"Published-iOS/mainScene.ccbi"];
+    [self assertFileExists:@"Published-iOS/mainScene.sbi"];
 }
 
 - (void)testCustomScalingFactorsForImages

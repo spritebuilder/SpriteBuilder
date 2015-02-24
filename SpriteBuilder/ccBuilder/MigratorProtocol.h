@@ -5,6 +5,7 @@
 #import <Foundation/Foundation.h>
 
 @class ProjectSettings;
+@class MigrationLogger;
 
 @protocol MigratorProtocol <NSObject>
 
@@ -18,5 +19,7 @@
 
 @optional
 - (void)tidyUp;
+
+- (void)setLogger:(MigrationLogger *)migrationLogger;
 
 @end

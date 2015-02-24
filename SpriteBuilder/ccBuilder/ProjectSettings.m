@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+#import "MigrationLogger.h"
 
 #import "ProjectSettings.h"
 #import "NSString+RelativePath.h"
@@ -92,6 +93,8 @@
     self.publishEnabledIOS = YES;
     self.publishEnabledAndroid = YES;
 
+    self.exporter = kCCBDefaultExportPlugIn;
+
     self.publishEnvironment = kCCBPublishEnvironmentDevelop;
 
     self.tabletPositionScaleFactor = 2.0f;
@@ -142,7 +145,11 @@
     self.publishEnabledAndroid = [[dict objectForKey:@"publishEnabledAndroid"] boolValue];
 
     self.publishToZipFile = [[dict objectForKey:@"publishToZipFile"] boolValue];
-    self.exporter = [dict objectForKey:@"exporter"];
+
+    self.exporter = [dict objectForKey:@"exporter"]
+        ? [dict objectForKey:@"exporter"]
+        : kCCBDefaultExportPlugIn;
+
     self.deviceOrientationPortrait = [[dict objectForKey:@"deviceOrientationPortrait"] boolValue];
     self.deviceOrientationUpsideDown = [[dict objectForKey:@"deviceOrientationUpsideDown"] boolValue];
     self.deviceOrientationLandscapeLeft = [[dict objectForKey:@"deviceOrientationLandscapeLeft"] boolValue];

@@ -22,8 +22,8 @@
         [[ResourcePathToPackageMigrator alloc] initWithProjectSettings:projectSettings],
         [[AllSBDocumentsMigrator alloc] initWithDirPath:projectSettings.projectPathDir toVersion:kCCBDictionaryFormatVersion],
         [[AllPackageSettingsMigrator alloc] initWithPackagePaths:packagePaths toVersion:PACKAGE_SETTINGS_VERSION],
-        [[ProjectSettingsMigrator alloc] initWithProjectSettings:projectSettings]],
-        [[CCBToSBRenameMigrator alloc] initWithDirPath:projectSettings.projectPathDir];
+        [[ProjectSettingsMigrator alloc] initWithProjectSettings:projectSettings],
+        [[CCBToSBRenameMigrator alloc] initWithDirPath:projectSettings.projectPathDir]];
 
     return migrationController;
 }
@@ -43,7 +43,7 @@
 {
     MigrationController *migrationController = [[MigrationController alloc] init];
     migrationController.migrators = @[
-            [[CCBDictionaryMigrator alloc] initWithFilepath:filepath toVersion:0]];
+            [[CCBDictionaryMigrator alloc] initWithFilepath:filepath toVersion:kCCBDictionaryFormatVersion]];
 
     return migrationController;
 }
