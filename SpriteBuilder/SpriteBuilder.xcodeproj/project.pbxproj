@@ -26,8 +26,6 @@
 		5BA3DC36192110BA0055DD96 /* GuideGridSizeWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BA3DC31192108AB0055DD96 /* GuideGridSizeWindow.xib */; };
 		5BB9A3551A038C59008184AE /* ResourceDuplicateCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB9A3541A038C59008184AE /* ResourceDuplicateCommand.m */; };
 		5BBEC3601A011D8D00FBA08B /* InspectorTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBEC35F1A011D8D00FBA08B /* InspectorTextView.m */; };
-		77055FB513D0E5CA009DD63A /* logo-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 77055FB313D0E5CA009DD63A /* logo-icon.png */; };
-		77055FB613D0E5CA009DD63A /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 77055FB413D0E5CA009DD63A /* logo.png */; };
 		77156DB1137F0351005EF746 /* CCBSpriteSheetParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 77156DB0137F0351005EF746 /* CCBSpriteSheetParser.m */; };
 		771B2B321353818200B260BA /* NewDocWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 771B2B311353818000B260BA /* NewDocWindowController.m */; };
 		7729F03A1390215400CAA44F /* frame-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 7729F0391390215400CAA44F /* frame-iphone.png */; };
@@ -423,7 +421,6 @@
 		92F0961818F8855A00D47A94 /* inspector-body-goto-hi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92F0961418F8855A00D47A94 /* inspector-body-goto-hi@2x.png */; };
 		92F0961918F8855A00D47A94 /* inspector-body-goto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92F0961518F8855A00D47A94 /* inspector-body-goto@2x.png */; };
 		92F12E4E18847BC800AB8F32 /* seq-keyframe-x4-sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 80B149BC183D4D280085935B /* seq-keyframe-x4-sel.png */; };
-		92F64B78199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns in Resources */ = {isa = PBXBuildFile; fileRef = 92F64B77199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns */; };
 		92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F33194F6AD80076B343 /* AnimationTest3.ccb */; };
 		92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F36194F70CA0076B343 /* AnimationTest4.ccb */; };
 		92F85F3C194F8A4A0076B343 /* AnimationTest5.ccb in Resources */ = {isa = PBXBuildFile; fileRef = 92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */; };
@@ -477,9 +474,9 @@
 		B73788EB1804AD5C0076A88C /* CCBPProperties.plist in Resources */ = {isa = PBXBuildFile; fileRef = B73788E91804AD5C0076A88C /* CCBPProperties.plist */; };
 		B73788EC1804AD5C0076A88C /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B73788EA1804AD5C0076A88C /* Icon.png */; };
 		B73788EF1804AF6D0076A88C /* CCScrollView.ccbPlugNode in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = B73788D91804AC5D0076A88C /* CCScrollView.ccbPlugNode */; };
-		B73788F51804D80B0076A88C /* ccb.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F41804D80B0076A88C /* ccb.icns */; };
-		B73788F71804D8200076A88C /* ccbproj.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F61804D8200076A88C /* ccbproj.icns */; };
-		B73788F91804D8690076A88C /* ccbi.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F81804D8690076A88C /* ccbi.icns */; };
+		B73788F51804D80B0076A88C /* sb.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F41804D80B0076A88C /* sb.icns */; };
+		B73788F71804D8200076A88C /* sbproj.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F61804D8200076A88C /* sbproj.icns */; };
+		B73788F91804D8690076A88C /* sbi.icns in Resources */ = {isa = PBXBuildFile; fileRef = B73788F81804D8690076A88C /* sbi.icns */; };
 		B747E60819CB3A0E00F692A2 /* CCBPEffectHue.m in Sources */ = {isa = PBXBuildFile; fileRef = B747E60719CB3A0E00F692A2 /* CCBPEffectHue.m */; };
 		B747E60A19CB3BF700F692A2 /* effect-hue.png in Resources */ = {isa = PBXBuildFile; fileRef = B747E60919CB3BF700F692A2 /* effect-hue.png */; };
 		B747E60E19CB3C0F00F692A2 /* EffectHueControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B747E60C19CB3C0F00F692A2 /* EffectHueControl.m */; };
@@ -1370,8 +1367,6 @@
 		5BB9A3541A038C59008184AE /* ResourceDuplicateCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceDuplicateCommand.m; sourceTree = "<group>"; };
 		5BBEC35E1A011D8D00FBA08B /* InspectorTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorTextView.h; sourceTree = "<group>"; };
 		5BBEC35F1A011D8D00FBA08B /* InspectorTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorTextView.m; sourceTree = "<group>"; };
-		77055FB313D0E5CA009DD63A /* logo-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-icon.png"; sourceTree = "<group>"; };
-		77055FB413D0E5CA009DD63A /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		77156DAF137F0351005EF746 /* CCBSpriteSheetParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSpriteSheetParser.h; sourceTree = "<group>"; };
 		77156DB0137F0351005EF746 /* CCBSpriteSheetParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSpriteSheetParser.m; sourceTree = "<group>"; };
 		771B2B301353818000B260BA /* NewDocWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewDocWindowController.h; sourceTree = "<group>"; };
@@ -1913,7 +1908,6 @@
 		92F0961318F8855A00D47A94 /* inspector-body-goto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-goto.png"; sourceTree = "<group>"; };
 		92F0961418F8855A00D47A94 /* inspector-body-goto-hi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-goto-hi@2x.png"; sourceTree = "<group>"; };
 		92F0961518F8855A00D47A94 /* inspector-body-goto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inspector-body-goto@2x.png"; sourceTree = "<group>"; };
-		92F64B77199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "SpriteBuilder 1.3 Beta.icns"; sourceTree = SOURCE_ROOT; };
 		92F85F33194F6AD80076B343 /* AnimationTest3.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest3.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest3.ccb"; sourceTree = "<group>"; };
 		92F85F36194F70CA0076B343 /* AnimationTest4.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest4.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest4.ccb"; sourceTree = "<group>"; };
 		92F85F3B194F8A4A0076B343 /* AnimationTest5.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = AnimationTest5.ccb; path = "SpriteBuilderTestProject.spritebuilder/SpriteBuilder Resources/AnimationTest5.ccb"; sourceTree = "<group>"; };
@@ -1984,9 +1978,9 @@
 		B73788E11804AC5E0076A88C /* CCScrollView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCScrollView-Prefix.pch"; sourceTree = "<group>"; };
 		B73788E91804AD5C0076A88C /* CCBPProperties.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CCBPProperties.plist; sourceTree = "<group>"; };
 		B73788EA1804AD5C0076A88C /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		B73788F41804D80B0076A88C /* ccb.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccb.icns; path = ../ccb.icns; sourceTree = "<group>"; };
-		B73788F61804D8200076A88C /* ccbproj.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccbproj.icns; path = ../ccbproj.icns; sourceTree = "<group>"; };
-		B73788F81804D8690076A88C /* ccbi.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ccbi.icns; path = ../ccbi.icns; sourceTree = "<group>"; };
+		B73788F41804D80B0076A88C /* sb.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = sb.icns; path = ../sb.icns; sourceTree = "<group>"; };
+		B73788F61804D8200076A88C /* sbproj.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = sbproj.icns; path = ../sbproj.icns; sourceTree = "<group>"; };
+		B73788F81804D8690076A88C /* sbi.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = sbi.icns; path = ../sbi.icns; sourceTree = "<group>"; };
 		B747E60619CB3A0E00F692A2 /* CCBPEffectHue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCBPEffectHue.h; path = ccBuilder/CCBPEffectHue.h; sourceTree = "<group>"; };
 		B747E60719CB3A0E00F692A2 /* CCBPEffectHue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCBPEffectHue.m; path = ccBuilder/CCBPEffectHue.m; sourceTree = "<group>"; };
 		B747E60919CB3BF700F692A2 /* effect-hue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-hue.png"; path = "Resources/effect-hue.png"; sourceTree = "<group>"; };
@@ -2150,7 +2144,6 @@
 		D2E0168618D783F800927430 /* SpriteBuilder.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SpriteBuilder.sdef; sourceTree = SOURCE_ROOT; };
 		D2F06F9E1A3EA6F4000283CB /* effect-outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-outline.png"; path = "Resources/effect-outline.png"; sourceTree = "<group>"; };
 		D35E589D18E391DA008571EC /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SpriteKitTextureAtlasToolPath.txt; sourceTree = "<group>"; };
 		DC68033A189168390060BE39 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
 		E312973116CC377700A09155 /* SequencerPopoverBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerPopoverBlock.h; sourceTree = "<group>"; };
@@ -3285,15 +3278,12 @@
 		776041E61498F7980078095D /* Icons & Logos */ = {
 			isa = PBXGroup;
 			children = (
-				92F64B77199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns */,
 				830F4E9A192F5263002B832D /* Package.icns */,
 				B78B8B0F185FF982006ADBBE /* Folder.icns */,
-				B73788F81804D8690076A88C /* ccbi.icns */,
-				B73788F61804D8200076A88C /* ccbproj.icns */,
-				B73788F41804D80B0076A88C /* ccb.icns */,
+				B73788F81804D8690076A88C /* sbi.icns */,
+				B73788F61804D8200076A88C /* sbproj.icns */,
+				B73788F41804D80B0076A88C /* sb.icns */,
 				B7DEBD6317D113B800942E4D /* SpriteBuilder.icns */,
-				77055FB313D0E5CA009DD63A /* logo-icon.png */,
-				77055FB413D0E5CA009DD63A /* logo.png */,
 			);
 			name = "Icons & Logos";
 			sourceTree = "<group>";
@@ -3893,7 +3883,6 @@
 		7789ACEB133AB6A700CEFCC7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DC0A8D3E18C8C274009A619D /* SpriteKitTextureAtlasToolPath.txt */,
 				B7AC69DB17A9D9700041B8BD /* defaultTemplates.zip */,
 				E390C780170A371E003E9E92 /* Generated */,
 				E3AF6CE015F0CFAE0048DB2A /* Documentation */,
@@ -6640,7 +6629,7 @@
 				772BE567133E40D60009B5B9 /* missing-texture.png in Resources */,
 				83F3CA211A422CD6003D8659 /* ruler-mark-origin.png in Resources */,
 				830485A419AF2A6900A624BB /* PreviewGenericView.xib in Resources */,
-				B73788F51804D80B0076A88C /* ccb.icns in Resources */,
+				B73788F51804D80B0076A88C /* sb.icns in Resources */,
 				772BE57C134398EE0009B5B9 /* NewDocWindow.xib in Resources */,
 				774F95C613638D74005D43EB /* missing-particle-texture.png in Resources */,
 				774E4EC2136D98AB0025D0A8 /* select-bl.png in Resources */,
@@ -6717,10 +6706,8 @@
 				83F3CA281A422CD6003D8659 /* ruler-xy@2x.png in Resources */,
 				776A370F139544A200960E94 /* TB_zoomOut.png in Resources */,
 				776A37B8139BCE3600960E94 /* TB_imageAssets.png in Resources */,
-				77055FB513D0E5CA009DD63A /* logo-icon.png in Resources */,
 				83F3CAA71A423BC2003D8659 /* EffectColorChannelOffsetControl.xib in Resources */,
 				83F3C9E51A422CA4003D8659 /* seq-keyframe-x4.png in Resources */,
-				77055FB613D0E5CA009DD63A /* logo.png in Resources */,
 				92F0960F18F8851300D47A94 /* inspector-body-disconnected@2x.png in Resources */,
 				92154AC718A5531800BD215C /* CCBPProperties.plist in Resources */,
 				B71706D2184ECD660081720A /* select-skew@2x.png in Resources */,
@@ -6794,7 +6781,7 @@
 				E3E8B49015791FFB00373983 /* seq-tl-mark-origin.png in Resources */,
 				E3E8B4921579326A00373983 /* seq-timedisplay-bg.png in Resources */,
 				83F3CA191A422CD6003D8659 /* ruler-bg-vertical.png in Resources */,
-				B73788F71804D8200076A88C /* ccbproj.icns in Resources */,
+				B73788F71804D8200076A88C /* sbproj.icns in Resources */,
 				83F3CA9F1A423B8A003D8659 /* EffectLightingControl.xib in Resources */,
 				E3E8B49915793AF800373983 /* seq-btn-play.png in Resources */,
 				926D13C118B5778300582959 /* joint-distance-handle-long@2x.png in Resources */,
@@ -6815,7 +6802,7 @@
 				E39B63A31587E56D009BDE38 /* seq-row-n-bg.png in Resources */,
 				83F3C9F11A422CA4003D8659 /* seq-row-channel-bg.png in Resources */,
 				E3A0ED52158FE3AB000BDF4B /* btn-dropdown.png in Resources */,
-				B73788F91804D8690076A88C /* ccbi.icns in Resources */,
+				B73788F91804D8690076A88C /* sbi.icns in Resources */,
 				E3A0ED55158FEAC0000BDF4B /* btn-dropdown-arrows.png in Resources */,
 				E3A0ED57159118F3000BDF4B /* SequencerSettingsWindow.xib in Resources */,
 				E3F73DB81593916E00D74084 /* SequencerDurationWindow.xib in Resources */,
@@ -6853,7 +6840,6 @@
 				E33C2ABA15CBF2580043EF9B /* seq-keyframe-hint.png in Resources */,
 				83F3CA8F1A4239A0003D8659 /* btn-dropdown-arrows@2x.png in Resources */,
 				E3214C4115D3BF4D002413A7 /* CustomPropSettingsWindow.xib in Resources */,
-				92F64B78199C14E300769BB5 /* SpriteBuilder 1.3 Beta.icns in Resources */,
 				83F3C9C51A422CA4003D8659 /* seq-btn-collapse.png in Resources */,
 				83F3C9C91A422CA4003D8659 /* seq-btn-expand.png in Resources */,
 				B71706CF184ECD660081720A /* select-move@2x.png in Resources */,
