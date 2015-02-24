@@ -7,6 +7,7 @@
 #import "BackupFileCommand.h"
 #import "PackageSettingsMigrator.h"
 #import "MigrationLogger.h"
+#import "PublishResolutions.h"
 
 
 static NSString *const LOGGER_SECTION = @"AllPackageSettingsMigrator";
@@ -156,6 +157,8 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         package.dirPath = packagePath;
 
         PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
+        packageSettings.mainProjectResolutions.resolution_4x = YES;
+
         if (![packageSettings store])
         {
             [NSError setNewErrorWithErrorPointer:error

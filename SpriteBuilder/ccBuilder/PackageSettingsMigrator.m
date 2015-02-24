@@ -295,11 +295,6 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
     return [self migrateFromVersion:currentVersion error:error];
 }
 
-- (NSDictionary *)migrate:(NSError **)error
-{
-
-}
-
 - (NSDictionary *)migrateFromVersion:(NSUInteger)fromVersion error:(NSError **)error
 {
     NSMutableDictionary *result = CFBridgingRelease(CFPropertyListCreateDeepCopy(NULL, (__bridge CFPropertyListRef)(_packageSettings), kCFPropertyListMutableContainersAndLeaves));;

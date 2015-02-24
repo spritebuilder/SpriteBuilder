@@ -1678,7 +1678,7 @@ typedef enum
 
     //Find .ccbproj file
     NSArray *projectContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:projectPath error:nil];
-    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj'"];
+    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj' OR SELF ENDSWITH '.sbproj'"];
     NSString *ccbprojFileName = (NSString*)[[projectContents filteredArrayUsingPredicate:ccbprojExtension] firstObject];
 
     projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
