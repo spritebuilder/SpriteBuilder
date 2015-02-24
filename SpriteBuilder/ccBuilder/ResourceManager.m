@@ -170,7 +170,7 @@
 
 + (BOOL)isResolutionDependentFile:(NSString *)file
 {
-    if ([[file pathExtension] isEqualToString:@"ccb"])
+    if ([[file pathExtension] isEqualToString:@"sb"])
     {
         return NO;
     }
@@ -248,9 +248,9 @@
     {
         return kCCBResTypeAnimation;
     }
-    else if ([ext isEqualToString:@"ccb"])
+    else if ([ext isEqualToString:@"sb"])
     {
-        return kCCBResTypeCCBFile;
+        return kCCBResTypeSBFile;
     }
     else if ([ext isEqualToString:@"js"])
     {
@@ -373,7 +373,7 @@
                     || res.type == kCCBResTypeImage
                     || res.type == kCCBResTypeBMFont
                     || res.type == kCCBResTypeTTF
-                    || res.type == kCCBResTypeCCBFile
+                    || res.type == kCCBResTypeSBFile
                     || res.type == kCCBResTypeAudio
                     || res.type == kCCBResTypeGeneratedSpriteSheetDef)
                 {
@@ -470,7 +470,7 @@
             {
                 [dir.ttfFonts addObject:res];
             }
-            if (res.type == kCCBResTypeCCBFile
+            if (res.type == kCCBResTypeSBFile
                 || res.type == kCCBResTypeDirectory)
             {
                 [dir.ccbFiles addObject:res];
@@ -487,7 +487,7 @@
                 || res.type == kCCBResTypeAnimation
                 || res.type == kCCBResTypeBMFont
                 || res.type == kCCBResTypeTTF
-                || res.type == kCCBResTypeCCBFile
+                || res.type == kCCBResTypeSBFile
                 || res.type == kCCBResTypeDirectory
                 || res.type == kCCBResTypeJS
                 || res.type == kCCBResTypeJSON

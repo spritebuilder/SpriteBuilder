@@ -42,7 +42,7 @@
     if (type == kCCBResTypeBMFont) return bmFonts;
     if (type == kCCBResTypeTTF) return ttfFonts;
     if (type == kCCBResTypeAnimation) return animations;
-    if (type == kCCBResTypeCCBFile) return ccbFiles;
+    if (type == kCCBResTypeSBFile) return ccbFiles;
     if (type == kCCBResTypeAudio) return audioFiles;
     return NULL;
 }

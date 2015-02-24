@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "CCBTextFieldCell.h"
 #import "NSPasteboard+CCB.h"
+#import "PasteboardTypes.h"
 
 @implementation LocalizationEditorWindow
 
@@ -20,7 +21,7 @@
 
 - (void) awakeFromNib
 {
-    [tableTranslations registerForDraggedTypes:[NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"]];
+    [tableTranslations registerForDraggedTypes:@[PASTEBOARD_TYPE_LOCALIZATIONEDITORTRANSLATION]];
     [self populateLanguageAddMenu];
     [tableLanguages reloadData];
     [self updateLanguageSelectionMenu];
@@ -512,7 +513,7 @@
         LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
         NSPasteboard* pb = [info draggingPasteboard];
         
-        NSArray* items = [pb propertyListsForType:@"com.cocosbuilder.LocalizationEditorTranslation"];
+        NSArray* items = [pb propertyListsForType:PASTEBOARD_TYPE_LOCALIZATIONEDITORTRANSLATION];
         if (items.count != 1) return NO;
         
         NSDictionary* dict = [items objectAtIndex:0];

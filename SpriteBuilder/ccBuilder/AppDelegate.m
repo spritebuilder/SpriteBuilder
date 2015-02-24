@@ -141,6 +141,7 @@
 #import "MigrationViewController.h"
 #import "MigrationControllerFactory.h"
 #import "MigrationLogWindowController.h"
+#import "PasteboardTypes.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -2505,10 +2506,10 @@ typedef enum
             return;
         }
         
-        NSString* clipType = kClipboardKeyFrames;
+        NSString* clipType = PASTEBOARD_TYPE_KEYFRAMES;
         if (hasChannelKeyframes)
         {
-            clipType = kClipboardChannelKeyframes;
+            clipType = PASTEBOARD_TYPE_CHANNELKEYFRAMES;
         }
         
         // Serialize keyframe
@@ -2519,7 +2520,7 @@ typedef enum
         }
         NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:serKeyframes];
         NSPasteboard* cb = [NSPasteboard generalPasteboard];
-        [cb declareTypes:[NSArray arrayWithObject:clipType] owner:self];
+        [cb declareTypes:@[clipType] owner:self];
         [cb setData:clipData forType:clipType];
         
         return;
@@ -2537,9 +2538,9 @@ typedef enum
     NSMutableDictionary* clipDict = [CCBDictionaryWriter serializeNode:self.selectedNode];
     NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    
-    [cb declareTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.node", nil] owner:self];
-    [cb setData:clipData forType:@"com.cocosbuilder.node"];
+
+    [cb declareTypes:@[PASTEBOARD_TYPE_NODE] owner:self];
+    [cb setData:clipData forType:PASTEBOARD_TYPE_NODE];
 }
 
 -(void)updateUUIDs:(CCNode*)node
@@ -2555,7 +2556,7 @@ typedef enum
 - (void) doPasteAsChild:(BOOL)asChild
 {
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:@"com.cocosbuilder.node", nil]];
+    NSString* type = [cb availableTypeFromArray:@[PASTEBOARD_TYPE_NODE]];
     
     if (type)
     {
@@ -2586,11 +2587,11 @@ typedef enum
     
     // Paste keyframes
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
+    NSString* type = [cb availableTypeFromArray:@[PASTEBOARD_TYPE_KEYFRAMES, PASTEBOARD_TYPE_CHANNELKEYFRAMES]];
     
     if (type)
     {
-        if (!self.selectedNode && [type isEqualToString:kClipboardKeyFrames])
+        if (!self.selectedNode && [type isEqualToString:PASTEBOARD_TYPE_KEYFRAMES])
         {
             [self modalDialogTitle:@"Paste Failed" message:@"You need to select a node to paste keyframes"];
             return;
@@ -2622,11 +2623,11 @@ typedef enum
             keyframe.time = [seq alignTimeToResolution:keyframe.time - firstTime + seq.timelinePosition];
             
             // Add the keyframe
-            if ([type isEqualToString:kClipboardKeyFrames])
+            if ([type isEqualToString:PASTEBOARD_TYPE_KEYFRAMES])
             {
                 [self.selectedNode addKeyframe:keyframe forProperty:keyframe.name atTime:keyframe.time sequenceId:seq.sequenceId];
             }
-            else if ([type isEqualToString:kClipboardChannelKeyframes])
+            else if ([type isEqualToString:PASTEBOARD_TYPE_CHANNELKEYFRAMES])
             {
                 if (keyframe.type == kCCBKeyframeTypeCallbacks)
                 {

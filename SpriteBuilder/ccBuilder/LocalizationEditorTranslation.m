@@ -8,6 +8,7 @@
 
 #import "LocalizationEditorTranslation.h"
 #import "LocalizationEditorLanguage.h"
+#import "PasteboardTypes.h"
 
 @implementation LocalizationEditorTranslation
 
@@ -64,7 +65,7 @@
 
 - (id) pasteboardPropertyListForType:(NSString *)type
 {
-    if ([type isEqualToString:@"com.cocosbuilder.LocalizationEditorTranslation"])
+    if ([type isEqualToString:PASTEBOARD_TYPE_LOCALIZATIONEDITORTRANSLATION])
     {
         return [self serialization];
     }
@@ -73,12 +74,12 @@
 
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-    return [NSArray arrayWithObject:@"com.cocosbuilder.LocalizationEditorTranslation"];
+    return @[PASTEBOARD_TYPE_LOCALIZATIONEDITORTRANSLATION];
 }
 
 - (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
-    if ([type isEqualToString:@"com.cocosbuilder.LocalizationEditorTranslation"])
+    if ([type isEqualToString:PASTEBOARD_TYPE_LOCALIZATIONEDITORTRANSLATION])
     {
         return NSPasteboardWritingPromised;
     }
