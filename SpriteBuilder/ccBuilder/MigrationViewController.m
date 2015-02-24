@@ -55,14 +55,9 @@
         case NSAlertFirstButtonReturn:
             return YES;
 
-        case NSAlertSecondButtonReturn:
-            return NO;
-
         default:
             return NO;
     }
-
-    return NO;
 }
 
 - (BOOL)migrate
