@@ -23,7 +23,7 @@
     return self;
 }
 
--(void) showNodePluginsForEngine:(CCBTargetEngine)engine
+-(void) showNodePluginsForEngine:(SBTargetEngine)engine
 {
     PlugInManager* pim = [PlugInManager sharedManager];
     

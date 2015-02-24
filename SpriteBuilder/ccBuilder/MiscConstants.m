@@ -32,6 +32,8 @@ NSUInteger const RESOLUTION_4X = 4;
 
 NSUInteger const MINIMUM_FILENAME_LENGTH = 3;
 
+NSString *const DOCUMENT_BINARY_EXTENSION = @"sbi";
+
 // *** Notification object dictionary keys
 
 NSString *const NOTIFICATION_USERINFO_KEY_FILEPATH = @"filepath";

@@ -56,10 +56,11 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 {
     NSDictionary *rootKeys = @{
         @"onlyPublishCCBs" : [NSNull null],
+        @"excludedFromPackageMigration" : [NSNull null],
         @"exporter" : @"ccbi"
     };
 
-    if ([self rootKeysSet:rootKeys])
+    if ([self areRootKeysSet:rootKeys])
     {
         self.requiresRemovalOfObsoleteKeys = YES;
     }
@@ -115,7 +116,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         || _requiresRenamingOfFile;
 }
 
-- (BOOL)rootKeysSet:(NSDictionary *)rootKeys
+- (BOOL)areRootKeysSet:(NSDictionary *)rootKeys
 {
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_projectSettings.projectPath];
     BOOL result = NO;
@@ -167,7 +168,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 - (void)changeExporterToSBI
 {
-    _projectSettings.exporter = @"sbi";
+    _projectSettings.exporter = DOCUMENT_BINARY_EXTENSION;
 }
 
 - (BOOL)renameProjectFile:(NSError **)error

@@ -266,13 +266,11 @@
     XCTAssertEqual(project.deviceScaling, 0);
     XCTAssertEqual(project.designTarget, 0);
 
-    XCTAssertEqual(project.engine, CCBTargetEngineCocos2d);
+    XCTAssertEqual(project.engine, SBTargetEngineCocos2d);
     XCTAssertEqualObjects(project.exporter, @"ccbi");
 
     XCTAssertFalse(project.publishToZipFile);
     XCTAssertEqual(project.publishEnvironment, kCCBPublishEnvironmentDevelop);
-
-    XCTAssertTrue(project.excludedFromPackageMigration);
 
     NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
     XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
@@ -303,7 +301,6 @@
     XCTAssertNotNil(project);
     XCTAssertEqualObjects(project.publishDirectory, @"");
     XCTAssertEqualObjects(project.publishDirectoryAndroid, @"");
-    XCTAssertFalse(project.excludedFromPackageMigration);
 }
 
 - (void)testStandardInitializerAndPersistency
@@ -322,7 +319,7 @@
 
     XCTAssertNotNil(projectSettings.resourcePaths);
     XCTAssertEqual(projectSettings.resourcePaths.count, 0);
-    XCTAssertEqual(projectSettings.engine, CCBTargetEngineCocos2d);
+    XCTAssertEqual(projectSettings.engine, SBTargetEngineCocos2d);
     XCTAssertEqualObjects(projectSettings.publishDirectory, @"Published-iOS");
     XCTAssertEqualObjects(projectSettings.publishDirectoryAndroid, @"Published-Android");
 
@@ -338,8 +335,6 @@
     XCTAssertEqual(projectSettings.publishEnvironment, kCCBPublishEnvironmentDevelop);
 
     XCTAssertEqual(projectSettings.tabletPositionScaleFactor, 2.0f);
-
-    XCTAssertFalse(projectSettings.excludedFromPackageMigration);
 }
 
 - (void)testResourcePathsAndPersistency
@@ -388,16 +383,16 @@
 // be migrated with more effort to fix this change later on
 - (void)testEnums
 {
-    XCTAssertEqual(kCCBPublishEnvironmentDevelop, 0, @"Enum value kCCBPublishEnvironmentDevelop  must not change");
-    XCTAssertEqual(kCCBPublishEnvironmentRelease, 1, @"Enum value kCCBPublishEnvironmentRelease  must not change");
+    XCTAssertEqual(kCCBPublishEnvironmentDevelop, 0, @"Enum value kSBPublishEnvironmentDevelop  must not change");
+    XCTAssertEqual(kCCBPublishEnvironmentRelease, 1, @"Enum value kSBPublishEnvironmentRelease  must not change");
 
-    XCTAssertEqual(CCBTargetEngineCocos2d, 0, @"Enum value CCBTargetEngineCocos2d  must not change");
+    XCTAssertEqual(SBTargetEngineCocos2d, 0, @"Enum value SBTargetEngineCocos2d  must not change");
 
-    XCTAssertEqual(kCCBOrientationLandscape, 0, @"Enum value kCCBOrientationLandscape  must not change");
-    XCTAssertEqual(kCCBOrientationPortrait, 1, @"Enum value kCCBOrientationPortrait  must not change");
+    XCTAssertEqual(kSBOrientationLandscape, 0, @"Enum value kSBOrientationLandscape  must not change");
+    XCTAssertEqual(kSBOrientationPortrait, 1, @"Enum value kSBOrientationPortrait  must not change");
 
-    XCTAssertEqual(kCCBDesignTargetFlexible, 0, @"Enum value kCCBDesignTargetFlexible  must not change");
-    XCTAssertEqual(kCCBDesignTargetFixed, 1, @"Enum value kCCBDesignTargetFixed  must not change");
+    XCTAssertEqual(kSBDesignTargetFlexible, 0, @"Enum value kSBDesignTargetFlexible  must not change");
+    XCTAssertEqual(kSBDesignTargetFixed, 1, @"Enum value kSBDesignTargetFixed  must not change");
 }
 
 - (void)testRelativePathFromAbsolutePath

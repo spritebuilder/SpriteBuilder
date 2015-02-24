@@ -1175,7 +1175,7 @@ typedef enum
     
     if (type == kCCBDocDimensionsTypeNode)
     {
-        if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+        if (projectSettings.designTarget == kSBDesignTargetFlexible)
         {
             [updatedResolutions addObject:[ResolutionSetting settingIPhone]];
             [updatedResolutions addObject:[ResolutionSetting settingIPad]];
@@ -1189,14 +1189,14 @@ typedef enum
     {
         ResolutionSetting* settingDefault = [resolutions objectAtIndex:0];
         
-        if (projectSettings.designTarget == kCCBDesignTargetFixed)
+        if (projectSettings.designTarget == kSBDesignTargetFixed)
         {
             settingDefault.name = @"Fixed";
             settingDefault.scale = 2;
             settingDefault.ext = @"tablet phonehd";
             [updatedResolutions addObject:settingDefault];
         }
-        else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+        else if (projectSettings.designTarget == kSBDesignTargetFlexible)
         {
             settingDefault.name = @"Phone";
             settingDefault.scale = 1;
@@ -1212,14 +1212,14 @@ typedef enum
     }
     else if (type == kCCBDocDimensionsTypeFullScreen)
     {
-        if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+        if (projectSettings.defaultOrientation == kSBOrientationLandscape)
         {
             // Full screen landscape
-            if (projectSettings.designTarget == kCCBDesignTargetFixed)
+            if (projectSettings.designTarget == kSBDesignTargetFixed)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingFixedLandscape]];
             }
-            else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+            else if (projectSettings.designTarget == kSBDesignTargetFlexible)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
@@ -1229,11 +1229,11 @@ typedef enum
         else
         {
             // Full screen portrait
-            if (projectSettings.designTarget == kCCBDesignTargetFixed)
+            if (projectSettings.designTarget == kSBDesignTargetFixed)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingFixedPortrait]];
             }
-            else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+            else if (projectSettings.designTarget == kSBDesignTargetFlexible)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
@@ -3060,10 +3060,10 @@ typedef enum
 {
     switch (saveDlgLanguagePopup.selectedItem.tag)
     {
-        case CCBProgrammingLanguageObjectiveC:
+        case SBProgrammingLanguageObjectiveC:
             saveDlgLanguageHint.title = @"All supported platforms";
             break;
-        case CCBProgrammingLanguageSwift:
+        case SBProgrammingLanguageSwift:
             saveDlgLanguageHint.title = @"iOS7+ and OSX 10.10+ only";
             break;
         default:
@@ -3073,19 +3073,19 @@ typedef enum
     }
 }
 
--(void) createNewProjectTargetting:(CCBTargetEngine)engine
+-(void) createNewProjectTargetting:(SBTargetEngine)engine
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
-    [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
+    [saveDlg setAllowedFileTypes:@[@"spritebuilder"]];
     //saveDlg.message = @"Save your project file in the same directory as your projects resources.";
 
     // Configure the accessory view
     [saveDlg setAccessoryView:saveDlgAccessoryView];
     [saveDlgLanguagePopup removeAllItems];
     [saveDlgLanguagePopup addItemsWithTitles:@[@"Objective-C", @"Swift"]];
-    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.firstObject).tag = CCBProgrammingLanguageObjectiveC;
-    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.lastObject).tag = CCBProgrammingLanguageSwift;
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.firstObject).tag = SBProgrammingLanguageObjectiveC;
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.lastObject).tag = SBProgrammingLanguageSwift;
     saveDlgLanguagePopup.target = self;
     saveDlgLanguagePopup.action = @selector(updateLanguageHint);
     [self updateLanguageHint];
@@ -3139,7 +3139,7 @@ typedef enum
 
 - (IBAction) menuNewProject:(id)sender
 {
-	[self createNewProjectTargetting:CCBTargetEngineCocos2d];
+    [self createNewProjectTargetting:SBTargetEngineCocos2d];
 }
 
 - (IBAction) menuNewPackage:(id)sender

@@ -40,7 +40,7 @@
 
 @implementation CCBProjectCreator
 
--(BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(CCBTargetEngine)engine programmingLanguage:(CCBProgrammingLanguage)programmingLanguage
+-(BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(SBTargetEngine)engine programmingLanguage:(SBProgrammingLanguage)programmingLanguage
 {
     NSError *error = nil;
     NSFileManager* fm = [NSFileManager defaultManager];
@@ -83,7 +83,7 @@
     [self setName:projName inFile:pbxprojFile search:substitutableProjectName];
     [self setName:identifier inFile:pbxprojFile search:substitutableProjectIdentifier];
     NSArray *filesToRemove;
-    if (programmingLanguage == CCBProgrammingLanguageObjectiveC)
+    if (programmingLanguage == SBProgrammingLanguageObjectiveC)
     {
         [self setName:@"IPHONEOS_DEPLOYMENT_TARGET = 6.0"
                inFile:pbxprojFile
@@ -94,7 +94,7 @@
         [self removeLinesMatching:@".*MainScene[.]swift.*" inFile:pbxprojFile];
         filesToRemove = @[@"Source/MainScene.swift"];
     }
-    else if (programmingLanguage == CCBProgrammingLanguageSwift)
+    else if (programmingLanguage == SBProgrammingLanguageSwift)
     {
         [self removeLinesMatching:@".*MainScene[.][hm].*" inFile:pbxprojFile];
         filesToRemove = @[@"Source/MainScene.h", @"Source/MainScene.m"];
