@@ -25,6 +25,7 @@
 
     if (![self askDelegateHowToProceed])
     {
+        [NSError setNewErrorWithErrorPointer:error code:SBCCBMigrationCancelledError message:@"Cancelled by delegate"];
         return NO;
     }
 

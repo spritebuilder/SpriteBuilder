@@ -38,8 +38,9 @@ NSInteger const SBCCBReadingErrorVersionHigherThanSpritebuilderSupport = 3003;
 NSInteger const SBCCBReadingErrorNoNodesFound = 3004;
 
 NSInteger const SBCCBMigrationError = 3010;
-NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError = 3011;
-NSInteger const SBCCBMigrationNoVersionFoundError = 3012;
+NSInteger const SBCCBMigrationCancelledError = 3011;
+NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError = 3012;
+NSInteger const SBCCBMigrationNoVersionFoundError = 3013;
 
 NSInteger const SBPackageSettingsMigrationNoRuleError = 3100;
 NSInteger const SBPackageSettingsMigrationCannotDowngraderError = 3101;

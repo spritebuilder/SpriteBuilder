@@ -16,7 +16,7 @@
 #import "MigrationControllerDelegate.h"
 
 
-@interface ProjectMigrationController_Tests : FileSystemTestCase <MigrationControllerDelegate>
+@interface MigrationController_Tests : FileSystemTestCase <MigrationControllerDelegate>
 
 @property (nonatomic, strong) MigrationController *migrationController;
 @property (nonatomic) BOOL migrationControllerDelegateResult;
@@ -24,7 +24,7 @@
 @end
 
 
-@implementation ProjectMigrationController_Tests
+@implementation MigrationController_Tests
 
 - (void)setUp
 {
@@ -116,6 +116,23 @@
     [migratorMock1 verify];
     [migratorMock2 verify];
 };
+
+- (void)testDelegateCancellingMigration
+{
+    self.migrationControllerDelegateResult = NO;
+
+    id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
+    [OCMStub([migratorMock1 isMigrationRequired]) andReturnValue:@(YES)];
+    [OCMStub([migratorMock1 htmlInfoText]) andReturn:@"1"];
+
+    _migrationController.migrators = @[migratorMock1];
+    _migrationController.delegate = self;
+
+    NSError *error;
+    XCTAssertFalse([_migrationController migrateWithError:&error]);
+    XCTAssertNotNil(error);
+    XCTAssertEqual(error.code, SBCCBMigrationCancelledError);
+}
 
 #pragma mark - helpers
 

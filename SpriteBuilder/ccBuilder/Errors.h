@@ -38,6 +38,7 @@ extern NSInteger const SBCCBReadingErrorVersionHigherThanSpritebuilderSupport;
 extern NSInteger const SBCCBReadingErrorNoNodesFound;
 
 extern NSInteger const SBCCBMigrationError;
+extern NSInteger const SBCCBMigrationCancelledError;
 extern NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError;
 extern NSInteger const SBCCBMigrationNoVersionFoundError;
 
