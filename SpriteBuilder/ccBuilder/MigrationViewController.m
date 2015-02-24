@@ -8,6 +8,7 @@
 #import "MigrationLogger.h"
 #import "MigrationLogWindowController.h"
 #import "CCBModalSheetController.h"
+#import "Errors.h"
 
 
 @interface MigrationViewController ()
@@ -63,7 +64,10 @@
 - (BOOL)migrate
 {
     NSError *error;
-    if (![_migrationController migrateWithError:&error])
+    BOOL migration = [_migrationController migrateWithError:&error];
+
+    if (!migration
+         && error.code != SBCCBMigrationCancelledError)
     {
         [NSAlert showModalDialogWithTitle:@"Migration Error" message:error.localizedDescription];
 
@@ -73,7 +77,8 @@
 
         return NO;
     }
-    return YES;
+
+    return migration;
 }
 
 @end

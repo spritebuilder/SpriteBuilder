@@ -15,6 +15,7 @@
 #import "Errors.h"
 #import "PackageSettings.h"
 #import "RMPackage.h"
+#import "PublishResolutions.h"
 
 @interface AllPackageSettingsMigrator_Tests : FileSystemTestCase
 
@@ -51,6 +52,17 @@
         [@"package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME],
         [@"package_b.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]
     ]];
+
+    RMPackage *package = [[RMPackage alloc] init];
+    package.dirPath = [self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"];
+
+    PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
+    NSError *error2;
+    XCTAssertTrue([packageSettings loadWithError:&error2]);
+
+    XCTAssertFalse(packageSettings.mainProjectResolutions.resolution_1x);
+    XCTAssertFalse(packageSettings.mainProjectResolutions.resolution_2x);
+    XCTAssertTrue(packageSettings.mainProjectResolutions.resolution_4x);
 }
 
 - (void)testMigrateOnlyPackageSettings
