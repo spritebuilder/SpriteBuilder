@@ -93,8 +93,8 @@
     [self copyTestingResource:@"blank.wav" toFolder:@"baa.spritebuilder/Packages/foo.sbpack"];
     [self copyTestingResource:@"photoshop.psd" toFolder:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto"];
 
-    _projectSettings.designTarget = kCCBDesignTargetFixed;
-    _projectSettings.defaultOrientation = kCCBOrientationPortrait;
+    _projectSettings.designTarget = kSBDesignTargetFixed;
+    _projectSettings.defaultOrientation = kSBOrientationPortrait;
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -371,8 +371,8 @@
     [self createFolders:@[@"baa.spritebuilder/Packages/foo.sbpack/images/resources-auto"]];
     [self copyTestingResource:@"greyscale.png" toFolder:@"baa.spritebuilder/Packages/foo.sbpack/images/resources-auto"];
 
-    _projectSettings.designTarget = kCCBDesignTargetFixed;
-    _projectSettings.defaultOrientation = kCCBOrientationPortrait;
+    _projectSettings.designTarget = kSBDesignTargetFixed;
+    _projectSettings.defaultOrientation = kSBOrientationPortrait;
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];

@@ -45,7 +45,7 @@
 @interface ProjectSettings()
 
 @property (nonatomic, strong) NSMutableDictionary* resourceProperties;
-@property (nonatomic, readwrite) CCBTargetEngine engine;
+@property (nonatomic, readwrite) SBTargetEngine engine;
 @property (nonatomic) BOOL storing;
 
 @end
@@ -79,7 +79,7 @@
         return NULL;
     }
 
-    self.engine = CCBTargetEngineCocos2d;
+    self.engine = SBTargetEngineCocos2d;
 
     self.resourcePaths = [[NSMutableArray alloc] init];
     self.publishDirectory = @"Published-iOS";
@@ -126,7 +126,7 @@
         return NULL;
     }
 
-	self.engine = (CCBTargetEngine)[[dict objectForKey:@"engine"] intValue];
+	self.engine = (SBTargetEngine)[[dict objectForKey:@"engine"] intValue];
     self.resourcePaths = [dict objectForKey:@"resourcePaths"];
 
     self.publishDirectory = [dict objectForKey:@"publishDirectory"];
@@ -167,11 +167,6 @@
 
     self.resourceProperties = [[dict objectForKey:@"resourceProperties"] mutableCopy];
 
-    self.excludedFromPackageMigration = [[dict objectForKey:@"excludedFromPackageMigration"] boolValue];
-    if (!self.excludedFromPackageMigration)
-    {
-        self.excludedFromPackageMigration = NO;
-    }
 
     [self initializeVersionStringWithProjectDict:dict];
 
@@ -235,8 +230,6 @@
     dict[@"deviceScaling"] = @(_deviceScaling);
 
     dict[@"publishEnvironment"] = @(_publishEnvironment);
-
-    dict[@"excludedFromPackageMigration"] = @(_excludedFromPackageMigration);
 
     if (_resourceProperties)
     {

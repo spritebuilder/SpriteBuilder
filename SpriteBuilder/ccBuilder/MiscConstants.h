@@ -32,6 +32,7 @@ extern NSUInteger RESOLUTION_4X;
 
 extern NSUInteger const MINIMUM_FILENAME_LENGTH;
 
+extern NSString *const DOCUMENT_BINARY_EXTENSION;
 
 // *** Notification userInfo dictionary keys
 

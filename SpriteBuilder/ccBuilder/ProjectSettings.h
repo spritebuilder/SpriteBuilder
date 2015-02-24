@@ -30,25 +30,25 @@
 
 typedef enum
 {
-    kCCBDesignTargetFlexible = 0,
-    kCCBDesignTargetFixed = 1,
-} CCBDesignTarget;
+    kSBDesignTargetFlexible = 0,
+    kSBDesignTargetFixed = 1,
+} SBDesignTarget;
 
 typedef enum
 {
-    kCCBOrientationLandscape = 0,
-    kCCBOrientationPortrait = 1,
-} CCBOrientation;
+    kSBOrientationLandscape = 0,
+    kSBOrientationPortrait = 1,
+} SBOrientation;
 
-typedef NS_ENUM(int8_t, CCBTargetEngine)
+typedef NS_ENUM(int8_t, SBTargetEngine)
 {
-	CCBTargetEngineCocos2d = 0,
+	SBTargetEngineCocos2d = 0,
 };
 
-typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
+typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 {
-    CCBProgrammingLanguageObjectiveC = 0,
-    CCBProgrammingLanguageSwift = 1,
+    SBProgrammingLanguageObjectiveC = 0,
+    SBProgrammingLanguageSwift = 1,
 };
 
 @class RMResource;
@@ -90,19 +90,18 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 @property (nonatomic) BOOL canUpdateCocos2D;
 
 @property (nonatomic, strong) NSMutableArray *cocos2dUpdateIgnoredVersions;
-@property (nonatomic) BOOL excludedFromPackageMigration;
 
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
 
-@property (nonatomic, assign) int designTarget;
+@property (nonatomic, assign) SBDesignTarget designTarget;
 @property (nonatomic, assign) int defaultOrientation;
 @property (nonatomic, assign) int deviceScaling;
 @property (nonatomic, assign) float tabletPositionScaleFactor;
 
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
 
-@property (nonatomic, readonly) CCBTargetEngine engine;
+@property (nonatomic, readonly) SBTargetEngine engine;
 
 // Returns an instance of ProjectSettings with projectPath already set
 - (instancetype)initWithFilepath:(NSString *)filepath;
