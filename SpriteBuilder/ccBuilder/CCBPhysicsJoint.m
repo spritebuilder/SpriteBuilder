@@ -14,6 +14,7 @@
 #import "SequencerHandler.h"
 #import "SequencerSequence.h"
 #import "AppDelegate.h"
+#import "PasteboardTypes.h"
 
 static const float kOutletHorizontalOffset = 8.0f;
 
@@ -354,7 +355,7 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
     
-    if ([pbType isEqualToString:@"com.cocosbuilder.jointBody"])
+    if ([pbType isEqualToString:PASTEBOARD_TYPE_JOINTBODY])
     {
         [dict setObject:@(self.UUID) forKey:@"jointUUID"];
         return dict;
@@ -364,10 +365,9 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-    NSMutableArray* pbTypes = [NSMutableArray arrayWithObject: @"com.cocosbuilder.jointBody"];
+    NSMutableArray* pbTypes = [@[PASTEBOARD_TYPE_JOINTBODY] mutableCopy];
     return pbTypes;
 }
-
 
 +(NSString *)convertBodyTypeToString:(JointHandleType)index
 {

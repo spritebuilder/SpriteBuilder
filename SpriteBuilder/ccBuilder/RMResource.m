@@ -9,6 +9,7 @@
 #import "ResourceManagerUtil.h"
 #import "RMDirectory.h"
 #import "MiscConstants.h"
+#import "PasteboardTypes.h"
 
 
 @implementation RMResource
@@ -120,23 +121,23 @@
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
 
-    if ([pbType isEqualToString:@"com.cocosbuilder.RMResource"])
+    if ([pbType isEqualToString:PASTEBOARD_TYPE_RMRESOURCE])
     {
         dict[@"type"] = @(_type);
         dict[@"filePath"] = _filePath;
         return dict;
     }
-    else if ([pbType isEqualToString:@"com.cocosbuilder.texture"])
+    else if ([pbType isEqualToString:PASTEBOARD_TYPE_TEXTURE])
     {
         dict[@"spriteFile"] = self.relativePath;
         return dict;
     }
-    else if ([pbType isEqualToString:@"com.cocosbuilder.ccb"])
+    else if ([pbType isEqualToString:PASTEBOARD_TYPE_SB])
     {
         dict[@"ccbFile"] = self.relativePath;
         return dict;
     }
-    else if ([pbType isEqualToString:@"com.cocosbuilder.wav"])
+    else if ([pbType isEqualToString:PASTEBOARD_TYPE_WAVE])
     {
         dict[@"wavFile"] = self.relativePath;
         return dict;
@@ -146,18 +147,18 @@
 
 - (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-    NSMutableArray* pbTypes = [@[@"com.cocosbuilder.RMResource"] mutableCopy];
+    NSMutableArray* pbTypes = [@[PASTEBOARD_TYPE_RMRESOURCE] mutableCopy];
     if (_type == kCCBResTypeImage)
     {
-        [pbTypes addObject:@"com.cocosbuilder.texture"];
+        [pbTypes addObject:PASTEBOARD_TYPE_TEXTURE];
     }
-    else if (_type == kCCBResTypeCCBFile)
+    else if (_type == kCCBResTypeSBFile)
     {
-        [pbTypes addObject:@"com.cocosbuilder.ccb"];
+        [pbTypes addObject:PASTEBOARD_TYPE_SB];
     }
     else if(_type == kCCBResTypeAudio)
     {
-        [pbTypes addObject:@"com.cocosbuilder.wav"];
+        [pbTypes addObject:PASTEBOARD_TYPE_WAVE];
     }
 
     return pbTypes;
@@ -165,19 +166,19 @@
 
 - (NSPasteboardWritingOptions)writingOptionsForType:(NSString *)pbType pasteboard:(NSPasteboard *)pasteboard
 {
-    if ([pbType isEqualToString:@"com.cocosbuilder.RMResource"])
+    if ([pbType isEqualToString:PASTEBOARD_TYPE_RMRESOURCE])
     {
         return NSPasteboardWritingPromised;
     }
-    if ([pbType isEqualToString:@"com.cocosbuilder.texture"] && _type == kCCBResTypeImage)
+    if ([pbType isEqualToString:PASTEBOARD_TYPE_TEXTURE] && _type == kCCBResTypeImage)
     {
         return NSPasteboardWritingPromised;
     }
-    if ([pbType isEqualToString:@"com.cocosbuilder.ccb"] && _type == kCCBResTypeCCBFile)
+    if ([pbType isEqualToString:PASTEBOARD_TYPE_SB] && _type == kCCBResTypeSBFile)
     {
         return NSPasteboardWritingPromised;
     }
-    if ([pbType isEqualToString:@"com.cocosbuilder.wav"] && _type == kCCBResTypeAudio)
+    if ([pbType isEqualToString:PASTEBOARD_TYPE_WAVE] && _type == kCCBResTypeAudio)
     {
         return NSPasteboardWritingPromised;
     }
@@ -210,7 +211,7 @@
         if ([fm fileExistsAtPath:autoPath]) return autoPath;
         else return NULL;
     }
-    else if (self.type == kCCBResTypeCCBFile)
+    else if (self.type == kCCBResTypeSBFile)
     {
         NSFileManager* fm = [NSFileManager defaultManager];
 
@@ -241,7 +242,7 @@
         }
         else return 0;
     }
-    else if (self.type == kCCBResTypeCCBFile)
+    else if (self.type == kCCBResTypeSBFile)
     {
         NSFileManager* fm = [NSFileManager defaultManager];
 

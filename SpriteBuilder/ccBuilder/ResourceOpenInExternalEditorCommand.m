@@ -34,7 +34,7 @@
 + (BOOL)isResourceCCBFileOrDirectory:(id)resource
 {
     RMResource *aResource = (RMResource *)resource;
-	return aResource.type != kCCBResTypeCCBFile && aResource.type != kCCBResTypeDirectory;
+	return aResource.type != kCCBResTypeSBFile && aResource.type != kCCBResTypeDirectory;
 }
 
 @end

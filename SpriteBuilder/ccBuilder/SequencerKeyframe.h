@@ -50,8 +50,6 @@ typedef enum
     kCCBKeyframeTypeAnimation,	
 } kCCBKeyframeType;
 
-NSString * kClipboardKeyFrames;
-NSString * kClipboardChannelKeyframes;
 
 @interface SequencerKeyframe : NSObject
 {

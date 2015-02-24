@@ -7,7 +7,7 @@ typedef enum
     kCCBResTypeImage,
     kCCBResTypeBMFont,
     kCCBResTypeTTF,
-    kCCBResTypeCCBFile,
+    kCCBResTypeSBFile,
     kCCBResTypeJS,
     kCCBResTypeJSON,
     kCCBResTypeAudio,

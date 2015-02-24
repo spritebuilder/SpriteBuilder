@@ -88,7 +88,7 @@
             
             if (res.type == kCCBResTypeImage
                 || res.type == kCCBResTypeBMFont
-                || res.type == kCCBResTypeCCBFile
+                || res.type == kCCBResTypeSBFile
                 || res.type == kCCBResTypeTTF
                 || res.type == kCCBResTypeAudio)
             {

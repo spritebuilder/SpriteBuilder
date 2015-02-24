@@ -54,7 +54,7 @@
     {
         [self showAudioPreview];
     }
-    else if (_previewedResource.type == kCCBResTypeCCBFile)
+    else if (_previewedResource.type == kCCBResTypeSBFile)
     {
         [self showCCBPreivew];
     }

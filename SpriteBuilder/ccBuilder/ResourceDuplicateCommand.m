@@ -17,7 +17,7 @@
 {
     RMResource *resource = _resources.firstObject;
 
-    NSAssert(resource.type==kCCBResTypeCCBFile,@"Only CCB files currently supported for duplication.");
+    NSAssert(resource.type== kCCBResTypeSBFile,@"Only CCB files currently supported for duplication.");
 
      [self duplicateResource:resource];
 }
@@ -64,7 +64,7 @@
     if ([firstResource isKindOfClass:[RMResource class]])
     {
         RMResource *clickedResource = firstResource;
-        if (clickedResource.type == kCCBResTypeCCBFile)
+        if (clickedResource.type == kCCBResTypeSBFile)
         {
             return YES;
         }
