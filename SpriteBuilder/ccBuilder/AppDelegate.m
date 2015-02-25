@@ -138,10 +138,9 @@
 #import "SecurityScopedBookmarksStore.h"
 #import "CCDirector_Private.h"
 #import "Cocos2dUpdaterController.h"
-#import "MigrationViewController.h"
 #import "MigrationControllerFactory.h"
-#import "MigrationLogWindowController.h"
 #import "PasteboardTypes.h"
+#import "MigrationDialogWindowController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1684,30 +1683,26 @@ typedef enum
 
     projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
 
-    ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithFilepath:projectPath];
-    if (!prjctSettings)
+    ProjectSettings *loadedProjectSettings = [[ProjectSettings alloc] initWithFilepath:projectPath];
+    if (!loadedProjectSettings)
     {
         [self modalDialogTitle:@"Invalid Project File"
                        message:@"Failed to open the project. Possible causes: File does not exist, invalid or was created with a newer version of SpriteBuilder."];
         return NO;
     }
 
-    MigrationViewController *migrationViewController =
-            [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:prjctSettings]
-                                                                  window:window];
-
-    migrationViewController.projectName = [[projectPath lastPathComponent] stringByDeletingPathExtension];
-    migrationViewController.cancelButtonTitle = @"Close Project";
-    if (![migrationViewController migrate])
+    MigrationDialogWindowController *migrationDialogWindowController = [[MigrationDialogWindowController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:loadedProjectSettings]];
+    migrationDialogWindowController.title = @"Project Migration";
+    migrationDialogWindowController.logItemName = loadedProjectSettings.projectName;
+    SBMigrationDialogResult returnValue = (SBMigrationDialogResult) [migrationDialogWindowController startMigration];
+    if (returnValue == SBMigrationDialogResultMigrateFailed)
     {
         [self closeProject];
         return NO;
     }
 
-    [prjctSettings store];
-
     // inject new project settings
-    self.projectSettings = prjctSettings;
+    self.projectSettings = loadedProjectSettings;
     _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     [ResourceManager sharedManager].projectSettings = projectSettings;
@@ -1717,7 +1712,7 @@ typedef enum
     [self updateResourcePathsFromProjectSettings];
 
     // Update Node Plugins list
-	[plugInNodeViewHandler showNodePluginsForEngine:prjctSettings.engine];
+	[plugInNodeViewHandler showNodePluginsForEngine:loadedProjectSettings.engine];
 
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success)
@@ -1729,10 +1724,10 @@ typedef enum
     localizationEditorHandler.managedFile = langFile;
 
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[prjctSettings.projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[loadedProjectSettings.projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
 
     // Open ccb file for project if there is only one
-    NSArray* resPaths = prjctSettings.absoluteResourcePaths;
+    NSArray* resPaths = loadedProjectSettings.absoluteResourcePaths;
     if (resPaths.count > 0)
     {
         NSString* resPath = resPaths[0];
@@ -1850,11 +1845,12 @@ typedef enum
 
     if (migrate)
     {
-        MigrationViewController *migrationViewController =
-                [[MigrationViewController alloc] initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilepath:filePath] window:window];
-
-        migrationViewController.cancelButtonTitle = @"Cancel (Do not open)";
-        if (![migrationViewController migrate])
+        MigrationDialogWindowController *migrationDialogWindowController =
+                [[MigrationDialogWindowController alloc] initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilepath:filePath]];
+        migrationDialogWindowController.title = @"Document Migration";
+        migrationDialogWindowController.logItemName = [NSString stringWithFormat:@"%@-%@", projectSettings.projectName, [filePath lastPathComponent]];
+        SBMigrationDialogResult returnValue = (SBMigrationDialogResult) [migrationDialogWindowController startMigration];
+        if (returnValue == SBMigrationDialogResultMigrateFailed)
         {
             return;
         }

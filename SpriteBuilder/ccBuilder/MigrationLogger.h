@@ -14,6 +14,6 @@
 
 - (void)log:(NSString *)message section:(id)section;
 
-- (NSArray *)allLogMessages;
+- (NSString *)log;
 
 @end

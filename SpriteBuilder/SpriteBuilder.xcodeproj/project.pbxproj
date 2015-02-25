@@ -136,8 +136,8 @@
 		830F4E9B192F5263002B832D /* Package.icns in Resources */ = {isa = PBXBuildFile; fileRef = 830F4E9A192F5263002B832D /* Package.icns */; };
 		830F4EB21934706C002B832D /* OCMock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
 		830F4ECB193486E5002B832D /* OCMock.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 830F4EB019347032002B832D /* OCMock.framework */; };
-		8316C9AE1A9B6B3B003369A7 /* MigrationLogWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8316C9AC1A9B6B3B003369A7 /* MigrationLogWindowController.m */; };
-		8316C9AF1A9B6B3B003369A7 /* MigrationLogWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8316C9AD1A9B6B3B003369A7 /* MigrationLogWindowController.xib */; };
+		8316C9BC1A9D0FAB003369A7 /* MigrationDialogWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8316C9BA1A9D0FAB003369A7 /* MigrationDialogWindowController.m */; };
+		8316C9BD1A9D0FAB003369A7 /* MigrationDialogWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8316C9BB1A9D0FAB003369A7 /* MigrationDialogWindowController.xib */; };
 		832705A019E5389100A311A0 /* PasteboardTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC052AEB516FE8A3E3EA /* PasteboardTypes.m */; };
 		833A5C4C192B48CB001837B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833A5C4B192B48CB001837B3 /* XCTest.framework */; };
 		833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 833A5C50192B48CB001837B3 /* InfoPlist.strings */; };
@@ -956,7 +956,6 @@
 		E525F73E5E09F387AE34D519 /* InspectorPosition.xib in Resources */ = {isa = PBXBuildFile; fileRef = E525FF473922B627A6A884A7 /* InspectorPosition.xib */; };
 		E525F7417672EF139D91F2BB /* test_ccbreader_slider.sb in Resources */ = {isa = PBXBuildFile; fileRef = E525FBD96C7FD372B58D4FD8 /* test_ccbreader_slider.sb */; };
 		E525F741BC8F5824EE86C26B /* ProjectSettingsMigrator_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC430296CE5DD37F7A7F /* ProjectSettingsMigrator_Tests.m */; };
-		E525F74D54D33077198A9D5B /* MigrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FE7A7754ED0F405AF376 /* MigrationViewController.m */; };
 		E525F76F40CE2A23E80DC6D9 /* test_ccbreader_migration_version_4_to_5.sb in Resources */ = {isa = PBXBuildFile; fileRef = E525F4A8257E15BC525C169B /* test_ccbreader_migration_version_4_to_5.sb */; };
 		E525F7955AC7103E961D6553 /* PluginNode_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = E525FC789866B6FA119F827F /* PluginNode_Tests.m */; };
 		E525F7A003FECE9F026E6272 /* InspectorFntFile.m in Sources */ = {isa = PBXBuildFile; fileRef = E525F2BBA2DFE1F0E3A4E3A4 /* InspectorFntFile.m */; };
@@ -1525,9 +1524,9 @@
 		830B39AF197032F400218021 /* blank.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = blank.wav; sourceTree = "<group>"; };
 		830F4E9A192F5263002B832D /* Package.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Package.icns; sourceTree = "<group>"; };
 		830F4EB019347032002B832D /* OCMock.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OCMock.framework; path = libs/OCMock.framework; sourceTree = "<group>"; };
-		8316C9AB1A9B6B3B003369A7 /* MigrationLogWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MigrationLogWindowController.h; sourceTree = "<group>"; };
-		8316C9AC1A9B6B3B003369A7 /* MigrationLogWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MigrationLogWindowController.m; sourceTree = "<group>"; };
-		8316C9AD1A9B6B3B003369A7 /* MigrationLogWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MigrationLogWindowController.xib; sourceTree = "<group>"; };
+		8316C9B91A9D0FAB003369A7 /* MigrationDialogWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MigrationDialogWindowController.h; sourceTree = "<group>"; };
+		8316C9BA1A9D0FAB003369A7 /* MigrationDialogWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MigrationDialogWindowController.m; sourceTree = "<group>"; };
+		8316C9BB1A9D0FAB003369A7 /* MigrationDialogWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MigrationDialogWindowController.xib; sourceTree = "<group>"; };
 		833A5C4A192B48CB001837B3 /* SpriteBuilder Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SpriteBuilder Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		833A5C4B192B48CB001837B3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		833A5C4F192B48CB001837B3 /* SpriteBuilder Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SpriteBuilder Tests-Info.plist"; sourceTree = "<group>"; };
@@ -2605,7 +2604,6 @@
 		E525F3EC220BB11985744E64 /* InspectorNodeReference.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorNodeReference.xib; sourceTree = "<group>"; };
 		E525F3F446FE40F0B87D829F /* ObserverTestHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObserverTestHelper.m; sourceTree = "<group>"; };
 		E525F40B4A984D6D907A54CF /* InspectorPhysicsUnavailable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorPhysicsUnavailable.m; sourceTree = "<group>"; };
-		E525F40CF56885E53ED52C8C /* MigrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MigrationViewController.h; sourceTree = "<group>"; };
 		E525F41EF24ED269266294D3 /* InspectorPointLock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorPointLock.h; sourceTree = "<group>"; };
 		E525F43AA008D5DD2726DA7E /* InspectorPopoverFloatXY.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorPopoverFloatXY.xib; sourceTree = "<group>"; };
 		E525F441BF8BA2627B1411F5 /* InspectorString.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorString.xib; sourceTree = "<group>"; };
@@ -2854,7 +2852,6 @@
 		E525FE6EEA14481321CC29E3 /* InspectorSpriteFrame.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorSpriteFrame.xib; sourceTree = "<group>"; };
 		E525FE7458F3960493FBF8D6 /* test_ccbreader_textfield.sb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_textfield.sb; sourceTree = "<group>"; };
 		E525FE7743A319577492F8FE /* InspectorCCBFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InspectorCCBFile.h; sourceTree = "<group>"; };
-		E525FE7A7754ED0F405AF376 /* MigrationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MigrationViewController.m; sourceTree = "<group>"; };
 		E525FE7D2E12F6004546A65F /* InspectorBlock.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InspectorBlock.xib; sourceTree = "<group>"; };
 		E525FE80A18731AAFB1A6C36 /* PreviewBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewBaseViewController.h; sourceTree = "<group>"; };
 		E525FE849808293F2D7051BA /* InspectorFlip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InspectorFlip.m; sourceTree = "<group>"; };
@@ -2873,7 +2870,6 @@
 		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
 		E525FEFBAEFBE0162647D84C /* NSNumber+ImageResolutions_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ImageResolutions_Tests.m"; sourceTree = "<group>"; };
 		E525FF18D2784BB119B2882A /* RMResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource.m; sourceTree = "<group>"; };
-		E525FF1A361573E24CED729A /* MigrationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MigrationControllerDelegate.h; sourceTree = "<group>"; };
 		E525FF20A3DA94C3BDBA97C7 /* CreateDirectoryFileCommand_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDirectoryFileCommand_Tests.m; sourceTree = "<group>"; };
 		E525FF29D4E8E5D93DDADC15 /* PublishIntermediateFilesLookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishIntermediateFilesLookup.m; sourceTree = "<group>"; };
 		E525FF2CEC6DF0EB5FFCA742 /* PublishRegularFileOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublishRegularFileOperation.m; sourceTree = "<group>"; };
@@ -5619,21 +5615,18 @@
 		E525F2B7F0804D971A7E55E9 /* Migration */ = {
 			isa = PBXGroup;
 			children = (
-				E525F9C75EFCBAFA968793ED /* MigrationLogger.m */,
-				E525FCB0E90494C3D3EB1EBE /* MigrationControllerFactory.m */,
-				E525F554D720452DEF7E706F /* MigrationLogger.h */,
-				E525F3744DDB4B88DA567C69 /* MigrationControllerFactory.h */,
-				E525FE7A7754ED0F405AF376 /* MigrationViewController.m */,
-				E525F40CF56885E53ED52C8C /* MigrationViewController.h */,
-				E525FF1A361573E24CED729A /* MigrationControllerDelegate.h */,
+				E525F10E3DAD50C019D1ABB9 /* FileCommands */,
+				E525F44F4D8B348401EC0A61 /* Migrators */,
 				E525FD59B692A8CF333470A0 /* MigrationController.h */,
 				E525FAD8FE315F7C04864D00 /* MigrationController.m */,
+				E525F3744DDB4B88DA567C69 /* MigrationControllerFactory.h */,
+				E525FCB0E90494C3D3EB1EBE /* MigrationControllerFactory.m */,
+				8316C9B91A9D0FAB003369A7 /* MigrationDialogWindowController.h */,
+				8316C9BA1A9D0FAB003369A7 /* MigrationDialogWindowController.m */,
+				8316C9BB1A9D0FAB003369A7 /* MigrationDialogWindowController.xib */,
+				E525F554D720452DEF7E706F /* MigrationLogger.h */,
+				E525F9C75EFCBAFA968793ED /* MigrationLogger.m */,
 				E525F22BC84996C5BB4891F7 /* MigratorProtocol.h */,
-				E525F44F4D8B348401EC0A61 /* Migrators */,
-				E525F10E3DAD50C019D1ABB9 /* FileCommands */,
-				8316C9AB1A9B6B3B003369A7 /* MigrationLogWindowController.h */,
-				8316C9AC1A9B6B3B003369A7 /* MigrationLogWindowController.m */,
-				8316C9AD1A9B6B3B003369A7 /* MigrationLogWindowController.xib */,
 			);
 			name = Migration;
 			sourceTree = "<group>";
@@ -6647,6 +6640,7 @@
 				77E1995213858DE0006C361B /* overflowImage.png in Resources */,
 				83EDACF9193DC99100327B86 /* Features.plist in Resources */,
 				77E1995313858DE0006C361B /* overflowImagePressed.png in Resources */,
+				8316C9BD1A9D0FAB003369A7 /* MigrationDialogWindowController.xib in Resources */,
 				77E1995413858DE0006C361B /* pi.png in Resources */,
 				83F3C9EA1A422CA4003D8659 /* seq-locked@2x.png in Resources */,
 				8304858519AE063A00A624BB /* PreviewCCBView.xib in Resources */,
@@ -6669,7 +6663,6 @@
 				9218DF301919B04D0033851E /* joint-pivot-mode-r-off.png in Resources */,
 				77E1995B13858DE0006C361B /* TabNewMetal.png in Resources */,
 				77E1995C13858DE0006C361B /* TabNewMetalPressed.png in Resources */,
-				8316C9AF1A9B6B3B003369A7 /* MigrationLogWindowController.xib in Resources */,
 				9218DF3D1919B04D0033851E /* joint-pivot-handle-ratchetmark@2x.png in Resources */,
 				83F3C9CE1A422CA4003D8659 /* seq-btn-play@2x.png in Resources */,
 				921EEAD818A5760700D864C2 /* joint-anchor.png in Resources */,
@@ -7442,6 +7435,7 @@
 				E3C5C1A41504D17E000CF6F3 /* ResourceManager.m in Sources */,
 				9249983218B7E1F500DE9ADA /* SceneGraph.m in Sources */,
 				E3C5C1AC1504D30C000CF6F3 /* SCEvent.m in Sources */,
+				8316C9BC1A9D0FAB003369A7 /* MigrationDialogWindowController.m in Sources */,
 				E3C5C1AD1504D30C000CF6F3 /* SCEvents.m in Sources */,
 				92AEE8431979D62B00B50F74 /* Base64.m in Sources */,
 				E3C5C1B515075CDD000CF6F3 /* ResourceManagerUtil.m in Sources */,
@@ -7584,7 +7578,6 @@
 				B7F02D4C17D13332008A2E2D /* CCBTransparentWindowDraggable.m in Sources */,
 				E525FB7B0CB67BE80AAFB31F /* OptimizeImageWithOptiPNGOperation.m in Sources */,
 				E525FD5C17B1032DF742AC22 /* PublishSpriteSheetOperation.m in Sources */,
-				8316C9AE1A9B6B3B003369A7 /* MigrationLogWindowController.m in Sources */,
 				E525FF5E533A11756767D753 /* PublishRegularFileOperation.m in Sources */,
 				E525FA6349C648C70C3F65DC /* PublishSoundFileOperation.m in Sources */,
 				E525F9D641B364C1235E450B /* PublishBaseOperation.m in Sources */,
@@ -7704,7 +7697,6 @@
 				E525F814A1B40A92F27D0D06 /* Cocos2dUpdaterController.m in Sources */,
 				E525F948B67B788DB7E46D6D /* MigrationLogger.m in Sources */,
 				E525F2702CBD5398A4D4C06C /* MigrationControllerFactory.m in Sources */,
-				E525F74D54D33077198A9D5B /* MigrationViewController.m in Sources */,
 				E525FDE28994B502E26D76C8 /* MigrationController.m in Sources */,
 				E525F1E9828B68471E53547E /* AllPackageSettingsMigrator.m in Sources */,
 				E525FA5037BEBCB06025DD8A /* AllSBDocumentsMigrator.m in Sources */,
