@@ -248,7 +248,7 @@
     {
         return kCCBResTypeAnimation;
     }
-    else if ([ext isEqualToString:@"sb"])
+    else if ([ext isEqualToString:@"sb"] || [ext isEqualToString:@"ccb"])
     {
         return kCCBResTypeSBFile;
     }

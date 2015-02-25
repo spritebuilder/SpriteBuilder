@@ -9,7 +9,9 @@
 #import "AllSBDocumentsMigrator.h"
 #import "CCBDictionaryReader.h"
 #import "CCBToSBRenameMigrator.h"
+#import "CCBDocument.h"
 #import "MiscConstants.h"
+#import "CCBDocument.h"
 
 @implementation MigrationControllerFactory
 
@@ -23,7 +25,7 @@
         [[AllSBDocumentsMigrator alloc] initWithDirPath:projectSettings.projectPathDir toVersion:kCCBDictionaryFormatVersion],
         [[AllPackageSettingsMigrator alloc] initWithPackagePaths:packagePaths toVersion:PACKAGE_SETTINGS_VERSION],
         [[ProjectSettingsMigrator alloc] initWithProjectSettings:projectSettings],
-        [[CCBToSBRenameMigrator alloc] initWithDirPath:projectSettings.projectPathDir]];
+            [[CCBToSBRenameMigrator alloc] initWithFilePath:projectSettings.projectPathDir renameResult:nil]];
 
     return migrationController;
 }
@@ -39,11 +41,12 @@
     return packagePaths;
 }
 
-+ (MigrationController *)documentMigrationControllerWithFilepath:(NSString *)filepath
++ (MigrationController *)documentMigrationControllerWithFilePath:(NSString *)filePath renameResult:(NSMutableDictionary *)renameResult
 {
     MigrationController *migrationController = [[MigrationController alloc] init];
     migrationController.migrators = @[
-            [[CCBDictionaryMigrator alloc] initWithFilepath:filepath toVersion:kCCBDictionaryFormatVersion]];
+            [[CCBDictionaryMigrator alloc] initWithFilepath:filePath toVersion:kCCBDictionaryFormatVersion],
+            [[CCBToSBRenameMigrator alloc] initWithFilePath:filePath renameResult:renameResult]];
 
     return migrationController;
 }
@@ -54,7 +57,7 @@
     migrationController.migrators = @[
         [[AllSBDocumentsMigrator alloc] initWithDirPath:dirPath toVersion:kCCBDictionaryFormatVersion],
         [[AllPackageSettingsMigrator alloc] initWithPackagePaths:@[dirPath] toVersion:PACKAGE_SETTINGS_VERSION],
-        [[CCBToSBRenameMigrator alloc] initWithDirPath:dirPath]];
+            [[CCBToSBRenameMigrator alloc] initWithFilePath:dirPath renameResult:nil]];
 
     return migrationController;
 }
