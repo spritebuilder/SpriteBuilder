@@ -82,12 +82,15 @@
     NSError *error;
     if (![_migrationController migrateWithError:&error])
     {
-        [self setText:[NSString stringWithFormat:@"Error: %@", error]];
+        [self setText:[NSString stringWithFormat:
+            @"<h3 style='color: red'>Migration failed with the following error: %@.</h3><br/> "
+            "Please ask for help on the <a href='http://forum.spritebuilder.com/'>Spritebuilder forum</a> or <a href='https://github.com/spritebuilder/SpriteBuilder/issues/new'>create an issue on github.</a>"
+            "Please provide the log file for a bug report.", error]];
         self.migrationResult = NO;
     }
     else
     {
-        [self setText:[NSString stringWithFormat:@"Success!"]];
+        [self setText:[NSString stringWithFormat:@"<h3 style='color: green'>Migration was successful!</h3>"]];
         self.migrationResult = YES;
     }
 
@@ -120,6 +123,7 @@
 
     [self setStartMigrationInfoText];
 
+    [_textView setTextContainerInset:NSMakeSize(5.0, 10.0)];
     [_textView setEditable:NO];
     [_textView setSelectable:YES];
     [_textView setDrawsBackground:NO];
@@ -127,14 +131,21 @@
 
 - (void)setStartMigrationInfoText
 {
-    [self setText:[_migrationController infoHtmlText]];
+    NSString *intro =
+            @"<h3>The Project/Document is of an older version, migration is required.</h3><br/>"
+            "<b style='color: red'>We strongly recommend to make a backup of your files before you proceed."
+            "It is even better to use a version control system such as <a href='http://git-scm.com/'>GIT</a> to keep track of changes to your files.</b><br/><br/>"
+            "If an error occurs the changes will be rolled back but the project/document can't be opened. A log file will be created for details."
+            "The following items have been detected for migration:<br/><br/>";
+
+    [self setText:[intro stringByAppendingString:[_migrationController infoHtmlText]]];
 }
 
 - (void)setText:(id)text
 {
     NSString *htmlMessage =
             [NSString stringWithFormat:
-                    @"<html><head><style>* {font-family: \"Lucida Grande\", sans-serif; padding:0; margin:0;}</style></head><body>"
+                    @"<html><head><style>* {font-family: \"Helvetica Neue\", sans-serif; padding:0; margin:0;}</style></head><body>"
                      "%@"
                      "</body></html>", text];
 
