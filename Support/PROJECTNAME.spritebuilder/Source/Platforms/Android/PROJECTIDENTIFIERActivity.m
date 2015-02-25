@@ -24,7 +24,7 @@
 
 
 #import "PROJECTIDENTIFIERActivity.h"
-#import "PROJECTIDENTIFIERController.h"
+#import "PROJECTIDENTIFIERSetup.h"
 
 #import <AndroidKit/AndroidKeyEvent.h>
 
@@ -44,7 +44,7 @@
 {
     [super run];
     
-    [PROJECTIDENTIFIERController setupApplication];
+    [[PROJECTIDENTIFIERSetup sharedSetup] setupApplication];
 }
 
 @end
