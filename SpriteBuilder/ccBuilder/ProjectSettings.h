@@ -173,4 +173,6 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 // If no package include the given absolutePath nil is returned
 - (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath;
 
+- (NSString *)projectName;
+
 @end

@@ -76,4 +76,9 @@
     return _logMessages;
 }
 
+- (NSString *)log
+{
+    return [_logMessages componentsJoinedByString:@"\n"];
+}
+
 @end

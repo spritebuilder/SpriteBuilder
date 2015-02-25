@@ -676,4 +676,9 @@
     return nil;
 }
 
+- (NSString *)projectName
+{
+    return [[self.projectPath lastPathComponent] stringByDeletingLastPathComponent];
+}
+
 @end

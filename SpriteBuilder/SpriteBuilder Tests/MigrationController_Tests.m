@@ -13,13 +13,10 @@
 #import "FileSystemTestCase.h"
 #import "Errors.h"
 #import "MigratorProtocol.h"
-#import "MigrationControllerDelegate.h"
 
-
-@interface MigrationController_Tests : FileSystemTestCase <MigrationControllerDelegate>
+@interface MigrationController_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) MigrationController *migrationController;
-@property (nonatomic) BOOL migrationControllerDelegateResult;
 
 @end
 
@@ -64,13 +61,10 @@
 
 - (void)testMigration
 {
-    self.migrationControllerDelegateResult = YES;
-
     id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
     id migratorMock2 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
 
     _migrationController.migrators = @[migratorMock1, migratorMock2];
-    _migrationController.delegate = self;
 
     [OCMStub([migratorMock1 isMigrationRequired]) andReturnValue:@(NO)];
     [OCMStub([migratorMock2 isMigrationRequired]) andReturnValue:@(YES)];
@@ -89,13 +83,10 @@
 
 - (void)testMigrationWithErrors
 {
-    self.migrationControllerDelegateResult = YES;
-
     id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
     id migratorMock2 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
 
     _migrationController.migrators = @[migratorMock1, migratorMock2];
-    _migrationController.delegate = self;
 
     [OCMStub([migratorMock1 isMigrationRequired]) andReturnValue:@(YES)];
     [OCMStub([migratorMock2 isMigrationRequired]) andReturnValue:@(YES)];
@@ -116,29 +107,5 @@
     [migratorMock1 verify];
     [migratorMock2 verify];
 };
-
-- (void)testDelegateCancellingMigration
-{
-    self.migrationControllerDelegateResult = NO;
-
-    id migratorMock1 = [OCMockObject niceMockForProtocol:@protocol(MigratorProtocol)];
-    [OCMStub([migratorMock1 isMigrationRequired]) andReturnValue:@(YES)];
-    [OCMStub([migratorMock1 htmlInfoText]) andReturn:@"1"];
-
-    _migrationController.migrators = @[migratorMock1];
-    _migrationController.delegate = self;
-
-    NSError *error;
-    XCTAssertFalse([_migrationController migrateWithError:&error]);
-    XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, SBCCBMigrationCancelledError);
-}
-
-#pragma mark - helpers
-
-- (BOOL)migrateWithMigrationDetails:(NSString *)migrationDetails
-{
-    return _migrationControllerDelegateResult;
-}
 
 @end

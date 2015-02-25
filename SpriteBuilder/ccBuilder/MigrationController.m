@@ -1,7 +1,6 @@
 #import "MigrationController.h"
 
 #import "ResourcePathToPackageMigrator.h"
-#import "MigrationViewController.h"
 #import "NSError+SBErrors.h"
 #import "Errors.h"
 #import "MigrationLogger.h"
@@ -18,15 +17,9 @@
         return NO;
     }
 
-    if (![self needsMigration])
+    if (![self isMigrationRequired])
     {
         return YES;
-    }
-
-    if (![self askDelegateHowToProceed])
-    {
-        [NSError setNewErrorWithErrorPointer:error code:SBCCBMigrationCancelledError message:@"Cancelled by delegate"];
-        return NO;
     }
 
     if (![self doMigrateWithError:error])
@@ -75,17 +68,7 @@
     return YES;
 }
 
-- (BOOL)askDelegateHowToProceed
-{
-    if (!_delegate)
-    {
-        return YES;
-    }
-    
-    return [_delegate migrateWithMigrationDetails:[self infoTextsAsHtmlOfAllMigrationSteps]];
-}
-
-- (NSString *)infoTextsAsHtmlOfAllMigrationSteps
+- (NSString *)infoHtmlText
 {
     NSMutableString *result = [NSMutableString string];
 
@@ -105,7 +88,7 @@
     return result;
 }
 
-- (BOOL)needsMigration
+- (BOOL)isMigrationRequired
 {
     for (id <MigratorProtocol> migrationStep in _migrators)
     {
