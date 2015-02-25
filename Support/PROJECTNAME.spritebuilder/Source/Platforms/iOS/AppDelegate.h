@@ -26,7 +26,7 @@
 #import <UIKit/UIKit.h>
 #import "cocos2d.h"
 
-@interface AppDelegate : CCAppDelegate
+@interface AppDelegate : NSObject
 {
 }
 
