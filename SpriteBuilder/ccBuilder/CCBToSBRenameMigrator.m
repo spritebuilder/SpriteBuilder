@@ -6,8 +6,10 @@
 #import "BackupFileCommand.h"
 #import "NSError+SBErrors.h"
 #import "Errors.h"
+#import "CCBDocument.h"
 #import "MoveFileCommand.h"
 #import "MigrationLogger.h"
+#import "CCBDocument.h"
 
 static NSString *const LOGGER_SECTION = @"CCBToSBRenameMigrator";
 static NSString *const LOGGER_ERROR = @"Error";
@@ -15,26 +17,34 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 @interface CCBToSBRenameMigrator()
 
-@property (nonatomic, strong) NSString *dirPath;
+@property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) NSMutableArray *commands;
 @property (nonatomic, strong) NSArray *allDocuments;
 @property (nonatomic, strong) MigrationLogger *logger;
+@property (nonatomic, strong) NSMutableDictionary *renameResult;
 
 @end
 
 
 @implementation CCBToSBRenameMigrator
 
-- (id)initWithDirPath:(NSString *)dirPath
+- (instancetype)initWithFilePath:(NSString *)filePath
 {
-    NSAssert(dirPath != nil, @"dirPath must not be nil");
+    CCBToSBRenameMigrator *migrator = [self initWithFilePath:filePath renameResult:nil];
+    return migrator;
+}
+
+- (instancetype)initWithFilePath:(NSString *)filePath renameResult:(NSMutableDictionary *)renameResult
+{
+    NSAssert(filePath != nil, @"dirPath must not be nil");
 
     self = [super init];
 
     if (self)
     {
-        self.dirPath = dirPath;
+        self.path = filePath;
         self.commands = [NSMutableArray array];
+        self.renameResult = renameResult;
     }
 
     return self;
@@ -49,17 +59,32 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 {
     if (!_allDocuments)
     {
-        self.allDocuments = [_dirPath allFilesInDirWithFilterBlock:^BOOL(NSURL *fileURL)
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        BOOL isDir;
+        if (![fileManager fileExistsAtPath:_path isDirectory:&isDir])
         {
-            NSString *filename;
-            [fileURL getResourceValue:&filename forKey:NSURLNameKey error:nil];
+            return nil;
+        }
 
-            NSNumber *isDirectory;
-            [fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
+        if (isDir)
+        {
+            self.allDocuments = [_path allFilesInDirWithFilterBlock:^BOOL(NSURL *fileURL) {
+                NSString *filename;
+                [fileURL getResourceValue:&filename forKey:NSURLNameKey error:nil];
 
-            return ![isDirectory boolValue]
-                   && ([[fileURL relativeString] hasSuffix:@"ccb"]);
-        }];
+                NSNumber *isDirectory;
+                [fileURL getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
+
+                return ![isDirectory boolValue]
+                       && ([[fileURL relativeString] hasSuffix:@"ccb"]);
+            }];
+        }
+        else
+        {
+            return [_path hasSuffix:@".sb"]
+                ? nil
+                : @[_path];
+        }
     }
 
     return _allDocuments;
@@ -100,6 +125,8 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 - (BOOL)renameCCBFileToSB:(NSString *)path error:(NSError **)error
 {
     NSString *newPath = [path replaceExtension:@"sb"];
+
+    _renameResult[path] = newPath;
 
     MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:path toPath:newPath];
 

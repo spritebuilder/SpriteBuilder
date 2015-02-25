@@ -10,12 +10,54 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "CCBToSBRenameMigrator.h"
+#import "CCBDocument.h"
+#import "CCBDictionaryReader.h"
 
 @interface CCBToSBRenameMigrator_Tests : FileSystemTestCase
 
 @end
 
 @implementation CCBToSBRenameMigrator_Tests
+
+- (void)testRenameWithFilePathPointer
+{
+    [self createFilesWithContents:@{
+            @"document.ccb" : @{@"nodeGraph" : @{}, @"fileVersion" : @4}
+    }];
+
+    NSString *filePath = [self fullPathForFile:@"document.ccb"];
+
+    NSMutableDictionary *renameResult = [NSMutableDictionary dictionary];
+    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithFilePath:filePath renameResult:renameResult];
+
+    XCTAssertTrue([migrator isMigrationRequired]);
+
+    NSError *error;
+    XCTAssertTrue([migrator migrateWithError:&error]);
+    XCTAssertNil(error);
+
+    XCTAssertEqualObjects(renameResult[filePath], [self fullPathForFile:@"document.sb"]);
+
+    [self assertFileExists:@"document.sb"];
+    [self assertFileDoesNotExist:@"document.ccb"];
+}
+
+- (void)testRenameCCBFilesToSBWithFilePathGiven
+{
+    [self createFilesWithContents:@{ @"foo.spritebuilder/foo.ccb" : @{@"nodeGraph" : @{}, @"fileVersion" : @4} }];
+
+    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc]
+                                                              initWithFilePath:[self fullPathForFile:@"foo.spritebuilder/foo.ccb"] renameResult:nil];
+
+    XCTAssertTrue([migrator isMigrationRequired]);
+
+    NSError *error;
+    XCTAssertTrue([migrator migrateWithError:&error]);
+    XCTAssertNil(error);
+
+    [self assertFileExists:@"foo.spritebuilder/foo.sb"];
+    [self assertFileDoesNotExist:@"foo.spritebuilder/foo.ccb"];
+}
 
 - (void)testRenameCCBFilesToSB
 {
@@ -31,7 +73,8 @@
         @"foo.spritebuilder/packages/baa.sbpack/docs/universe001/milkyway/sol/earth/ocean/marianatrench/not_in_dir_path_of_migrator.ccb" : [self ccBContentsThatCanBeMigrated],
     }];
 
-    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack"]];
+    NSMutableDictionary *renameResult = [NSMutableDictionary dictionary];
+    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithFilePath:[self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack"] renameResult:renameResult];
 
     XCTAssertTrue([migrator isMigrationRequired]);
 
@@ -39,23 +82,45 @@
     XCTAssertTrue([migrator migrateWithError:&error]);
     XCTAssertNil(error);
 
-    [self assertFilesDoNotExistRelativeToDirectory:@"foo.spritebuilder/packages" filesPaths:@[
-        @"foo.sbpack/scenes/level1/renameonly.ccb",
-        @"foo.sbpack/scenes/somcenestedfolder/level1/whoa.ccb",
-        @"foo.spritebuilder/packages/baa.sbpack/docs/universe001/milkyway/sol/earth/ocean/marianatrench/treasurechest.ccb"
-    ]];
+    NSString *org1 = @"foo.spritebuilder/packages/foo.sbpack/scenes/level1/renameonly.ccb";
+    NSString *org2 = @"foo.spritebuilder/packages/foo.sbpack/scenes/somcenestedfolder/level1/whoa.ccb";
+
+    NSString *new1 = @"foo.spritebuilder/packages/foo.sbpack/scenes/level1/renameonly.sb";
+    NSString *new2 = @"foo.spritebuilder/packages/foo.sbpack/scenes/somcenestedfolder/level1/whoa.sb";
+
+    [self assertFileDoesNotExist:org1];
+    [self assertFileDoesNotExist:org2];
+
+    [self assertFileExists:new1];
+    [self assertFileExists:new2];
 
     [self assertFilesExistRelativeToDirectory:@"foo.spritebuilder/packages" filesPaths:@[
-       @"foo.sbpack/scenes/level1/renameonly.sb",
        @"foo.sbpack/scenes/level1/donothing.pdf",
-       @"foo.sbpack/scenes/somcenestedfolder/level1/whoa.sb",
        @"baa.sbpack/docs/universe001/milkyway/sol/earth/ocean/marianatrench/not_in_dir_path_of_migrator.ccb"
     ]];
+
+    // NOTE Super hack: /var/... paths can be special links to /private/var and FileSystemTestCase is creating files within
+    // the temp folder which usually resides in /var. The tested method is using a NSDirectoryEnumerator which actually
+    // resolves these special links resulting in different paths string wise. DAMN!
+    for (NSString *key in [renameResult copy])
+    {
+        if ([key hasPrefix:@"/private"])
+        {
+            NSString *newKey = [key stringByReplacingCharactersInRange:NSMakeRange(0, 8) withString:@""];
+            NSString *newVal = [renameResult[key] stringByReplacingCharactersInRange:NSMakeRange(0, 8) withString:@""];
+            renameResult[newKey] = newVal;
+            [renameResult removeObjectForKey:key];
+        }
+    }
+
+    XCTAssertEqualObjects(renameResult[[self fullPathForFile:org1]], [self fullPathForFile:new1]);
+    XCTAssertEqualObjects(renameResult[[self fullPathForFile:org2]], [self fullPathForFile:new2]);
 };
 
 - (void)testHtmlInfoText
 {
-    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack"]];
+    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc]
+                                                              initWithFilePath:[self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack"] renameResult:nil];
     XCTAssertNotNil([migrator htmlInfoText]);
 }
 
@@ -67,7 +132,7 @@
         @"scenes/somcenestedfolder/level1/whoa.ccb" : [self ccBContentsThatCanBeMigrated],
     }];
 
-    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithDirPath:[self fullPathForFile:@"scenes"]];
+    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithFilePath:[self fullPathForFile:@"scenes"] renameResult:nil];
 
     XCTAssertTrue([migrator isMigrationRequired]);
 
@@ -92,7 +157,7 @@
         @"scenes/somcenestedfolder/level1/whoa.sb" : [self ccBContentsThatCanBeMigrated],
     }];
 
-    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack"]];
+    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithFilePath:[self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack"] renameResult:nil];
 
     XCTAssertFalse([migrator isMigrationRequired]);
 

@@ -1693,7 +1693,7 @@ typedef enum
 
     MigrationDialogWindowController *migrationDialogWindowController = [[MigrationDialogWindowController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:loadedProjectSettings]];
     migrationDialogWindowController.title = @"Project Migration";
-    migrationDialogWindowController.logItemName = loadedProjectSettings.projectName;
+    migrationDialogWindowController.logItemName = [loadedProjectSettings projectName];
     SBMigrationDialogResult returnValue = (SBMigrationDialogResult) [migrationDialogWindowController startMigration];
     if (returnValue == SBMigrationDialogResultMigrateFailed)
     {
@@ -1838,25 +1838,22 @@ typedef enum
     if (openDoc)
     {
         [tabView selectTabViewItem:[self tabViewItemFromDoc:openDoc]];
+        [[[CCDirector currentDirector] view] unlockOpenGLContext];
         return;
     }
-    
-    [self prepareForDocumentSwitch];
 
-    if (migrate)
+    CCBDocument *newDoc = migrate
+        ? [self migratedDocument:filePath]
+        : [[CCBDocument alloc] initWithContentsOfFile:filePath];
+
+    if (!newDoc)
     {
-        MigrationDialogWindowController *migrationDialogWindowController =
-                [[MigrationDialogWindowController alloc] initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilepath:filePath]];
-        migrationDialogWindowController.title = @"Document Migration";
-        migrationDialogWindowController.logItemName = [NSString stringWithFormat:@"%@-%@", projectSettings.projectName, [filePath lastPathComponent]];
-        SBMigrationDialogResult returnValue = (SBMigrationDialogResult) [migrationDialogWindowController startMigration];
-        if (returnValue == SBMigrationDialogResultMigrateFailed)
-        {
-            return;
-        }
+        [[[CCDirector currentDirector] view] unlockOpenGLContext];
+        return;
     }
 
-    CCBDocument *newDoc = [[CCBDocument alloc] initWithContentsOfFile:filePath];
+
+    [self prepareForDocumentSwitch];
 
     [self switchToDocument:newDoc];
      
@@ -1870,6 +1867,32 @@ typedef enum
     [self setSelectedNodes:NULL];
     
 	[[[CCDirector currentDirector] view] unlockOpenGLContext];
+}
+
+- (CCBDocument *)migratedDocument:(NSString *)filePath
+{
+    NSMutableDictionary *migrationResult = [NSMutableDictionary dictionary];
+    MigrationDialogWindowController *migrationDialogWindowController =
+            [[MigrationDialogWindowController alloc]  initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilePath:filePath
+                                                                                                                                         renameResult:migrationResult]];
+    migrationDialogWindowController.title = @"Document Migration";
+    migrationDialogWindowController.logItemName = [NSString stringWithFormat:@"%@-%@", self->projectSettings
+                                                                                           .projectName, [filePath lastPathComponent]];
+    SBMigrationDialogResult returnValue = (SBMigrationDialogResult) [migrationDialogWindowController startMigration];
+    if (returnValue == SBMigrationDialogResultMigrateFailed)
+    {
+        [[[CCDirector currentDirector] view] unlockOpenGLContext];
+        return nil;
+    }
+    else
+    {
+        // In case no renaming happened for this file it's safe to open the given filePath
+        NSString *resolvedFilePath = migrationResult[filePath]
+            ? migrationResult[filePath]
+            : filePath;
+
+        return [[CCBDocument alloc] initWithContentsOfFile:resolvedFilePath];
+    }
 }
 
 - (void) saveFile:(NSString*) fileName
@@ -4462,7 +4485,7 @@ typedef enum
 	id row = [outlineView itemAtRow:idx];
 	if([row isKindOfClass:[RMDirectory class]])
 	{
-		fullpath = [row dirPath];
+		fullpath = [row path];
 	}
 	else if([row isKindOfClass:[RMResource class]])
 	{

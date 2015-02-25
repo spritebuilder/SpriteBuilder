@@ -6,13 +6,15 @@
 
 @class ProjectSettings;
 @class MigrationController;
+@class CCBDocument;
 
 
 @interface MigrationControllerFactory : NSObject
 
 + (MigrationController *)fullProjectMigrationControllerWithProjectSettings:(ProjectSettings *)projectSettings;
 
-+ (MigrationController *)documentMigrationControllerWithFilepath:(NSString *)filepath;
++ (MigrationController *)documentMigrationControllerWithFilePath:(NSString *)filePath renameResult:(NSMutableDictionary *)renameResult;
 
 + (MigrationController *)packageImportingMigrationController:(NSString *)dirPath;
+
 @end

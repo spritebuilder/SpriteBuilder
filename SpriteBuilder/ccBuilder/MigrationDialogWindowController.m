@@ -193,7 +193,7 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateFormat = @"yyyy-MM-dd_HH-mm-ss";
 
-    return [NSString stringWithFormat:@"MigrationFailed-%@-%@.log", projectName, [dateFormatter stringFromDate:[NSDate date]]];
+    return [NSString stringWithFormat:@"Migration-%@-%@.log", projectName, [dateFormatter stringFromDate:[NSDate date]]];
 }
 
 

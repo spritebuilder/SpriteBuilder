@@ -594,6 +594,7 @@
 
     ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/foo.ccbproj"]];
 
+    XCTAssertEqualObjects(projectSettings.projectName, @"foo");
     XCTAssertNotNil(projectSettings);
     XCTAssertEqualObjects(projectSettings.projectPath, [self fullPathForFile:@"foo.spritebuilder/foo.ccbproj"]);
 }
