@@ -223,7 +223,6 @@ void ApplyCustomNodeVisitSwizzle()
     NSAssert(cocosView, @"cocosView is nil");
     [director setView:cocosView];
     [cocosView setWantsBestResolutionOpenGLSurface:YES];
-    [[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
 	
 	[director setDisplayStats:NO];
 	[director setProjection:CCDirectorProjection2D];    
@@ -3301,7 +3300,8 @@ typedef enum
     
     [CCDirector sharedDirector].contentScaleFactor = s;
     [CCDirector sharedDirector].UIScaleFactor = 1.0 / res.scale;
-    [[CCFileUtils sharedFileUtils] setMacContentScaleFactor:res.scale];
+    [CCFileLocator sharedFileLocator].deviceContentScale = res.scale;
+    [CCFileLocator sharedFileLocator].untaggedContentScale = 1.0;
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
