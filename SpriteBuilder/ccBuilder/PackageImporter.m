@@ -12,7 +12,6 @@
 #import "PackageSettings.h"
 #import "PackageSettingsMigrator.h"
 #import "MigrationControllerFactory.h"
-#import "MigrationViewController.h"
 #import "MigrationController.h"
 
 @implementation PackageImporter
