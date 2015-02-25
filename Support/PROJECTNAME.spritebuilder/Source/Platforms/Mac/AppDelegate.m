@@ -1,23 +1,13 @@
 #import "AppDelegate.h"
 #import "CCPackageManager.h"
 #import "CCDirector_Private.h"
-#import "PROJECTIDENTIFIERController.h"
-
-@interface AppDelegate ()
-
-@property (weak) IBOutlet NSWindow *window;
-@property (weak) IBOutlet CC_VIEW<CCView> *glView;
-@end
+#import "PROJECTIDENTIFIERSetup.h"
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    PROJECTIDENTIFIERController *controller = [PROJECTIDENTIFIERController sharedController];
-    controller.window = _window;
-    controller.glView = _glView;
-    [controller setupApplication];
-    return;
+    [[PROJECTIDENTIFIERSetup sharedSetup] setupApplication];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification

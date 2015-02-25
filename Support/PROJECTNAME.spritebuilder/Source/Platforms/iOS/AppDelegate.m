@@ -27,13 +27,13 @@
 
 #import "AppDelegate.h"
 #import "CCBuilderReader.h"
-#import "PROJECTIDENTIFIERController.h"
+#import "PROJECTIDENTIFIERSetup.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [PROJECTIDENTIFIERController setupApplication];
+    [[PROJECTIDENTIFIERSetup sharedSetup] setupApplication];
     
     return YES;
 }
