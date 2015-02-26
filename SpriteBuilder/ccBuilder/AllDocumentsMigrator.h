@@ -6,7 +6,7 @@
 #import "MigratorProtocol.h"
 
 
-@interface AllSBDocumentsMigrator : NSObject <MigratorProtocol>
+@interface AllDocumentsMigrator : NSObject <MigratorProtocol>
 
 - (id)initWithDirPath:(NSString *)dirPath toVersion:(NSUInteger)toVersion;
 

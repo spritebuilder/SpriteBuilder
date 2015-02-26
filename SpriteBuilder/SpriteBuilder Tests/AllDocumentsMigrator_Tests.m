@@ -7,13 +7,14 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "AllSBDocumentsMigrator.h"
+#import "AllDocumentsMigrator.h"
 #import "FileSystemTestCase.h"
 #import "CCBDictionaryKeys.h"
+#import "ProjectSettings.h"
 
 @interface AllDocumentsMigrator_Tests : FileSystemTestCase
 
-@property (nonatomic, strong) AllSBDocumentsMigrator *migrator;
+@property (nonatomic, strong) AllDocumentsMigrator *migrator;
 
 @end
 
@@ -42,7 +43,7 @@
     [@{CCB_DICTIONARY_KEY_FILEVERSION : @4, CCB_DICTIONARY_KEY_NODEGRAPH : @{}}  writeToFile:path3  atomically:YES];
     [@{CCB_DICTIONARY_KEY_FILEVERSION : @1, CCB_DICTIONARY_KEY_NODEGRAPH : @{}}  writeToFile:path4  atomically:YES];
 
-    AllSBDocumentsMigrator *migrator = [[AllSBDocumentsMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder"] toVersion:5];
+    AllDocumentsMigrator *migrator = [[AllDocumentsMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder"] toVersion:5];
     XCTAssertTrue([migrator isMigrationRequired]);
     
     NSError *error;
@@ -74,7 +75,7 @@
     NSDictionary *dict2 = @{CCB_DICTIONARY_KEY_FILEVERSION : @3, CCB_DICTIONARY_KEY_NODEGRAPH : @{}};
     [dict2 writeToFile:path2  atomically:YES];
 
-    AllSBDocumentsMigrator *migrator = [[AllSBDocumentsMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder"] toVersion:5];
+    AllDocumentsMigrator *migrator = [[AllDocumentsMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder"] toVersion:5];
     XCTAssertTrue([migrator isMigrationRequired]);
 
     NSError *error;
@@ -95,7 +96,7 @@
     NSDictionary *dict1 = @{CCB_DICTIONARY_KEY_FILEVERSION : @5, CCB_DICTIONARY_KEY_NODEGRAPH : @{}};
     [dict1 writeToFile:path1  atomically:YES];
 
-    AllSBDocumentsMigrator *migrator = [[AllSBDocumentsMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder"] toVersion:5];
+    AllDocumentsMigrator *migrator = [[AllDocumentsMigrator alloc] initWithDirPath:[self fullPathForFile:@"foo.spritebuilder"] toVersion:5];
     XCTAssertFalse([migrator isMigrationRequired]);
 
     NSError *error;

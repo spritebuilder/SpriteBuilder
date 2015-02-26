@@ -588,7 +588,7 @@
 
 - (void)testInitWithFilename
 {
-    [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
+    [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
 
     [self assertFileExists:@"foo.spritebuilder/foo.ccbproj"];
 

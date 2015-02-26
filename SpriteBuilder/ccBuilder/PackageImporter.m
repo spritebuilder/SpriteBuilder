@@ -14,7 +14,7 @@
 #import "MigrationController.h"
 #import "CCBToSBRenameMigrator.h"
 #import "AllPackageSettingsMigrator.h"
-#import "AllSBDocumentsMigrator.h"
+#import "AllDocumentsMigrator.h"
 #import "CCBDictionaryReader.h"
 
 @implementation PackageImporter
@@ -109,7 +109,7 @@
 
         MigrationController *migrationController = [[MigrationController alloc] init];
         migrationController.migrators = @[
-            [[AllSBDocumentsMigrator alloc] initWithDirPath:newPathInPackagesFolder toVersion:kCCBDictionaryFormatVersion],
+            [[AllDocumentsMigrator alloc] initWithDirPath:newPathInPackagesFolder toVersion:kCCBDictionaryFormatVersion],
             [[AllPackageSettingsMigrator alloc] initWithPackagePaths:@[newPathInPackagesFolder] toVersion:PACKAGE_SETTINGS_VERSION],
             [[CCBToSBRenameMigrator alloc] initWithFilePath:newPathInPackagesFolder renameResult:nil]];
 

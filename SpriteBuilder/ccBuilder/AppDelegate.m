@@ -1682,15 +1682,7 @@ typedef enum
 
     projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
 
-    ProjectSettings *loadedProjectSettings = [[ProjectSettings alloc] initWithFilepath:projectPath];
-    if (!loadedProjectSettings)
-    {
-        [self modalDialogTitle:@"Invalid Project File"
-                       message:@"Failed to open the project. Possible causes: File does not exist, invalid or was created with a newer version of SpriteBuilder."];
-        return NO;
-    }
-
-    ProjectSettings *upToDateProjectSettings = [MigrationDialogConvenience migrateFullProject:loadedProjectSettings];
+    ProjectSettings *upToDateProjectSettings = [MigrationDialogConvenience migrateWithFilePath:projectPath];
     if (!upToDateProjectSettings)
     {
         [self closeProject];

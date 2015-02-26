@@ -17,8 +17,7 @@
 
 @interface ResourcePathToPackageMigrator_Tests : FileSystemTestCase
 
-@property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) ResourcePathToPackageMigrator *packageMigrator;
+@property (nonatomic, copy) NSString *projectSettingsFilePath;
 
 @end
 
@@ -29,36 +28,23 @@
 {
     [super setUp];
 
-    [self createProjectSettingsFileWithName:@"migrationtest"];
-
-    self.projectSettings = [self loadProjectSettingsWithProjectName:@"migrationtest"];
-
-    self.packageMigrator = [[ResourcePathToPackageMigrator alloc] initWithProjectSettings:_projectSettings];
+    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"migrationtest"];
+    self.projectSettingsFilePath = projectSettings.projectPath; 
 }
 
 
 #pragma mark - setup
 
-- (ProjectSettings *)loadProjectSettingsWithProjectName:(NSString *)projectName
-{
-    NSString *projectFileName = [NSString stringWithFormat:@"%@.ccbproj", projectName];
-    NSString *projectSettingsPath = [self fullPathForFile:projectFileName];
-
-    NSMutableDictionary *projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectSettingsPath];
-    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
-    projectSettings.projectPath = projectSettingsPath;
-
-    [self assertFileExists:projectFileName];
-
-    return projectSettings;
-}
-
 - (void)setProjectsResourcePaths:(NSArray *)resourcePaths
 {
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:_projectSettingsFilePath];
+
     for (NSString *resourcePath in resourcePaths)
     {
-        [_projectSettings addResourcePath:[self fullPathForFile:resourcePath] error:nil];
+        [projectSettings addResourcePath:[self fullPathForFile:resourcePath] error:nil];
     }
+
+    [projectSettings store];
 }
 
 
@@ -72,18 +58,23 @@
 
     [self setProjectsResourcePaths:@[@"SpriteBuilder Resources"]];
 
-    XCTAssertTrue([_packageMigrator isMigrationRequired]);
+    ResourcePathToPackageMigrator *packageMigrator = [[ResourcePathToPackageMigrator alloc]
+                                                                                     initWithProjectFilePath:_projectSettingsFilePath];
+
+    XCTAssertTrue([packageMigrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:_projectSettingsFilePath];
 
     [self assertFileExists:@"packages"];
     [self assertFileDoesNotExist:@"SpriteBuilder Resources"];
     [self assertFileExists:[@"packages/SpriteBuilder Resources" stringByAppendingPackageSuffix]];
     [self assertFileExists:[[@"packages/SpriteBuilder Resources" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
-    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"SpriteBuilder Resources"]]];
-    [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]]];
+    [self assertResourcePathsInProject:@[[projectSettings fullPathForPackageName:@"SpriteBuilder Resources"]] inProjectSettings:projectSettings];
+    [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]] inProjectSettings:nil];
 }
 
 - (void)testMigrationWithExistingPackagesFolderAsResourcePath
@@ -94,20 +85,25 @@
 
     [self setProjectsResourcePaths:@[@"Packages"]];
 
-    XCTAssertTrue([_packageMigrator isMigrationRequired]);
+    ResourcePathToPackageMigrator *packageMigrator = [[ResourcePathToPackageMigrator alloc]
+                                                                                     initWithProjectFilePath:_projectSettingsFilePath];
 
-    XCTAssertTrue([_packageMigrator isMigrationRequired]);
+    XCTAssertTrue([packageMigrator isMigrationRequired]);
+
+    XCTAssertTrue([packageMigrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:_projectSettingsFilePath];
 
     [self assertFileExists:@"Packages"];
     [self assertFileExists:[@"Packages/Packages" stringByAppendingPackageSuffix]];
     [self assertFileExists:[[@"Packages/Packages" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
 
-    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"Packages"]]];
-    [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"Packages"]]];
+    [self assertResourcePathsInProject:@[[projectSettings fullPathForPackageName:@"Packages"]] inProjectSettings:projectSettings];
+    [self assertResourcePathsNotInProject:@[[self fullPathForFile:@"Packages"]] inProjectSettings:nil];
 }
 
 - (void)testWithExistingPackagesFolderAndANotInProjectPackageFolderInside
@@ -118,11 +114,16 @@
 
     [self setProjectsResourcePaths:@[@"sprites"]];
 
-    XCTAssertTrue([_packageMigrator isMigrationRequired]);
+    ResourcePathToPackageMigrator *packageMigrator = [[ResourcePathToPackageMigrator alloc]
+                                                                                     initWithProjectFilePath:_projectSettingsFilePath];
+
+    XCTAssertTrue([packageMigrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:_projectSettingsFilePath];
 
     [self assertFileExists:[@"Packages/sprites" stringByAppendingPackageSuffix]];
     [self assertFileExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPathComponent:@"asset.png"]];
@@ -131,7 +132,7 @@
 
     // This is a bit brittle, but should be easily fixed if renaming rules change
     [self assertFileExists:[[@"Packages/sprites" stringByAppendingPackageSuffix] stringByAppendingString:@".renamed"]];
-    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"sprites"]]];
+    [self assertResourcePathsInProject:@[[projectSettings fullPathForPackageName:@"sprites"]] inProjectSettings:projectSettings];
 }
 
 - (void)testImportingAResourcePathWithPackageSuffixButOutsidePackagesFolder
@@ -139,17 +140,22 @@
     [self createFolders:@[[@"sprites" stringByAppendingPackageSuffix]]];
     [self setProjectsResourcePaths:@[[@"sprites" stringByAppendingPackageSuffix]]];
 
-    XCTAssertTrue([_packageMigrator isMigrationRequired]);
+    ResourcePathToPackageMigrator *packageMigrator = [[ResourcePathToPackageMigrator alloc]
+                                                                                     initWithProjectFilePath:_projectSettingsFilePath];
+
+    XCTAssertTrue([packageMigrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:_projectSettingsFilePath];
 
     [self assertFileExists:[@"packages/sprites" stringByAppendingPackageSuffix]];
     [self assertFileDoesNotExist:[@"sprites" stringByAppendingPackageSuffix]];
     [self assertFileDoesNotExist:[[@"packages/sprites" stringByAppendingPackageSuffix] stringByAppendingPackageSuffix]];
 
-    [self assertResourcePathsInProject:@[[_projectSettings fullPathForPackageName:@"sprites"]]];
+    [self assertResourcePathsInProject:@[[projectSettings fullPathForPackageName:@"sprites"]] inProjectSettings:projectSettings];
 }
 
 - (void)testHtmlInfoText
@@ -158,10 +164,13 @@
 
     XCTAssertTrue([@{} writeToFile:[self fullPathForFile:[@"foo.spritebuilder/Packages/package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]] atomically:YES]);
 
-    XCTAssertFalse([_packageMigrator isMigrationRequired]);
+    ResourcePathToPackageMigrator *packageMigrator = [[ResourcePathToPackageMigrator alloc]
+                                                                                     initWithProjectFilePath:_projectSettingsFilePath];
+
+    XCTAssertFalse([packageMigrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrateWithError:&error]);
+    XCTAssertTrue([packageMigrator migrateWithError:&error]);
     XCTAssertNil(error);
 }
 
@@ -173,42 +182,50 @@
 
     [self setProjectsResourcePaths:@[@"SpriteBuilder Resources"]];
 
-    XCTAssertTrue([_packageMigrator isMigrationRequired]);
+    ResourcePathToPackageMigrator *packageMigrator = [[ResourcePathToPackageMigrator alloc]
+                                                                                     initWithProjectFilePath:_projectSettingsFilePath];
+
+    XCTAssertTrue([packageMigrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
+    XCTAssertTrue([packageMigrator migrateWithError:&error], @"Migration failed, error: %@", error);
     XCTAssertNil(error);
 
-    [_packageMigrator rollback];
+    [packageMigrator rollback];
+
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:_projectSettingsFilePath];
 
     [self assertFileExists:@"SpriteBuilder Resources/asset.png"];
     [self assertFileExists:@"SpriteBuilder Resources/song.wav"];
     [self assertFileDoesNotExist:@"packages"];
-    [self assertResourcePathsInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]]];
-    XCTAssertTrue(_projectSettings.resourcePaths.count == 1, @"There should be only 1 resourcepath but %lu found: %@", _projectSettings.resourcePaths.count, _projectSettings.resourcePaths);
+    [self assertResourcePathsInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]] inProjectSettings:projectSettings];
+    XCTAssertTrue(projectSettings.resourcePaths.count == 1, @"There should be only 1 resourcepath but %lu found: %@", projectSettings.resourcePaths.count, projectSettings.resourcePaths);
 }
 
 - (void)testMigrationNotRequired
 {
-    XCTAssertFalse([_packageMigrator isMigrationRequired]);
+    ResourcePathToPackageMigrator *packageMigrator = [[ResourcePathToPackageMigrator alloc]
+                                                                                     initWithProjectFilePath:_projectSettingsFilePath];
+
+    XCTAssertFalse([packageMigrator  isMigrationRequired]);
 }
 
 
 #pragma mark - assertion helper
 
-- (void)assertResourcePathsInProject:(NSArray *)resourcePaths
+- (void)assertResourcePathsInProject:(NSArray *)resourcePaths inProjectSettings:(ProjectSettings *)projectSettings
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertTrue([_projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Found in settings: %@", resourcePath, _projectSettings.resourcePaths);
+        XCTAssertTrue([projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Found in settings: %@", resourcePath, projectSettings.resourcePaths);
     }
 }
 
-- (void)assertResourcePathsNotInProject:(NSArray *)resourcePaths
+- (void)assertResourcePathsNotInProject:(NSArray *)resourcePaths inProjectSettings:(ProjectSettings *)projectSettings
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertFalse([_projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is in project settings.", resourcePath);
+        XCTAssertFalse([projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is in project settings.", resourcePath);
     }
 }
 

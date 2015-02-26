@@ -8,6 +8,7 @@
 #import "PackageSettingsMigrator.h"
 #import "MigrationLogger.h"
 #import "PublishResolutions.h"
+#import "ProjectSettings.h"
 
 
 static NSString *const LOGGER_SECTION = @"AllPackageSettingsMigrator";
@@ -27,7 +28,25 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 @implementation AllPackageSettingsMigrator
 
-- (id)initWithPackagePaths:(NSArray *)packagePaths toVersion:(NSUInteger)toVersion
+- (instancetype)initWithProjectFilePath:(NSString *)filepath toVersion:(NSUInteger)toVersion
+{
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:filepath];
+    if (!projectSettings)
+    {
+        return nil;
+    }
+
+    NSMutableArray *packagePaths = [NSMutableArray array];
+    for (NSMutableDictionary *resourcePathDict in projectSettings.resourcePaths)
+    {
+        NSString *fullPackagePath = [projectSettings fullPathForResourcePathDict:resourcePathDict];
+        [packagePaths addObject:fullPackagePath];
+    }
+
+    return [self initWithPackagePaths:packagePaths toVersion:toVersion];
+}
+
+- (instancetype)initWithPackagePaths:(NSArray *)packagePaths toVersion:(NSUInteger)toVersion
 {
     NSAssert(packagePaths != nil, @"dirPaths must not be nil");
     NSAssert([packagePaths count] > 0, @"dirPaths should at least contain one path");

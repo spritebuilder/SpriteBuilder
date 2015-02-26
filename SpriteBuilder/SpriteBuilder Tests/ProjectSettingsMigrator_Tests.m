@@ -15,147 +15,162 @@
 
 @interface ProjectSettingsMigrator_Tests : FileSystemTestCase
 
-@property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) ProjectSettingsMigrator *migrator;
-
 @end
+
 
 @implementation ProjectSettingsMigrator_Tests
 
-- (void)setUp
-{
-    [super setUp];
-
-    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
-    self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
-}
-
 - (void)testMigration
 {
-    NSMutableDictionary *project = [[NSDictionary dictionaryWithContentsOfFile:_projectSettings.projectPath] mutableCopy];
+    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
+
+    [projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+    [projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+    [projectSettings markAsDirtyRelPath:@"flowers"];
+
+    [projectSettings setProperty:@YES forRelPath:@"rocks" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+    [projectSettings clearDirtyMarkerOfRelPath:@"rocks"];
+
+    [projectSettings setProperty:@3 forRelPath:@"background.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
+    [projectSettings clearDirtyMarkerOfRelPath:@"background.png"];
+
+    [projectSettings store];
+
+    NSMutableDictionary *project = [[NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath] mutableCopy];
     project[@"onlyPublishCCBs"] = @NO;
-    [project writeToFile:_projectSettings.projectPath atomically:YES];
+    [project writeToFile:projectSettings.projectPath atomically:YES];
 
-    [_projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
-    [_projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
-    [_projectSettings markAsDirtyRelPath:@"flowers"];
+    NSMutableString *renameResult = [NSMutableString string];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
+            .projectPath                                                            renameResult:renameResult];
 
-    [_projectSettings setProperty:@YES forRelPath:@"rocks" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
-    [_projectSettings clearDirtyMarkerOfRelPath:@"rocks"];
-
-    [_projectSettings setProperty:@3 forRelPath:@"background.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
-    [_projectSettings clearDirtyMarkerOfRelPath:@"background.png"];
-
-    XCTAssertTrue([_migrator isMigrationRequired]);
+    XCTAssertTrue([migrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_migrator migrateWithError:&error]);
+    XCTAssertTrue([migrator migrateWithError:&error]);
     XCTAssertNil(error);
 
-    XCTAssertEqualObjects([_projectSettings.projectPath pathExtension], @"sbproj");
+    ProjectSettings *projectSettingsMigrated = [[ProjectSettings alloc] initWithFilepath:projectSettings.projectPath];
+
+    XCTAssertEqualObjects([projectSettingsMigrated.projectPath pathExtension], @"sbproj");
     [self assertFileExists:@"foo.spritebuilder/foo.sbproj"];
     [self assertFileDoesNotExist:@"foo.spritebuilder/foo.ccbproj"];
 
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
-    XCTAssertTrue([_projectSettings isDirtyRelPath:@"flowers"]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
+    XCTAssertTrue([projectSettingsMigrated isDirtyRelPath:@"flowers"]);
 
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
-    XCTAssertFalse([_projectSettings isDirtyRelPath:@"rocks"]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
+    XCTAssertFalse([projectSettingsMigrated isDirtyRelPath:@"rocks"]);
 
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
-    XCTAssertFalse([_projectSettings propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
-    XCTAssertFalse([_projectSettings isDirtyRelPath:@"background.png"]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
+    XCTAssertFalse([projectSettingsMigrated isDirtyRelPath:@"background.png"]);
 
-    XCTAssertEqualObjects(_projectSettings.exporter, @"sbi");
+    XCTAssertEqualObjects(projectSettingsMigrated.exporter, @"sbi");
 
-    NSDictionary *newProject = [NSDictionary dictionaryWithContentsOfFile:_projectSettings.projectPath];
+    NSDictionary *newProject = [NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath];
     XCTAssertNil(newProject[@"onlyPublishCCBs"]);
+
+    XCTAssertEqualObjects(renameResult, projectSettings.projectPath);
 }
 
 - (void)testHtmlInfoText
 {
-    XCTAssertNotNil([_migrator htmlInfoText]);
+    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
+
+    NSMutableString *renameResult = [NSMutableString string];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
+            .projectPath                                                            renameResult:renameResult];
+
+    XCTAssertNotNil([migrator htmlInfoText]);
 }
 
 - (void)testMigrationRequired_oldCCBProjName
 {
-    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
-    self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
+    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
+    NSMutableString *renameResult = [NSMutableString string];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
+            .projectPath                                                            renameResult:renameResult];
 
-    XCTAssertTrue([_migrator isMigrationRequired]);
+    XCTAssertTrue([migrator isMigrationRequired]);
+
+    NSError *error;
+    XCTAssertTrue([migrator migrateWithError:&error]);
+    XCTAssertNil(error);
+
+    [self assertFileExists:@"foo.spritebuilder/foo.sbproj"];
+    [self assertFileDoesNotExist:@"foo.spritebuilder/foo.ccbproj"];
 }
 
 - (void)testMigrationRequired_obsoleteKeysSetInPropertyList
 {
-    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
-    NSMutableDictionary *project = [[NSDictionary dictionaryWithContentsOfFile:[self fullPathForFile:@"foo.spritebuilder/foo.sbproj"]] mutableCopy];
+    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
+
+    NSMutableDictionary *project = [[NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath] mutableCopy];
     project[@"onlyPublishCCBs"] = @NO;
-    [project writeToFile:[self fullPathForFile:@"foo.spritebuilder/foo.sbproj"] atomically:YES];
+    [project writeToFile:projectSettings.projectPath atomically:YES];
 
-    self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
+    NSMutableString *renameResult = [NSMutableString string];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
+            .projectPath                                                            renameResult:renameResult];
 
-    XCTAssertTrue([_migrator isMigrationRequired]);
+    XCTAssertTrue([migrator isMigrationRequired]);
 }
 
 - (void)testMigrationNotRequired
 {
-    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
-    self.migrator = [[ProjectSettingsMigrator alloc] initWithProjectSettings:_projectSettings];
+    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
 
-    NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
+    NSMutableString *renameResult = [NSMutableString string];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
+            .projectPath                                                            renameResult:renameResult];
 
-    XCTAssertFalse([_migrator isMigrationRequired]);
+    NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
+
+    XCTAssertFalse([migrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_migrator migrateWithError:&error]);
+    XCTAssertTrue([migrator migrateWithError:&error]);
     XCTAssertNil(error);
 
-    NSString *hopefullyNotMigratedFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
+    NSString *hopefullyNotMigratedFile = [NSString stringWithContentsOfFile:projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
     [self assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:hopefullyNotMigratedFile];
 }
 
 - (void)testRollback
 {
-    [_projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
-    [_projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
-    [_projectSettings markAsDirtyRelPath:@"flowers"];
-    [_projectSettings store];
+    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
+    [projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+    [projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
+    [projectSettings markAsDirtyRelPath:@"flowers"];
+    [projectSettings store];
 
-    NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
+    NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
-    XCTAssertTrue([_migrator isMigrationRequired]);
+    NSMutableString *renameResult = [NSMutableString string];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
+            .projectPath                                                            renameResult:renameResult];
+
+    XCTAssertTrue([migrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([_migrator migrateWithError:&error]);
+    XCTAssertTrue([migrator migrateWithError:&error]);
     XCTAssertNil(error);
 
-    XCTAssertEqualObjects([_projectSettings.projectPath pathExtension], @"sbproj");
     [self assertFileExists:@"foo.spritebuilder/foo.sbproj"];
     [self assertFileDoesNotExist:@"foo.spritebuilder/foo.ccbproj"];
 
-    [_migrator rollback];
+    [migrator rollback];
 
-    XCTAssertEqualObjects([_projectSettings.projectPath pathExtension], @"ccbproj");
     [self assertFileExists:@"foo.spritebuilder/foo.ccbproj"];
     [self assertFileDoesNotExist:@"foo.spritebuilder/foo.sbproj"];
 
-    NSString *newPrjSettingsFile = [NSString stringWithContentsOfFile:_projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
+    NSString *newPrjSettingsFile = [NSString stringWithContentsOfFile:projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
     [self assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:newPrjSettingsFile];
-}
-
-- (void)testRemovalOfKeys
-{
-    // onlyPublishCCBs -> remove
-    // XCTFail(@"Implement me");
-}
-
-- (void)testRenamingOfProjectSettingsFile
-{
-
 }
 
 @end

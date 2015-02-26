@@ -10,7 +10,7 @@
 
 @interface MigrationDialogConvenience : NSObject
 
-+ (ProjectSettings *)migrateFullProject:(ProjectSettings *)projectSettings;
++ (ProjectSettings *)migrateWithFilePath:(NSString *)filePath;
 
 + (CCBDocument *)migrateDocumentWithFilePath:(NSString *)filePath
                              projectSettings:(ProjectSettings *)projectSettings;
