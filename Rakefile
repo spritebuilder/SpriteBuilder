@@ -195,7 +195,7 @@ task :package => [:clobber, BUILD_DIR, :build_requirements] do
     Rake::Task["clean"].invoke
     Rake::Task["package:archive"].invoke
 
-    copy_artifacts
+    Rake::Task["package:artifacts"].invoke
 end
 
 build_dirs =  `find . -type d -iname build`.split
