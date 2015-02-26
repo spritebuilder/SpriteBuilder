@@ -155,7 +155,7 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     }
     else
     {
-        filename = [NSString stringWithFormat:@"%@.ccbproj", name];
+        filename = [NSString stringWithFormat:@"%@.sbproj", name];
     }
 
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];

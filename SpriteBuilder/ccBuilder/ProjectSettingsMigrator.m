@@ -27,20 +27,28 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 @property (nonatomic) BOOL requiresMigrationOfProperties;
 @property (nonatomic) BOOL requiresRemovalOfObsoleteKeys;
 
+@property (nonatomic, strong) NSMutableString *renameResult;
+
 @end
 
 
 @implementation ProjectSettingsMigrator
 
-- (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings
+- (id)initWithProjectFilePath:(NSString *)filePath renameResult:(NSMutableString *)renameResult
 {
-    NSAssert(projectSettings != nil, @"ProjectSettings must be set");
+    NSAssert(filePath != nil, @"filePath must be set");
+    NSAssert(renameResult != nil, @"renameResult must be set");
+
+    ProjectSettings *loadedProjectSettings = [[ProjectSettings alloc] initWithFilepath:filePath];
+    NSAssert(loadedProjectSettings != nil, @"project settings could not be loaded");
 
     self = [super init];
     if (self)
     {
-        self.projectSettings = projectSettings;
+        self.renameResult = renameResult;
+        [_renameResult setString:filePath];
 
+        self.projectSettings = loadedProjectSettings;
         [self figureOutWhatNeedsMigration];
     }
 
@@ -180,6 +188,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
     if ([_renameCommand execute:error])
     {
         _projectSettings.projectPath = newFileName;
+        [_renameResult setString:newFileName];
         return YES;
     }
 

@@ -40,6 +40,29 @@
     self.migrator = [[AllPackageSettingsMigrator alloc] initWithPackagePaths:packagePaths toVersion:PACKAGE_SETTINGS_VERSION];
 }
 
+- (void)testMigrationWithProjectFilePath
+{
+    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/packages/foo.sbpack"];
+
+    [projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"] error:nil];
+    [projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil];
+
+    [projectSettings store];
+
+    self.migrator = [[AllPackageSettingsMigrator alloc] initWithProjectFilePath:projectSettings.projectPath toVersion:PACKAGE_SETTINGS_VERSION];
+
+    XCTAssertTrue([_migrator isMigrationRequired]);
+
+    NSError *error;
+    XCTAssertTrue([_migrator migrateWithError:&error]);
+    XCTAssertNil(error);
+
+    [self assertFilesExistRelativeToDirectory:@"foo.spritebuilder/Packages" filesPaths:@[
+        [@"package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME],
+        [@"package_b.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]
+    ]];
+}
+
 - (void)testCreateDefaultPackageSettingsIfNoneExists
 {
     XCTAssertTrue([_migrator isMigrationRequired]);

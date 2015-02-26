@@ -1,4 +1,4 @@
-#import "AllSBDocumentsMigrator.h"
+#import "AllDocumentsMigrator.h"
 #import "ProjectSettings.h"
 #import "CCRenderer_Private.h"
 #import "CCBDictionaryMigrator.h"
@@ -8,11 +8,10 @@
 #import "MigrationLogger.h"
 
 static NSString *const LOGGER_SECTION = @"AllDocumentsMigrator";
-static NSString *const LOGGER_ERROR = @"Error";
 static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 
-@interface AllSBDocumentsMigrator ()
+@interface AllDocumentsMigrator ()
 
 @property (nonatomic, strong) NSString *dirPath;
 @property (nonatomic) NSUInteger migrationVersionTarget;
@@ -23,7 +22,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 @end
 
 
-@implementation AllSBDocumentsMigrator
+@implementation AllDocumentsMigrator
 
 - (instancetype)initWithDirPath:(NSString *)dirPath toVersion:(NSUInteger)toVersion
 {

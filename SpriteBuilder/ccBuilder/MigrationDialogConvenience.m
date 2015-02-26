@@ -9,51 +9,32 @@
 #import "ProjectSettingsMigrator.h"
 #import "PackageSettings.h"
 #import "AllPackageSettingsMigrator.h"
-#import "AllSBDocumentsMigrator.h"
+#import "AllDocumentsMigrator.h"
 #import "ResourcePathToPackageMigrator.h"
 
 
 @implementation MigrationDialogConvenience
 
-+ (ProjectSettings *)migrateFullProject:(ProjectSettings *)projectSettings
++ (ProjectSettings *)migrateWithFilePath:(NSString *)filePath
 {
-    NSArray *packagePaths = [self allPackagePathsInProject:projectSettings];
-
+    NSMutableString *renameResult = [NSMutableString string];
     MigrationController *migrationController = [[MigrationController alloc] init];
     migrationController.migrators = @[
-        [[ResourcePathToPackageMigrator alloc] initWithProjectSettings:projectSettings],
-        [[AllSBDocumentsMigrator alloc] initWithDirPath:projectSettings.projectPathDir toVersion:kCCBDictionaryFormatVersion],
-        [[AllPackageSettingsMigrator alloc] initWithPackagePaths:packagePaths toVersion:PACKAGE_SETTINGS_VERSION],
-        [[ProjectSettingsMigrator alloc] initWithProjectSettings:projectSettings],
-        [[CCBToSBRenameMigrator alloc] initWithFilePath:projectSettings.projectPathDir]];
+        [[ProjectSettingsMigrator alloc] initWithProjectFilePath:filePath renameResult:renameResult],
+        [[ResourcePathToPackageMigrator alloc] initWithProjectFilePath:renameResult],
+        [[AllDocumentsMigrator alloc] initWithDirPath:[renameResult stringByDeletingLastPathComponent] toVersion:kCCBDictionaryFormatVersion],
+        [[AllPackageSettingsMigrator alloc] initWithProjectFilePath:renameResult toVersion:PACKAGE_SETTINGS_VERSION],
+        [[CCBToSBRenameMigrator alloc] initWithFilePath:[renameResult stringByDeletingLastPathComponent]]];
 
     MigrationDialogWindowController *dialog = [[MigrationDialogWindowController alloc] initWithMigrationController:migrationController];
 
     dialog.title = @"Project Migration";
-    dialog.logItemName = [projectSettings projectName];
-    dialog.logHeadline = [NSString stringWithFormat:@"Starting migration of project '%@'", projectSettings.projectPathDir];
+    dialog.logItemName = [[filePath lastPathComponent] stringByDeletingPathExtension];
+    dialog.logHeadline = [NSString stringWithFormat:@"Starting migration of project '%@'", filePath];
 
-    SBMigrationDialogResult returnValue = (SBMigrationDialogResult) [dialog startMigration];
-
-    if (returnValue == SBMigrationDialogResultMigrateFailed)
-    {
-        return nil;
-    }
-    else
-    {
-        return projectSettings;
-    }
-}
-
-+ (NSArray *)allPackagePathsInProject:(ProjectSettings *)projectSettings
-{
-    NSMutableArray *packagePaths = [NSMutableArray array];
-    for (NSMutableDictionary *resourcePathDict in projectSettings.resourcePaths)
-    {
-        NSString *fullPackagePath = [projectSettings fullPathForResourcePathDict:resourcePathDict];
-        [packagePaths addObject:fullPackagePath];
-    }
-    return packagePaths;
+    return [dialog startMigration] == SBMigrationDialogResultMigrateSuccessful
+       ? [[ProjectSettings alloc] initWithFilepath:renameResult]
+       : nil;
 }
 
 + (CCBDocument *)migrateDocumentWithFilePath:(NSString *)filePath

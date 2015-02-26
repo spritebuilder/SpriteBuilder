@@ -8,6 +8,8 @@
 
 @interface AllPackageSettingsMigrator : NSObject <MigratorProtocol>
 
-- (id)initWithPackagePaths:(NSArray *)packagePaths toVersion:(NSUInteger)toVersion;
+- (instancetype)initWithProjectFilePath:(NSString *)filepath toVersion:(NSUInteger)toVersion;
+
+- (instancetype)initWithPackagePaths:(NSArray *)packagePaths toVersion:(NSUInteger)toVersion;
 
 @end

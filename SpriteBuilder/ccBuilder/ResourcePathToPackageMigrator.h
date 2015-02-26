@@ -6,6 +6,6 @@
 
 @interface ResourcePathToPackageMigrator : NSObject  <MigratorProtocol>
 
-- (id)initWithProjectSettings:(ProjectSettings *)projectSettings;
+- (id)initWithProjectFilePath:(NSString *)filePath;
 
 @end

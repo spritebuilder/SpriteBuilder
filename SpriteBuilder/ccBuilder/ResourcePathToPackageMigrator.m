@@ -25,7 +25,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 @interface ResourcePathToPackageMigrator ()
 
-@property (nonatomic, weak)ProjectSettings *projectSettings;
+@property (nonatomic, strong)ProjectSettings *projectSettings;
 @property (nonatomic) BOOL resourcePathWithPackagesFolderNameFound;
 @property (nonatomic, copy) NSString *packageAsResourcePathTempName;
 
@@ -45,12 +45,17 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     return nil;
 }
 
-- (instancetype)initWithProjectSettings:(ProjectSettings *)projectSettings
+- (instancetype)initWithProjectFilePath:(NSString *)filePath
 {
+    NSAssert(filePath != nil, @"filePath must not be nil");
+
+    ProjectSettings *loadedProjectSettings = [[ProjectSettings alloc] initWithFilepath:filePath];
+    NSAssert(loadedProjectSettings != nil, @"project settings could not be loaded");
+
     self = [super init];
     if (self)
     {
-        self.projectSettings = projectSettings;
+        self.projectSettings = loadedProjectSettings;
         self.resourcePathWithPackagesFolderNameFound = NO;
         self.migrationCommandsStack = [NSMutableArray array];
         self.resourePathsBackup = [NSMutableArray array];
@@ -115,6 +120,8 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         [NSError setError:error withError:[self standardError]];
         return NO;
     }
+
+    [_projectSettings store];
 
     [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
     return YES;
@@ -405,6 +412,8 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     [_logger log:[NSString stringWithFormat:@"Resource paths reinstated: %@", _resourePathsBackup] section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 
     _projectSettings.resourcePaths = [_resourePathsBackup copy];
+
+    [_projectSettings store];
 }
 
 @end

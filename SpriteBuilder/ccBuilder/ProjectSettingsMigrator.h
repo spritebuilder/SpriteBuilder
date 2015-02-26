@@ -8,6 +8,6 @@
 
 @interface ProjectSettingsMigrator : NSObject <MigratorProtocol>
 
-- (id)initWithProjectSettings:(ProjectSettings *)projectSettings;
+- (id)initWithProjectFilePath:(NSString *)filePath renameResult:(NSMutableString *)renameResult;
 
 @end
