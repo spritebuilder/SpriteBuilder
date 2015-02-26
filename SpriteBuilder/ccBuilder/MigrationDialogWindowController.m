@@ -80,6 +80,11 @@
     }
 
     NSError *error;
+    if (_logHeadline)
+    {
+        [_migrationLogger log:_logHeadline];
+    }
+
     if (![_migrationController migrateWithError:&error])
     {
         [self setText:[NSString stringWithFormat:
@@ -87,11 +92,13 @@
             "Please ask for help on the <a href='http://forum.spritebuilder.com/'>Spritebuilder forum</a> or <a href='https://github.com/spritebuilder/SpriteBuilder/issues/new'>create an issue on github.</a>"
             "Please provide the log file for a bug report.", error]];
         self.migrationResult = NO;
+        [_migrationLogger log:@"Migration failed."];
     }
     else
     {
         [self setText:[NSString stringWithFormat:@"<h3 style='color: green'>Migration was successful!</h3>"]];
         self.migrationResult = YES;
+        [_migrationLogger log:@"Migration successful!"];
     }
 
     [self saveLogToFile];

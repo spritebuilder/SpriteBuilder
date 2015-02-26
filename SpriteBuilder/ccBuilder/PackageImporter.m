@@ -11,8 +11,11 @@
 #import "RMPackage.h"
 #import "PackageSettings.h"
 #import "PackageSettingsMigrator.h"
-#import "MigrationControllerFactory.h"
 #import "MigrationController.h"
+#import "CCBToSBRenameMigrator.h"
+#import "AllPackageSettingsMigrator.h"
+#import "AllSBDocumentsMigrator.h"
+#import "CCBDictionaryReader.h"
 
 @implementation PackageImporter
 
@@ -104,7 +107,12 @@
             return NO;
         }
 
-        MigrationController *migrationController = [MigrationControllerFactory packageImportingMigrationController:newPathInPackagesFolder];
+        MigrationController *migrationController = [[MigrationController alloc] init];
+        migrationController.migrators = @[
+            [[AllSBDocumentsMigrator alloc] initWithDirPath:newPathInPackagesFolder toVersion:kCCBDictionaryFormatVersion],
+            [[AllPackageSettingsMigrator alloc] initWithPackagePaths:@[newPathInPackagesFolder] toVersion:PACKAGE_SETTINGS_VERSION],
+            [[CCBToSBRenameMigrator alloc] initWithFilePath:newPathInPackagesFolder renameResult:nil]];
+
         if (![migrationController migrateWithError:localError])
         {
             return NO;

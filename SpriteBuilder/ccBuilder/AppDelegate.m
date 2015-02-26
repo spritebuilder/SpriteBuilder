@@ -137,10 +137,9 @@
 #import "NSAlert+Convenience.h"
 #import "SecurityScopedBookmarksStore.h"
 #import "CCDirector_Private.h"
-#import "Cocos2dUpdaterController.h"
-#import "MigrationControllerFactory.h"
 #import "PasteboardTypes.h"
-#import "MigrationDialogWindowController.h"
+#import "MigrationDialogConvenience.h"
+#import "Cocos2dUpdaterController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -1691,18 +1690,15 @@ typedef enum
         return NO;
     }
 
-    MigrationDialogWindowController *migrationDialogWindowController = [[MigrationDialogWindowController alloc] initWithMigrationController:[MigrationControllerFactory fullProjectMigrationControllerWithProjectSettings:loadedProjectSettings]];
-    migrationDialogWindowController.title = @"Project Migration";
-    migrationDialogWindowController.logItemName = [loadedProjectSettings projectName];
-    SBMigrationDialogResult returnValue = (SBMigrationDialogResult) [migrationDialogWindowController startMigration];
-    if (returnValue == SBMigrationDialogResultMigrateFailed)
+    ProjectSettings *upToDateProjectSettings = [MigrationDialogConvenience migrateFullProject:loadedProjectSettings];
+    if (!upToDateProjectSettings)
     {
         [self closeProject];
         return NO;
     }
 
     // inject new project settings
-    self.projectSettings = loadedProjectSettings;
+    self.projectSettings = upToDateProjectSettings;
     _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     [ResourceManager sharedManager].projectSettings = projectSettings;
@@ -1712,7 +1708,7 @@ typedef enum
     [self updateResourcePathsFromProjectSettings];
 
     // Update Node Plugins list
-	[plugInNodeViewHandler showNodePluginsForEngine:loadedProjectSettings.engine];
+	[plugInNodeViewHandler showNodePluginsForEngine:upToDateProjectSettings.engine];
 
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success)
@@ -1724,10 +1720,10 @@ typedef enum
     localizationEditorHandler.managedFile = langFile;
 
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[loadedProjectSettings.projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[upToDateProjectSettings.projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
 
     // Open ccb file for project if there is only one
-    NSArray* resPaths = loadedProjectSettings.absoluteResourcePaths;
+    NSArray* resPaths = upToDateProjectSettings.absoluteResourcePaths;
     if (resPaths.count > 0)
     {
         NSString* resPath = resPaths[0];
@@ -1843,7 +1839,7 @@ typedef enum
     }
 
     CCBDocument *newDoc = migrate
-        ? [self migratedDocument:filePath]
+        ? [MigrationDialogConvenience migrateDocumentWithFilePath:filePath projectSettings:projectSettings]
         : [[CCBDocument alloc] initWithContentsOfFile:filePath];
 
     if (!newDoc)
@@ -1867,32 +1863,6 @@ typedef enum
     [self setSelectedNodes:NULL];
     
 	[[[CCDirector currentDirector] view] unlockOpenGLContext];
-}
-
-- (CCBDocument *)migratedDocument:(NSString *)filePath
-{
-    NSMutableDictionary *migrationResult = [NSMutableDictionary dictionary];
-    MigrationDialogWindowController *migrationDialogWindowController =
-            [[MigrationDialogWindowController alloc]  initWithMigrationController:[MigrationControllerFactory documentMigrationControllerWithFilePath:filePath
-                                                                                                                                         renameResult:migrationResult]];
-    migrationDialogWindowController.title = @"Document Migration";
-    migrationDialogWindowController.logItemName = [NSString stringWithFormat:@"%@-%@", self->projectSettings
-                                                                                           .projectName, [filePath lastPathComponent]];
-    SBMigrationDialogResult returnValue = (SBMigrationDialogResult) [migrationDialogWindowController startMigration];
-    if (returnValue == SBMigrationDialogResultMigrateFailed)
-    {
-        [[[CCDirector currentDirector] view] unlockOpenGLContext];
-        return nil;
-    }
-    else
-    {
-        // In case no renaming happened for this file it's safe to open the given filePath
-        NSString *resolvedFilePath = migrationResult[filePath]
-            ? migrationResult[filePath]
-            : filePath;
-
-        return [[CCBDocument alloc] initWithContentsOfFile:resolvedFilePath];
-    }
 }
 
 - (void) saveFile:(NSString*) fileName
