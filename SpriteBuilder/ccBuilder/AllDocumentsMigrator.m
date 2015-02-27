@@ -72,11 +72,6 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
                 || [[fileURL relativeString] hasSuffix:@"sb"]);
 }
 
-- (NSString *)htmlInfoText
-{
-    return @"Some ccb documents are of an older version. Migration is required.";
-}
-
 - (BOOL)isMigrationRequired
 {
     for (NSString *documentPath in self.allDocuments)

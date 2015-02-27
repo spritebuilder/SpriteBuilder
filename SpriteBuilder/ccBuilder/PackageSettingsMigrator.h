@@ -5,6 +5,9 @@
 #import <Foundation/Foundation.h>
 #import "CCRenderer_Private.h"
 #import "MigratorProtocol.h"
+#import "CCEffect_Private.h"
+
+@class MigratorData;
 
 
 @interface PackageSettingsMigrator : NSObject <MigratorProtocol>

@@ -13,6 +13,4 @@
 
 - (BOOL)isMigrationRequired;
 
-- (NSString *)infoHtmlText;
-
 @end

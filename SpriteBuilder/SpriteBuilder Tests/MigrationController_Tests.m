@@ -68,7 +68,6 @@
 
     [OCMStub([migratorMock1 isMigrationRequired]) andReturnValue:@(NO)];
     [OCMStub([migratorMock2 isMigrationRequired]) andReturnValue:@(YES)];
-    [OCMStub([migratorMock2 htmlInfoText]) andReturn:@"2"];
 
     [[[migratorMock1 expect] andReturnValue:@(YES)] migrateWithError:[OCMArg anyObjectRef]];
     [[[migratorMock2 expect] andReturnValue:@(YES)] migrateWithError:[OCMArg anyObjectRef]];
@@ -90,8 +89,6 @@
 
     [OCMStub([migratorMock1 isMigrationRequired]) andReturnValue:@(YES)];
     [OCMStub([migratorMock2 isMigrationRequired]) andReturnValue:@(YES)];
-    [OCMStub([migratorMock1 htmlInfoText]) andReturn:@"1"];
-    [OCMStub([migratorMock2 htmlInfoText]) andReturn:@"2"];
 
     NSError *error;
     [[[migratorMock1 expect] andReturnValue:@(YES)] migrateWithError:[OCMArg anyObjectRef]];

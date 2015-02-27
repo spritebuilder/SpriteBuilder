@@ -4,6 +4,8 @@
 #import "PackageSettings.h"
 #import "BackupFileCommand.h"
 #import "MigrationLogger.h"
+#import "CCEffect_Private.h"
+#import "MigratorData.h"
 
 /*
 
@@ -105,7 +107,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 {
     NSAssert(filepath != nil, @"filepath must not be nil");
     NSAssert(toVersion > 0, @"toVersion must be greater than 0");
-
+    
     self = [super init];
 
     if (self)
@@ -142,11 +144,6 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
     }
 
     return _packageSettings;
-}
-
-- (NSString *)htmlInfoText
-{
-    return @"Package Settings are of an older version.";
 }
 
 - (BOOL)isMigrationRequired

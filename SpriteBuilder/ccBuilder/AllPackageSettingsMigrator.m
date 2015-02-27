@@ -9,11 +9,15 @@
 #import "MigrationLogger.h"
 #import "PublishResolutions.h"
 #import "ProjectSettings.h"
+#import "MigratorData.h"
+#import "CCEffect_Private.h"
 
 
 static NSString *const LOGGER_SECTION = @"AllPackageSettingsMigrator";
 static NSString *const LOGGER_ERROR = @"Error";
 static NSString *const LOGGER_ROLLBACK = @"Rollback";
+
+typedef NSArray *(^LazyPackagePathsGetterBlock)();
 
 @interface AllPackageSettingsMigrator ()
 
@@ -22,40 +26,44 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 @property (nonatomic) NSUInteger migrationVersionTarget;
 @property (nonatomic, strong) NSArray *packagePaths;
 @property (nonatomic, strong) MigrationLogger *logger;
+@property (nonatomic, copy) LazyPackagePathsGetterBlock packagePathGetterBlock;
 
 @end
 
 
 @implementation AllPackageSettingsMigrator
 
-- (instancetype)initWithProjectFilePath:(NSString *)filepath toVersion:(NSUInteger)toVersion
+- (instancetype)initWithMigratorData:(MigratorData *)migratorData toVersion:(NSUInteger)toVersion
 {
-    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:filepath];
-    if (!projectSettings)
-    {
-        return nil;
-    }
+    NSAssert(migratorData != nil, @"migratorData must be set");
 
-    NSMutableArray *packagePaths = [NSMutableArray array];
-    for (NSMutableDictionary *resourcePathDict in projectSettings.resourcePaths)
+    return [self initWithPackagePathsGetterBlock:^NSArray *
     {
-        NSString *fullPackagePath = [projectSettings fullPathForResourcePathDict:resourcePathDict];
-        [packagePaths addObject:fullPackagePath];
-    }
+        ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:migratorData.projectSettingsPath];
+        if (!projectSettings)
+        {
+            return nil;
+        }
 
-    return [self initWithPackagePaths:packagePaths toVersion:toVersion];
+        NSMutableArray *packagePaths = [NSMutableArray array];
+        for (NSMutableDictionary *resourcePathDict in projectSettings.resourcePaths)
+        {
+            NSString *fullPackagePath = [projectSettings fullPathForResourcePathDict:resourcePathDict];
+            [packagePaths addObject:fullPackagePath];
+        }
+        return packagePaths;
+    } toVersion:toVersion];
 }
 
-- (instancetype)initWithPackagePaths:(NSArray *)packagePaths toVersion:(NSUInteger)toVersion
+- (instancetype)initWithPackagePathsGetterBlock:(LazyPackagePathsGetterBlock)block toVersion:(NSUInteger)toVersion
 {
-    NSAssert(packagePaths != nil, @"dirPaths must not be nil");
-    NSAssert([packagePaths count] > 0, @"dirPaths should at least contain one path");
-    NSAssert(toVersion > 0, @"toVersion must be greate than 0");
+    NSAssert(block != nil, @"block must not be nil");
+
     self = [super init];
 
     if (self)
     {
-        self.packagePaths = packagePaths;
+        self.packagePathGetterBlock = block;
         self.migrationVersionTarget = toVersion;
         self.packageSettingsCreated = [NSMutableArray array];
         self.packageSettingsMigrators = [NSMutableArray array];
@@ -64,26 +72,26 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
     return self;
 }
 
+- (instancetype)initWithPackagePaths:(NSArray *)packagePaths toVersion:(NSUInteger)toVersion
+{
+    return [self initWithPackagePathsGetterBlock:^NSArray * {
+        return packagePaths;
+    } toVersion:toVersion];
+}
+
+- (NSArray *)packagePaths
+{
+    if (!_packagePaths)
+    {
+        _packagePaths = _packagePathGetterBlock();
+    }
+
+    return _packagePaths;
+}
+
 - (void)setLogger:(MigrationLogger *)migrationLogger
 {
     _logger = migrationLogger;
-}
-
-- (NSString *)htmlInfoText
-{
-    NSMutableArray *result = [NSMutableArray array];
-
-    if ([self missingPackageSettings])
-    {
-        [result addObject:@"Some packages are missing the Package.plist file. Default files will be created."];
-    }
-
-    if ([self packagesNeedMigration])
-    {
-        [result addObject:@"Some package settings files will are not up to date. Settings will be migrated."];
-    }
-
-    return [result componentsJoinedByString:@"<br/>"];
 }
 
 - (BOOL)isMigrationRequired
@@ -94,7 +102,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 - (BOOL)packagesNeedMigration
 {
-    for (NSString *packagePath in _packagePaths)
+    for (NSString *packagePath in self.packagePaths)
     {
         NSString *fullPackagePath = [packagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
         PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:fullPackagePath toVersion:_migrationVersionTarget];
@@ -109,7 +117,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 - (BOOL)missingPackageSettings
 {
-    for (NSString *packagePath in _packagePaths)
+    for (NSString *packagePath in self.packagePaths)
     {
         NSString *fullPackagePath = [packagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -147,10 +155,10 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 - (BOOL)migrateAllPackageSettingsWithError:(NSError **)error
 {
-    for (NSString *packagePath in _packagePaths)
+    for (NSString *packagePath in self.packagePaths)
     {
         NSString *fullPackagePath = [packagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
-        PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:fullPackagePath  toVersion:_migrationVersionTarget];
+        PackageSettingsMigrator *packageSettingsMigrator = [[PackageSettingsMigrator alloc] initWithFilepath:fullPackagePath toVersion:_migrationVersionTarget];
         [_packageSettingsMigrators addObject:packageSettingsMigrator];
 
         if (![packageSettingsMigrator migrateWithError:error])
@@ -163,7 +171,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 - (BOOL)addMissingPackageSettingsWithError:(NSError **)error
 {
-    for (NSString *packagePath in _packagePaths)
+    for (NSString *packagePath in self.packagePaths)
     {
         NSString *fullSettingsPath = [packagePath stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME];
         NSFileManager *fileManager = [NSFileManager defaultManager];

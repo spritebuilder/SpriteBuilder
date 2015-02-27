@@ -111,7 +111,7 @@
         migrationController.migrators = @[
             [[AllDocumentsMigrator alloc] initWithDirPath:newPathInPackagesFolder toVersion:kCCBDictionaryFormatVersion],
             [[AllPackageSettingsMigrator alloc] initWithPackagePaths:@[newPathInPackagesFolder] toVersion:PACKAGE_SETTINGS_VERSION],
-            [[CCBToSBRenameMigrator alloc] initWithFilePath:newPathInPackagesFolder renameResult:nil]];
+            [[CCBToSBRenameMigrator alloc] initWithFilePath:newPathInPackagesFolder migratorData:nil]];
 
         if (![migrationController migrateWithError:localError])
         {

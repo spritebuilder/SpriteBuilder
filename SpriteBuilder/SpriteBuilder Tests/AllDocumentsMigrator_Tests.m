@@ -21,11 +21,6 @@
 
 @implementation AllDocumentsMigrator_Tests
 
-- (void)testHtmlInfoText
-{
-    XCTAssertNil([_migrator htmlInfoText]);
-}
-
 - (void)testMigrationOfSomeDeeplyNestedDocuments
 {
     [self createFolders:@[

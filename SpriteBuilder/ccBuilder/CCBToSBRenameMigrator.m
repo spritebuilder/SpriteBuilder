@@ -10,6 +10,7 @@
 #import "MoveFileCommand.h"
 #import "MigrationLogger.h"
 #import "CCBDocument.h"
+#import "MigratorData.h"
 
 static NSString *const LOGGER_SECTION = @"CCBToSBRenameMigrator";
 static NSString *const LOGGER_ERROR = @"Error";
@@ -21,20 +22,14 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 @property (nonatomic, strong) NSMutableArray *commands;
 @property (nonatomic, strong) NSArray *allDocuments;
 @property (nonatomic, strong) MigrationLogger *logger;
-@property (nonatomic, strong) NSMutableDictionary *renameResult;
+@property (nonatomic, strong) MigratorData *migratorData;
 
 @end
 
 
 @implementation CCBToSBRenameMigrator
 
-- (instancetype)initWithFilePath:(NSString *)filePath
-{
-    CCBToSBRenameMigrator *migrator = [self initWithFilePath:filePath renameResult:nil];
-    return migrator;
-}
-
-- (instancetype)initWithFilePath:(NSString *)filePath renameResult:(NSMutableDictionary *)renameResult
+- (instancetype)initWithFilePath:(NSString *)filePath migratorData:(MigratorData *)migratorData
 {
     NSAssert(filePath != nil, @"dirPath must not be nil");
 
@@ -42,9 +37,9 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
     if (self)
     {
+        self.migratorData = migratorData;
         self.path = filePath;
         self.commands = [NSMutableArray array];
-        self.renameResult = renameResult;
     }
 
     return self;
@@ -126,7 +121,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 {
     NSString *newPath = [path replaceExtension:@"sb"];
 
-    _renameResult[path] = newPath;
+    _migratorData.renamedFiles[path] = newPath;
 
     MoveFileCommand *moveFileCommand = [[MoveFileCommand alloc] initWithFromPath:path toPath:newPath];
 
