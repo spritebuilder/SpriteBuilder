@@ -13,7 +13,9 @@ deployment:
         branch: develop
         commands:
             - rake package
-    ex:
-        branch: experimental/circleciSign
+
+    version_branch:
+        branch: /v[0-9]*\.[0-9]*/
         commands:
             - rake package
+

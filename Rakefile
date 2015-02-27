@@ -42,6 +42,9 @@ def call_xctool command
     sh "xctool #{reporter} #{command}"
 end
 
+def copy_artifacts
+end
+
 def get_artifact_name
     return @artifact_name if @artifact_name
     branch = `git rev-parse --abbrev-ref HEAD`.chomp
@@ -170,6 +173,16 @@ namespace :package do
             sh "zip -r SpriteBuilder.xcarchive.zip SpriteBuilder.xcarchive"
         end
     end
+
+    desc "Copy artifacts to circle ci artifact dir"
+    task :artifacts do
+        if ENV["CIRCLE_CI"]
+            Dir.chdir BUILD_DIR do
+                sh "echo Copying artifacts.."
+                sh "cp *.zip $CIRCLE_ARTIFACTS"
+            end
+        end
+    end
 end
 
 desc "Build SpriteBuilder distribution"
@@ -182,12 +195,7 @@ task :package => [:clobber, BUILD_DIR, :build_requirements] do
     Rake::Task["clean"].invoke
     Rake::Task["package:archive"].invoke
 
-    if ENV["CIRCLE_CI"]
-        Dir.chdir BUILD_DIR do
-            sh "echo Copying artifacts.."
-            sh "cp *.zip $CIRCLE_ARTIFACTS"
-        end
-    end
+    Rake::Task["package:artifacts"].invoke
 end
 
 build_dirs =  `find . -type d -iname build`.split
