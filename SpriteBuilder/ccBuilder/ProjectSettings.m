@@ -40,7 +40,13 @@
 #import "RMDirectory.h"
 #import "ResourcePropertyKeys.h"
 
-#import <ApplicationServices/ApplicationServices.h>
+
+NSString *const PROJECTSETTINGS_KEY_FILEVERSION = @"fileVersion";
+NSString *const PROJECTSETTINGS_KEY_RESOURCEPROPERTIES = @"resourceProperties";
+NSString *const PROJECTSETTINGS_KEY_PACKAGES = @"packages";
+NSString *const PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS = @"resourcePaths";
+NSString *const PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS = @"onlyPublishCCBs";
+NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"excludedFromPackageMigration";
 
 @interface ProjectSettings()
 
@@ -205,7 +211,7 @@
     dict[@"engine"] = @(_engine);
 
     dict[@"fileType"] = @"CocosBuilderProject";
-    dict[@"fileVersion"] = @kCCBProjectSettingsVersion;
+    dict[PROJECTSETTINGS_KEY_FILEVERSION] = @kCCBProjectSettingsVersion;
     dict[@"resourcePaths"] = _packages;
     
     dict[@"publishDirectory"] = _publishDirectory;

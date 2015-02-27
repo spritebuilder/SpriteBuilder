@@ -28,6 +28,13 @@
 #define kCCBProjectSettingsVersion 2
 #define kCCBDefaultExportPlugIn @"sbi"
 
+extern NSString *const PROJECTSETTINGS_KEY_FILEVERSION;
+extern NSString *const PROJECTSETTINGS_KEY_RESOURCEPROPERTIES;
+extern NSString *const PROJECTSETTINGS_KEY_PACKAGES;
+extern NSString *const PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS;
+extern NSString *const PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS;
+extern NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION;
+
 typedef enum
 {
     kSBDesignTargetFlexible = 0,

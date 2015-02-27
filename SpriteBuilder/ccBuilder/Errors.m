@@ -28,7 +28,9 @@ NSInteger const SBPathWithoutPackageSuffix = 2108;
 NSInteger const SBNoPackagePathsToImport = 2109;
 NSInteger const SBPackageAlreayInProject = 2110;
 NSInteger const SBEmptyPackageNameError = 2111;
+
 NSInteger const SBMigrationError = 2200;
+NSInteger const SBMigrationCannotDowngradeError = 2201;
 
 // CCB Reading and writing
 NSInteger const SBCCBReadingError = 3000;
@@ -43,7 +45,6 @@ NSInteger const SBCCBMigrationNoMigrationStepClassPrefixError = 3012;
 NSInteger const SBCCBMigrationNoVersionFoundError = 3013;
 
 NSInteger const SBPackageSettingsMigrationNoRuleError = 3100;
-NSInteger const SBPackageSettingsMigrationCannotDowngraderError = 3101;
 NSInteger const SBPackageSettingsEmptyOrDoesNotExist = 3102;
 
 NSInteger const SBProjectMigrationError = 3200;
