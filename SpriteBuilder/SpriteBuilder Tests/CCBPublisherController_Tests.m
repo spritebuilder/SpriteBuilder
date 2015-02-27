@@ -58,7 +58,7 @@
 
 - (void)configureSinglePackagePublishSettingCase
 {
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
 
     self.package = [[RMPackage alloc] init];
     _package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
@@ -227,9 +227,9 @@
     [self createPNGAtPath:@"baa.spritebuilder/Packages/Characters.sbpack/resources-auto/hero.png" width:4 height:4];
     [self createPNGAtPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack/resources-auto/desert.png" width:4 height:4];
 
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Menus.sbpack"] error:nil];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Characters.sbpack"] error:nil];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Backgrounds.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"baa.spritebuilder/Packages/Menus.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"baa.spritebuilder/Packages/Characters.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"baa.spritebuilder/Packages/Backgrounds.sbpack"] error:nil];
     _projectSettings.publishEnabledIOS = YES;
     _projectSettings.publishEnabledAndroid = YES;
 

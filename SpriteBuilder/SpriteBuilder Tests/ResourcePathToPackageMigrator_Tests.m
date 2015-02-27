@@ -43,7 +43,7 @@
 
     for (NSString *resourcePath in resourcePaths)
     {
-        [projectSettings addResourcePath:[self fullPathForFile:resourcePath] error:nil];
+        [projectSettings addPackageWithFullPath:[self fullPathForFile:resourcePath] error:nil];
     }
 
     [projectSettings store];
@@ -196,7 +196,8 @@
     [self assertFileExists:@"SpriteBuilder Resources/song.wav"];
     [self assertFileDoesNotExist:@"packages"];
     [self assertResourcePathsInProject:@[[self fullPathForFile:@"SpriteBuilder Resources"]] inProjectSettings:projectSettings];
-    XCTAssertTrue(projectSettings.resourcePaths.count == 1, @"There should be only 1 resourcepath but %lu found: %@", projectSettings.resourcePaths.count, projectSettings.resourcePaths);
+    XCTAssertTrue(projectSettings.packages.count == 1, @"There should be only 1 resourcepath but %lu found: %@", projectSettings.packages
+                                                                                                                                .count, projectSettings.packages);
 }
 
 - (void)testMigrationNotRequired
@@ -213,7 +214,7 @@
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertTrue([projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Found in settings: %@", resourcePath, projectSettings.resourcePaths);
+        XCTAssertTrue([projectSettings isPackageWithFullPathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Found in settings: %@", resourcePath, projectSettings.packages);
     }
 }
 
@@ -221,7 +222,7 @@
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertFalse([projectSettings isResourcePathInProject:resourcePath], @"Resource path \"%@\"is in project settings.", resourcePath);
+        XCTAssertFalse([projectSettings isPackageWithFullPathInProject:resourcePath], @"Resource path \"%@\"is in project settings.", resourcePath);
     }
 }
 

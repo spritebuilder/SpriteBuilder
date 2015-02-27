@@ -18,10 +18,10 @@
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="576" height="430"/>
+            <rect key="contentRect" x="196" y="240" width="576" height="303"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="-1" width="576" height="430"/>
+                <rect key="frame" x="0.0" y="2" width="576" height="303"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" id="Rs5-pq-eOP">
@@ -33,7 +33,7 @@
                         </buttonCell>
                     </button>
                     <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="bcB-03-ZWF">
-                        <rect key="frame" x="20" y="61" width="536" height="349"/>
+                        <rect key="frame" x="20" y="61" width="536" height="222"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" copiesOnScroll="NO" id="ma5-u9-NbX">
                             <rect key="frame" x="1" y="1" width="223" height="133"/>
@@ -43,10 +43,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="223" height="347"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="534" height="347"/>
+                                    <size key="minSize" width="534" height="220"/>
                                     <size key="maxSize" width="598" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <size key="minSize" width="534" height="347"/>
+                                    <size key="minSize" width="534" height="220"/>
                                     <size key="maxSize" width="598" height="10000000"/>
                                 </textView>
                             </subviews>
@@ -77,7 +77,7 @@ Gw
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="613" y="421"/>
+            <point key="canvasLocation" x="613" y="357.5"/>
         </window>
     </objects>
 </document>

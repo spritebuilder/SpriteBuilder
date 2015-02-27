@@ -87,7 +87,7 @@
 {
     return ^BOOL(RMPackage *packageToImport, NSError **localError)
     {
-        if ([_projectSettings isResourcePathInProject:packageToImport.dirPath])
+        if ([_projectSettings isPackageWithFullPathInProject:packageToImport.dirPath])
         {
             [NSError setNewErrorWithErrorPointer:localError code:SBPackageAlreayInProject message:@"Package already in project folder."];
             return NO;
@@ -102,7 +102,7 @@
             return NO;
         }
 
-        if (![_projectSettings addResourcePath:newPathInPackagesFolder error:localError])
+        if (![_projectSettings addPackageWithFullPath:newPathInPackagesFolder error:localError])
         {
             return NO;
         }

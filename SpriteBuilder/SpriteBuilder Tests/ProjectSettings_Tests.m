@@ -44,9 +44,9 @@
 - (void)testAddResourcePath
 {
     NSError *error;
-    XCTAssertTrue([_projectSettings addResourcePath:@"/project/resourcepath1" error:&error]);
+    XCTAssertTrue([_projectSettings addPackageWithFullPath:@"/project/resourcepath1" error:&error]);
     XCTAssertNil(error);
-    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 1);
+    XCTAssertEqual((int)_projectSettings.packages.count, 1);
 }
 
 - (void)testAddResourcePathTwice
@@ -54,36 +54,36 @@
     NSString *resourcePath = @"/project/resourcepath1";
 
     NSError *error;
-    XCTAssertTrue([_projectSettings addResourcePath:resourcePath error:&error]);
+    XCTAssertTrue([_projectSettings addPackageWithFullPath:resourcePath error:&error]);
     XCTAssertNil(error);
 
     NSError *error2;
-    XCTAssertFalse([_projectSettings addResourcePath:resourcePath error:&error2]);
+    XCTAssertFalse([_projectSettings addPackageWithFullPath:resourcePath error:&error2]);
     XCTAssertNotNil(error2);
-    XCTAssertEqual(error2.code, SBDuplicateResourcePathError);
+    XCTAssertEqual(error2.code, SBDuplicatePackageError);
 
-    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 1);
+    XCTAssertEqual((int)_projectSettings.packages.count, 1);
 }
 
 - (void)testIsResourcePathAlreadyInProject
 {
     NSString *resourcePath = @"/project/resourcepath1";
 
-    [_projectSettings addResourcePath:resourcePath error:nil];
+    [_projectSettings addPackageWithFullPath:resourcePath error:nil];
 
-    XCTAssertTrue([_projectSettings isResourcePathInProject:resourcePath]);
+    XCTAssertTrue([_projectSettings isPackageWithFullPathInProject:resourcePath]);
 
-    XCTAssertFalse([_projectSettings isResourcePathInProject:@"/foo/notinproject"]);
+    XCTAssertFalse([_projectSettings isPackageWithFullPathInProject:@"/foo/notinproject"]);
 }
 
 - (void)testRemoveResourcePath
 {
     _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
-    [_projectSettings.resourcePaths addObject:@{@"path" : @"test"}];
+    [_projectSettings.packages addObject:@{@"path" : @"test"}];
 
     NSError *error;
-    XCTAssertTrue([_projectSettings removeResourcePath:@"/project/test" error:&error]);
-    XCTAssertEqual((int)_projectSettings.resourcePaths.count, 0);
+    XCTAssertTrue([_projectSettings removePackageWithFullPath:@"/project/test" error:&error]);
+    XCTAssertEqual((int)_projectSettings.packages.count, 0);
     XCTAssertNil(error);
 }
 
@@ -92,9 +92,9 @@
     _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
 
     NSError *error;
-    XCTAssertFalse([_projectSettings removeResourcePath:@"/project/test" error:&error]);
+    XCTAssertFalse([_projectSettings removePackageWithFullPath:@"/project/test" error:&error]);
     XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, SBResourcePathNotInProjectError);
+    XCTAssertEqual(error.code, SBPackageNotInProjectError);
 }
 
 - (void)testMoveResourcePath
@@ -102,28 +102,28 @@
     _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
 
     NSString *pathOld = @"/somewhere/path_old";
-    [_projectSettings addResourcePath:pathOld error:nil];
+    [_projectSettings addPackageWithFullPath:pathOld error:nil];
 
     NSString *pathNew = @"/somewhere/path_new";
     NSError *error;
-    XCTAssertTrue([_projectSettings moveResourcePathFrom:pathOld toPath:pathNew error:&error]);
+    XCTAssertTrue([_projectSettings movePackageWithFullPathFrom:pathOld toFullPath:pathNew error:&error]);
     XCTAssertNil(error);
 
-    XCTAssertFalse([_projectSettings isResourcePathInProject:pathOld]);
-    XCTAssertTrue([_projectSettings isResourcePathInProject:pathNew]);
+    XCTAssertFalse([_projectSettings isPackageWithFullPathInProject:pathOld]);
+    XCTAssertTrue([_projectSettings isPackageWithFullPathInProject:pathNew]);
 }
 
 - (void)testMoveResourcePathFailingBecauseThereIsAlreadyOneWithTheSameName
 {
     NSString *path1 = @"/somewhere/path1";
-    [_projectSettings addResourcePath:path1 error:nil];
+    [_projectSettings addPackageWithFullPath:path1 error:nil];
     NSString *path2 = @"/somewhere/path2";
-    [_projectSettings addResourcePath:path2 error:nil];
+    [_projectSettings addPackageWithFullPath:path2 error:nil];
 
     NSError *error;
-    XCTAssertFalse([_projectSettings moveResourcePathFrom:path1 toPath:path2 error:&error]);
+    XCTAssertFalse([_projectSettings movePackageWithFullPathFrom:path1 toFullPath:path2 error:&error]);
     XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, SBDuplicateResourcePathError);
+    XCTAssertEqual(error.code, SBDuplicatePackageError);
 }
 
 - (void)testFullPathForPackageName
@@ -317,8 +317,8 @@
     NSMutableDictionary *projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:fullPath];
     projectSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
 
-    XCTAssertNotNil(projectSettings.resourcePaths);
-    XCTAssertEqual(projectSettings.resourcePaths.count, 0);
+    XCTAssertNotNil(projectSettings.packages);
+    XCTAssertEqual(projectSettings.packages.count, 0);
     XCTAssertEqual(projectSettings.engine, SBTargetEngineCocos2d);
     XCTAssertEqualObjects(projectSettings.publishDirectory, @"Published-iOS");
     XCTAssertEqualObjects(projectSettings.publishDirectoryAndroid, @"Published-Android");
@@ -346,8 +346,8 @@
     NSString *resPath1 = [self fullPathForFile:@"1234567/890"];
     NSString *resPath2 = [self fullPathForFile:@"foo/baa/yeehaaa"];
 
-    [projectSettings addResourcePath:resPath1 error:nil];
-    [projectSettings addResourcePath:resPath2 error:nil];
+    [projectSettings addPackageWithFullPath:resPath1 error:nil];
+    [projectSettings addPackageWithFullPath:resPath2 error:nil];
 
     XCTAssertTrue([projectSettings store], @"Failed to persist project at path \"%@\"", projectSettings.projectPath);
 
@@ -397,8 +397,8 @@
 
 - (void)testRelativePathFromAbsolutePath
 {
-    [_projectSettings addResourcePath:[self fullPathForFile:@"Packages/foo.sbpack"] error:nil];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"Packages/baa.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"Packages/foo.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"Packages/baa.sbpack"] error:nil];
 
     NSString *fullPath = [self fullPathForFile:@"Packages/foo.sbpack/sprites/fighter.png"];
     XCTAssertEqualObjects([_projectSettings findRelativePathInPackagesForAbsolutePath:fullPath], @"sprites/fighter.png");
@@ -428,7 +428,7 @@
             [self fullPathForFile:@"project/Packages/package1.sbpack"],
     ]];
 
-    [_projectSettings addResourcePath:@"project/Packages/package1.sbpack" error:nil];
+    [_projectSettings addPackageWithFullPath:@"project/Packages/package1.sbpack" error:nil];
     [_projectSettings clearAllDirtyMarkers];
 
     // Test clear all dirty markers
@@ -485,7 +485,7 @@
     NSString *REL_IMAGE_NOT_IN_SPRITESHEET_PATH = @"project/Packages/package1.sbpack/image.png";
 
     _projectSettings.projectPath = [self fullPathForFile:@"project/abc.ccbproj"];
-    [_projectSettings addResourcePath:[self fullPathForFile:REL_PACKAGE_PATH] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:REL_PACKAGE_PATH] error:nil];
 
     ResourceManager *resourceManager = [ResourceManager sharedManager];
     [resourceManager setActiveDirectoriesWithFullReset:@[[self fullPathForFile:REL_PACKAGE_PATH]]];
@@ -567,7 +567,7 @@
             [self fullPathForFile:@"project/Packages/package1.sbpack"],
     ]];
 
-    [_projectSettings addResourcePath:@"project/Packages/package1.sbpack" error:nil];
+    [_projectSettings addPackageWithFullPath:@"project/Packages/package1.sbpack" error:nil];
     [_projectSettings clearAllDirtyMarkers];
 
     [_projectSettings markAsDirtyResource:res1];
@@ -625,7 +625,7 @@
 {
     for (NSString *resourcePath in resourcePaths)
     {
-        XCTAssertTrue([project isResourcePathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Present in settings: %@", resourcePath, project.resourcePaths);
+        XCTAssertTrue([project isPackageWithFullPathInProject:resourcePath], @"Resource path \"%@\"is not in project settings. Present in settings: %@", resourcePath, project.packages);
     }
 }
 
