@@ -1,5 +1,4 @@
 #import "ProjectSettingsMigrator.h"
-#import "ProjectSettings.h"
 #import "ResourcePathToPackageMigrator.h"
 #import "ResourcePropertyKeys.h"
 #import "BackupFileCommand.h"
@@ -13,6 +12,7 @@
 #import "MigratorData.h"
 #import "CCEffect_Private.h"
 #import "CCRendererBasicTypes_Private.h"
+#import "ProjectSettings.h"
 
 static NSString *const LOGGER_SECTION = @"ProjectSettings";
 static NSString *const LOGGER_ERROR = @"Error";
@@ -25,7 +25,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 @property (nonatomic, strong) MoveFileCommand *renameCommand;
 @property (nonatomic, strong) MigrationLogger *logger;
 
-@property (nonatomic) NSUInteger migrationTargetVersion;
+@property (nonatomic) NSUInteger migrationVersionTarget;
 
 @property (nonatomic, copy) NSString *filePath;
 
@@ -45,7 +45,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
     if (self)
     {
         self.migratorData = migratorData;
-        self.migrationTargetVersion = toVersion;
+        self.migrationVersionTarget = toVersion;
     }
 
     return self;
@@ -58,23 +58,21 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 - (BOOL)requiresMigrationOfProperties
 {
-    BOOL result = NO;
+    NSDictionary *keyValues = @{
+        RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED : [NSNull null],
+    };
 
-/*
-    for (NSString *relativePath in [_projectSettings allResourcesRelativePaths])
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath];
+    NSDictionary *resourceProperties = dict[PROJECTSETTINGS_KEY_RESOURCEPROPERTIES];
+
+    for (NSString *key in resourceProperties)
     {
-        NSNumber *trimSpritesValue = [_projectSettings propertyForRelPath:relativePath andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
-        if (trimSpritesValue)
+        if ([self areKeysAndValuesSet:keyValues inDictionary:resourceProperties[key] logBlock:nil])
         {
-            [_logger log:[NSString stringWithFormat:@"Legacy property key '%@' detected for relative path '%@'.", RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED, relativePath]
-                 section:LOGGER_SECTION];
-
-            self.requiresMigrationOfProperties = YES;
+            return YES;
         }
     }
-*/
-
-    return result;
+    return NO;
 }
 
 - (BOOL)requiresRenamingOfFile
@@ -88,7 +86,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
     return result;
 }
 
-- (BOOL)requiresRemovalOfObsoleteKeys
+- (BOOL)requiresRemovalOfObsoleteRootKeys
 {
     NSDictionary *rootKeys = @{
         @"onlyPublishCCBs" : [NSNull null],
@@ -96,27 +94,32 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         @"exporter" : @"ccbi"
     };
 
-    return [self areRootKeysSet:rootKeys];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath];
+    return [self areKeysAndValuesSet:rootKeys inDictionary:dict logBlock:^(NSString *key, id Value) {
+        [_logger log:[NSString stringWithFormat:@"Obsolete root key '%@' detected.", key] section:LOGGER_SECTION];
+    }];
 }
 
 - (BOOL)isMigrationRequired
 {
     return [self requiresMigrationOfProperties]
-        || [self requiresRemovalOfObsoleteKeys]
+        || [self requiresRemovalOfObsoleteRootKeys]
         || [self requiresRenamingOfFile];
 }
 
-- (BOOL)areRootKeysSet:(NSDictionary *)rootKeys
+- (BOOL)areKeysAndValuesSet:(NSDictionary *)keysAndValues inDictionary:(NSDictionary *)dictionary logBlock:(void (^)(NSString *key, id Value))logBlock
 {
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath];
     BOOL result = NO;
 
-    for (NSString *rootKey in rootKeys)
+    for (NSString *key in keysAndValues)
     {
-        if ((dict[rootKey] && [rootKeys[rootKey] isKindOfClass:[NSNull class]])
-            || ([dict[rootKey] isEqualTo:rootKeys[rootKey]]))
+        if ((dictionary[key] && [keysAndValues[key] isKindOfClass:[NSNull class]])
+            || ([dictionary[key] isEqualTo:keysAndValues[key]]))
         {
-            [_logger log:[NSString stringWithFormat:@"Obsolete key '%@' detected.", rootKey] section:LOGGER_SECTION];
+            if (logBlock)
+            {
+                logBlock(key, dictionary[key]);
+            }
             result = YES;
         }
     }
@@ -154,32 +157,101 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 - (BOOL)migrateProjectSettings:(NSError **)error
 {
-    if (![self migrateRootKeys:error])
+    NSDictionary *projectSettingsDict = [NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath];
+
+    if (!projectSettingsDict)
     {
+        NSString *message = [NSString stringWithFormat:@"Could not load project settings file at '%@'", _migratorData.projectSettingsPath];
+        [_logger log:message section:@[LOGGER_SECTION, LOGGER_ERROR]];
+        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError message:message];
         return NO;
     }
 
-    // At the moment there is nothing that can go wrong here
-    [self migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites];
+    NSUInteger currentVersion = 1;
+    if (projectSettingsDict[PROJECTSETTINGS_KEY_FILEVERSION])
+    {
+        currentVersion = [projectSettingsDict[PROJECTSETTINGS_KEY_FILEVERSION] unsignedIntegerValue];
+        [_logger log:[NSString stringWithFormat:@"project settings version detected: %lu", currentVersion] section:@[LOGGER_SECTION]];
+    }
 
+    if (currentVersion == _migrationVersionTarget)
+    {
+        [_logger log:@"versions are up to date" section:@[LOGGER_SECTION]];
+        return YES;
+    }
+
+    if (_migrationVersionTarget < currentVersion)
+    {
+        NSString *message = [NSString stringWithFormat:@"Cannot downgrade version %lu to version %lu", currentVersion, _migrationVersionTarget];
+        [_logger log:message section:@[LOGGER_SECTION, LOGGER_ERROR]];
+        [NSError setNewErrorWithErrorPointer:error
+                                        code:SBMigrationCannotDowngradeError
+                                     message:message];
+        return NO;
+    }
+
+    return [self migrateProjectSettingsDict:projectSettingsDict fromVersion:currentVersion error:error];
+}
+
+- (BOOL)migrateProjectSettingsDict:(NSDictionary *)projectSettingsDict fromVersion:(NSUInteger)fromVersion error:(NSError **)error
+{
+    NSMutableDictionary *result = CFBridgingRelease(CFPropertyListCreateDeepCopy(NULL, (__bridge CFPropertyListRef)(projectSettingsDict), kCFPropertyListMutableContainersAndLeaves));;
+
+    NSUInteger currentVersion = fromVersion;
+    while (currentVersion < _migrationVersionTarget)
+    {
+        [_logger log:[NSString stringWithFormat:@"migrating from version %lu to %lu...", currentVersion, currentVersion+1] section:@[LOGGER_SECTION]];
+
+        currentVersion++;
+
+        result = [self migrate:result toVersion:currentVersion withError:error];
+        if (!result)
+        {
+            return NO;
+        }
+    }
+
+    if (![result writeToFile:_migratorData.projectSettingsPath atomically:YES])
+    {
+        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError message:[NSString stringWithFormat:@"Could not overwrite project settings at '%@'", _migratorData.projectSettingsPath]];
+        [_logger log:[NSString stringWithFormat:@"Could not overwrite project settings file at '%@'.", _migratorData.projectSettingsPath] section:@[LOGGER_SECTION, LOGGER_ERROR]];
+
+        return NO;
+    }
     return YES;
 }
 
-- (BOOL)migrateRootKeys:(NSError **)error
+- (NSMutableDictionary *)migrate:(NSMutableDictionary *)dictionary toVersion:(NSUInteger)toVersion withError:(NSError **)error
 {
-    NSMutableDictionary *dict = [[NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath] mutableCopy];
-
-    dict[@"exporter"] = DOCUMENT_BINARY_EXTENSION;
-    [dict removeObjectForKey:@"onlyPublishCCBs"];
-    [dict removeObjectForKey:@"excludedFromPackageMigration"];
-
-    if (![dict writeToFile:_migratorData.projectSettingsPath atomically:YES])
+    switch (toVersion)
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError message:@"Could not overwrite project settings file."];
-        [_logger log:[NSString stringWithFormat:@"Could not overwrite project settings file at '%@'.", _migratorData.projectSettingsPath] section:@[LOGGER_SECTION, LOGGER_ERROR]];
-        return NO;
+        case 2: return [self migrateToVersion_2:dictionary withError:error];
+        default: break;
     }
-    return YES;
+
+    [NSError setNewErrorWithErrorPointer:error code:SBPackageSettingsMigrationNoRuleError message:[NSString stringWithFormat:@"Migration rule not found for version %lu", toVersion]];
+    return nil;
+}
+
+- (NSMutableDictionary *)migrateToVersion_2:(NSMutableDictionary *)dictionary withError:(NSError **)error
+{
+    [self migrateRootKeysProjectSettingsDictionary:dictionary];
+
+    // At the moment there is nothing that can go wrong here
+    [self migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites:dictionary];
+
+    dictionary[PROJECTSETTINGS_KEY_FILEVERSION] = @2;
+    return dictionary;
+}
+
+- (void)migrateRootKeysProjectSettingsDictionary:(NSMutableDictionary *)projectSettingsDictionary
+{
+    projectSettingsDictionary[@"exporter"] = DOCUMENT_BINARY_EXTENSION;
+    [projectSettingsDictionary removeObjectForKey:@"onlyPublishCCBs"];
+    [projectSettingsDictionary removeObjectForKey:@"excludedFromPackageMigration"];
+
+    projectSettingsDictionary[@"packages"] = projectSettingsDictionary[@"resourcePaths"];
+    [projectSettingsDictionary removeObjectForKey:@"resourcePaths"];
 }
 
 - (BOOL)renameProjectFile:(NSError **)error
@@ -248,16 +320,31 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 // Note: To refactor the whole setValue redundancies the convention to name the properties the
 // same as in the project settings is necessary to prevent special case mapping code.
-- (void)migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites
+- (void)migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites:(NSMutableDictionary *)projectSettingsDict
 {
-/*
-    for (NSString *relativePath in [_projectSettings allResourcesRelativePaths])
-    {
-        [self migrateTrimSpritesPropertyOfSpriteSheetsForRelPath:relativePath];
-    }
+    NSDictionary *resources = projectSettingsDict[PROJECTSETTINGS_KEY_RESOURCEPROPERTIES];
 
-    [_projectSettings store];
-*/
+    for (NSString *resourceKey in [resources copy])
+    {
+        NSMutableDictionary *properties = resources[resourceKey];
+        if (![properties[RESOURCE_PROPERTY_IS_SMARTSHEET] boolValue])
+        {
+            continue;
+        }
+
+        NSNumber *trimSpritesValue = properties[RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+
+        if ([trimSpritesValue boolValue])
+        {
+            [_logger log:[NSString stringWithFormat:@"Removing resource property key '%@' for path '%@'", RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED, resourceKey] section:LOGGER_SECTION];
+            [properties removeObjectForKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+        }
+        else
+        {
+            [_logger log:[NSString stringWithFormat:@"Setting resource property key '%@' for path '%@'", RESOURCE_PROPERTY_TRIM_SPRITES, resourceKey] section:LOGGER_SECTION];
+            properties[RESOURCE_PROPERTY_TRIM_SPRITES] = @YES;
+        }
+    }
 }
 
 - (void)migrateTrimSpritesPropertyOfSpriteSheetsForRelPath:(NSString *)relPath

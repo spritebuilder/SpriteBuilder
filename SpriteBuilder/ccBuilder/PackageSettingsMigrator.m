@@ -265,7 +265,6 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         return nil;
     }
 
-
     NSUInteger currentVersion = 1;
     if (_packageSettings[@"version"])
     {
@@ -284,7 +283,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         NSString *message = [NSString stringWithFormat:@"Cannot downgrade version %lu to version %lu", currentVersion, _migrationVersionTarget];
         [_logger log:message section:@[LOGGER_SECTION, LOGGER_ERROR]];
         [NSError setNewErrorWithErrorPointer:error
-                                        code:SBPackageSettingsMigrationCannotDowngraderError
+                                        code:SBMigrationCannotDowngradeError
                                      message:message];
         return nil;
     }
@@ -308,9 +307,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         {
             return nil;
         }
-
-        [_logger log:[NSString stringWithFormat:@"migrating from version %lu to %lu DONE", currentVersion, currentVersion+1] section:@[LOGGER_SECTION]];
-    }
+  }
 
     return result;
 }

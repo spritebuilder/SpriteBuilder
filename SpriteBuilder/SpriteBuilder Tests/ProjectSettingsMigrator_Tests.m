@@ -21,7 +21,7 @@
 
 @implementation ProjectSettingsMigrator_Tests
 
-- (void)testMigration
+- (void)testMigrationToVersion2
 {
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
     MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];
@@ -36,14 +36,20 @@
     [projectSettings setProperty:@3 forRelPath:@"background.png" andKey:RESOURCE_PROPERTY_IOS_IMAGE_FORMAT];
     [projectSettings clearDirtyMarkerOfRelPath:@"background.png"];
 
+    XCTAssertTrue([projectSettings addPackageWithFullPath:[self fullPathForFile:@"foo.spritebuilder/Packages/test.sbpack"] error:nil]);
+
     [projectSettings store];
 
-    NSMutableDictionary *project = [[NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath] mutableCopy];
-    project[@"onlyPublishCCBs"] = @NO;
-    [project writeToFile:projectSettings.projectPath atomically:YES];
+    NSMutableDictionary *projectDictBeforeMigration = [[NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath] mutableCopy];
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS] = @NO;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION] = @YES;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS] = @YES;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_FILEVERSION] = @1;
+    [projectDictBeforeMigration writeToFile:projectSettings.projectPath atomically:YES];
 
-    NSMutableString *renameResult = [NSMutableString string];
-    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:kCCBProjectSettingsVersion];
+
+    // Assertions
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:2];
 
     XCTAssertTrue([migrator isMigrationRequired]);
 
@@ -62,7 +68,7 @@
     XCTAssertTrue([projectSettingsMigrated isDirtyRelPath:@"flowers"]);
 
     XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
-    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
+    XCTAssertTrue([projectSettingsMigrated propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([projectSettingsMigrated isDirtyRelPath:@"rocks"]);
 
     XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
@@ -72,9 +78,11 @@
     XCTAssertEqualObjects(projectSettingsMigrated.exporter, @"sbi");
 
     NSDictionary *newProject = [NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath];
-    XCTAssertNil(newProject[@"onlyPublishCCBs"]);
-
-    XCTAssertEqualObjects(renameResult, projectSettings.projectPath);
+    XCTAssertEqualObjects(newProject[PROJECTSETTINGS_KEY_FILEVERSION], @2);
+    XCTAssertEqualObjects(newProject[PROJECTSETTINGS_KEY_PACKAGES],projectDictBeforeMigration[@"resourcePaths"]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS]);
 }
 
 - (void)testMigrationRequired_oldCCBProjName

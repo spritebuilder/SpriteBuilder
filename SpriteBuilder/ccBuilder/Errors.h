@@ -28,7 +28,10 @@ extern NSInteger const SBPathWithoutPackageSuffix;
 extern NSInteger const SBNoPackagePathsToImport;
 extern NSInteger const SBPackageAlreayInProject;
 extern NSInteger const SBEmptyPackageNameError;
+
+// Migration in general
 extern NSInteger const SBMigrationError;
+extern NSInteger const SBMigrationCannotDowngradeError;
 
 // CCB Reading and writing
 extern NSInteger const SBCCBReadingError;
@@ -44,7 +47,6 @@ extern NSInteger const SBCCBMigrationNoVersionFoundError;
 
 // Package Settings reading, writing & migration
 extern NSInteger const SBPackageSettingsMigrationNoRuleError;
-extern NSInteger const SBPackageSettingsMigrationCannotDowngraderError;
 extern NSInteger const SBPackageSettingsEmptyOrDoesNotExist;
 
 // Project Migration

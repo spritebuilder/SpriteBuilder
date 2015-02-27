@@ -31,7 +31,7 @@
     NSError *error;
     XCTAssertFalse([migrator migrateWithError:&error]);
     XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, SBPackageSettingsMigrationCannotDowngraderError);
+    XCTAssertEqual(error.code, SBMigrationCannotDowngradeError);
 };
 
 - (void)testNoMigrationRule
