@@ -138,7 +138,7 @@
 #import "SecurityScopedBookmarksStore.h"
 #import "CCDirector_Private.h"
 #import "PasteboardTypes.h"
-#import "MigrationDialogConvenience.h"
+#import "Migrator.h"
 #import "Cocos2dUpdaterController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
@@ -1682,7 +1682,7 @@ typedef enum
 
     projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
 
-    ProjectSettings *upToDateProjectSettings = [MigrationDialogConvenience migrateWithFilePath:projectPath];
+    ProjectSettings *upToDateProjectSettings = [Migrator migrateFullProjectWithProjectSettingsFilePath:projectPath];
     if (!upToDateProjectSettings)
     {
         [self closeProject];
@@ -1831,7 +1831,7 @@ typedef enum
     }
 
     CCBDocument *newDoc = migrate
-        ? [MigrationDialogConvenience migrateDocumentWithFilePath:filePath projectSettings:projectSettings]
+        ? [Migrator migrateDocumentWithFilePath:filePath projectSettings:projectSettings]
         : [[CCBDocument alloc] initWithContentsOfFile:filePath];
 
     if (!newDoc)

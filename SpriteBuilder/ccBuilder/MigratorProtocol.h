@@ -9,8 +9,6 @@
 
 @protocol MigratorProtocol <NSObject>
 
-- (NSString *)htmlInfoText;
-
 - (BOOL)isMigrationRequired;
 
 - (BOOL)migrateWithError:(NSError **)error;

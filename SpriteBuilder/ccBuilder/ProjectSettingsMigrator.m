@@ -10,6 +10,9 @@
 #import "MoveFileCommand.h"
 #import "NSString+Misc.h"
 #import "MigrationLogger.h"
+#import "MigratorData.h"
+#import "CCEffect_Private.h"
+#import "CCRendererBasicTypes_Private.h"
 
 static NSString *const LOGGER_SECTION = @"ProjectSettings";
 static NSString *const LOGGER_ERROR = @"Error";
@@ -18,38 +21,31 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 @interface ProjectSettingsMigrator ()
 
-@property (nonatomic, strong) ProjectSettings *projectSettings;
 @property (nonatomic, strong) BackupFileCommand *backupFileCommand;
 @property (nonatomic, strong) MoveFileCommand *renameCommand;
 @property (nonatomic, strong) MigrationLogger *logger;
 
-@property (nonatomic) BOOL requiresRenamingOfFile;
-@property (nonatomic) BOOL requiresMigrationOfProperties;
-@property (nonatomic) BOOL requiresRemovalOfObsoleteKeys;
+@property (nonatomic) NSUInteger migrationTargetVersion;
 
-@property (nonatomic, strong) NSMutableString *renameResult;
+@property (nonatomic, copy) NSString *filePath;
+
+@property (nonatomic, strong) MigratorData *migratorData;
 
 @end
 
 
 @implementation ProjectSettingsMigrator
 
-- (id)initWithProjectFilePath:(NSString *)filePath renameResult:(NSMutableString *)renameResult
+- (instancetype)initWithMigratorData:(MigratorData *)migratorData toVersion:(NSUInteger)toVersion
 {
-    NSAssert(filePath != nil, @"filePath must be set");
-    NSAssert(renameResult != nil, @"renameResult must be set");
-
-    ProjectSettings *loadedProjectSettings = [[ProjectSettings alloc] initWithFilepath:filePath];
-    NSAssert(loadedProjectSettings != nil, @"project settings could not be loaded");
+    NSAssert(migratorData != nil, @"migratorData must be set");
+    NSAssert(migratorData.projectSettingsPath != nil, @"migratorData must be set");
 
     self = [super init];
     if (self)
     {
-        self.renameResult = renameResult;
-        [_renameResult setString:filePath];
-
-        self.projectSettings = loadedProjectSettings;
-        [self figureOutWhatNeedsMigration];
+        self.migratorData = migratorData;
+        self.migrationTargetVersion = toVersion;
     }
 
     return self;
@@ -60,19 +56,11 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
     _logger = migrationLogger;
 }
 
-- (void)figureOutWhatNeedsMigration
+- (BOOL)requiresMigrationOfProperties
 {
-    NSDictionary *rootKeys = @{
-        @"onlyPublishCCBs" : [NSNull null],
-        @"excludedFromPackageMigration" : [NSNull null],
-        @"exporter" : @"ccbi"
-    };
+    BOOL result = NO;
 
-    if ([self areRootKeysSet:rootKeys])
-    {
-        self.requiresRemovalOfObsoleteKeys = YES;
-    }
-
+/*
     for (NSString *relativePath in [_projectSettings allResourcesRelativePaths])
     {
         NSNumber *trimSpritesValue = [_projectSettings propertyForRelPath:relativePath andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
@@ -84,49 +72,43 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
             self.requiresMigrationOfProperties = YES;
         }
     }
-
-    if ([[_projectSettings.projectPath pathExtension] isEqualToString:PROJECT_FILE_CCB_EXTENSION])
-    {
-        [_logger log:[NSString stringWithFormat:@"Old project file extension '%@' detected.", PROJECT_FILE_CCB_EXTENSION] section:LOGGER_SECTION];
-        self.requiresRenamingOfFile = YES;
-    }
-}
-
-- (NSString *)htmlInfoText
-{
-    NSMutableString *result = [NSMutableString string];
-    [result appendString:@"<ul>"];
-
-    if (_requiresMigrationOfProperties)
-    {
-        [result appendString:@"<li>Some properties are of an older version.</li>"];
-    }
-
-    if (_requiresRenamingOfFile)
-    {
-        [result appendString:@"<li>Project file has ccbproj extension. Extension will be renamed to sbproj.</li>"];
-    }
-
-    if (_requiresRemovalOfObsoleteKeys)
-    {
-        [result appendString:@"<li>Obsolete settings detected. Those will be removed.</li>"];
-    }
-
-    [result appendString:@"</ul>"];
+*/
 
     return result;
 }
 
+- (BOOL)requiresRenamingOfFile
+{
+    BOOL result = NO;
+    if ([[_migratorData.projectSettingsPath pathExtension] isEqualToString:PROJECT_FILE_CCB_EXTENSION])
+    {
+        [_logger log:[NSString stringWithFormat:@"Old project file extension '%@' detected.", PROJECT_FILE_CCB_EXTENSION] section:LOGGER_SECTION];
+        result =  YES;
+    }
+    return result;
+}
+
+- (BOOL)requiresRemovalOfObsoleteKeys
+{
+    NSDictionary *rootKeys = @{
+        @"onlyPublishCCBs" : [NSNull null],
+        @"excludedFromPackageMigration" : [NSNull null],
+        @"exporter" : @"ccbi"
+    };
+
+    return [self areRootKeysSet:rootKeys];
+}
+
 - (BOOL)isMigrationRequired
 {
-    return _requiresMigrationOfProperties
-        || _requiresRemovalOfObsoleteKeys
-        || _requiresRenamingOfFile;
+    return [self requiresMigrationOfProperties]
+        || [self requiresRemovalOfObsoleteKeys]
+        || [self requiresRenamingOfFile];
 }
 
 - (BOOL)areRootKeysSet:(NSDictionary *)rootKeys
 {
-    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_projectSettings.projectPath];
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath];
     BOOL result = NO;
 
     for (NSString *rootKey in rootKeys)
@@ -155,54 +137,76 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         return NO;
     }
 
-    [_projectSettings store];
-
-    [self changeExporterToSBI];
-
-    // At the moment there is nothing that can go wrong here
-    [self migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites];
+    if (![self migrateProjectSettings:error])
+    {
+        return NO;
+    }
 
     if (![self renameProjectFile:error])
     {
         return NO;
     }
 
-    [_projectSettings store];
-
     [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
 
     return YES;
 }
 
-- (void)changeExporterToSBI
+- (BOOL)migrateProjectSettings:(NSError **)error
 {
-    _projectSettings.exporter = DOCUMENT_BINARY_EXTENSION;
+    if (![self migrateRootKeys:error])
+    {
+        return NO;
+    }
+
+    // At the moment there is nothing that can go wrong here
+    [self migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites];
+
+    return YES;
+}
+
+- (BOOL)migrateRootKeys:(NSError **)error
+{
+    NSMutableDictionary *dict = [[NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath] mutableCopy];
+
+    dict[@"exporter"] = DOCUMENT_BINARY_EXTENSION;
+    [dict removeObjectForKey:@"onlyPublishCCBs"];
+    [dict removeObjectForKey:@"excludedFromPackageMigration"];
+
+    if (![dict writeToFile:_migratorData.projectSettingsPath atomically:YES])
+    {
+        [NSError setNewErrorWithErrorPointer:error code:SBMigrationError message:@"Could not overwrite project settings file."];
+        [_logger log:[NSString stringWithFormat:@"Could not overwrite project settings file at '%@'.", _migratorData.projectSettingsPath] section:@[LOGGER_SECTION, LOGGER_ERROR]];
+        return NO;
+    }
+    return YES;
 }
 
 - (BOOL)renameProjectFile:(NSError **)error
 {
-    NSString *newFileName = [_projectSettings.projectPath replaceExtension:PROJECT_FILE_SB_EXTENSION];
+    NSString *newFileName = [_migratorData.projectSettingsPath replaceExtension:PROJECT_FILE_SB_EXTENSION];
 
-    self.renameCommand = [[MoveFileCommand alloc] initWithFromPath:_projectSettings.projectPath toPath:newFileName];
-
+    self.renameCommand = [[MoveFileCommand alloc] initWithFromPath:_migratorData.projectSettingsPath toPath:newFileName];
     if ([_renameCommand execute:error])
     {
-        _projectSettings.projectPath = newFileName;
-        [_renameResult setString:newFileName];
+        _migratorData.renamedFiles[_migratorData.projectSettingsPath] = newFileName;
+        _migratorData.projectSettingsPath = newFileName;
         return YES;
     }
+
+    [_logger log:[NSString stringWithFormat:@"Could not rename project settings file at '%@' to '%@' with error %@", _filePath, newFileName, *error] section:@[LOGGER_SECTION, LOGGER_ERROR]];
 
     return NO;
 }
 
 - (BOOL)backupProjectFile:(NSError **)error
 {
-    self.backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:_projectSettings.projectPath];
+    self.backupFileCommand = [[BackupFileCommand alloc] initWithFilePath:_migratorData.projectSettingsPath];
 
     NSError *errorBackup;
     if (![_backupFileCommand execute:&errorBackup])
     {
-        [_logger log:[NSString stringWithFormat:@"Project file '%@', creating backup file at '%@'.", _projectSettings.projectPath, _backupFileCommand.backupFilePath]
+        [_logger log:[NSString stringWithFormat:@"Project file '%@', creating backup file at '%@'.", _migratorData.projectSettingsPath, _backupFileCommand.backupFilePath]
              section:@[LOGGER_SECTION, LOGGER_ERROR]];
 
         [NSError setNewErrorWithErrorPointer:error code:SBMigrationError userInfo:@{
@@ -212,7 +216,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         return NO;
     };
 
-    [_logger log:[NSString stringWithFormat:@"Project file '%@' creating backup file at '%@'.", _projectSettings.projectPath, _backupFileCommand.backupFilePath]
+    [_logger log:[NSString stringWithFormat:@"Project file '%@' creating backup file at '%@'.", _migratorData.projectSettingsPath, _backupFileCommand.backupFilePath]
          section:LOGGER_SECTION];
 
     return YES;
@@ -239,8 +243,6 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
              section:@[LOGGER_SECTION, LOGGER_ROLLBACK, LOGGER_ERROR]];
     }
 
-    _projectSettings.projectPath = [_projectSettings.projectPath replaceExtension:PROJECT_FILE_CCB_EXTENSION];
-
     [_logger log:@"Finished" section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 }
 
@@ -248,16 +250,19 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 // same as in the project settings is necessary to prevent special case mapping code.
 - (void)migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites
 {
+/*
     for (NSString *relativePath in [_projectSettings allResourcesRelativePaths])
     {
         [self migrateTrimSpritesPropertyOfSpriteSheetsForRelPath:relativePath];
     }
 
     [_projectSettings store];
+*/
 }
 
 - (void)migrateTrimSpritesPropertyOfSpriteSheetsForRelPath:(NSString *)relPath
 {
+/*
     if (![[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_IS_SMARTSHEET] boolValue])
     {
         return;
@@ -284,6 +289,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         [_logger log:[NSString stringWithFormat:@"Marking resource '%@' as dirty", relPath] section:LOGGER_SECTION];
         [_projectSettings clearDirtyMarkerOfRelPath:relPath];
     }
+*/
 }
 
 - (void)tidyUp

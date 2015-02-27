@@ -142,10 +142,9 @@
             @"<h3>The Project/Document is of an older version, migration is required.</h3><br/>"
             "<b style='color: red'>We strongly recommend to make a backup of your files before you proceed."
             "It is even better to use a version control system such as <a href='http://git-scm.com/'>GIT</a> to keep track of changes to your files.</b><br/><br/>"
-            "If an error occurs the changes will be rolled back but the project/document can't be opened. A log file will be created for details."
-            "The following items have been detected for migration:<br/><br/>";
+            "If an error occurs the changes will be rolled back but the project/document can't be opened. A log file will be created for details.";
 
-    [self setText:[intro stringByAppendingString:[_migrationController infoHtmlText]]];
+    [self setText:intro];
 }
 
 - (void)setText:(id)text

@@ -68,26 +68,6 @@
     return YES;
 }
 
-- (NSString *)infoHtmlText
-{
-    NSMutableString *result = [NSMutableString string];
-
-    [result appendString:@"<small><ul>"];
-
-    for (id <MigratorProtocol> migrationStep in _migrators)
-    {
-        if ([migrationStep isMigrationRequired])
-        {
-            [result appendString:@"<li>"];
-            [result appendString:[migrationStep htmlInfoText]];
-            [result appendString:@"</li>"];
-        }
-    }
-    [result appendString:@"</ul></small>"];
-
-    return result;
-}
-
 - (BOOL)isMigrationRequired
 {
     for (id <MigratorProtocol> migrationStep in _migrators)

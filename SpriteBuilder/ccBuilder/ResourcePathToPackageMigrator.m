@@ -7,6 +7,7 @@
 #import "MiscConstants.h"
 #import "PackageRenamer.h"
 #import "ResourceManager.h"
+#import "MigratorData.h"
 #import "RMPackage.h"
 #import "MoveFileCommand.h"
 #import "CreateDirectoryFileCommand.h"
@@ -14,6 +15,7 @@
 #import "NSError+SBErrors.h"
 #import "Errors.h"
 #import "MigrationLogger.h"
+#import "MigratorData.h"
 
 
 static NSString *const LOGGER_SECTION = @"ResourcePathToPackage";
@@ -33,29 +35,21 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 @property (nonatomic, strong) NSMutableArray *resourePathsBackup;
 @property (nonatomic, strong) MigrationLogger *logger;
 
+@property (nonatomic, strong) MigratorData *migratorData;
+
 @end
 
 
 @implementation ResourcePathToPackageMigrator
 
-- (instancetype)init
+- (id)initWithMigratorData:(MigratorData *)migratorData
 {
-    NSLog(@"Create instances of %@ with designated initializer.", [self class]);
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
-- (instancetype)initWithProjectFilePath:(NSString *)filePath
-{
-    NSAssert(filePath != nil, @"filePath must not be nil");
-
-    ProjectSettings *loadedProjectSettings = [[ProjectSettings alloc] initWithFilepath:filePath];
-    NSAssert(loadedProjectSettings != nil, @"project settings could not be loaded");
+    NSAssert(migratorData != nil, @"migratorData must be set");
 
     self = [super init];
     if (self)
     {
-        self.projectSettings = loadedProjectSettings;
+        self.migratorData = migratorData;
         self.resourcePathWithPackagesFolderNameFound = NO;
         self.migrationCommandsStack = [NSMutableArray array];
         self.resourePathsBackup = [NSMutableArray array];
@@ -69,19 +63,26 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     _logger = migrationLogger;
 }
 
-- (NSString *)htmlInfoText
+- (ProjectSettings *)projectSettings
 {
-    return [NSString stringWithFormat:@"Convert old resource paths to Packages."];
+    if (!_projectSettings)
+    {
+        ProjectSettings *loadedProjectSettings = [[ProjectSettings alloc] initWithFilepath:_migratorData.projectSettingsPath];
+        NSAssert(loadedProjectSettings != nil, @"project settings could not be loaded");
+        _projectSettings = loadedProjectSettings;
+    }
+
+    return _projectSettings;
 }
 
 - (BOOL)isMigrationRequired
 {
-    for (NSMutableDictionary *dict in _projectSettings.resourcePaths)
+    for (NSMutableDictionary *dict in self.projectSettings.resourcePaths)
     {
-        NSString *fullPath = [_projectSettings fullPathForResourcePathDict:dict];
+        NSString *fullPath = [self.projectSettings fullPathForResourcePathDict:dict];
 
         if (![fullPath hasPackageSuffix]
-            || ![_projectSettings isPathInPackagesFolder:fullPath])
+            || ![self.projectSettings isPathInPackagesFolder:fullPath])
         {
             return YES;
         }
@@ -121,7 +122,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
         return NO;
     }
 
-    [_projectSettings store];
+    [self.projectSettings store];
 
     [_logger log:@"Finished successfully!" section:@[LOGGER_SECTION]];
     return YES;
@@ -137,7 +138,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 - (void)backupResourcePaths
 {
     [_resourePathsBackup removeAllObjects];
-    for (NSMutableDictionary *resourcePath in _projectSettings.resourcePaths)
+    for (NSMutableDictionary *resourcePath in self.projectSettings.resourcePaths)
     {
         [_resourePathsBackup addObject:[resourcePath copy]];
     }
@@ -148,7 +149,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     for (NSMutableString *resourcePath in resourcePathsToImport)
     {
         NSString *futurePackageName = [resourcePath lastPathComponent];
-        NSString *futurePackagePath = [_projectSettings fullPathForPackageName:futurePackageName];
+        NSString *futurePackagePath = [self.projectSettings fullPathForPackageName:futurePackageName];
         if ([[NSFileManager defaultManager] fileExistsAtPath:futurePackagePath])
         {
             NSString *newPath = [self rollingRenamedPathForPath:futurePackagePath suffix:@"renamed"];
@@ -166,10 +167,10 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 {
     NSMutableArray *resourcePathsToImport = [NSMutableArray array];
 
-    for (NSMutableDictionary *resourcePathDict in [_projectSettings.resourcePaths copy])
+    for (NSMutableDictionary *resourcePathDict in [self.projectSettings.resourcePaths copy])
     {
-        NSString *fullResourcePath = [_projectSettings fullPathForResourcePathDict:resourcePathDict];
-        if ([_projectSettings isPathInPackagesFolder:fullResourcePath])
+        NSString *fullResourcePath = [self.projectSettings fullPathForResourcePathDict:resourcePathDict];
+        if ([self.projectSettings isPathInPackagesFolder:fullResourcePath])
         {
             continue;
         }
@@ -184,7 +185,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     for (NSMutableString *resourcePath in resourcePathsToImport)
     {
         NSError *error;
-        if (![_projectSettings removeResourcePath:resourcePath error:&error])
+        if (![self.projectSettings removeResourcePath:resourcePath error:&error])
         {
             [_logger log:[NSString stringWithFormat:@"removing resource path %@ - %@", resourcePath, error.localizedDescription] section:@[LOGGER_SECTION, LOGGER_ERROR]];
             return NO;
@@ -218,7 +219,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     for (NSString *pathToImport in resourcePathsToImport)
     {
         PackageImporter *packageImporter = [[PackageImporter alloc] init];
-        packageImporter.projectSettings = _projectSettings;
+        packageImporter.projectSettings = self.projectSettings;
 
         NSError *error;
         if ([packageImporter importPackagesWithPaths:@[pathToImport] error:&error])
@@ -244,11 +245,11 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     if (_resourcePathWithPackagesFolderNameFound)
     {
         PackageRenamer *packageRenamer = [[PackageRenamer alloc] init];
-        packageRenamer.projectSettings = _projectSettings;
+        packageRenamer.projectSettings = self.projectSettings;
         packageRenamer.resourceManager = [ResourceManager sharedManager];
 
         RMPackage *package = [[RMPackage alloc] init];
-        package.dirPath = [_projectSettings fullPathForPackageName:_packageAsResourcePathTempName];
+        package.dirPath = [self.projectSettings fullPathForPackageName:_packageAsResourcePathTempName];
 
         NSError *error;
         BOOL success = [packageRenamer renamePackage:package toName:PACKAGES_FOLDER_NAME error:&error];
@@ -271,7 +272,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)tryToCreatePackagesFolder
 {
-    NSString *packageFolderPath = [_projectSettings packagesFolderPath];
+    NSString *packageFolderPath = [self.projectSettings packagesFolderPath];
 
     NSAssert(packageFolderPath, @"ProjectSettings' packagesFolderPath not yielding anything, forgot to set projectsettings.projectPath property?");
 
@@ -282,7 +283,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)packageFolderExists
 {
-    NSString *packageFolderPath = [_projectSettings packagesFolderPath];
+    NSString *packageFolderPath = [self.projectSettings packagesFolderPath];
 
     return [[NSFileManager defaultManager] fileExistsAtPath:packageFolderPath];
 }
@@ -301,7 +302,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 {
     // NOTE: If a resource path is named packages/ or whatever in PACKAGES_FOLDER_NAME is
     // it has to be renamed in order create the packages/ folder
-    if ([_projectSettings isResourcePathInProject:[_projectSettings packagesFolderPath]])
+    if ([self.projectSettings isResourcePathInProject:[self.projectSettings packagesFolderPath]])
     {
         self.resourcePathWithPackagesFolderNameFound = YES;
         return YES;
@@ -314,16 +315,16 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     NSString *renamePathTo = [self renamePathForSpecialCasePackagesFolderAsResourcePath];
     self.packageAsResourcePathTempName = [renamePathTo lastPathComponent];
 
-    NSString *renamePathFrom = [_projectSettings packagesFolderPath];
+    NSString *renamePathFrom = [self.projectSettings packagesFolderPath];
     if (![self moveFileAndAddToCommandStackAtPath:renamePathFrom toPath:renamePathTo])
     {
         return NO;
     }
 
     NSString *newResourcePathName = [renamePathTo lastPathComponent];
-    for (NSMutableDictionary *resourcePath in _projectSettings.resourcePaths)
+    for (NSMutableDictionary *resourcePath in self.projectSettings.resourcePaths)
     {
-        if ([[_projectSettings fullPathForResourcePathDict:resourcePath] isEqualToString:[_projectSettings packagesFolderPath]])
+        if ([[self.projectSettings fullPathForResourcePathDict:resourcePath] isEqualToString:[self.projectSettings packagesFolderPath]])
         {
             // TODO: use ResourcePath object
             resourcePath[@"path"] = [[resourcePath[@"path"] stringByDeletingLastPathComponent] stringByAppendingPathComponent:newResourcePathName];
@@ -335,7 +336,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (NSString *)renamePathForSpecialCasePackagesFolderAsResourcePath
 {
-    return [self rollingRenamedPathForPath:[_projectSettings packagesFolderPath] suffix:@"user"];
+    return [self rollingRenamedPathForPath:[self.projectSettings packagesFolderPath] suffix:@"user"];
 }
 
 - (NSString *)rollingRenamedPathForPath:(NSString *)path suffix:(NSString *)suffix
@@ -411,9 +412,9 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 {
     [_logger log:[NSString stringWithFormat:@"Resource paths reinstated: %@", _resourePathsBackup] section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 
-    _projectSettings.resourcePaths = [_resourePathsBackup copy];
+    self.projectSettings.resourcePaths = [_resourePathsBackup copy];
 
-    [_projectSettings store];
+    [self.projectSettings store];
 }
 
 @end

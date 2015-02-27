@@ -11,8 +11,9 @@
 #import "CCBDictionaryMigrationStepVersion4.h"
 #import "CCBDictionaryKeys.h"
 #import "Errors.h"
+#import "FileSystemTestCase+ProjectFixtures.h"
 
-@interface CCBDictionaryMigrationStepVersion4_Tests : XCTestCase
+@interface CCBDictionaryMigrationStepVersion4_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) CCBDictionaryMigrationStepVersion4 *migrationStep;
 
@@ -28,45 +29,7 @@
 
 - (void)testMigrate
 {
-    NSDictionary *ccb = @{
-        CCB_DICTIONARY_KEY_FILEVERSION : @4,
-        CCB_DICTIONARY_KEY_NODEGRAPH : @{
-            CCB_DICTIONARY_KEY_PROPERTIES : @[
-                @{
-                    CCB_DICTIONARY_KEY_PROPERTY_NAME : @"blendFunc",
-                    CCB_DICTIONARY_KEY_PROPERTY_TYPE : @"Blendmode",
-                    CCB_DICTIONARY_KEY_PROPERTY_VALUE : @[ @774, @772 ]
-                }
-            ],
-            CCB_DICTIONARY_KEY_CHILDREN : @[
-                @{
-                    CCB_DICTIONARY_KEY_PROPERTIES : @[
-                        // Should be ignored
-                        @{
-                            CCB_DICTIONARY_KEY_PROPERTY_NAME : @"Homer",
-                            CCB_DICTIONARY_KEY_PROPERTY_TYPE : @"quote",
-                            CCB_DICTIONARY_KEY_PROPERTY_VALUE : @"Duh!"
-                        },
-                        // Should not get migrated due to wrong value
-                        @{
-                            CCB_DICTIONARY_KEY_PROPERTY_NAME : @"blendFunc",
-                            CCB_DICTIONARY_KEY_PROPERTY_TYPE : @"Blendmode",
-                            CCB_DICTIONARY_KEY_PROPERTY_VALUE : @"Not an array!"
-                        }
-                    ]
-                },
-                @{
-                    CCB_DICTIONARY_KEY_PROPERTIES : @[
-                        @{
-                            CCB_DICTIONARY_KEY_PROPERTY_NAME : @"blendFunc",
-                            CCB_DICTIONARY_KEY_PROPERTY_TYPE : @"Blendmode",
-                            CCB_DICTIONARY_KEY_PROPERTY_VALUE : @[ @769, @771 ]
-                        }
-                    ],
-                }
-            ]
-        }
-    };
+    NSDictionary *ccb = [self ccbVersion4WithOldBlendFunc];
 
     NSError *error;
     NSDictionary *migratedCCB = [_migrationStep migrate:ccb error:&error];
@@ -108,7 +71,7 @@
     XCTAssertEqualObjects(firstChildsBlendModeProperty[CCB_DICTIONARY_KEY_PROPERTY_NAME], @"blendFunc");
     XCTAssertEqualObjects(firstChildsBlendModeProperty[CCB_DICTIONARY_KEY_PROPERTY_VALUE], @"Not an array!");
     XCTAssertEqualObjects(secondChildsBlendModeProperty, expectedBlendModePropertyOfSecondChild);
-};
+}
 
 - (void)testMigrateWithoutNodeGraph
 {
@@ -118,7 +81,7 @@
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBCCBMigrationError);
     XCTAssertNil(migratedCCB);
-};
+}
 
 - (void)testMigrateWithNilParam
 {
@@ -128,6 +91,6 @@
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBCCBMigrationError);
     XCTAssertNil(migratedCCB);
-};
+}
 
 @end

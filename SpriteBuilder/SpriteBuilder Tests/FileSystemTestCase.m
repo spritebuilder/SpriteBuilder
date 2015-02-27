@@ -128,7 +128,7 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
         }
         else
         {
-            XCTAssertTrue([content writeToFile:fullPathForFile atomically:YES]);
+            XCTAssertTrue([content writeToFile:fullPathForFile atomically:YES], @"Could not write file at '%@'", fullPathForFile);
         }
     }
 }

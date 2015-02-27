@@ -184,12 +184,6 @@
     XCTAssertEqualObjects(packageSettings, migratedSettings);
 }
 
-- (void)testHtmlInfoText
-{
-    PackageSettingsMigrator *migrator = [[PackageSettingsMigrator alloc] initWithFilepath:[self fullPathForFile:@"Package.plist"] toVersion:3];
-    XCTAssertNotNil([migrator htmlInfoText]);
-}
-
 - (void)testMigrationNotRequired
 {
     [self createFolders:@[@"foo.spritebuilder/Packages/package_a.sbpack"]];

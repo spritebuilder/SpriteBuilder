@@ -16,10 +16,12 @@
 #import "PackageSettings.h"
 #import "RMPackage.h"
 #import "PublishResolutions.h"
+#import "MigratorData.h"
 
 @interface AllPackageSettingsMigrator_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) AllPackageSettingsMigrator *migrator;
+@property (nonatomic, strong) MigratorData *migratorData;
 
 @end
 
@@ -29,6 +31,7 @@
 {
     [super setUp];
 
+
     [self createFolders:@[
         @"foo.spritebuilder/Packages/package_a.sbpack",
         @"foo.spritebuilder/Packages/package_b.sbpack"]];
@@ -37,7 +40,9 @@
             [self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"],
             [self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"]];
 
-    self.migrator = [[AllPackageSettingsMigrator alloc] initWithPackagePaths:packagePaths toVersion:PACKAGE_SETTINGS_VERSION];
+    self.migratorData = [[MigratorData alloc] initWithProjectSettingsPath:[self fullPathForFile:@"foo.spritebuilder"]];
+    self.migrator = [[AllPackageSettingsMigrator alloc] initWithPackagePaths:packagePaths
+                                                                   toVersion:PACKAGE_SETTINGS_VERSION];
 }
 
 - (void)testMigrationWithProjectFilePath
@@ -46,10 +51,10 @@
 
     [projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"] error:nil];
     [projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil];
-
     [projectSettings store];
 
-    self.migrator = [[AllPackageSettingsMigrator alloc] initWithProjectFilePath:projectSettings.projectPath toVersion:PACKAGE_SETTINGS_VERSION];
+    MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];
+    self.migrator = [[AllPackageSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:PACKAGE_SETTINGS_VERSION];
 
     XCTAssertTrue([_migrator isMigrationRequired]);
 
@@ -134,11 +139,6 @@
         [@"package_a.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME],
         [@"package_b.sbpack" stringByAppendingPathComponent:PACKAGE_PUBLISH_SETTINGS_FILE_NAME]
     ]];
-}
-
-- (void)testHtmlInfoText
-{
-    XCTAssertNotNil([_migrator htmlInfoText]);
 }
 
 - (void)testMigrationNotRequired

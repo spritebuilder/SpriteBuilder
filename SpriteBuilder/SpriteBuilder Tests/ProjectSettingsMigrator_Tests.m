@@ -12,6 +12,7 @@
 #import "FileSystemTestCase.h"
 #import "ResourcePropertyKeys.h"
 #import "MigrationLogger.h"
+#import "MigratorData.h"
 
 @interface ProjectSettingsMigrator_Tests : FileSystemTestCase
 
@@ -23,6 +24,7 @@
 - (void)testMigration
 {
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
+    MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];
 
     [projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
     [projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
@@ -41,8 +43,7 @@
     [project writeToFile:projectSettings.projectPath atomically:YES];
 
     NSMutableString *renameResult = [NSMutableString string];
-    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
-            .projectPath                                                            renameResult:renameResult];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:kCCBProjectSettingsVersion];
 
     XCTAssertTrue([migrator isMigrationRequired]);
 
@@ -76,23 +77,12 @@
     XCTAssertEqualObjects(renameResult, projectSettings.projectPath);
 }
 
-- (void)testHtmlInfoText
-{
-    ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
-
-    NSMutableString *renameResult = [NSMutableString string];
-    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
-            .projectPath                                                            renameResult:renameResult];
-
-    XCTAssertNotNil([migrator htmlInfoText]);
-}
-
 - (void)testMigrationRequired_oldCCBProjName
 {
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
-    NSMutableString *renameResult = [NSMutableString string];
-    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
-            .projectPath                                                            renameResult:renameResult];
+    MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];
+
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:kCCBProjectSettingsVersion];
 
     XCTAssertTrue([migrator isMigrationRequired]);
 
@@ -107,14 +97,13 @@
 - (void)testMigrationRequired_obsoleteKeysSetInPropertyList
 {
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
+    MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];
 
     NSMutableDictionary *project = [[NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath] mutableCopy];
     project[@"onlyPublishCCBs"] = @NO;
     [project writeToFile:projectSettings.projectPath atomically:YES];
 
-    NSMutableString *renameResult = [NSMutableString string];
-    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
-            .projectPath                                                            renameResult:renameResult];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:kCCBProjectSettingsVersion];
 
     XCTAssertTrue([migrator isMigrationRequired]);
 }
@@ -122,10 +111,9 @@
 - (void)testMigrationNotRequired
 {
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
+    MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];
 
-    NSMutableString *renameResult = [NSMutableString string];
-    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
-            .projectPath                                                            renameResult:renameResult];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:kCCBProjectSettingsVersion];
 
     NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
@@ -148,11 +136,11 @@
     [projectSettings markAsDirtyRelPath:@"flowers"];
     [projectSettings store];
 
+    MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];
+
     NSString *originalPrjSettingsFile = [NSString stringWithContentsOfFile:projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
-    NSMutableString *renameResult = [NSMutableString string];
-    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithProjectFilePath:projectSettings
-            .projectPath                                                            renameResult:renameResult];
+    ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:kCCBProjectSettingsVersion];
 
     XCTAssertTrue([migrator isMigrationRequired]);
 
@@ -171,6 +159,9 @@
     NSString *newPrjSettingsFile = [NSString stringWithContentsOfFile:projectSettings.projectPath encoding:NSUTF8StringEncoding error:nil];
 
     [self assertEqualObjectsWithDiff:originalPrjSettingsFile objectB:newPrjSettingsFile];
+
+    XCTAssertEqualObjects(migratorData.renamedFiles[[self fullPathForFile:@"foo.spritebuilder/foo.ccbproj"]],
+                          [self fullPathForFile:@"foo.spritebuilder/foo.sbproj"]);
 }
 
 @end

@@ -2,10 +2,11 @@
 #import "MigratorProtocol.h"
 
 @class ProjectSettings;
+@class MigratorData;
 
 
 @interface ResourcePathToPackageMigrator : NSObject  <MigratorProtocol>
 
-- (id)initWithProjectFilePath:(NSString *)filePath;
+- (id)initWithMigratorData:(MigratorData *)migratorData;
 
 @end
