@@ -46,9 +46,9 @@ typedef NSArray *(^LazyPackagePathsGetterBlock)();
         }
 
         NSMutableArray *packagePaths = [NSMutableArray array];
-        for (NSMutableDictionary *resourcePathDict in projectSettings.resourcePaths)
+        for (NSMutableDictionary *resourcePathDict in projectSettings.packages)
         {
-            NSString *fullPackagePath = [projectSettings fullPathForResourcePathDict:resourcePathDict];
+            NSString *fullPackagePath = [projectSettings fullPathForPackageDict:resourcePathDict];
             [packagePaths addObject:fullPackagePath];
         }
         return packagePaths;

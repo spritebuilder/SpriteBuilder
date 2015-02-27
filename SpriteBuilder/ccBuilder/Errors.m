@@ -16,10 +16,10 @@ NSInteger const SBCocos2dUpdateCopyFilesError = 2003;
 NSInteger const SBCocos2dUpdateUserCancelledError = 2010;
 
 // Resource path / Packages
-NSInteger const SBDuplicateResourcePathError = 2100;
-NSInteger const SBResourcePathNotInProjectError = 2101;
+NSInteger const SBDuplicatePackageError = 2100;
+NSInteger const SBPackageNotInProjectError = 2101;
 NSInteger const SBImportingPackagesError = 2102;
-NSInteger const SBResourcePathExistsButNotInProjectError = 2103;
+NSInteger const SBPackageExistsButNotInProjectError = 2103;
 NSInteger const SBRemovePackagesError = 2104;
 NSInteger const SBPackageExportInvalidPackageError = 2105;
 NSInteger const SBPackageAlreadyExistsAtPathError = 2106;

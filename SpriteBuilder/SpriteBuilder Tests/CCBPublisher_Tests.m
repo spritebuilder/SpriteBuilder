@@ -50,7 +50,7 @@
 
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
-    [_projectSettings addResourcePath:package.dirPath error:nil];
+    [_projectSettings addPackageWithFullPath:package.dirPath error:nil];
 
     [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
 

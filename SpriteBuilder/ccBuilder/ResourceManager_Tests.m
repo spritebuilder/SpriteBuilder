@@ -41,7 +41,7 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"project/foo.ccbproj"];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"project/Packages/package1.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"project/Packages/package1.sbpack"] error:nil];
 }
 
 - (void)testResourceForRelativePath
@@ -242,7 +242,7 @@
     _projectSettings.projectPath = [self fullPathForFile:@"project/foo.ccbproj"];
     for (NSString *packagePath in packages)
     {
-        [_projectSettings addResourcePath:packagePath error:nil];
+        [_projectSettings addPackageWithFullPath:packagePath error:nil];
     }
 
     [self createFolders:packages];

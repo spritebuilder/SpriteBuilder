@@ -49,8 +49,8 @@
 {
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/packages/foo.sbpack"];
 
-    [projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"] error:nil];
-    [projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil];
+    [projectSettings addPackageWithFullPath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_a.sbpack"] error:nil];
+    [projectSettings addPackageWithFullPath:[self fullPathForFile:@"foo.spritebuilder/Packages/package_b.sbpack"] error:nil];
     [projectSettings store];
 
     MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];

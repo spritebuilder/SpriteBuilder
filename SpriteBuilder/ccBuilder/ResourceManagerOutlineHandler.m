@@ -475,7 +475,7 @@
     NSArray *errors = error.userInfo[@"errors"];
     for (NSError *anError in errors)
     {
-        if (anError.code != SBDuplicateResourcePathError)
+        if (anError.code != SBDuplicatePackageError)
         {
             [errorMessage appendFormat:@"%@\n", anError.localizedDescription];
         }

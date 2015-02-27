@@ -52,8 +52,8 @@
 
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
 
-    XCTAssertTrue([projectSettings addResourcePath:[self fullPathForFile:pathPackage1] error:nil]);
-    XCTAssertTrue([projectSettings addResourcePath:[self fullPathForFile:pathPackage2] error:nil]);
+    XCTAssertTrue([projectSettings addPackageWithFullPath:[self fullPathForFile:pathPackage1] error:nil]);
+    XCTAssertTrue([projectSettings addPackageWithFullPath:[self fullPathForFile:pathPackage2] error:nil]);
 
     [projectSettings store];
 
@@ -118,7 +118,7 @@
         @"foo.spritebuilder/SpriteBuilder Resources/song.wav"]];
 
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
-    XCTAssertTrue([projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/SpriteBuilder Resources"] error:nil]);
+    XCTAssertTrue([projectSettings addPackageWithFullPath:[self fullPathForFile:@"foo.spritebuilder/SpriteBuilder Resources"] error:nil]);
     [projectSettings store];
 
     // Test
@@ -133,7 +133,7 @@
        [[CCBToSBRenameMigrator alloc] initWithFilePath:migratorData.projectPath migratorData:migratorData]
     ];
 
-    migrationController.logger = [[MigrationLogger alloc] initWithLogToConsole:YES];
+    // migrationController.logger = [[MigrationLogger alloc] initWithLogToConsole:YES];
 
     XCTAssertTrue([migrationController isMigrationRequired]);
 

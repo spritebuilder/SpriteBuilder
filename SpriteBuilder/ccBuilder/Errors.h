@@ -16,11 +16,11 @@ extern NSInteger const SBCocos2dUpdateCopyFilesError;
 extern NSInteger const SBCocos2dUpdateUserCancelledError;
 
 // Resource path / Packages
-extern NSInteger const SBDuplicateResourcePathError;
-extern NSInteger const SBResourcePathNotInProjectError;
+extern NSInteger const SBDuplicatePackageError;
+extern NSInteger const SBPackageNotInProjectError;
 extern NSInteger const SBImportingPackagesError;
 extern NSInteger const SBRemovePackagesError;
-extern NSInteger const SBResourcePathExistsButNotInProjectError;
+extern NSInteger const SBPackageExistsButNotInProjectError;
 extern NSInteger const SBPackageExportInvalidPackageError;
 extern NSInteger const SBPackageAlreadyExistsAtPathError;
 extern NSInteger const SBRenamePackageGenericError;

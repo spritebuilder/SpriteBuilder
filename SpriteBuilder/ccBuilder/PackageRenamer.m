@@ -38,7 +38,7 @@
 
     BOOL renameSuccessful = ([self canRenamePackage:package toName:newName error:error]
                             && [_fileManager moveItemAtPath:package.dirPath toPath:newFullPath error:error]
-                            && [_projectSettings moveResourcePathFrom:package.dirPath toPath:newFullPath error:error]);
+                            && [_projectSettings movePackageWithFullPathFrom:package.dirPath toFullPath:newFullPath error:error]);
 
     if (renameSuccessful)
     {
@@ -70,15 +70,15 @@
         return YES;
     }
 
-    if ([_projectSettings isResourcePathInProject:newFullPath])
+    if ([_projectSettings isPackageWithFullPathInProject:newFullPath])
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBDuplicateResourcePathError message:@"A package with this name already exists in the project"];
+        [NSError setNewErrorWithErrorPointer:error code:SBDuplicatePackageError message:@"A package with this name already exists in the project"];
         return NO;
     }
 
     if ([_fileManager fileExistsAtPath:newFullPath])
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBResourcePathExistsButNotInProjectError message:@"A package with this name already exists on the file system, but is not in the project."];
+        [NSError setNewErrorWithErrorPointer:error code:SBPackageExistsButNotInProjectError message:@"A package with this name already exists on the file system, but is not in the project."];
         return NO;
     }
 

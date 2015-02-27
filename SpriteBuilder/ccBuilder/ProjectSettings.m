@@ -81,7 +81,7 @@
 
     self.engine = SBTargetEngineCocos2d;
 
-    self.resourcePaths = [[NSMutableArray alloc] init];
+    self.packages = [[NSMutableArray alloc] init];
     self.publishDirectory = @"Published-iOS";
     self.publishDirectoryAndroid = @"Published-Android";
 
@@ -127,7 +127,7 @@
     }
 
 	self.engine = (SBTargetEngine)[[dict objectForKey:@"engine"] intValue];
-    self.resourcePaths = [dict objectForKey:@"resourcePaths"];
+    self.packages = [dict objectForKey:@"resourcePaths"];
 
     self.publishDirectory = [dict objectForKey:@"publishDirectory"];
     if (!_publishDirectory)
@@ -159,14 +159,13 @@
 
     self.deviceScaling = [[dict objectForKey:@"deviceScaling"] intValue];
     self.defaultOrientation = [[dict objectForKey:@"defaultOrientation"] intValue];
-    self.designTarget = [[dict objectForKey:@"designTarget"] intValue];
+    self.designTarget = (SBDesignTarget) [[dict objectForKey:@"designTarget"] intValue];
     
     self.tabletPositionScaleFactor = 2.0f;
 
     self.publishEnvironment = (CCBPublishEnvironment) [[dict objectForKey:@"publishEnvironment"] integerValue];
 
     self.resourceProperties = [[dict objectForKey:@"resourceProperties"] mutableCopy];
-
 
     [self initializeVersionStringWithProjectDict:dict];
 
@@ -207,7 +206,7 @@
 
     dict[@"fileType"] = @"CocosBuilderProject";
     dict[@"fileVersion"] = @kCCBProjectSettingsVersion;
-    dict[@"resourcePaths"] = _resourcePaths;
+    dict[@"resourcePaths"] = _packages;
     
     dict[@"publishDirectory"] = _publishDirectory;
     dict[@"publishDirectoryAndroid"] = _publishDirectoryAndroid;
@@ -255,7 +254,7 @@
     
     NSMutableArray* paths = [NSMutableArray array];
     
-    for (NSDictionary* dict in _resourcePaths)
+    for (NSDictionary* dict in _packages)
     {
         NSString* path = dict[@"path"];
         NSString* absPath = [path absolutePathFromBaseDirPath:projectDirectory];
@@ -523,85 +522,85 @@
     }
 }
 
-- (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error
+- (BOOL)removePackageWithFullPath:(NSString *)fullPath error:(NSError **)error
 {
     NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
-    NSString *relResourcePath = [path relativePathFromBaseDirPath:projectDir];
+    NSString *relResourcePath = [fullPath relativePathFromBaseDirPath:projectDir];
 
-    for (NSMutableDictionary *resourcePath in [_resourcePaths copy])
+    for (NSMutableDictionary *resourcePath in [_packages copy])
     {
         NSString *relPath = resourcePath[@"path"];
         if ([relPath isEqualToString:relResourcePath])
         {
-            [_resourcePaths removeObject:resourcePath];
+            [_packages removeObject:resourcePath];
             return YES;
         }
     }
 
     [NSError setNewErrorWithErrorPointer:error
-                                    code:SBResourcePathNotInProjectError
+                                    code:SBPackageNotInProjectError
                                  message:[NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]];
     return NO;
 }
 
-- (BOOL)addResourcePath:(NSString *)path error:(NSError **)error
+- (BOOL)addPackageWithFullPath:(NSString *)fullPath error:(NSError **)error
 {
-    if (![self isResourcePathInProject:path])
+    if (![self isPackageWithFullPathInProject:fullPath])
     {
-        NSString *relResourcePath = [path relativePathFromBaseDirPath:self.projectPathDir];
+        NSString *relPackagePath = [fullPath relativePathFromBaseDirPath:self.projectPathDir];
 
-        [_resourcePaths addObject:[@{@"path" : relResourcePath} mutableCopy]];
+        [_packages addObject:[@{@"path" : relPackagePath} mutableCopy]];
         return YES;
     }
     else
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Cannot create %@, already present.", [path lastPathComponent]]];
+        [NSError setNewErrorWithErrorPointer:error code:SBDuplicatePackageError message:[NSString stringWithFormat:@"Cannot create %@, already present.", [fullPath lastPathComponent]]];
         return NO;
     }
 }
 
-- (BOOL)isResourcePathInProject:(NSString *)resourcePath
+- (BOOL)isPackageWithFullPathInProject:(NSString *)fullPath
 {
-    NSString *relResourcePath = [resourcePath relativePathFromBaseDirPath:self.projectPathDir];
+    NSString *relPackagePath = [fullPath relativePathFromBaseDirPath:self.projectPathDir];
 
-    return [self resourcePathForRelativePath:relResourcePath] != nil;
+    return [self packagePathForRelativePath:relPackagePath] != nil;
 }
 
-- (NSMutableDictionary *)resourcePathForRelativePath:(NSString *)path
+- (NSMutableDictionary *)packagePathForRelativePath:(NSString *)path
 {
-    for (NSMutableDictionary *resourcePath in _resourcePaths)
+    for (NSMutableDictionary *packagePath in _packages)
     {
-        NSString *aResourcePath = resourcePath[@"path"];
-        if ([aResourcePath isEqualToString:path])
+        NSString *aPackagePath = packagePath[@"path"];
+        if ([aPackagePath isEqualToString:path])
         {
-            return resourcePath;
+            return packagePath;
         }
     }
     return nil;
 }
 
-- (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error
+- (BOOL)movePackageWithFullPathFrom:(NSString *)fromPath toFullPath:(NSString *)toFullPath error:(NSError **)error
 {
-    if ([self isResourcePathInProject:toPath])
+    if ([self isPackageWithFullPathInProject:toFullPath])
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBDuplicateResourcePathError message:@"Cannot move resource path, there's already one with the same name."];
+        [NSError setNewErrorWithErrorPointer:error code:SBDuplicatePackageError message:@"Cannot move package, there's already one with the same name."];
         return NO;
     }
 
-    NSString *relResourcePathOld = [fromPath relativePathFromBaseDirPath:self.projectPathDir];
-    NSString *relResourcePathNew = [toPath relativePathFromBaseDirPath:self.projectPathDir];
+    NSString *relPackagePathOld = [fromPath relativePathFromBaseDirPath:self.projectPathDir];
+    NSString *relPackagePathNew = [toFullPath relativePathFromBaseDirPath:self.projectPathDir];
 
-    NSMutableDictionary *resourcePath = [self resourcePathForRelativePath:relResourcePathOld];
-    resourcePath[@"path"] = relResourcePathNew;
+    NSMutableDictionary *packageDict = [self packagePathForRelativePath:relPackagePathOld];
+    packageDict[@"path"] = relPackagePathNew;
 
-    [self movedResourceFrom:relResourcePathOld to:relResourcePathNew fromFullPath:fromPath toFullPath:toPath];
+    [self movedResourceFrom:relPackagePathOld to:relPackagePathNew fromFullPath:fromPath toFullPath:toFullPath];
     return YES;
 }
 
 // TODO: remove after transition state to ResourcePath class
-- (NSString *)fullPathForResourcePathDict:(NSMutableDictionary *)resourcePathDict
+- (NSString *)fullPathForPackageDict:(NSMutableDictionary *)packageDict
 {
-    return [self.projectPathDir stringByAppendingPathComponent:resourcePathDict[@"path"]];
+    return [self.projectPathDir stringByAppendingPathComponent:packageDict[@"path"]];
 }
 
 - (NSString* ) getVersion

@@ -77,9 +77,9 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 
 - (BOOL)isMigrationRequired
 {
-    for (NSMutableDictionary *dict in self.projectSettings.resourcePaths)
+    for (NSMutableDictionary *dict in self.projectSettings.packages)
     {
-        NSString *fullPath = [self.projectSettings fullPathForResourcePathDict:dict];
+        NSString *fullPath = [self.projectSettings fullPathForPackageDict:dict];
 
         if (![fullPath hasPackageSuffix]
             || ![self.projectSettings isPathInPackagesFolder:fullPath])
@@ -138,7 +138,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 - (void)backupResourcePaths
 {
     [_resourePathsBackup removeAllObjects];
-    for (NSMutableDictionary *resourcePath in self.projectSettings.resourcePaths)
+    for (NSMutableDictionary *resourcePath in self.projectSettings.packages)
     {
         [_resourePathsBackup addObject:[resourcePath copy]];
     }
@@ -167,9 +167,9 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 {
     NSMutableArray *resourcePathsToImport = [NSMutableArray array];
 
-    for (NSMutableDictionary *resourcePathDict in [self.projectSettings.resourcePaths copy])
+    for (NSMutableDictionary *resourcePathDict in [self.projectSettings.packages copy])
     {
-        NSString *fullResourcePath = [self.projectSettings fullPathForResourcePathDict:resourcePathDict];
+        NSString *fullResourcePath = [self.projectSettings fullPathForPackageDict:resourcePathDict];
         if ([self.projectSettings isPathInPackagesFolder:fullResourcePath])
         {
             continue;
@@ -185,7 +185,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     for (NSMutableString *resourcePath in resourcePathsToImport)
     {
         NSError *error;
-        if (![self.projectSettings removeResourcePath:resourcePath error:&error])
+        if (![self.projectSettings removePackageWithFullPath:resourcePath error:&error])
         {
             [_logger log:[NSString stringWithFormat:@"removing resource path %@ - %@", resourcePath, error.localizedDescription] section:@[LOGGER_SECTION, LOGGER_ERROR]];
             return NO;
@@ -302,7 +302,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 {
     // NOTE: If a resource path is named packages/ or whatever in PACKAGES_FOLDER_NAME is
     // it has to be renamed in order create the packages/ folder
-    if ([self.projectSettings isResourcePathInProject:[self.projectSettings packagesFolderPath]])
+    if ([self.projectSettings isPackageWithFullPathInProject:[self.projectSettings packagesFolderPath]])
     {
         self.resourcePathWithPackagesFolderNameFound = YES;
         return YES;
@@ -322,9 +322,9 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
     }
 
     NSString *newResourcePathName = [renamePathTo lastPathComponent];
-    for (NSMutableDictionary *resourcePath in self.projectSettings.resourcePaths)
+    for (NSMutableDictionary *resourcePath in self.projectSettings.packages)
     {
-        if ([[self.projectSettings fullPathForResourcePathDict:resourcePath] isEqualToString:[self.projectSettings packagesFolderPath]])
+        if ([[self.projectSettings fullPathForPackageDict:resourcePath] isEqualToString:[self.projectSettings packagesFolderPath]])
         {
             // TODO: use ResourcePath object
             resourcePath[@"path"] = [[resourcePath[@"path"] stringByDeletingLastPathComponent] stringByAppendingPathComponent:newResourcePathName];
@@ -412,7 +412,7 @@ NSString *const PACKAGES_LOG_HASHTAG = @"#packagemigration";
 {
     [_logger log:[NSString stringWithFormat:@"Resource paths reinstated: %@", _resourePathsBackup] section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 
-    self.projectSettings.resourcePaths = [_resourePathsBackup copy];
+    self.projectSettings.packages = [_resourePathsBackup copy];
 
     [self.projectSettings store];
 }

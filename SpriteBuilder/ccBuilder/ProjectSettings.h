@@ -65,7 +65,7 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 @property (nonatomic, strong, readonly) NSArray *allResourcesRelativePaths;
 
 @property (nonatomic, readonly) NSString* projectPathHashed;
-@property (nonatomic, strong) NSMutableArray* resourcePaths;
+@property (nonatomic, strong) NSMutableArray*packages;
 
 @property (nonatomic,assign) BOOL publishEnabledIOS;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
@@ -142,26 +142,26 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 
 - (void)movedResourceFrom:(NSString *)relPathOld to:(NSString *)relPathNew fromFullPath:(NSString *)fromFullPath toFullPath:(NSString *)toFullPath;
 
-// *** Resource Paths ***
-// Adds a full resourcePath to the project, provide full filePath
-// Returns NO if resource path could not be added.
-// Returns SBDuplicateResourcePathError if given resource path is already present,
-- (BOOL)addResourcePath:(NSString *)path error:(NSError **)error;
+// *** Packages ***
+// Adds a full package to the project, provide full filePath
+// Returns NO if package could not be added.
+// Returns SBDuplicatePackageError if given full package path is already present,
+- (BOOL)addPackageWithFullPath:(NSString *)fullPath error:(NSError **)error;
 
-// Tests if a given full resource path is already in the project, provide full filePath
-- (BOOL)isResourcePathInProject:(NSString *)resourcePath;
+// Tests if a given full package path is already in the project, provide full filePath
+- (BOOL)isPackageWithFullPathInProject:(NSString *)fullPath;
 
-// Removes a full resourcePath from the project, provide full filePath
-// Returns NO if resource path could not be removed.
-// Returns SBResourcePathNotInProjectError if given resource path does not exist,
-- (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error;
+// Removes a package from the project, provide full filePath
+// Returns NO if package could not be removed.
+// Returns SBPackageNotInProjectError if given full package path does not exist,
+- (BOOL)removePackageWithFullPath:(NSString *)fullPath error:(NSError **)error;
 
-// Changes the path component of a resourcePath, provide full paths
-// Returns NO if resource path could not be moved.
-// Returns SBDuplicateResourcePathError if resource path toPath already exists
-- (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
+// Changes the path component of a package, provide full paths
+// Returns NO if package could not be moved.
+// Returns SBDuplicatePackageError if package toFullPath already exists
+- (BOOL)movePackageWithFullPathFrom:(NSString *)fromPath toFullPath:(NSString *)toFullPath error:(NSError **)error;
 
-- (NSString *)fullPathForResourcePathDict:(NSMutableDictionary *)resourcePathDict;
+- (NSString *)fullPathForPackageDict:(NSMutableDictionary *)packageDict;
 
 // *** Misc ***
 - (NSString* ) getVersion;

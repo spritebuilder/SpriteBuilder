@@ -67,7 +67,7 @@
 
     [[[_fileManagerMock expect] andReturnValue:@(YES)] copyItemAtPath:OCMOCK_ANY toPath:OCMOCK_ANY error:[OCMArg anyObjectRef]];
 
-    [_projectSettings addResourcePath:packagePathInProject error:nil];
+    [_projectSettings addPackageWithFullPath:packagePathInProject error:nil];
 
     NSError *error;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:packagePaths error:&error]);
@@ -99,7 +99,7 @@
     XCTAssertNil(error);
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
 
-    XCTAssertTrue([_projectSettings isResourcePathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.resourcePaths);
+    XCTAssertTrue([_projectSettings isPackageWithFullPathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.packages);
 
     [_fileManagerMock verify];
 }
@@ -117,7 +117,7 @@
     XCTAssertFalse([_packageImporter importPackagesWithPaths:@[packagePath] error:&error]);
     XCTAssertNotNil(error);
 
-    XCTAssertFalse([_projectSettings isResourcePathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.resourcePaths);
+    XCTAssertFalse([_projectSettings isPackageWithFullPathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.packages);
 
     [_fileManagerMock verify];
 }
@@ -134,7 +134,7 @@
     XCTAssertTrue([_packageImporter importPackagesWithPaths:@[toImportPackagePath] error:&error]);
     XCTAssertNil(error);
 
-    XCTAssertTrue([_projectSettings isResourcePathInProject:toImportPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", toImportPackagePath, _projectSettings.resourcePaths);
+    XCTAssertTrue([_projectSettings isPackageWithFullPathInProject:toImportPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", toImportPackagePath, _projectSettings.packages);
 
     [_fileManagerMock verify];
 }
@@ -177,7 +177,7 @@
         @"Package.plist"
     ]];
 
-    XCTAssertTrue([_projectSettings isResourcePathInProject:[self fullPathForFile:@"foo.spritebuilder/Packages/baa.sbpack"]]);
+    XCTAssertTrue([_projectSettings isPackageWithFullPathInProject:[self fullPathForFile:@"foo.spritebuilder/Packages/baa.sbpack"]]);
 }
 
 @end
