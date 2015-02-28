@@ -7,7 +7,7 @@
 	<key>ordering</key>
 	<integer>4000</integer>
 	<key>description</key>
-	<string>Draws a rectangular area filled with a color.</string>
+	<string>Creates a light source.</string>
 	<key>inheritsFrom</key>
 	<string>CCNode</string>
 	<key>canHaveChildren</key>
