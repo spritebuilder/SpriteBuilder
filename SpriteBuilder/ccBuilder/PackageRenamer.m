@@ -42,7 +42,7 @@
 
     if (renameSuccessful)
     {
-        [_resourceManager setActiveDirectoriesWithFullReset:[_projectSettings absoluteResourcePaths]];
+        [_resourceManager setActiveDirectoriesWithFullReset:[_projectSettings absolutePackagePaths]];
         [[AppDelegate appDelegate] renamedResourcePathFrom:oldFullPath toPath:newFullPath];
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:package];
         return YES;
