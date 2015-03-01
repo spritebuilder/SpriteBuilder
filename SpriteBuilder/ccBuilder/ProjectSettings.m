@@ -133,7 +133,7 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
     }
 
 	self.engine = (SBTargetEngine)[[dict objectForKey:@"engine"] intValue];
-    self.packages = [dict objectForKey:@"resourcePaths"];
+    self.packages = [dict objectForKey:PROJECTSETTINGS_KEY_PACKAGES];
 
     self.publishDirectory = [dict objectForKey:@"publishDirectory"];
     if (!_publishDirectory)
@@ -212,7 +212,7 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
 
     dict[@"fileType"] = @"CocosBuilderProject";
     dict[PROJECTSETTINGS_KEY_FILEVERSION] = @kCCBProjectSettingsVersion;
-    dict[@"resourcePaths"] = _packages;
+    dict[PROJECTSETTINGS_KEY_PACKAGES] = _packages;
     
     dict[@"publishDirectory"] = _publishDirectory;
     dict[@"publishDirectoryAndroid"] = _publishDirectoryAndroid;
@@ -253,8 +253,8 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
     return dict;
 }
 
-@dynamic absoluteResourcePaths;
-- (NSArray*) absoluteResourcePaths
+@dynamic absolutePackagePaths;
+- (NSArray*)absolutePackagePaths
 {
     NSString* projectDirectory = [self.projectPath stringByDeletingLastPathComponent];
     
@@ -531,21 +531,21 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
 - (BOOL)removePackageWithFullPath:(NSString *)fullPath error:(NSError **)error
 {
     NSString *projectDir = [self.projectPath stringByDeletingLastPathComponent];
-    NSString *relResourcePath = [fullPath relativePathFromBaseDirPath:projectDir];
+    NSString *relPackagePath = [fullPath relativePathFromBaseDirPath:projectDir];
 
-    for (NSMutableDictionary *resourcePath in [_packages copy])
+    for (NSMutableDictionary *packageDict in [_packages copy])
     {
-        NSString *relPath = resourcePath[@"path"];
-        if ([relPath isEqualToString:relResourcePath])
+        NSString *relPath = packageDict[@"path"];
+        if ([relPath isEqualToString:relPackagePath])
         {
-            [_packages removeObject:resourcePath];
+            [_packages removeObject:packageDict];
             return YES;
         }
     }
 
     [NSError setNewErrorWithErrorPointer:error
                                     code:SBPackageNotInProjectError
-                                 message:[NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relResourcePath]];
+                                 message:[NSString stringWithFormat:@"Cannot remove path \"%@\" does not exist in project.", relPackagePath]];
     return NO;
 }
 
@@ -603,7 +603,6 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
     return YES;
 }
 
-// TODO: remove after transition state to ResourcePath class
 - (NSString *)fullPathForPackageDict:(NSMutableDictionary *)packageDict
 {
     return [self.projectPathDir stringByAppendingPathComponent:packageDict[@"path"]];
@@ -670,11 +669,11 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
 
 - (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath
 {
-    for (NSString *absoluteResourcePath in self.absoluteResourcePaths)
+    for (NSString *absolutePackagePath in self.absolutePackagePaths)
     {
-        if ([absolutePath hasPrefix:absoluteResourcePath])
+        if ([absolutePath hasPrefix:absolutePackagePath])
         {
-            return [absolutePath substringFromIndex:[absoluteResourcePath length] + 1];
+            return [absolutePath substringFromIndex:[absolutePackagePath length] + 1];
         }
     }
 

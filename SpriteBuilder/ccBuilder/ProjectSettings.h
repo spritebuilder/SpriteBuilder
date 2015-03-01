@@ -72,7 +72,7 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 @property (nonatomic, strong, readonly) NSArray *allResourcesRelativePaths;
 
 @property (nonatomic, readonly) NSString* projectPathHashed;
-@property (nonatomic, strong) NSMutableArray*packages;
+@property (nonatomic, strong) NSMutableArray *packages;
 
 @property (nonatomic,assign) BOOL publishEnabledIOS;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
@@ -82,7 +82,7 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, assign) BOOL onlyPublishCCBs;
-@property (nonatomic, readonly) NSArray* absoluteResourcePaths;
+@property (nonatomic, readonly) NSArray*absolutePackagePaths;
 @property (nonatomic, copy) NSString* exporter;
 @property (nonatomic, strong) NSMutableArray* availableExporters;
 @property (nonatomic, readonly) NSString* displayCacheDirectory;

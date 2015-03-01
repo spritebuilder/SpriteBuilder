@@ -1625,7 +1625,7 @@ typedef enum
 
 - (void) updateResourcePathsFromProjectSettings
 {
-    [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absoluteResourcePaths]];
+    [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absolutePackagePaths]];
 }
 
 - (void) closeProject
@@ -1715,7 +1715,7 @@ typedef enum
     [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[upToDateProjectSettings.projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
 
     // Open ccb file for project if there is only one
-    NSArray* resPaths = upToDateProjectSettings.absoluteResourcePaths;
+    NSArray* resPaths = upToDateProjectSettings.absolutePackagePaths;
     if (resPaths.count > 0)
     {
         NSString* resPath = resPaths[0];
