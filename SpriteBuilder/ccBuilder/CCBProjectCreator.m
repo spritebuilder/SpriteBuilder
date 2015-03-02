@@ -40,7 +40,7 @@
 
 @implementation CCBProjectCreator
 
--(BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(SBTargetEngine)engine programmingLanguage:(SBProgrammingLanguage)programmingLanguage
+- (BOOL)createDefaultProjectAtPath:(NSString *)fileName programmingLanguage:(SBProgrammingLanguage)programmingLanguage
 {
     NSError *error = nil;
     NSFileManager* fm = [NSFileManager defaultManager];

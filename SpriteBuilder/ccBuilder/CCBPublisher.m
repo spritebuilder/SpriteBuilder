@@ -204,10 +204,7 @@
         }
     }
 
-    if (!_projectSettings.onlyPublishCCBs)
-    {
-        [self enqueueGenerateFilesOperationWithTarget:target];
-    }
+    [self enqueueGenerateFilesOperationWithTarget:target];
 
     // Yiee Haa!
     return YES;
@@ -238,8 +235,7 @@
 
 - (void)removeOldPublishDirIfCacheCleaned
 {
-    if (_projectSettings.needRepublish
-        && !_projectSettings.onlyPublishCCBs)
+    if (_projectSettings.needRepublish)
     {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         for (CCBPublishingTarget *target in _publishingTargets)
