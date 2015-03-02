@@ -120,9 +120,9 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (IBAction)selectPublishDirectoryIOS:(id)sender
 {
-    [self selectPublishCurrentPath:_projectSettings.publishDirectory
+    [self selectPublishCurrentPath:_projectSettings.publishDirectoryIOS
                     dirSetterBlock:^(NSString *directoryPath) {
-        _projectSettings.publishDirectory = directoryPath;
+        _projectSettings.publishDirectoryIOS = directoryPath;
     }];
 }
 

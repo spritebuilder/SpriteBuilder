@@ -31,10 +31,14 @@
 extern NSString *const PROJECTSETTINGS_KEY_FILEVERSION;
 extern NSString *const PROJECTSETTINGS_KEY_RESOURCEPROPERTIES;
 extern NSString *const PROJECTSETTINGS_KEY_PACKAGES;
-extern NSString *const PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS;
-extern NSString *const PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS;
-extern NSString *const PROJECTSETTINGS_KEY_LEGACY_ENGINE;
-extern NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION;
+extern NSString *const PROJECTSETTINGS_KEY_PUBLISHDIR_IOS;
+extern NSString *const PROJECTSETTINGS_KEY_PUBLISHDIR_ANDROID;
+
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_RESOURCESPATHS;
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_ONLYPUBLISHCCBS;
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_ENGINE;
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS;
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION;
 
 typedef enum
 {
@@ -73,8 +77,8 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 @property (nonatomic,assign) BOOL publishEnabledIOS;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
 
-@property (nonatomic, copy) NSString* publishDirectory;
-@property (nonatomic, copy) NSString* publishDirectoryAndroid;
+@property (nonatomic, copy) NSString *publishDirectoryIOS;
+@property (nonatomic, copy) NSString *publishDirectoryAndroid;
 
 @property (nonatomic, assign) BOOL publishToZipFile;
 @property (nonatomic, readonly) NSArray*absolutePackagePaths;

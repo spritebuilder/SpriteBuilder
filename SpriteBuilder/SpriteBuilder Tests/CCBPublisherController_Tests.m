@@ -37,7 +37,7 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
-    _projectSettings.publishDirectory = @"../Published-iOS";
+    _projectSettings.publishDirectoryIOS = @"../Published-iOS";
     _projectSettings.publishDirectoryAndroid = @"../Published-Android";
 
     self.publisherController = [[CCBPublisherController alloc] init];

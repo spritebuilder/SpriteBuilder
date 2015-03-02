@@ -38,7 +38,7 @@
     [super setUp];
 
     _projectSettings = [[ProjectSettings alloc] init];
-    _projectSettings.projectPath = @"/project/abc.ccbproj";
+    _projectSettings.projectPath = @"/project/abc.sbproj";
 }
 
 - (void)testAddResourcePath
@@ -78,7 +78,7 @@
 
 - (void)testRemoveResourcePath
 {
-    _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
+    _projectSettings.projectPath = @"/project/ccbuttonwooga.sbproj";
     [_projectSettings.packages addObject:@{@"path" : @"test"}];
 
     NSError *error;
@@ -89,7 +89,7 @@
 
 - (void)testRemoveNonExistingResourcePath
 {
-    _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
+    _projectSettings.projectPath = @"/project/ccbuttonwooga.sbproj";
 
     NSError *error;
     XCTAssertFalse([_projectSettings removePackageWithFullPath:@"/project/test" error:&error]);
@@ -99,7 +99,7 @@
 
 - (void)testMoveResourcePath
 {
-    _projectSettings.projectPath = @"/project/ccbuttonwooga.ccbproj";
+    _projectSettings.projectPath = @"/project/ccbuttonwooga.sbproj";
 
     NSString *pathOld = @"/somewhere/path_old";
     [_projectSettings addPackageWithFullPath:pathOld error:nil];
@@ -155,8 +155,6 @@
 {
    NSDictionary *projectDict =
    @{
-      @"deviceOrientationPortrait":@(NO),
-      @"publishDirectory":@"Source/Resources/Published-iOS",
       @"resourceAutoScaleFactor":@(0),
       @"resourceProperties":@{
          @"":@{
@@ -211,36 +209,28 @@
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          }
       },
-      @"publishDirectoryAndroid":@"Source/Resources/Published-Android",
-      @"defaultOrientation":@(0),
-      @"publishResolution_android_tablet":@(YES),
       @"publishEnabledAndroid":@(YES),
-      @"publishResolution_ios_phonehd":@(YES),
-      @"publishResolution_ios_tablet":@(YES),
-      @"publishResolution_android_phone":@(YES),
+      @"publishEnablediPhone":@(YES),
+      @"publishEnvironment":@(0),
+      @"publishToZipFile":@(NO),
+      PROJECTSETTINGS_KEY_PUBLISHDIR_ANDROID : @"Source/Resources/Published-Android",
+      PROJECTSETTINGS_KEY_PUBLISHDIR_IOS : @"Source/Resources/Published-iOS",
+      @"defaultOrientation":@(0),
       @"fileType":@"CocosBuilderProject",
       @"packages":@[
          @{
             @"path":@"packages/SpriteBuilder Resources.sbpack"
          }
       ],
+      @"deviceOrientationPortrait":@(NO),
       @"deviceOrientationLandscapeLeft":@(YES),
-      @"publishResolution_android_tablethd":@(YES),
-      @"publishEnvironment":@(0),
-      @"publishEnablediPhone":@(YES),
-      @"publishToZipFile":@(NO),
       @"exporter":@"sbi",
       @"versionStr":@"Version: 1.x\n-n GitHub: \nfcec170fc2\n",
-      @"publishResolution_ios_phone":@(YES),
-      @"publishResolution_ios_tablethd":@(YES),
       @"deviceOrientationUpsideDown":@(NO),
-      @"publishResolution_android_phonehd":@(YES),
       @"deviceOrientationLandscapeRight":@(YES),
-      @"onlyPublishCCBs":@(NO),
       @"deviceScaling":@(0),
-      @"excludedFromPackageMigration":@(YES),
       @"designTarget":@(0),
-      @"cocos@(2)dUpdateIgnoredVersions":@[],
+      @"cocos2ddUpdateIgnoredVersions":@[],
    };
 
     ProjectSettings *project = [[ProjectSettings alloc] initWithSerialization:projectDict];
@@ -251,7 +241,7 @@
     XCTAssertTrue(project.deviceOrientationLandscapeRight);
 
     // This a convention, if it's read as 0 has to become 4
-    XCTAssertEqualObjects(project.publishDirectory, @"Source/Resources/Published-iOS");
+    XCTAssertEqualObjects(project.publishDirectoryIOS, @"Source/Resources/Published-iOS");
 
     XCTAssertEqualObjects(project.publishDirectoryAndroid, @"Source/Resources/Published-Android");
     XCTAssertEqual(project.defaultOrientation, 0);
@@ -296,13 +286,13 @@
 
     ProjectSettings *project = [[ProjectSettings alloc] initWithSerialization:projectDict];
     XCTAssertNotNil(project);
-    XCTAssertEqualObjects(project.publishDirectory, @"");
+    XCTAssertEqualObjects(project.publishDirectoryIOS, @"");
     XCTAssertEqualObjects(project.publishDirectoryAndroid, @"");
 }
 
 - (void)testStandardInitializerAndPersistency
 {
-    NSString *fullPath = [self fullPathForFile:@"project.ccbproj"];;
+    NSString *fullPath = [self fullPathForFile:@"project.sbproj"];;
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = fullPath;
 
@@ -316,7 +306,7 @@
 
     XCTAssertNotNil(projectSettings.packages);
     XCTAssertEqual(projectSettings.packages.count, 0);
-    XCTAssertEqualObjects(projectSettings.publishDirectory, @"Published-iOS");
+    XCTAssertEqualObjects(projectSettings.publishDirectoryIOS, @"Published-iOS");
     XCTAssertEqualObjects(projectSettings.publishDirectoryAndroid, @"Published-Android");
 
     XCTAssertFalse(projectSettings.publishToZipFile);
@@ -334,7 +324,7 @@
 
 - (void)testResourcePathsAndPersistency
 {
-    NSString *fullPath = [self fullPathForFile:@"project.ccbproj"];;
+    NSString *fullPath = [self fullPathForFile:@"project.sbproj"];;
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = fullPath;
 
@@ -356,7 +346,7 @@
 
 - (void)testResourcePropertiesAndPersistency
 {
-    NSString *fullPath = [self fullPathForFile:@"project.ccbproj"];;
+    NSString *fullPath = [self fullPathForFile:@"project.sbproj"];;
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
     projectSettings.projectPath = fullPath;
 
@@ -477,7 +467,7 @@
     NSString *REL_IMAGE_IN_SPRITESHEET_PATH = @"project/Packages/package1.sbpack/spritesheet/image.png";
     NSString *REL_IMAGE_NOT_IN_SPRITESHEET_PATH = @"project/Packages/package1.sbpack/image.png";
 
-    _projectSettings.projectPath = [self fullPathForFile:@"project/abc.ccbproj"];
+    _projectSettings.projectPath = [self fullPathForFile:@"project/abc.sbproj"];
     [_projectSettings addPackageWithFullPath:[self fullPathForFile:REL_PACKAGE_PATH] error:nil];
 
     ResourceManager *resourceManager = [ResourceManager sharedManager];
@@ -581,20 +571,20 @@
 
 - (void)testInitWithFilename
 {
-    [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
+    [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.sbproj"];
 
-    [self assertFileExists:@"foo.spritebuilder/foo.ccbproj"];
+    [self assertFileExists:@"foo.spritebuilder/foo.sbproj"];
 
-    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/foo.ccbproj"]];
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/foo.sbproj"]];
 
     XCTAssertEqualObjects(projectSettings.projectName, @"foo");
     XCTAssertNotNil(projectSettings);
-    XCTAssertEqualObjects(projectSettings.projectPath, [self fullPathForFile:@"foo.spritebuilder/foo.ccbproj"]);
+    XCTAssertEqualObjects(projectSettings.projectPath, [self fullPathForFile:@"foo.spritebuilder/foo.sbproj"]);
 }
 
 - (void)testInitWithFilenameFailing_fileDoesNotExist
 {
-    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.ccbproj"]];
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.sbproj"]];
 
     XCTAssertNil(projectSettings);
 }
@@ -605,9 +595,9 @@
         @"asdasd" : @"hahahahahha"
     };
 
-    [somedict writeToFile:[self fullPathForFile:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.ccbproj"]] atomically:YES];
+    [somedict writeToFile:[self fullPathForFile:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.sbproj"]] atomically:YES];
 
-    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.ccbproj"]];
+    ProjectSettings *projectSettings = [[ProjectSettings alloc] initWithFilepath:[self fullPathForFile:@"foo.spritebuilder/doesnotexist.sbproj"]];
 
     XCTAssertNil(projectSettings);
 };

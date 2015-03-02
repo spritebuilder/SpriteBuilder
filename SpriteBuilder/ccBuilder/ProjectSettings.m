@@ -44,10 +44,13 @@
 NSString *const PROJECTSETTINGS_KEY_FILEVERSION = @"fileVersion";
 NSString *const PROJECTSETTINGS_KEY_RESOURCEPROPERTIES = @"resourceProperties";
 NSString *const PROJECTSETTINGS_KEY_PACKAGES = @"packages";
-NSString *const PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS = @"resourcePaths";
-NSString *const PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS = @"onlyPublishCCBs";
-NSString *const PROJECTSETTINGS_KEY_LEGACY_ENGINE = @"engine";
-NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"excludedFromPackageMigration";
+NSString *const PROJECTSETTINGS_KEY_PUBLISHDIR_IOS = @"publishDirectoryIOS";
+NSString *const PROJECTSETTINGS_KEY_PUBLISHDIR_ANDROID = @"publishDirectoryAndroid";
+NSString *const PROJECTSETTINGS_KEY_DEPRECATED_RESOURCESPATHS = @"resourcePaths";
+NSString *const PROJECTSETTINGS_KEY_DEPRECATED_ONLYPUBLISHCCBS = @"onlyPublishCCBs";
+NSString *const PROJECTSETTINGS_KEY_DEPRECATED_ENGINE = @"engine";
+NSString *const PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS = @"publishDirectory";
+NSString *const PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION = @"excludedFromPackageMigration";
 
 @interface ProjectSettings()
 
@@ -86,7 +89,7 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
     }
 
     self.packages = [[NSMutableArray alloc] init];
-    self.publishDirectory = @"Published-iOS";
+    self.publishDirectoryIOS = @"Published-iOS";
     self.publishDirectoryAndroid = @"Published-Android";
 
     self.publishToZipFile = NO;
@@ -132,13 +135,13 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
 
     self.packages = [dict objectForKey:PROJECTSETTINGS_KEY_PACKAGES];
 
-    self.publishDirectory = [dict objectForKey:@"publishDirectory"];
-    if (!_publishDirectory)
+    self.publishDirectoryIOS = [dict objectForKey:PROJECTSETTINGS_KEY_PUBLISHDIR_IOS];
+    if (!_publishDirectoryIOS)
     {
-        self.publishDirectory = @"";
+        self.publishDirectoryIOS = @"";
     }
 
-    self.publishDirectoryAndroid = [dict objectForKey:@"publishDirectoryAndroid"];
+    self.publishDirectoryAndroid = [dict objectForKey:PROJECTSETTINGS_KEY_PUBLISHDIR_ANDROID];
     if (!_publishDirectoryAndroid)
     {
         self.publishDirectoryAndroid = @"";
@@ -209,8 +212,8 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
     dict[PROJECTSETTINGS_KEY_FILEVERSION] = @kCCBProjectSettingsVersion;
     dict[PROJECTSETTINGS_KEY_PACKAGES] = _packages;
     
-    dict[@"publishDirectory"] = _publishDirectory;
-    dict[@"publishDirectoryAndroid"] = _publishDirectoryAndroid;
+    dict[PROJECTSETTINGS_KEY_PUBLISHDIR_IOS] = _publishDirectoryIOS;
+    dict[PROJECTSETTINGS_KEY_PUBLISHDIR_ANDROID] = _publishDirectoryAndroid;
 
     dict[@"publishEnablediPhone"] = @(_publishEnabledIOS);
     dict[@"publishEnabledAndroid"] = @(_publishEnabledAndroid);
