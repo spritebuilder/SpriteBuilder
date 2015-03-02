@@ -224,7 +224,7 @@ typedef enum
             return _projectSettings.projectPathDir;
 
         case SBOpenPathTypePublishIOS:
-            return [_projectSettings.projectPathDir stringByAppendingPathComponent:_projectSettings.publishDirectory];
+            return [_projectSettings.projectPathDir stringByAppendingPathComponent:_projectSettings.publishDirectoryIOS];
 
         case SBOpenPathTypePublishAndroid:
             return [_projectSettings.projectPathDir stringByAppendingPathComponent:_projectSettings.publishDirectoryAndroid];

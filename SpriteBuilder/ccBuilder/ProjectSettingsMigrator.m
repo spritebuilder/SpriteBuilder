@@ -89,10 +89,10 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 - (BOOL)requiresRemovalOfObsoleteRootKeys
 {
     NSDictionary *rootKeys = @{
-        PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS : [NSNull null],
-        PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION : [NSNull null],
+            PROJECTSETTINGS_KEY_DEPRECATED_ONLYPUBLISHCCBS : [NSNull null],
+            PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION : [NSNull null],
         @"exporter" : @"ccbi",
-        PROJECTSETTINGS_KEY_LEGACY_ENGINE : [NSNull null]
+            PROJECTSETTINGS_KEY_DEPRECATED_ENGINE : [NSNull null]
     };
 
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath];
@@ -248,12 +248,15 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 - (void)migrateRootKeysProjectSettingsDictionary:(NSMutableDictionary *)projectSettingsDictionary
 {
     projectSettingsDictionary[@"exporter"] = DOCUMENT_BINARY_EXTENSION;
-    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS];
-    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION];
-    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_LEGACY_ENGINE];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_DEPRECATED_ONLYPUBLISHCCBS];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_DEPRECATED_ENGINE];
 
-    projectSettingsDictionary[@"packages"] = projectSettingsDictionary[PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS];
-    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS];
+    projectSettingsDictionary[PROJECTSETTINGS_KEY_PUBLISHDIR_IOS] = projectSettingsDictionary[PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS];
+
+    projectSettingsDictionary[@"packages"] = projectSettingsDictionary[PROJECTSETTINGS_KEY_DEPRECATED_RESOURCESPATHS];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_DEPRECATED_RESOURCESPATHS];
 }
 
 - (BOOL)renameProjectFile:(NSError **)error

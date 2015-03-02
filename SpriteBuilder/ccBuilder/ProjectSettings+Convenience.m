@@ -61,7 +61,7 @@
 
     if (osType == kCCBPublisherOSTypeIOS)
     {
-        result = [self publishDirectory];
+        result = [self publishDirectoryIOS];
     }
 
     if (!result)

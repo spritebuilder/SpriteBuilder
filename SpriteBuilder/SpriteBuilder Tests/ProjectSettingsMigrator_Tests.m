@@ -41,10 +41,11 @@
     [projectSettings store];
 
     NSMutableDictionary *projectDictBeforeMigration = [[NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath] mutableCopy];
-    projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS] = @NO;
-    projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION] = @YES;
-    projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS] = @YES;
-    projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_ENGINE] = @0;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_DEPRECATED_RESOURCESPATHS] = @NO;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION] = @YES;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_DEPRECATED_ONLYPUBLISHCCBS] = @YES;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS] = @"foo.spritebuilder/Published-IOS";
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_DEPRECATED_ENGINE] = @0;
     projectDictBeforeMigration[PROJECTSETTINGS_KEY_FILEVERSION] = @1;
     [projectDictBeforeMigration writeToFile:projectSettings.projectPath atomically:YES];
 
@@ -76,15 +77,17 @@
     XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([projectSettingsMigrated isDirtyRelPath:@"background.png"]);
 
+    XCTAssertEqualObjects(projectSettingsMigrated.publishDirectoryIOS, @"foo.spritebuilder/Published-IOS");
     XCTAssertEqualObjects(projectSettingsMigrated.exporter, @"sbi");
 
     NSDictionary *newProject = [NSDictionary dictionaryWithContentsOfFile:projectSettings.projectPath];
     XCTAssertEqualObjects(newProject[PROJECTSETTINGS_KEY_FILEVERSION], @2);
     XCTAssertEqualObjects(newProject[PROJECTSETTINGS_KEY_PACKAGES],projectDictBeforeMigration[@"resourcePaths"]);
-    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS]);
-    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION]);
-    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS]);
-    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_ENGINE]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_DEPRECATED_RESOURCESPATHS]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_DEPRECATED_ONLYPUBLISHCCBS]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_DEPRECATED_ENGINE]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS]);
 }
 
 - (void)testMigrationRequired_oldCCBProjName
