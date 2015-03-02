@@ -44,6 +44,7 @@
     projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS] = @NO;
     projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION] = @YES;
     projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS] = @YES;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_LEGACY_ENGINE] = @0;
     projectDictBeforeMigration[PROJECTSETTINGS_KEY_FILEVERSION] = @1;
     [projectDictBeforeMigration writeToFile:projectSettings.projectPath atomically:YES];
 
@@ -83,6 +84,7 @@
     XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS]);
     XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION]);
     XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_LEGACY_ENGINE]);
 }
 
 - (void)testMigrationRequired_oldCCBProjName

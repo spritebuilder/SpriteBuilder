@@ -119,13 +119,6 @@
     XCTAssertEqualObjects(migratorData.renamedFiles[[self fullPathForFile:org2]], [self fullPathForFile:new2]);
 };
 
-- (void)testHtmlInfoText
-{
-    MigratorData *migratorData = [[MigratorData alloc] init];
-    CCBToSBRenameMigrator *migrator = [[CCBToSBRenameMigrator alloc] initWithFilePath:[self fullPathForFile:@"foo.spritebuilder/packages/foo.sbpack"] migratorData:migratorData];
-    XCTAssertNotNil([migrator htmlInfoText]);
-}
-
 - (void)testRollback
 {
     [self createFilesWithContents:@{

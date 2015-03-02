@@ -46,12 +46,12 @@ NSString *const PROJECTSETTINGS_KEY_RESOURCEPROPERTIES = @"resourceProperties";
 NSString *const PROJECTSETTINGS_KEY_PACKAGES = @"packages";
 NSString *const PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS = @"resourcePaths";
 NSString *const PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS = @"onlyPublishCCBs";
+NSString *const PROJECTSETTINGS_KEY_LEGACY_ENGINE = @"engine";
 NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"excludedFromPackageMigration";
 
 @interface ProjectSettings()
 
 @property (nonatomic, strong) NSMutableDictionary* resourceProperties;
-@property (nonatomic, readwrite) SBTargetEngine engine;
 @property (nonatomic) BOOL storing;
 
 @end
@@ -84,8 +84,6 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
     {
         return NULL;
     }
-
-    self.engine = SBTargetEngineCocos2d;
 
     self.packages = [[NSMutableArray alloc] init];
     self.publishDirectory = @"Published-iOS";
@@ -132,7 +130,6 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
         return NULL;
     }
 
-	self.engine = (SBTargetEngine)[[dict objectForKey:@"engine"] intValue];
     self.packages = [dict objectForKey:PROJECTSETTINGS_KEY_PACKAGES];
 
     self.publishDirectory = [dict objectForKey:@"publishDirectory"];
@@ -207,8 +204,6 @@ NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION = @"exclu
 - (id) serialize
 {
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-
-    dict[@"engine"] = @(_engine);
 
     dict[@"fileType"] = @"CocosBuilderProject";
     dict[PROJECTSETTINGS_KEY_FILEVERSION] = @kCCBProjectSettingsVersion;

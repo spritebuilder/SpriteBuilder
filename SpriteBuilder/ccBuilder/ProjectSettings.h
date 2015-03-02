@@ -33,6 +33,7 @@ extern NSString *const PROJECTSETTINGS_KEY_RESOURCEPROPERTIES;
 extern NSString *const PROJECTSETTINGS_KEY_PACKAGES;
 extern NSString *const PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS;
 extern NSString *const PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS;
+extern NSString *const PROJECTSETTINGS_KEY_LEGACY_ENGINE;
 extern NSString *const PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION;
 
 typedef enum
@@ -46,11 +47,6 @@ typedef enum
     kSBOrientationLandscape = 0,
     kSBOrientationPortrait = 1,
 } SBOrientation;
-
-typedef NS_ENUM(int8_t, SBTargetEngine)
-{
-	SBTargetEngineCocos2d = 0,
-};
 
 typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 {
@@ -81,7 +77,6 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 @property (nonatomic, copy) NSString* publishDirectoryAndroid;
 
 @property (nonatomic, assign) BOOL publishToZipFile;
-@property (nonatomic, assign) BOOL onlyPublishCCBs;
 @property (nonatomic, readonly) NSArray*absolutePackagePaths;
 @property (nonatomic, copy) NSString* exporter;
 @property (nonatomic, strong) NSMutableArray* availableExporters;
@@ -107,8 +102,6 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 @property (nonatomic, assign) float tabletPositionScaleFactor;
 
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
-
-@property (nonatomic, readonly) SBTargetEngine engine;
 
 // Returns an instance of ProjectSettings with projectPath already set
 - (instancetype)initWithFilepath:(NSString *)filepath;

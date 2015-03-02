@@ -17,6 +17,6 @@
 
 - (id) initWithCollectionView:(NSCollectionView*)cv;
 
--(void) showNodePluginsForEngine:(SBTargetEngine)engine;
+- (void)showNodePlugins;
 
 @end

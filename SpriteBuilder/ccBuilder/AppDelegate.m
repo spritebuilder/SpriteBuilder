@@ -1700,7 +1700,7 @@ typedef enum
     [self updateResourcePathsFromProjectSettings];
 
     // Update Node Plugins list
-	[plugInNodeViewHandler showNodePluginsForEngine:upToDateProjectSettings.engine];
+	[plugInNodeViewHandler showNodePlugins];
 
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success)
@@ -3041,7 +3041,7 @@ typedef enum
     }
 }
 
--(void) createNewProjectTargetting:(SBTargetEngine)engine
+- (void)createNewProject
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
@@ -3087,7 +3087,8 @@ typedef enum
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_main_queue(), ^{
                                    CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
-                                   if ([creator createDefaultProjectAtPath:fileName engine:engine programmingLanguage:saveDlgLanguagePopup.selectedItem.tag])
+                                   if ([creator createDefaultProjectAtPath:fileName programmingLanguage:saveDlgLanguagePopup.selectedItem
+                                                                                                                            .tag])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
                                    }
@@ -3107,7 +3108,7 @@ typedef enum
 
 - (IBAction) menuNewProject:(id)sender
 {
-    [self createNewProjectTargetting:SBTargetEngineCocos2d];
+    [self createNewProject];
 }
 
 - (IBAction) menuNewPackage:(id)sender

@@ -89,9 +89,10 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 - (BOOL)requiresRemovalOfObsoleteRootKeys
 {
     NSDictionary *rootKeys = @{
-        @"onlyPublishCCBs" : [NSNull null],
-        @"excludedFromPackageMigration" : [NSNull null],
-        @"exporter" : @"ccbi"
+        PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS : [NSNull null],
+        PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION : [NSNull null],
+        @"exporter" : @"ccbi",
+        PROJECTSETTINGS_KEY_LEGACY_ENGINE : [NSNull null]
     };
 
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath];
@@ -247,11 +248,12 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 - (void)migrateRootKeysProjectSettingsDictionary:(NSMutableDictionary *)projectSettingsDictionary
 {
     projectSettingsDictionary[@"exporter"] = DOCUMENT_BINARY_EXTENSION;
-    [projectSettingsDictionary removeObjectForKey:@"onlyPublishCCBs"];
-    [projectSettingsDictionary removeObjectForKey:@"excludedFromPackageMigration"];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_LEGACY_ONLYPUBLISHCCBS];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_LEGACY_EXCLUDEFROMPACKAGEMIGRATION];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_LEGACY_ENGINE];
 
-    projectSettingsDictionary[@"packages"] = projectSettingsDictionary[@"resourcePaths"];
-    [projectSettingsDictionary removeObjectForKey:@"resourcePaths"];
+    projectSettingsDictionary[@"packages"] = projectSettingsDictionary[PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS];
+    [projectSettingsDictionary removeObjectForKey:PROJECTSETTINGS_KEY_LEGACY_RESOURCESPATHS];
 }
 
 - (BOOL)renameProjectFile:(NSError **)error
@@ -345,38 +347,6 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
             properties[RESOURCE_PROPERTY_TRIM_SPRITES] = @YES;
         }
     }
-}
-
-- (void)migrateTrimSpritesPropertyOfSpriteSheetsForRelPath:(NSString *)relPath
-{
-/*
-    if (![[_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_IS_SMARTSHEET] boolValue])
-    {
-        return;
-    }
-
-    BOOL dirtyMarked = [_projectSettings isDirtyRelPath:relPath];
-    NSNumber *trimSpritesValue = [_projectSettings propertyForRelPath:relPath andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
-    if (trimSpritesValue)
-    {
-        if ([trimSpritesValue boolValue])
-        {
-            [_logger log:[NSString stringWithFormat:@"Removing resource property key '%@' for path '%@'", RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED, relPath] section:LOGGER_SECTION];
-            [_projectSettings removePropertyForRelPath:relPath andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
-        }
-        else
-        {
-            [_logger log:[NSString stringWithFormat:@"Setting resource property key '%@' for path '%@'", RESOURCE_PROPERTY_TRIM_SPRITES, relPath] section:LOGGER_SECTION];
-            [_projectSettings setProperty:@YES forRelPath:relPath andKey:RESOURCE_PROPERTY_TRIM_SPRITES];
-        }
-    }
-
-    if (!dirtyMarked)
-    {
-        [_logger log:[NSString stringWithFormat:@"Marking resource '%@' as dirty", relPath] section:LOGGER_SECTION];
-        [_projectSettings clearDirtyMarkerOfRelPath:relPath];
-    }
-*/
 }
 
 - (void)tidyUp

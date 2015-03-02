@@ -10,6 +10,6 @@
 
 @interface CCBProjectCreator : NSObject
 
-- (BOOL) createDefaultProjectAtPath:(NSString*)fileName engine:(SBTargetEngine)engine programmingLanguage:(SBProgrammingLanguage)language;
+- (BOOL)createDefaultProjectAtPath:(NSString *)fileName programmingLanguage:(SBProgrammingLanguage)language;
 
 @end

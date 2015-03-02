@@ -219,7 +219,7 @@
       @"publishResolution_ios_tablet":@(YES),
       @"publishResolution_android_phone":@(YES),
       @"fileType":@"CocosBuilderProject",
-      @"resourcePaths":@[
+      @"packages":@[
          @{
             @"path":@"packages/SpriteBuilder Resources.sbpack"
          }
@@ -229,7 +229,7 @@
       @"publishEnvironment":@(0),
       @"publishEnablediPhone":@(YES),
       @"publishToZipFile":@(NO),
-      @"exporter":@"ccbi",
+      @"exporter":@"sbi",
       @"versionStr":@"Version: 1.x\n-n GitHub: \nfcec170fc2\n",
       @"publishResolution_ios_phone":@(YES),
       @"publishResolution_ios_tablethd":@(YES),
@@ -241,7 +241,6 @@
       @"excludedFromPackageMigration":@(YES),
       @"designTarget":@(0),
       @"cocos@(2)dUpdateIgnoredVersions":@[],
-      @"engine":@(0)
    };
 
     ProjectSettings *project = [[ProjectSettings alloc] initWithSerialization:projectDict];
@@ -262,12 +261,10 @@
 
     [self assertResourcePaths:@[@"packages/SpriteBuilder Resources.sbpack"] inProject:project];
 
-    XCTAssertFalse(project.onlyPublishCCBs);
     XCTAssertEqual(project.deviceScaling, 0);
     XCTAssertEqual(project.designTarget, 0);
 
-    XCTAssertEqual(project.engine, SBTargetEngineCocos2d);
-    XCTAssertEqualObjects(project.exporter, @"ccbi");
+    XCTAssertEqualObjects(project.exporter, @"sbi");
 
     XCTAssertFalse(project.publishToZipFile);
     XCTAssertEqual(project.publishEnvironment, kCCBPublishEnvironmentDevelop);
@@ -319,11 +316,9 @@
 
     XCTAssertNotNil(projectSettings.packages);
     XCTAssertEqual(projectSettings.packages.count, 0);
-    XCTAssertEqual(projectSettings.engine, SBTargetEngineCocos2d);
     XCTAssertEqualObjects(projectSettings.publishDirectory, @"Published-iOS");
     XCTAssertEqualObjects(projectSettings.publishDirectoryAndroid, @"Published-Android");
 
-    XCTAssertFalse(projectSettings.onlyPublishCCBs);
     XCTAssertFalse(projectSettings.publishToZipFile);
 
     XCTAssertTrue(projectSettings.deviceOrientationLandscapeLeft);
@@ -385,8 +380,6 @@
 {
     XCTAssertEqual(kCCBPublishEnvironmentDevelop, 0, @"Enum value kSBPublishEnvironmentDevelop  must not change");
     XCTAssertEqual(kCCBPublishEnvironmentRelease, 1, @"Enum value kSBPublishEnvironmentRelease  must not change");
-
-    XCTAssertEqual(SBTargetEngineCocos2d, 0, @"Enum value SBTargetEngineCocos2d  must not change");
 
     XCTAssertEqual(kSBOrientationLandscape, 0, @"Enum value kSBOrientationLandscape  must not change");
     XCTAssertEqual(kSBOrientationPortrait, 1, @"Enum value kSBOrientationPortrait  must not change");
