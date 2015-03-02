@@ -234,10 +234,16 @@ static void *AVSPPlayerLayerReadyForDisplay = &AVSPPlayerLayerReadyForDisplay;
 	[self setTimeObserverToken:nil];
 	[self removeObserver:self forKeyPath:@"player.rate"];
 	[self removeObserver:self forKeyPath:@"player.currentItem.status"];
-	if ([self playerLayer])
+    if ([self playerLayer]) {
 		[self removeObserver:self forKeyPath:@"playerLayer.readyForDisplay"];
+    }
 
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)dealloc
+{
+    [self close];
 }
 
 - (void)loadAudioFile:(NSString*)filePath
