@@ -97,12 +97,17 @@
                inFile:pbxprojFile
                search:@"MACOSX_DEPLOYMENT_TARGET = 10.10"];
         [self removeLinesMatching:@".*MainScene[.]swift.*" inFile:pbxprojFile];
-        filesToRemove = @[@"Source/MainScene.swift"];
+        [self removeLinesMatching:@".*AppDelegate[.]swift.*" inFile:pbxprojFile];
+        filesToRemove = @[@"Source/MainScene.swift", @"Source/Platforms/iOS/AppDelegate.swift", @"Source/Platforms/Mac/AppDelegate.swift"];
     }
     else if (programmingLanguage == CCBProgrammingLanguageSwift)
     {
         [self removeLinesMatching:@".*MainScene[.][hm].*" inFile:pbxprojFile];
-        filesToRemove = @[@"Source/MainScene.h", @"Source/MainScene.m"];
+        [self removeLinesMatching:@".*AppDelegate[.][hm].*" inFile:pbxprojFile];
+        [self removeLinesMatching:@".*main[.][m].*" inFile:pbxprojFile];
+        filesToRemove = @[@"Source/MainScene.h", @"Source/MainScene.m",
+                          @"Source/Platforms/iOS/AppDelegate.h", @"Source/Platforms/iOS/AppDelegate.m", @"Source/Platforms/iOS/main.m",
+                          @"Source/Platforms/Mac/AppDelegate.h", @"Source/Platforms/Mac/AppDelegate.m", @"Source/Platforms/Mac/main.m"];
     }
 
     for (NSString *file in filesToRemove)
@@ -157,6 +162,12 @@
     
     // Update Mac Xib file
     NSString* xibFileName = [parentPath stringByAppendingPathComponent:@"Source/Resources/Platforms/Mac/MainMenu.xib"];
+    if (programmingLanguage == CCBProgrammingLanguageObjectiveC)
+    {
+        // this fixes the ObjC Mac target not being able to "find" the AppDelegate class
+        // CAUTION: This has to be performed *before* the substitutions below as it includes PROJECTNAME in the search string
+        [self removeAppDelegateModuleAndTargetFromXib:xibFileName];
+    }
     [self setName:identifier inFile:xibFileName search:substitutableProjectIdentifier];
     [self setName:projName inFile:xibFileName search:substitutableProjectName];
 
@@ -233,6 +244,22 @@
                                                     withTemplate:@""];
     NSData *updatedFileData = [updatedString dataUsingEncoding:NSUTF8StringEncoding];
     [updatedFileData writeToFile:fileName atomically:YES];
+}
+
+-(void) removeAppDelegateModuleAndTargetFromXib:(NSString*)xibFileName
+{
+    // this fixes the ObjC Mac target not being able to "find" the AppDelegate class because the Xib specified a custom module and target,
+    // which coincidentally is necessary for the Mac target in Swift to find the AppDelegate - so best solution was to setup Main.xib so
+    // that it works with Swift and removing the module & target for ObjC projects
+    NSData *fileData = [NSData dataWithContentsOfFile:xibFileName];
+    NSString *fileString = [[NSString alloc] initWithData:fileData encoding:NSUTF8StringEncoding];
+    
+    NSString* searchFor = @"customClass=\"AppDelegate\" customModule=\"PROJECTNAME\" customModuleProvider=\"target\"";
+    NSString* replaceWith = @"customClass=\"AppDelegate\"";
+    fileString = [fileString stringByReplacingOccurrencesOfString:searchFor withString:replaceWith];
+    
+    NSData *updatedFileData = [fileString dataUsingEncoding:NSUTF8StringEncoding];
+    [updatedFileData writeToFile:xibFileName atomically:YES];
 }
 
 @end

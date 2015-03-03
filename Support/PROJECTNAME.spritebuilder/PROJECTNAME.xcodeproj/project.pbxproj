@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B12102A197484DD004C1E1D /* PROJECTIDENTIFIERActivity.java in Sources */ = {isa = PBXBuildFile; fileRef = 5B12101B19748413004C1E1D /* PROJECTIDENTIFIERActivity.java */; };
-		5B121030197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m */; };
-		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
 		7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A046D7519E84C36004C4763 /* MainScene.swift */; };
 		7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B7378993180767190076A88C /* MainScene.m */; };
 		7A10CE5619F32FB0001673C3 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A046D7519E84C36004C4763 /* MainScene.swift */; };
@@ -42,7 +39,6 @@
 		7A59493B19E37F9300F65F90 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A59493A19E37F9300F65F90 /* OpenGL.framework */; };
 		7A59493D19E37FB200F65F90 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A59493C19E37FB200F65F90 /* libz.dylib */; };
 		7A59498B19E38E4A00F65F90 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7A59498A19E38E4A00F65F90 /* MainMenu.xib */; };
-		7A59498E19E3941300F65F90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A40360619DDEE84007B6E8F /* AppDelegate.m */; };
 		7A97910819E62F84001FFC4D /* libcocos2dAndroid.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A97910019E62E40001FFC4D /* libcocos2dAndroid.a */; };
 		7A97911719E631C6001FFC4D /* libcocos2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A97910419E62E40001FFC4D /* libcocos2d-mac.a */; };
 		7A97911819E631CD001FFC4D /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A9790FE19E62E40001FFC4D /* libcocos2d.a */; };
@@ -98,6 +94,10 @@
 		BC5399DB1A44DCC90063F482 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D61A44DCC90063F482 /* JavaFoundation.framework */; };
 		BC5399DC1A44DCC90063F482 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D71A44DCC90063F482 /* JavaKit.framework */; };
 		BCD00A8C1A44E83400DA5AD0 /* CoreJava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D41A44DCC90063F482 /* CoreJava.framework */; };
+		DC104EC41A8D061F004DF1DA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC104EBC1A8D061F004DF1DA /* AppDelegate.m */; };
+		DC104ECE1A8D0684004DF1DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC104ECD1A8D0684004DF1DA /* AppDelegate.swift */; };
+		DC104ED01A8D06C6004DF1DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC104ECF1A8D06C6004DF1DA /* AppDelegate.swift */; };
+		DC104EFC1A8D0D8D004DF1DA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC104EC01A8D061F004DF1DA /* AppDelegate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,41 +136,6 @@
 			remoteGlobalIDString = 7A4037A819E37038007B6E8F;
 			remoteInfo = "cocos2d-mac";
 		};
-		7A97910519E62E4C001FFC4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7378940180761A80076A88C /* cocos2d.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5BF32679195F8D8800D9A51A;
-			remoteInfo = cocos2dJava;
-		};
-		7A97910F19E6319A001FFC4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7378940180761A80076A88C /* cocos2d.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
-			remoteInfo = "cocos2d-ios";
-		};
-		7A97911519E631A1001FFC4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7378940180761A80076A88C /* cocos2d.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7A4037A719E37038007B6E8F;
-			remoteInfo = "cocos2d-mac";
-		};
-		7A97911F19E63219001FFC4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7378940180761A80076A88C /* cocos2d.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 5BF32679195F8D8800D9A51A;
-			remoteInfo = cocos2dJava;
-		};
-		7A97912119E6321C001FFC4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7378940180761A80076A88C /* cocos2d.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2FEB60D194F6C9E00FC0574;
-			remoteInfo = cocos2dAndroid;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -180,19 +145,14 @@
 		5B121011197483EE004C1E1D /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
 		5B121013197483EE004C1E1D /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
 		5B121015197483EE004C1E1D /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
-		5B12101B19748413004C1E1D /* PROJECTIDENTIFIERActivity.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; name = PROJECTIDENTIFIERActivity.java; path = Source/Platforms/Android/java/org/cocos2d/PROJECTIDENTIFIER/PROJECTIDENTIFIERActivity.java; sourceTree = "<group>"; };
 		5B121021197484A3004C1E1D /* PROJECTNAME Java.jar */ = {isa = PBXFileReference; explicitFileType = compiled.java.jar; includeInIndex = 0; path = "PROJECTNAME Java.jar"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5B12102E197484FA004C1E1D /* PROJECTIDENTIFIERActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PROJECTIDENTIFIERActivity.h; path = Source/Platforms/Android/PROJECTIDENTIFIERActivity.h; sourceTree = "<group>"; };
-		5B12102F197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PROJECTIDENTIFIERActivity.m; path = Source/Platforms/Android/PROJECTIDENTIFIERActivity.m; sourceTree = "<group>"; };
 		5B121033197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Android/Info.plist; sourceTree = "<group>"; };
 		5B121034197485FE004C1E1D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/iOS/Info.plist; sourceTree = "<group>"; };
 		5BA4619E1974C88900785744 /* AndroidManifest.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = AndroidManifest.xml; path = Platforms/Android/AndroidManifest.xml; sourceTree = "<group>"; };
-		7A046D7519E84C36004C4763 /* MainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainScene.swift; path = Source/MainScene.swift; sourceTree = "<group>"; };
+		7A046D7519E84C36004C4763 /* MainScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		7A4035FF19DDEE84007B6E8F /* PROJECTNAME Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PROJECTNAME Mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7A40360219DDEE84007B6E8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Platforms/Mac/Info.plist; sourceTree = "<group>"; };
 		7A40360319DDEE84007B6E8F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/Platforms/Mac/main.m; sourceTree = "<group>"; };
-		7A40360519DDEE84007B6E8F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Source/Platforms/Mac/AppDelegate.h; sourceTree = "<group>"; };
-		7A40360619DDEE84007B6E8F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Source/Platforms/Mac/AppDelegate.m; sourceTree = "<group>"; };
 		7A4036F419DE3FA8007B6E8F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
 		7A59493A19E37F9300F65F90 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		7A59493C19E37FB200F65F90 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
@@ -213,8 +173,6 @@
 		B71F590F188484E7003F4D28 /* Settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Settings.png; path = Icons/Settings.png; sourceTree = "<group>"; };
 		B71F5910188484E7003F4D28 /* Settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Settings@2x.png"; path = "Icons/Settings@2x.png"; sourceTree = "<group>"; };
 		B737893A180761570076A88C /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Published-iOS"; path = "Source/Resources/Published-iOS"; sourceTree = SOURCE_ROOT; };
-		B737893D1807617C0076A88C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Source/Platforms/iOS/AppDelegate.h; sourceTree = "<group>"; };
-		B737893E1807617C0076A88C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Source/Platforms/iOS/AppDelegate.m; sourceTree = "<group>"; };
 		B7378940180761A80076A88C /* cocos2d.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d.xcodeproj; path = "Source/libs/cocos2d-iphone/cocos2d.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		B737896B180762440076A88C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Source/Resources/Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		B737896C180762440076A88C /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "Source/Resources/Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
@@ -222,8 +180,8 @@
 		B737896E180762440076A88C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Source/Resources/Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		B73789851807631A0076A88C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Source/Platforms/iOS/main.m; sourceTree = SOURCE_ROOT; };
 		B73789861807631A0076A88C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = Source/Prefix.pch; sourceTree = SOURCE_ROOT; };
-		B7378992180767190076A88C /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainScene.h; path = Source/MainScene.h; sourceTree = "<group>"; };
-		B7378993180767190076A88C /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainScene.m; path = Source/MainScene.m; sourceTree = "<group>"; };
+		B7378992180767190076A88C /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
+		B7378993180767190076A88C /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
 		B77F1B2E17B978D7009739AE /* PROJECTNAME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PROJECTNAME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B77F1B3117B978D7009739AE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B77F1B3317B978D7009739AE /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -241,7 +199,16 @@
 		BC5399D51A44DCC90063F482 /* GLActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLActivityKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/GLActivityKit.framework"; sourceTree = "<group>"; };
 		BC5399D61A44DCC90063F482 /* JavaFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaFoundation.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaFoundation.framework"; sourceTree = "<group>"; };
 		BC5399D71A44DCC90063F482 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
-		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; name = MetalShaders; path = Source/MetalShaders; sourceTree = "<group>"; };
+		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MetalShaders; sourceTree = "<group>"; };
+		DC104EB71A8D061F004DF1DA /* PROJECTIDENTIFIERActivity.java */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.java; name = PROJECTIDENTIFIERActivity.java; path = java/org/cocos2d/PROJECTIDENTIFIER/PROJECTIDENTIFIERActivity.java; sourceTree = "<group>"; };
+		DC104EB81A8D061F004DF1DA /* PROJECTIDENTIFIERActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PROJECTIDENTIFIERActivity.h; sourceTree = "<group>"; };
+		DC104EB91A8D061F004DF1DA /* PROJECTIDENTIFIERActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PROJECTIDENTIFIERActivity.m; sourceTree = "<group>"; };
+		DC104EBB1A8D061F004DF1DA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DC104EBC1A8D061F004DF1DA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DC104EBF1A8D061F004DF1DA /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DC104EC01A8D061F004DF1DA /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DC104ECD1A8D0684004DF1DA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DC104ECF1A8D06C6004DF1DA /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -353,35 +320,6 @@
 			path = "drawable-xxhdpi";
 			sourceTree = "<group>";
 		};
-		7A40362019DDEF0D007B6E8F /* Platforms */ = {
-			isa = PBXGroup;
-			children = (
-				7A40362119DDF08C007B6E8F /* iOS */,
-				7A40362219DDF090007B6E8F /* Android */,
-				7A9791C019E6FAC5001FFC4D /* Mac */,
-			);
-			name = Platforms;
-			sourceTree = "<group>";
-		};
-		7A40362119DDF08C007B6E8F /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				B737893D1807617C0076A88C /* AppDelegate.h */,
-				B737893E1807617C0076A88C /* AppDelegate.m */,
-			);
-			name = iOS;
-			sourceTree = "<group>";
-		};
-		7A40362219DDF090007B6E8F /* Android */ = {
-			isa = PBXGroup;
-			children = (
-				5B12101B19748413004C1E1D /* PROJECTIDENTIFIERActivity.java */,
-				5B12102E197484FA004C1E1D /* PROJECTIDENTIFIERActivity.h */,
-				5B12102F197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m */,
-			);
-			name = Android;
-			sourceTree = "<group>";
-		};
 		7A40365D19DDF896007B6E8F /* Platforms */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,15 +392,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		7A9791C019E6FAC5001FFC4D /* Mac */ = {
-			isa = PBXGroup;
-			children = (
-				7A40360519DDEE84007B6E8F /* AppDelegate.h */,
-				7A40360619DDEE84007B6E8F /* AppDelegate.m */,
-			);
-			name = Mac;
-			sourceTree = "<group>";
-		};
 		9222E2B918734FF800A246C7 /* libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -474,13 +403,13 @@
 		B737893C1807616C0076A88C /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				7A40362019DDEF0D007B6E8F /* Platforms */,
+				DC104EB11A8D061F004DF1DA /* Platforms */,
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 			);
-			name = Source;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		B73789911807667A0076A88C /* Icons */ = {
@@ -580,6 +509,46 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		DC104EB11A8D061F004DF1DA /* Platforms */ = {
+			isa = PBXGroup;
+			children = (
+				DC104EB21A8D061F004DF1DA /* Android */,
+				DC104EBA1A8D061F004DF1DA /* iOS */,
+				DC104EBE1A8D061F004DF1DA /* Mac */,
+			);
+			path = Platforms;
+			sourceTree = "<group>";
+		};
+		DC104EB21A8D061F004DF1DA /* Android */ = {
+			isa = PBXGroup;
+			children = (
+				DC104EB71A8D061F004DF1DA /* PROJECTIDENTIFIERActivity.java */,
+				DC104EB81A8D061F004DF1DA /* PROJECTIDENTIFIERActivity.h */,
+				DC104EB91A8D061F004DF1DA /* PROJECTIDENTIFIERActivity.m */,
+			);
+			path = Android;
+			sourceTree = "<group>";
+		};
+		DC104EBA1A8D061F004DF1DA /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				DC104EBB1A8D061F004DF1DA /* AppDelegate.h */,
+				DC104EBC1A8D061F004DF1DA /* AppDelegate.m */,
+				DC104ECD1A8D0684004DF1DA /* AppDelegate.swift */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		DC104EBE1A8D061F004DF1DA /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				DC104EBF1A8D061F004DF1DA /* AppDelegate.h */,
+				DC104EC01A8D061F004DF1DA /* AppDelegate.m */,
+				DC104ECF1A8D06C6004DF1DA /* AppDelegate.swift */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -593,7 +562,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7A97910619E62E4C001FFC4D /* PBXTargetDependency */,
 			);
 			name = "PROJECTNAME Java";
 			productName = "PROJECTNAME Java";
@@ -611,7 +579,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7A97911619E631A1001FFC4D /* PBXTargetDependency */,
 			);
 			name = "PROJECTNAME Mac";
 			productName = "PROJECTNAME Mac";
@@ -630,8 +597,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7A97912219E6321C001FFC4D /* PBXTargetDependency */,
-				7A97912019E63219001FFC4D /* PBXTargetDependency */,
 				5B121032197485D1004C1E1D /* PBXTargetDependency */,
 			);
 			name = "PROJECTNAME Android";
@@ -652,7 +617,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				7A97911019E6319A001FFC4D /* PBXTargetDependency */,
 			);
 			name = "PROJECTNAME iOS";
 			productName = Example;
@@ -687,6 +651,7 @@
 			knownRegions = (
 				en,
 				Base,
+				English,
 			);
 			mainGroup = B77F1B2517B978D7009739AE;
 			productRefGroup = B77F1B2F17B978D7009739AE /* Products */;
@@ -724,7 +689,7 @@
 		};
 		7A97910219E62E40001FFC4D /* cocos2dJava.jar */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.jar;
+			fileType = compiled.java.jar;
 			path = cocos2dJava.jar;
 			remoteRef = 7A97910119E62E40001FFC4D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -858,7 +823,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B12102A197484DD004C1E1D /* PROJECTIDENTIFIERActivity.java in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,10 +830,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC104ED01A8D06C6004DF1DA /* AppDelegate.swift in Sources */,
 				7A4036E819DE3F33007B6E8F /* MainScene.m in Sources */,
 				7A10CE5619F32FB0001673C3 /* MainScene.swift in Sources */,
 				7A40360419DDEE84007B6E8F /* main.m in Sources */,
-				7A59498E19E3941300F65F90 /* AppDelegate.m in Sources */,
+				DC104EFC1A8D0D8D004DF1DA /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,7 +843,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				927F619E196C771E000F43EF /* MainScene.m in Sources */,
-				5B121030197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,7 +853,8 @@
 				B73789871807631A0076A88C /* main.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
-				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
+				DC104ECE1A8D0684004DF1DA /* AppDelegate.swift in Sources */,
+				DC104EC41A8D061F004DF1DA /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -900,31 +865,6 @@
 			isa = PBXTargetDependency;
 			target = 5B121020197484A3004C1E1D /* PROJECTNAME Java */;
 			targetProxy = 5B121031197485D1004C1E1D /* PBXContainerItemProxy */;
-		};
-		7A97910619E62E4C001FFC4D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dJava;
-			targetProxy = 7A97910519E62E4C001FFC4D /* PBXContainerItemProxy */;
-		};
-		7A97911019E6319A001FFC4D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2d-ios";
-			targetProxy = 7A97910F19E6319A001FFC4D /* PBXContainerItemProxy */;
-		};
-		7A97911619E631A1001FFC4D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "cocos2d-mac";
-			targetProxy = 7A97911519E631A1001FFC4D /* PBXContainerItemProxy */;
-		};
-		7A97912019E63219001FFC4D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dJava;
-			targetProxy = 7A97911F19E63219001FFC4D /* PBXContainerItemProxy */;
-		};
-		7A97912219E6321C001FFC4D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = cocos2dAndroid;
-			targetProxy = 7A97912119E6321C001FFC4D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1030,6 +970,16 @@
 				);
 				INFOPLIST_FILE = Source/Resources/Platforms/Mac/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glew/lib/Release/Win32",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glfw/lib-msvc100",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libGLEW/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libglfw/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/ObjectAL/ObjectAL/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/SSZipArchive/build/Release",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = (
@@ -1074,6 +1024,16 @@
 				);
 				INFOPLIST_FILE = Source/Resources/Platforms/Mac/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glew/lib/Release/Win32",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glfw/lib-msvc100",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libGLEW/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libglfw/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/ObjectAL/ObjectAL/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/SSZipArchive/build/Release",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = (
@@ -1118,6 +1078,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/armv7a",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glew/lib/Release/Win32",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glfw/lib-msvc100",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libGLEW/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libglfw/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/ObjectAL/ObjectAL/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/SSZipArchive/build/Release",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1166,6 +1133,13 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/armv7a",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glew/lib/Release/Win32",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glfw/lib-msvc100",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libGLEW/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libglfw/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/ObjectAL/ObjectAL/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/SSZipArchive/build/Release",
 				);
 				OTHER_LDFLAGS = (
 					"-lz",
@@ -1269,6 +1243,16 @@
 				INFOPLIST_FILE = Source/Resources/Platforms/iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glew/lib/Release/Win32",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glfw/lib-msvc100",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libGLEW/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libglfw/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/ObjectAL/ObjectAL/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/SSZipArchive/build/Release",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lz",
@@ -1303,6 +1287,16 @@
 				INFOPLIST_FILE = Source/Resources/Platforms/iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glew/lib/Release/Win32",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/msvc/glfw/lib-msvc100",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libGLEW/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/Chipmunk/xcode/libglfw/lib",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/ObjectAL/ObjectAL/build/Release",
+					"$(PROJECT_DIR)/Source/libs/cocos2d-iphone/external/SSZipArchive/build/Release",
+				);
 				OTHER_LDFLAGS = (
 					"-lz",
 					"-ObjC",

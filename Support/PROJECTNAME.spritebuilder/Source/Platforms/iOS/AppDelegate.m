@@ -28,7 +28,7 @@
 #import "AppDelegate.h"
 #import "CCBuilderReader.h"
 
-@implementation AppController
+@implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
