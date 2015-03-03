@@ -75,6 +75,11 @@
 	
 }
 
+- (PlugInNode*) plugIn
+{
+    // XXX Temporary fix for Issue #1387
+    return nil;
+}
 
 -(EffectDescription*)effectDescription
 {

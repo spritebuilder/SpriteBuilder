@@ -1,0 +1,21 @@
+checkout:
+    post:
+        - git submodule update --init --recursive
+
+test:
+    override:
+        - rake test
+    post:
+        - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+        - cp test_results.xml $CIRCLE_TEST_REPORTS/junit/
+deployment:
+    develop:
+        branch: develop
+        commands:
+            - rake package
+
+    version_branch:
+        branch: /v[0-9]*\.[0-9]*/
+        commands:
+            - rake package
+
