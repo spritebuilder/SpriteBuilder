@@ -8,6 +8,14 @@
 
 @implementation AppDelegate
 
+- (float)titleBarHeight
+{
+    NSRect frame = NSMakeRect (0, 0, 200, 200);
+    NSRect contentRect;
+    contentRect = [NSWindow contentRectForFrameRect:frame styleMask:NSTitledWindowMask];
+    return (frame.size.height - contentRect.size.height);
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     CCDirectorMac *director = (CCDirectorMac*)[CCDirector sharedDirector];
@@ -17,8 +25,8 @@
 
     // Set a default window size
     CGSize defaultSize = CGSizeMake(480.0f, 320.0f);
-    [_window setFrame:CGRectMake(0.0f, 0.0f, defaultSize.width, defaultSize.height) display:true animate:false];
-    _glView.frame = _window.frame;
+    [_window setFrame:CGRectMake(0, 0, defaultSize.width, defaultSize.height + [self titleBarHeight]) display:true animate:false];
+    [_glView setFrame:CGRectMake(0, 0, defaultSize.width, defaultSize.height)];
 
     // connect the OpenGL view with the director
     director.view = _glView;
