@@ -7,7 +7,7 @@ class AppDelegate : NSObject, NSApplicationDelegate
     @IBOutlet weak var window : NSWindow!
     @IBOutlet weak var glView : CCGLView!
     
-    func titleBarHeight() -> Float {
+    func titleBarHeight() -> CGFloat {
         let frame = NSRect(x:0, y:0, width:200, height:200)
         let contentRect = NSWindow.contentRectForFrameRect(frame, styleMask: NSTitledWindowMask)
         return (frame.size.height - contentRect.size.height)
@@ -23,7 +23,7 @@ class AppDelegate : NSObject, NSApplicationDelegate
         var defaultSize = CGSize(width: 480, height: 320)
         // window height must be increased by titleBarHeight to prevent the view being obstructed by the title bar
         window.setFrame(CGRect(x: 0, y: 0, width: defaultSize.width, height: defaultSize.height + titleBarHeight()), display: true, animate: false)
-        glView.setFrame(CGRect(x: 0, y: 0, width: defaultSize.width, height: defaultSize.height))
+        glView.frame = CGRect(x: 0, y: 0, width: defaultSize.width, height: defaultSize.height)
 
         // connect the OpenGL view with the director
         director.view = glView
