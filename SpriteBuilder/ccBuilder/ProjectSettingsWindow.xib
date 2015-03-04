@@ -162,7 +162,7 @@
                                     </textFieldCell>
                                     <connections>
                                         <binding destination="-2" name="enabled" keyPath="projectSettings.publishEnabledIOS" id="Z3i-Bm-65J"/>
-                                        <binding destination="-2" name="value" keyPath="projectSettings.publishDirectory" id="imc-F5-1Qd"/>
+                                        <binding destination="-2" name="value" keyPath="projectSettings.publishDirectoryIOS" id="imc-F5-1Qd"/>
                                     </connections>
                                 </textField>
                                 <button identifier=" " verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="chq-bA-flB">

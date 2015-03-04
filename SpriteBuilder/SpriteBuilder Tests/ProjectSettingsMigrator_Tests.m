@@ -13,6 +13,7 @@
 #import "ResourcePropertyKeys.h"
 #import "MigrationLogger.h"
 #import "MigratorData.h"
+#import "ResourcePropertyKeys.h"
 
 @interface ProjectSettingsMigrator_Tests : FileSystemTestCase
 
@@ -26,7 +27,7 @@
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
     MigratorData *migratorData = [[MigratorData alloc] initWithProjectSettingsPath:projectSettings.projectPath];
 
-    [projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+    [projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED];
     [projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [projectSettings markAsDirtyRelPath:@"flowers"];
 
@@ -47,6 +48,8 @@
     projectDictBeforeMigration[PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS] = @"foo.spritebuilder/Published-IOS";
     projectDictBeforeMigration[PROJECTSETTINGS_KEY_DEPRECATED_ENGINE] = @0;
     projectDictBeforeMigration[PROJECTSETTINGS_KEY_FILEVERSION] = @1;
+    projectDictBeforeMigration[PROJECTSETTINGS_KEY_RESOURCEPROPERTIES][@"background.png"][RESOURCE_PROPERTY_DEPRECATED_TABLETSCALE] = @1;
+
     [projectDictBeforeMigration writeToFile:projectSettings.projectPath atomically:YES];
 
 
@@ -65,15 +68,15 @@
     [self assertFileExists:@"foo.spritebuilder/foo.sbproj"];
     [self assertFileDoesNotExist:@"foo.spritebuilder/foo.ccbproj"];
 
-    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"flowers" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertTrue([projectSettingsMigrated isDirtyRelPath:@"flowers"]);
 
-    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertTrue([projectSettingsMigrated propertyForRelPath:@"rocks" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([projectSettingsMigrated isDirtyRelPath:@"rocks"]);
 
-    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED]);
+    XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED]);
     XCTAssertFalse([projectSettingsMigrated propertyForRelPath:@"background.png" andKey:RESOURCE_PROPERTY_TRIM_SPRITES]);
     XCTAssertFalse([projectSettingsMigrated isDirtyRelPath:@"background.png"]);
 
@@ -88,6 +91,7 @@
     XCTAssertNil(newProject[PROJECTSETTINGS_KEY_DEPRECATED_ONLYPUBLISHCCBS]);
     XCTAssertNil(newProject[PROJECTSETTINGS_KEY_DEPRECATED_ENGINE]);
     XCTAssertNil(newProject[PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS]);
+    XCTAssertNil(newProject[PROJECTSETTINGS_KEY_RESOURCEPROPERTIES][@"background.png"][RESOURCE_PROPERTY_DEPRECATED_TABLETSCALE]);
 }
 
 - (void)testMigrationRequired_oldCCBProjName
@@ -144,7 +148,7 @@
 - (void)testRollback
 {
     ProjectSettings *projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo.ccbproj"];
-    [projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+    [projectSettings setProperty:@1 forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED];
     [projectSettings setProperty:@YES forRelPath:@"flowers" andKey:RESOURCE_PROPERTY_IS_SMARTSHEET];
     [projectSettings markAsDirtyRelPath:@"flowers"];
     [projectSettings store];

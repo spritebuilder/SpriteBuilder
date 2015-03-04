@@ -360,18 +360,6 @@ NSString *const PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION = @"e
     }
 }
 
-- (NSArray *)allResourcesRelativePaths
-{
-    NSMutableArray *result = [NSMutableArray array];
-
-    for (NSString *relPath in _resourceProperties)
-    {
-        [result addObject:[relPath copy]];
-    }
-
-    return result;
-}
-
 - (void)setProperty:(id)newValue forResource:(RMResource *)res andKey:(id <NSCopying>) key
 {
     NSString* relPath = res.relativePath;
