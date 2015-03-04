@@ -101,6 +101,8 @@
 		DC5177EA1AA73B93008E9752 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5177E91AA73B93008E9752 /* Default-Landscape@2x~ipad.png */; };
 		DC5177EB1AA73B93008E9752 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5177E91AA73B93008E9752 /* Default-Landscape@2x~ipad.png */; };
 		DC5177EC1AA73B93008E9752 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5177E91AA73B93008E9752 /* Default-Landscape@2x~ipad.png */; };
+		DC5177F01AA73C06008E9752 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5177EF1AA73C06008E9752 /* AppDelegate.swift */; };
+		DC5177F31AA73C12008E9752 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC5177F21AA73C12008E9752 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,7 +225,7 @@
 		B737896C180762440076A88C /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "Source/Resources/Default-Landscape~ipad.png"; sourceTree = SOURCE_ROOT; };
 		B737896D180762440076A88C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Source/Resources/Default.png; sourceTree = SOURCE_ROOT; };
 		B737896E180762440076A88C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Source/Resources/Default@2x.png"; sourceTree = SOURCE_ROOT; };
-		B73789851807631A0076A88C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
+		B73789851807631A0076A88C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B73789861807631A0076A88C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = Source/Prefix.pch; sourceTree = SOURCE_ROOT; };
 		B7378992180767190076A88C /* MainScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainScene.h; sourceTree = "<group>"; };
 		B7378993180767190076A88C /* MainScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainScene.m; sourceTree = "<group>"; };
@@ -246,6 +248,8 @@
 		BC5399D71A44DCC90063F482 /* JavaKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaKit.framework; path = "../../../../Library/Application Support/Developer/Shared/Xcode/Platforms/Android.platform/Developer/SDKs/SBAndroid.sdk/System/Library/Frameworks/JavaKit.framework"; sourceTree = "<group>"; };
 		D352B48019EC608A00829775 /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MetalShaders; sourceTree = "<group>"; };
 		DC5177E91AA73B93008E9752 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x~ipad.png"; path = "Source/Resources/Default-Landscape@2x~ipad.png"; sourceTree = SOURCE_ROOT; };
+		DC5177EF1AA73C06008E9752 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DC5177F21AA73C12008E9752 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -372,6 +376,7 @@
 			children = (
 				B737893D1807617C0076A88C /* AppDelegate.h */,
 				B737893E1807617C0076A88C /* AppDelegate.m */,
+				DC5177EF1AA73C06008E9752 /* AppDelegate.swift */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -392,7 +397,8 @@
 				7A40366019DDF8A6007B6E8F /* iOS */,
 				7A40365F19DDF89C007B6E8F /* Mac */,
 			);
-			path = Platforms;
+			name = Platforms;
+			path = Source/Platforms;
 			sourceTree = "<group>";
 		};
 		7A40365F19DDF89C007B6E8F /* Mac */ = {
@@ -463,6 +469,7 @@
 			children = (
 				7A40360519DDEE84007B6E8F /* AppDelegate.h */,
 				7A40360619DDEE84007B6E8F /* AppDelegate.m */,
+				DC5177F21AA73C12008E9752 /* AppDelegate.swift */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -877,6 +884,7 @@
 				7A4036E819DE3F33007B6E8F /* MainScene.m in Sources */,
 				7A10CE5619F32FB0001673C3 /* MainScene.swift in Sources */,
 				7A40360419DDEE84007B6E8F /* main.m in Sources */,
+				DC5177F31AA73C12008E9752 /* AppDelegate.swift in Sources */,
 				7A59498E19E3941300F65F90 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -897,6 +905,7 @@
 				B73789871807631A0076A88C /* main.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
+				DC5177F01AA73C06008E9752 /* AppDelegate.swift in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
