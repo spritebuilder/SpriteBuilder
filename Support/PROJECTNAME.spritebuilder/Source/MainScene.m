@@ -2,4 +2,8 @@
 
 @implementation MainScene
 
+-(void) didLoadFromCCB {
+    
+}
+
 @end
