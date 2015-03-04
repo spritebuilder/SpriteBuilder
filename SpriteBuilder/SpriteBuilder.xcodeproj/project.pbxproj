@@ -142,7 +142,6 @@
 		833A5C4C192B48CB001837B3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 833A5C4B192B48CB001837B3 /* XCTest.framework */; };
 		833A5C52192B48CB001837B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 833A5C50192B48CB001837B3 /* InfoPlist.strings */; };
 		8341326B18DADF9E0088FFAB /* optipng in Resources */ = {isa = PBXBuildFile; fileRef = 8341326A18DADF9E0088FFAB /* optipng */; };
-		8354FDFC198233AB004EC272 /* MainProjectSettingsDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */; };
 		83599E9A1975470D008283EC /* photoshop.psd in Resources */ = {isa = PBXBuildFile; fileRef = 83599E991975470D008283EC /* photoshop.psd */; };
 		835C50DA1A5D44BE000DB185 /* SecurityScopedBookmarksStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 835C50D91A5D44BE000DB185 /* SecurityScopedBookmarksStore.m */; };
 		835DB0CB17156421003A2F7B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 835DB0CA17156421003A2F7B /* Security.framework */; };
@@ -1537,7 +1536,6 @@
 		833A5C51192B48CB001837B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		833A5C55192B48CB001837B3 /* SpriteBuilder Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SpriteBuilder Tests-Prefix.pch"; sourceTree = "<group>"; };
 		8341326A18DADF9E0088FFAB /* optipng */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = optipng; sourceTree = "<group>"; };
-		8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainProjectSettingsDetailView.xib; sourceTree = "<group>"; };
 		83599E991975470D008283EC /* photoshop.psd */ = {isa = PBXFileReference; lastKnownFileType = file; path = photoshop.psd; sourceTree = "<group>"; };
 		835C50D81A5D44BE000DB185 /* SecurityScopedBookmarksStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityScopedBookmarksStore.h; sourceTree = "<group>"; };
 		835C50D91A5D44BE000DB185 /* SecurityScopedBookmarksStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityScopedBookmarksStore.m; sourceTree = "<group>"; };
@@ -4111,7 +4109,6 @@
 				83FC411219815B8600799B6C /* ProjectSettingsWindow.xib */,
 				837E93FE19815C8D00A9F90B /* ProjectSettingsWindowController.h */,
 				837E93FF19815C8D00A9F90B /* ProjectSettingsWindowController.m */,
-				8354FDFB198233AB004EC272 /* MainProjectSettingsDetailView.xib */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -6941,7 +6938,6 @@
 				9218DF3F1919B04D0033851E /* joint-pivot-handle-min@2x.png in Resources */,
 				E37FCAEF175D2704009F81D6 /* ui-cogs@2x.png in Resources */,
 				05CA9CF51A5082C500265997 /* TabClose_Front_Rollover@2x.png in Resources */,
-				8354FDFC198233AB004EC272 /* MainProjectSettingsDetailView.xib in Resources */,
 				B794AB91177A30EB004FF493 /* ui-nopreview.png in Resources */,
 				B732A1841799736500333C56 /* TB_build.png in Resources */,
 				92F0960C18F8851300D47A94 /* inspector-body-remove-dis@2x.png in Resources */,
@@ -7357,7 +7353,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nif [ -z \"${CODE_SIGN_IDENTITY}\" ]; then\necho \"Not code signing: No code signing identity set\"\nexit 0\nfi\n\nCONTENTSDIR=\"${BUILT_PRODUCTS_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\nFRAMEWORKSLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# frameworks\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework\"\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A\"\n\n# binaries\nfor f1 in \"lame\" \"ccz\" \"oggenc\" \"pngquant\" \"optipng\"\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$CONTENTSDIR/Resources/$f1\"\ndone\n\n# plugins\nPLUGINFILES=\"$CONTENTSDIR/PlugIns/*\"\nfor f2 in $PLUGINFILES\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$f2\"\ndone";
+			shellScript = "#!/bin/bash\n\nif [ -z \"${CODE_SIGN_IDENTITY}\" ]; then\necho \"Not code signing: No code signing identity set\"\nexit 0\nfi\n\nCONTENTSDIR=\"${BUILT_PRODUCTS_DIR}\"/\"${CONTENTS_FOLDER_PATH}\"\nFRAMEWORKSLOCATION=\"${BUILT_PRODUCTS_DIR}\"/\"${FRAMEWORKS_FOLDER_PATH}\"\n\n# frameworks\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A/Frameworks/CrashReporter.framework\"\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/HockeySDK.framework/Versions/A\"\n#codesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$FRAMEWORKSLOCATION/libPVRTexLib.a/Versions/A\"\n\n# binaries\nfor f1 in \"lame\" \"ccz\" \"oggenc\" \"pngquant\" \"optipng\"\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$CONTENTSDIR/Resources/$f1\"\n\necho \"codesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$CONTENTSDIR/Resources/$f1\"\"\ndone\n\n# plugins\nPLUGINFILES=\"$CONTENTSDIR/PlugIns/*\"\nfor f2 in $PLUGINFILES\ndo\ncodesign --verbose --force --sign \"${CODE_SIGN_IDENTITY}\" \"$f2\"\ndone";
 		};
 		DC3DD33018A948560004D2AC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -8327,7 +8323,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				FRAMEWORK_SEARCH_PATHS = libs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -8360,7 +8356,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				FRAMEWORK_SEARCH_PATHS = libs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -8390,7 +8386,8 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -8432,7 +8429,8 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = SpriteBuilder.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -8552,7 +8550,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				FRAMEWORK_SEARCH_PATHS = libs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -8584,7 +8582,8 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_ENTITLEMENTS = NonSandboxed.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;

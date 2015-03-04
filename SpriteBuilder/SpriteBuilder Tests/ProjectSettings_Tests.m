@@ -217,7 +217,7 @@
       PROJECTSETTINGS_KEY_PUBLISHDIR_IOS : @"Source/Resources/Published-iOS",
       @"defaultOrientation":@(0),
       @"fileType":@"CocosBuilderProject",
-      @"packages":@[
+      PROJECTSETTINGS_KEY_PACKAGES:@[
          @{
             @"path":@"packages/SpriteBuilder Resources.sbpack"
          }

@@ -68,11 +68,10 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 
 // Full path to the project's root folder, according to -projectPath example: /foo/baa.spritebuilder/
 @property (nonatomic, readonly) NSString* projectPathDir;
-
-@property (nonatomic, strong, readonly) NSArray *allResourcesRelativePaths;
-
 @property (nonatomic, readonly) NSString* projectPathHashed;
+
 @property (nonatomic, strong) NSMutableArray *packages;
+@property (nonatomic, readonly) NSArray*absolutePackagePaths;
 
 @property (nonatomic,assign) BOOL publishEnabledIOS;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
@@ -81,16 +80,23 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 @property (nonatomic, copy) NSString *publishDirectoryAndroid;
 
 @property (nonatomic, assign) BOOL publishToZipFile;
-@property (nonatomic, readonly) NSArray*absolutePackagePaths;
+@property (nonatomic, assign) CCBPublishEnvironment publishEnvironment;
+
 @property (nonatomic, copy) NSString* exporter;
 @property (nonatomic, strong) NSMutableArray* availableExporters;
+
 @property (nonatomic, readonly) NSString* displayCacheDirectory;
 @property (nonatomic, readonly) NSString* tempSpriteSheetCacheDirectory;
+
 @property (nonatomic, assign) BOOL deviceOrientationPortrait;
 @property (nonatomic, assign) BOOL deviceOrientationUpsideDown;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
-@property (nonatomic, assign) CCBPublishEnvironment publishEnvironment;
+
+@property (nonatomic, assign) SBDesignTarget designTarget;
+@property (nonatomic, assign) int defaultOrientation;
+@property (nonatomic, assign) int deviceScaling;
+@property (nonatomic, assign) float tabletPositionScaleFactor;
 
 // *** Temporary property, do not persist ***
 @property (nonatomic) BOOL canUpdateCocos2D;
@@ -99,11 +105,6 @@ typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
-
-@property (nonatomic, assign) SBDesignTarget designTarget;
-@property (nonatomic, assign) int defaultOrientation;
-@property (nonatomic, assign) int deviceScaling;
-@property (nonatomic, assign) float tabletPositionScaleFactor;
 
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
 

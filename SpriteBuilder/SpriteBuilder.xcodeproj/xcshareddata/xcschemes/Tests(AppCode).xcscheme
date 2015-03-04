@@ -40,6 +40,12 @@
                <Test
                   Identifier = "InspectoreController_Tests/testUpdateInspectorFromSelectionForCCLabelBMFont">
                </Test>
+               <Test
+                  Identifier = "MigrationController_Tests">
+               </Test>
+               <Test
+                  Identifier = "MigrationIntegration_Tests">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>

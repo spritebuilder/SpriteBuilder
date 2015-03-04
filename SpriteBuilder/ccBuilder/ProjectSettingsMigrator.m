@@ -59,7 +59,7 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 - (BOOL)requiresMigrationOfProperties
 {
     NSDictionary *keyValues = @{
-        RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED : [NSNull null],
+            RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED : [NSNull null],
     };
 
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:_migratorData.projectSettingsPath];
@@ -236,10 +236,16 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
 
 - (NSMutableDictionary *)migrateToVersion_2:(NSMutableDictionary *)dictionary withError:(NSError **)error
 {
+    // At the moment there is nothing that can go wrong here
+
     [self migrateRootKeysProjectSettingsDictionary:dictionary];
 
-    // At the moment there is nothing that can go wrong here
     [self migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites:dictionary];
+
+    [self doForEveryResource:dictionary block:^(NSString *path, NSMutableDictionary *properties)
+    {
+        [properties removeObjectForKey:RESOURCE_PROPERTY_DEPRECATED_TABLETSCALE];
+    }];
 
     dictionary[PROJECTSETTINGS_KEY_FILEVERSION] = @2;
     return dictionary;
@@ -323,33 +329,38 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
     [_logger log:@"Finished" section:@[LOGGER_SECTION, LOGGER_ROLLBACK]];
 }
 
-// Note: To refactor the whole setValue redundancies the convention to name the properties the
-// same as in the project settings is necessary to prevent special case mapping code.
-- (void)migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites:(NSMutableDictionary *)projectSettingsDict
+- (void)doForEveryResource:(NSDictionary *)projectSettingsDict block:(void(^)(NSString *path, NSMutableDictionary *properties))block
 {
     NSDictionary *resources = projectSettingsDict[PROJECTSETTINGS_KEY_RESOURCEPROPERTIES];
-
-    for (NSString *resourceKey in [resources copy])
+    for (NSString *pathKey in [resources copy])
     {
-        NSMutableDictionary *properties = resources[resourceKey];
+        NSMutableDictionary *properties = resources[pathKey];
+        block(pathKey, properties);
+    }
+}
+
+- (void)migrateResourcePropertyKeepSpritesUntrimmedToTrimSprites:(NSMutableDictionary *)projectSettingsDict
+{
+    [self doForEveryResource:projectSettingsDict block:^(NSString *path, NSMutableDictionary *properties)
+    {
         if (![properties[RESOURCE_PROPERTY_IS_SMARTSHEET] boolValue])
         {
-            continue;
+            return;
         }
 
-        NSNumber *trimSpritesValue = properties[RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+        NSNumber *trimSpritesValue = properties[RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED];
 
         if ([trimSpritesValue boolValue])
         {
-            [_logger log:[NSString stringWithFormat:@"Removing resource property key '%@' for path '%@'", RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED, resourceKey] section:LOGGER_SECTION];
-            [properties removeObjectForKey:RESOURCE_PROPERTY_LEGACY_KEEP_SPRITES_UNTRIMMED];
+            [_logger log:[NSString stringWithFormat:@"Removing resource property key '%@' for path '%@'", RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED, path] section:LOGGER_SECTION];
+            [properties removeObjectForKey:RESOURCE_PROPERTY_DEPRECATED_KEEP_SPRITES_UNTRIMMED];
         }
         else
         {
-            [_logger log:[NSString stringWithFormat:@"Setting resource property key '%@' for path '%@'", RESOURCE_PROPERTY_TRIM_SPRITES, resourceKey] section:LOGGER_SECTION];
+            [_logger log:[NSString stringWithFormat:@"Setting resource property key '%@' for path '%@'", RESOURCE_PROPERTY_TRIM_SPRITES, path] section:LOGGER_SECTION];
             properties[RESOURCE_PROPERTY_TRIM_SPRITES] = @YES;
         }
-    }
+    }];
 }
 
 - (void)tidyUp
