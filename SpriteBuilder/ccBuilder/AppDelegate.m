@@ -140,6 +140,7 @@
 #import "PasteboardTypes.h"
 #import "Migrator.h"
 #import "Cocos2dUpdaterController.h"
+#import "CCFileLocator.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -213,22 +214,28 @@ void ApplyCustomNodeVisitSwizzle()
     class_addMethod([CCNode class], @selector(oldVisit:parentTransform:), origImp, method_getTypeEncoding(origMethod));
 }
 
+-(CGFloat)deviceContentScaleFactor
+{
+    return [cocosView convertSizeToBacking:CGSizeMake(1.0, 1.0)].width;
+}
+
 - (void) setupCocos2d
 {
     ApplyCustomNodeVisitSwizzle();
     
+    [CCSetup useCustomSetup];
+        
     // Insert code here to initialize your application
-    CCDirectorMac *director = cocosView.director;
+    CCDirectorMac *director = (CCDirectorMac *)cocosView.director;
     [CCDirector pushCurrentDirector:director];
 
     NSAssert(cocosView, @"cocosView is nil");
-    [director setView:cocosView];
     [cocosView setWantsBestResolutionOpenGLSurface:YES];
 	
 	[director setDisplayStats:NO];
 	[director setProjection:CCDirectorProjection2D];    
     
-    _baseContentScaleFactor = director.deviceContentScaleFactor;
+    _baseContentScaleFactor = self.deviceContentScaleFactor;
     
     [self updatePositionScaleFactor];
     
@@ -236,23 +243,15 @@ void ApplyCustomNodeVisitSwizzle()
     
     [director reshapeProjection:realSize];
     
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
-	// Use kCCDirectorResize_NoScale if you don't want auto-scaling.
-	[director setResizeMode:kCCDirectorResize_NoScale];
-	
 	// Enable "moving" mouse event. Default no.
 	//[window setAcceptsMouseMovedEvents:YES];
 	
 	[director presentScene:[CocosScene sceneWithAppDelegate:self]];
-	
-	NSAssert( [NSThread currentThread] == [[CCDirector sharedDirector] runningThread],
-			 @"cocos2d should run on the Main Thread. Compile SpriteBuilder with CC_DIRECTOR_MAC_THREAD=2");
 }
 
-- (void) updateDerivedViewScaleFactor {
-    CCDirectorMac *director     = (CCDirectorMac*) [CCDirector sharedDirector];
-    self.derivedViewScaleFactor = director.contentScaleFactor / director.deviceContentScaleFactor;
+- (CGFloat)derivedViewScaleFactor
+{
+    return [CCSetup sharedSetup].contentScale / [self deviceContentScaleFactor];
 }
 
 - (void) setupSequenceHandler
@@ -3222,14 +3221,13 @@ typedef enum
         FNTConfigRemoveCache();
     }
     
-    [CCDirector sharedDirector].contentScaleFactor = s;
-    [CCDirector sharedDirector].UIScaleFactor = 1.0 / res.scale;
-    [CCFileLocator sharedFileLocator].deviceContentScale = res.scale;
+    [CCSetup sharedSetup].contentScale = s;
+    [CCSetup sharedSetup].assetScale = s;
+    [CCSetup sharedSetup].UIScale = 1.0 / res.scale;
     [CCFileLocator sharedFileLocator].untaggedContentScale = 1.0;
 				
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
-    [self updateDerivedViewScaleFactor];
 }
 
 - (void) setResolution:(int)r
@@ -4276,14 +4274,14 @@ typedef enum
         CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
 
         // check if DPI has changed
-        if (dir.deviceContentScaleFactor != _baseContentScaleFactor) {
+        if (self.deviceContentScaleFactor != _baseContentScaleFactor) {
             
-            _baseContentScaleFactor = dir.deviceContentScaleFactor;
+            _baseContentScaleFactor = self.deviceContentScaleFactor;
             CGFloat tmp = dir.contentScaleFactor;
-            dir.contentScaleFactor = _baseContentScaleFactor;
+            [CCSetup sharedSetup].contentScale = _baseContentScaleFactor;
             CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
             [[CCDirector sharedDirector] reshapeProjection:realSize];
-            dir.contentScaleFactor = tmp;
+            [CCSetup sharedSetup].contentScale = tmp;
             
             [self updatePositionScaleFactor];
         }

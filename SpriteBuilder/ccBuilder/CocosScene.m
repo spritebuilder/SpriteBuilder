@@ -1238,14 +1238,14 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     if (!appDelegate.hasOpenedDocument) return;
     
-    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    CGPoint pos = [(CCDirectorMac *)[CCDirectorMac currentDirector] convertEventToGL:event];
     if ([appDelegate.physicsHandler rightMouseDown:pos event:event]) return;
     
 }
 
 - (void) leftMouseDown:(NSEvent *)event
 {
-    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    CGPoint pos = [(CCDirectorMac *)[CCDirectorMac currentDirector] convertEventToGL:event];
     
     if ([notesLayer mouseDown:pos event:event]) return;
     if ([guideLayer mouseDown:pos event:event]) return;
@@ -1362,7 +1362,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     if (!appDelegate.hasOpenedDocument) return;
     
-    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    CGPoint pos = [(CCDirectorMac *)[CCDirectorMac currentDirector] convertEventToGL:event];
     
     if ([appDelegate.physicsHandler rightMouseUp:pos event:event]) return;
     
@@ -1473,7 +1473,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 
 - (void) leftMouseDragged:(NSEvent *)event
 {
-    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    CGPoint pos = [(CCDirectorMac *)[CCDirectorMac currentDirector] convertEventToGL:event];
     
     if ([notesLayer mouseDragged:pos event:event]) return;
     if ([guideLayer mouseDragged:pos event:event]) return;
@@ -1914,7 +1914,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     CCNode* selectedNode = appDelegate.selectedNode;
     
-    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    CGPoint pos = [(CCDirectorMac *)[CCDirectorMac currentDirector] convertEventToGL:event];
     
     if ([appDelegate.physicsHandler mouseUp:pos event:event]) return;
     
@@ -2009,7 +2009,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 {
     if (!appDelegate.hasOpenedDocument) return;
     
-    CGPoint pos = [[CCDirectorMac sharedDirector] convertEventToGL:event];
+    CGPoint pos = [(CCDirectorMac *)[CCDirectorMac currentDirector] convertEventToGL:event];
     
     mousePos = pos;
     
