@@ -315,7 +315,7 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (nonatomic,assign) BOOL defaultCanvasSize;
 @property (nonatomic,assign) BOOL canEditCustomClass;
 @property (nonatomic,assign) BOOL canEditStageSize;
-@property (nonatomic,assign) CGFloat derivedViewScaleFactor;
+@property (nonatomic,readonly) CGFloat derivedViewScaleFactor;
 
 @property (weak, nonatomic,readonly) CCNode* selectedNode;
 
