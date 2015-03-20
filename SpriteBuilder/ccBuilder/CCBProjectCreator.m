@@ -150,8 +150,8 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     NSString *xibFileName = [parentPath stringByAppendingPathComponent:@"Source/Resources/Platforms/Mac/MainMenu.xib"];
     NSString *macAppDelegateMFileName = [parentPath stringByAppendingPathComponent:@"Source/Platforms/Mac/AppDelegate.m"];
     NSString *iosAppDelegateMFileName = [parentPath stringByAppendingPathComponent:@"Source/Platforms/iOS/AppDelegate.m"];
-    NSString *controllerHName = [parentPath stringByAppendingPathComponent:@"Source/PROJECTIDENTIFIERController.h"];
-    NSString *controllerMName = [parentPath stringByAppendingPathComponent:@"Source/PROJECTIDENTIFIERController.m"];
+    NSString *controllerHName = [parentPath stringByAppendingPathComponent:@"Source/PROJECTIDENTIFIERSetup.h"];
+    NSString *controllerMName = [parentPath stringByAppendingPathComponent:@"Source/PROJECTIDENTIFIERSetup.m"];
 
     NSMutableArray *filesNeedingInterpolation = [NSMutableArray arrayWithArray: @[xibFileName, macAppDelegateMFileName,
             iosAppDelegateMFileName, controllerHName,controllerMName]];
