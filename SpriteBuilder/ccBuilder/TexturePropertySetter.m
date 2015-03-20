@@ -30,6 +30,7 @@
 #import "CCBFileUtil.h"
 #import "CCNode+NodeInfo.h"
 #import "CCTextureCache.h"
+#import "CCSpriteFrameCache_Private.h"
 
 @implementation TexturePropertySetter
 
