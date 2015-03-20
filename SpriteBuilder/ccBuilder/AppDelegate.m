@@ -140,6 +140,7 @@
 #import "SecurityScopedBookmarksStore.h"
 #import "CCDirector_Private.h"
 #import "CCFileLocator.h"
+#import "CCSpriteFrameCache_Private.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -222,7 +223,7 @@ void ApplyCustomNodeVisitSwizzle()
 {
     ApplyCustomNodeVisitSwizzle();
     
-    [CCSetup useCustomSetup];
+    [CCSetup createCustomSetup];
         
     // Insert code here to initialize your application
     CCDirectorMac *director = (CCDirectorMac *)cocosView.director;
@@ -232,15 +233,12 @@ void ApplyCustomNodeVisitSwizzle()
     [cocosView setWantsBestResolutionOpenGLSurface:YES];
 	
 	[director setDisplayStats:NO];
-	[director setProjection:CCDirectorProjection2D];    
     
     _baseContentScaleFactor = self.deviceContentScaleFactor;
     
     [self updatePositionScaleFactor];
     
     CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
-    
-    [director reshapeProjection:realSize];
     
 	// Enable "moving" mouse event. Default no.
 	//[window setAcceptsMouseMovedEvents:YES];
@@ -3277,7 +3275,7 @@ typedef enum
     
     CGFloat s = _baseContentScaleFactor * res.scale;
     
-	if([CCDirector sharedDirector].contentScaleFactor != s)
+	if([CCSetup sharedSetup].contentScale != s)
     {
         [[CCTextureCache sharedTextureCache] removeAllTextures];
         [[CCSpriteFrameCache sharedSpriteFrameCache] removeSpriteFrames];
@@ -3288,7 +3286,10 @@ typedef enum
     [CCSetup sharedSetup].assetScale = s;
     [CCSetup sharedSetup].UIScale = 1.0 / res.scale;
     [CCFileLocator sharedFileLocator].untaggedContentScale = 1.0;
-				
+	
+    CCDirector *director = [CCDirector currentDirector];
+    director.runningScene.contentSize = director.viewSize;
+    
     // Setup the rulers with the new contentScale
     [[CocosScene cocosScene].rulerLayer setup];
 }
@@ -4340,11 +4341,7 @@ typedef enum
         if (self.deviceContentScaleFactor != _baseContentScaleFactor) {
             
             _baseContentScaleFactor = self.deviceContentScaleFactor;
-            CGFloat tmp = dir.contentScaleFactor;
-            [CCSetup sharedSetup].contentScale = _baseContentScaleFactor;
-            CGSize realSize = CGSizeMake(cocosView.frame.size.width * _baseContentScaleFactor, cocosView.frame.size.height * _baseContentScaleFactor);
-            [[CCDirector sharedDirector] reshapeProjection:realSize];
-            [CCSetup sharedSetup].contentScale = tmp;
+            [CCSetup sharedSetup].contentScale = dir.contentScaleFactor;
             
             [self updatePositionScaleFactor];
         }
