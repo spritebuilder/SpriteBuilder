@@ -31,6 +31,7 @@
 #import "CCNode+NodeInfo.h"
 #import "CCTextureCache.h"
 #import "CCSpriteFrameCache_Private.h"
+#import "CCFile_Private.h"
 
 @implementation TexturePropertySetter
 
@@ -73,7 +74,18 @@
         @try
         {
             fileName = [CCBFileUtil toResolutionIndependentFile:fileName];
-            CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:fileName];
+            
+            // Need to overload the regular texture cache behavior to load files from absolute paths
+            CCTexture* texture = [CCTexture textureForKey:fileName loader:^CCTexture *{
+                NSURL *url = [NSURL fileURLWithPath:fileName];
+                
+                // Not 100% certain this is correct...
+                CGFloat contentScale = [CCSetup sharedSetup].assetScale;
+                CCFile *file = [[CCFile alloc] initWithName:fileName url:url contentScale:contentScale tagged:YES];
+                
+                CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
+                return [[CCTexture alloc] initWithImage:image options:nil];
+            }];
             
             if (texture)
             {
