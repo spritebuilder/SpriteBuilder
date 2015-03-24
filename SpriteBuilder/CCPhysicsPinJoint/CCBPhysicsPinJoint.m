@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "GeometryUtil.h"
 #import "InspectorController.h"
+#import "ForceResolution.h"
 
 
 @interface CCBPhysicsJoint()
@@ -56,9 +57,9 @@
 {
     [super setupBody];
     
-    maxHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-long.png"];
+    maxHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-long.png" contentScale:[CCTexture SBWidgetScale]];
     maxHandle.anchorPoint = ccp(0.5f, 0.0f);
-    minHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png"];
+    minHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png" contentScale:[CCTexture SBWidgetScale]];
     minHandle.anchorPoint = ccp(0.5f, 0.0f);
     [scaleFreeNode addChild:maxHandle];
     [scaleFreeNode addChild:minHandle];
@@ -67,7 +68,7 @@
     sizeType.heightUnit = CCSizeUnitUIPoints;
     sizeType.widthUnit = CCSizeUnitUIPoints;
     
-    maxHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png"];
+    maxHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png" contentScale:[CCTexture SBWidgetScale]];
     maxHandleBody.marginLeft = 0.0f;
     maxHandleBody.marginRight = kMargin;
     maxHandleBody.marginBottom = 0.0;
@@ -80,7 +81,7 @@
     [scaleFreeNode addChild:maxHandleBody];
     
     
-    minHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png"];
+    minHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png" contentScale:[CCTexture SBWidgetScale]];
     minHandleBody.marginLeft = 0.0f;
     minHandleBody.marginRight = kMargin;
     minHandleBody.marginBottom = 0.0;

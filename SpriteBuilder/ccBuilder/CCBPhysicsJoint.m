@@ -14,6 +14,7 @@
 #import "SequencerHandler.h"
 #import "SequencerSequence.h"
 #import "AppDelegate.h"
+#import "ForceResolution.h"
 
 static const float kOutletHorizontalOffset = 8.0f;
 
@@ -46,16 +47,16 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
 	bodyOutletRoot.position = ccp([self outletHorizontalOffset],-[self outletVerticalOffset]);
 	bodyOutletRoot.positionType = CCPositionTypeUIPoints;
 	
-	CCSprite * outletBG = [CCSprite spriteWithImageNamed:@"joint-connection-bg.png"];
+	CCSprite * outletBG = [CCSprite spriteWithImageNamed:@"joint-connection-bg.png" contentScale:[CCTexture SBWidgetScale]];
 	outletBG.positionType = CCPositionTypeUIPoints;
 	[bodyOutletRoot addChild:outletBG];
 	
-    bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png"];
+    bodyAOutlet = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png" contentScale:[CCTexture SBWidgetScale]];
     bodyAOutlet.positionType = CCPositionTypeUIPoints;
     bodyAOutlet.position = ccp(-kOutletHorizontalOffset, 0);
     [bodyOutletRoot addChild:bodyAOutlet];
     
-    bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png"];
+    bodyBOutlet = [CCSprite spriteWithImageNamed:@"joint-connection-disconnected.png" contentScale:[CCTexture SBWidgetScale]];
     bodyBOutlet.position = ccp(kOutletHorizontalOffset, 0);
     bodyBOutlet.positionType = CCPositionTypeUIPoints;
 	[bodyOutletRoot addChild:bodyBOutlet];
@@ -77,8 +78,9 @@ NSString *  dependantProperties[kNumProperties] = {@"skewX", @"skewY", @"positio
   
     if(!spriteFrame)
     {
-        [spriteFrameCache setObject:[CCSpriteFrame frameWithImageNamed:name] forKey:name];
-        spriteFrame = spriteFrameCache[name];
+        CCTexture *texture = [CCTexture textureWithFile:name contentScale:[CCTexture SBWidgetScale]];
+        spriteFrame = texture.spriteFrame;
+        [spriteFrameCache setObject:spriteFrame forKey:name];
     }
    
     return spriteFrame;

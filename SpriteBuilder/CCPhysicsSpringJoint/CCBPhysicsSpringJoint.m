@@ -9,6 +9,7 @@
 #import "CCBPhysicsSpringJoint.h"
 #import "InspectorController.h"
 #import "AppDelegate.h"
+#import "ForceResolution.h"
 
 @interface CCBPhysicsJoint()
 -(void)updateSelectionUI;
@@ -54,11 +55,11 @@
     
     [super setupBody];
     
-    restLengthHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png"];
+    restLengthHandle = [CCSprite spriteWithImageNamed:@"joint-distance-handle-short.png" contentScale:[CCTexture SBWidgetScale]];
     restLengthHandle.anchorPoint = ccp(0.5f, 0.0f);
     [scaleFreeNode addChild:restLengthHandle];
  
-    restLengthHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png"];
+    restLengthHandleBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance-slide.png" contentScale:[CCTexture SBWidgetScale]];
     restLengthHandleBody.marginLeft = 0.0f;
     restLengthHandleBody.marginRight = kMargin;
     restLengthHandleBody.marginBottom = 0.0;

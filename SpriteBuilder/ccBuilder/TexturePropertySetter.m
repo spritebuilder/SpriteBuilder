@@ -79,8 +79,8 @@
             CCTexture* texture = [CCTexture textureForKey:fileName loader:^CCTexture *{
                 NSURL *url = [NSURL fileURLWithPath:fileName];
                 
-                // Not 100% certain this is correct...
-                CGFloat contentScale = [CCSetup sharedSetup].assetScale;
+                AppDelegate *delegate = (AppDelegate *)[NSApplication sharedApplication].delegate;
+                CGFloat contentScale = [CCSetup sharedSetup].contentScale/delegate.windowContentScaleFactor;
                 CCFile *file = [[CCFile alloc] initWithName:fileName url:url contentScale:contentScale tagged:YES];
                 
                 CCImage *image = [[CCImage alloc] initWithCCFile:file options:nil];
