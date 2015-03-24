@@ -13,6 +13,7 @@
 #import "SceneGraph.h"
 #import "NodeInfo.h"
 #import "CCNode+NodeInfo.h"
+#import "ForceResolution.h"
 
 
 @interface CCBPLightNode ()
@@ -30,9 +31,9 @@
     if ((self = [super init]))
     {
         _sceneGraph = nil;
-        _pointLightImage = [CCTexture textureWithFile:@"light-point.png"];
-        _directionalLightImage = [CCTexture textureWithFile:@"light-directional.png"];
-        _lightIcon = [CCSprite spriteWithImageNamed:@"light-point.png"];
+        _pointLightImage = [CCTexture textureWithFile:@"light-point.png" contentScale:[CCTexture SBWidgetScale]];
+        _directionalLightImage = [CCTexture textureWithFile:@"light-directional.png" contentScale:[CCTexture SBWidgetScale]];
+        _lightIcon = [CCSprite spriteWithImageNamed:@"light-point.png" contentScale:[CCTexture SBWidgetScale]];
         _lightIcon.userObject = [[NodeInfo alloc] init];
     }
 
