@@ -44,6 +44,7 @@
 #import "InspectorController.h"
 #import "SequencerHandler.h"
 #import "PasteboardTypes.h"
+#import "ForceResolution.h"
 
 #define kCCBPhysicsHandleRadius 5
 #define kCCBPhysicsLineSegmFuzz 5
@@ -745,7 +746,7 @@
             CGPoint pt = [ptVal pointValue];
             pt = [node convertToWorldSpace:pt];
             
-            CCSprite* handle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
+            CCSprite* handle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png" contentScale:[CCTexture SBWidgetScale]];
             handle.position = pt;
             [editorView addChild:handle];
             i++;
@@ -875,11 +876,11 @@
         free(points);
         
         // Draw handles
-        CCSprite* centerHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
+        CCSprite* centerHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png" contentScale:[CCTexture SBWidgetScale]];
         centerHandle.position = ccpRound(center);
         [editorView addChild:centerHandle];
         
-        CCSprite* edgeHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png"];
+        CCSprite* edgeHandle = [CCSprite spriteWithImageNamed:@"select-physics-corner.png" contentScale:[CCTexture SBWidgetScale]];
         edgeHandle.position = ccpRound(edge);
         [editorView addChild:edgeHandle];
     }

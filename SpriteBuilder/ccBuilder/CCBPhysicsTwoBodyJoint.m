@@ -11,6 +11,7 @@
 #import "CCNode+NodeInfo.h"
 #import "InspectorController.h"
 #import "AppDelegate.h"
+#import "ForceResolution.h"
 
 
 @interface CCBPhysicsJoint()
@@ -41,22 +42,22 @@ static const float kDefaultLength = 58.0f;
 
 -(void)setupBody
 {
-    jointBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance.png"];
+    jointBody = [CCSprite9Slice spriteWithImageNamed:@"joint-distance.png" contentScale:[CCTexture SBWidgetScale]];
     CCSizeType sizeType;
     sizeType.heightUnit = CCSizeUnitUIPoints;
     sizeType.widthUnit = CCSizeUnitUIPoints;
     jointBody.contentSizeType = sizeType;
     [scaleFreeNode addChild:jointBody];
     
-    anchorHandleA = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
-    anchorHandleB = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
+    anchorHandleA = [CCSprite spriteWithImageNamed:@"joint-anchor.png" contentScale:[CCTexture SBWidgetScale]];
+    anchorHandleB = [CCSprite spriteWithImageNamed:@"joint-anchor.png" contentScale:[CCTexture SBWidgetScale]];
     
     [scaleFreeNode addChild:anchorHandleA];
     [scaleFreeNode addChild:anchorHandleB];
 
     
-    distanceJointFrameSel = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png"];
-    distanceJointFrame    = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png"];
+    distanceJointFrameSel = [CCSpriteFrame frameWithImageNamed:@"joint-distance-sel.png" contentScale:[CCTexture SBWidgetScale]];
+    distanceJointFrame    = [CCSpriteFrame frameWithImageNamed:@"joint-distance.png" contentScale:[CCTexture SBWidgetScale]];
 }
 
 

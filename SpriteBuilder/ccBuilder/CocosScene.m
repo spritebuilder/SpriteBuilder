@@ -53,6 +53,7 @@
 #import "NSPasteboard+CCB.h"
 #import "InspectorController.h"
 #import "PasteboardTypes.h"
+#import "ForceResolution.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -226,48 +227,49 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         [borderLeft setOpacity:1.0f];
         [borderRight setOpacity:1.0f];
         
+        CGFloat forcedContentScale = [CCSetup sharedSetup].contentScale/appDelegate.windowContentScaleFactor;
         CCTexture* deviceTexture = NULL;
         BOOL rotateDevice = NO;
-        
+                
         int devType = [appDelegate orientedDeviceTypeForSize:stageBgLayer.contentSize];
         if (devType == kCCBCanvasSizeIPhonePortrait)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone.png"];
+            deviceTexture = [CCTexture textureWithFile:@"frame-iphone.png" contentScale:forcedContentScale];
             rotateDevice = NO;
         }
         else if (devType == kCCBCanvasSizeIPhoneLandscape)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone.png"];
+            deviceTexture = [CCTexture textureWithFile:@"frame-iphone.png" contentScale:forcedContentScale];
             rotateDevice = YES;
         }
         if (devType == kCCBCanvasSizeIPhone5Portrait)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone5.png"];
+            deviceTexture = [CCTexture textureWithFile:@"frame-iphone5.png" contentScale:forcedContentScale];
             rotateDevice = NO;
         }
         else if (devType == kCCBCanvasSizeIPhone5Landscape)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-iphone5.png"];
+            deviceTexture = [CCTexture textureWithFile:@"frame-iphone5.png" contentScale:forcedContentScale];
             rotateDevice = YES;
         }
         else if (devType == kCCBCanvasSizeIPadPortrait)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-ipad.png"];
+            deviceTexture = [CCTexture textureWithFile:@"frame-ipad.png" contentScale:forcedContentScale];
             rotateDevice = NO;
         }
         else if (devType == kCCBCanvasSizeIPadLandscape)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-ipad.png"];
+            deviceTexture = [CCTexture textureWithFile:@"frame-ipad.png" contentScale:forcedContentScale];
             rotateDevice = YES;
         }
         else if (devType == kCCBCanvasSizeFixedLandscape)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-fixed.png"];
+            deviceTexture = [CCTexture textureWithFile:@"frame-fixed.png" contentScale:forcedContentScale];
             rotateDevice = NO;
         }
         else if (devType == kCCBCanvasSizeFixedPortrait)
         {
-            deviceTexture = [[CCTextureCache sharedTextureCache] addImage:@"frame-fixed.png"];
+            deviceTexture = [CCTexture textureWithFile:@"frame-fixed.png" contentScale:forcedContentScale];
             rotateDevice = YES;
         }
         else if (devType == kCCBCanvasSizeAndroidXSmallPortrait)
@@ -516,10 +518,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
 	[self getCornerPointsForNode:node withPoints:points];
 	
 	
-	CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-	CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-	CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-	CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+	CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png" contentScale:[CCTexture SBWidgetScale]];
+	CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png" contentScale:[CCTexture SBWidgetScale]];
+	CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png" contentScale:[CCTexture SBWidgetScale]];
+	CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png" contentScale:[CCTexture SBWidgetScale]];
 	
 	
 	blSprt.position = points[0];
@@ -571,7 +573,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 
                 CGPoint anchorPointPos = ccpRound([node convertToWorldSpace:localAnchor]);
                 
-                CCSprite* anchorPointSprite = [CCSprite spriteWithImageNamed:@"select-pt.png"];
+                CCSprite* anchorPointSprite = [CCSprite spriteWithImageNamed:@"select-pt.png" contentScale:[CCTexture SBWidgetScale]];
                 anchorPointSprite.position = anchorPointPos;
                 [selectionLayer addChild:anchorPointSprite z:1];
                 
@@ -582,10 +584,10 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                 {
                     // Selection corners in world space
                     
-                    CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-                    CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-                    CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
-                    CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png"];
+                    CCSprite* blSprt = [CCSprite spriteWithImageNamed:@"select-corner.png" contentScale:[CCTexture SBWidgetScale]];
+                    CCSprite* brSprt = [CCSprite spriteWithImageNamed:@"select-corner.png" contentScale:[CCTexture SBWidgetScale]];
+                    CCSprite* tlSprt = [CCSprite spriteWithImageNamed:@"select-corner.png" contentScale:[CCTexture SBWidgetScale]];
+                    CCSprite* trSprt = [CCSprite spriteWithImageNamed:@"select-corner.png" contentScale:[CCTexture SBWidgetScale]];
                     
                     [self getCornerPointsForNode:node withPoints:points];
                     
@@ -613,7 +615,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
                     CGPoint pos = [node convertToWorldSpace: ccp(0,0)];
                     
 
-                    CCSprite* sel = [CCSprite spriteWithImageNamed:kZeroContentSizeImage];
+                    CCSprite* sel = [CCSprite spriteWithImageNamed:kZeroContentSizeImage contentScale:[CCTexture SBWidgetScale]];
                     sel.anchorPoint = ccp(0.5f, 0.5f);
                     sel.position = pos;
                     [selectionLayer addChild:sel];
@@ -1141,7 +1143,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
         if (transformScalingNode.contentSize.width == 0 || transformScalingNode.contentSize.height == 0)
         {
             isContentSizeZero = YES;
-            CCSprite * sel = [CCSprite spriteWithImageNamed:kZeroContentSizeImage];
+            CCSprite * sel = [CCSprite spriteWithImageNamed:kZeroContentSizeImage contentScale:[CCTexture SBWidgetScale]];
             [self getCornerPointsForZeroContentSizeNode:node withImageContentSize:sel.contentSize withPoints:points];
         }
         else

@@ -215,7 +215,7 @@ void ApplyCustomNodeVisitSwizzle()
     class_addMethod([CCNode class], @selector(oldVisit:parentTransform:), origImp, method_getTypeEncoding(origMethod));
 }
 
--(CGFloat)deviceContentScaleFactor
+-(CGFloat)windowContentScaleFactor
 {
     return [cocosView convertSizeToBacking:CGSizeMake(1.0, 1.0)].width;
 }
@@ -235,7 +235,7 @@ void ApplyCustomNodeVisitSwizzle()
 	
 	[director setDisplayStats:NO];
     
-    _baseContentScaleFactor = self.deviceContentScaleFactor;
+    _baseContentScaleFactor = self.windowContentScaleFactor;
     
     [self updatePositionScaleFactor];
     
@@ -249,7 +249,7 @@ void ApplyCustomNodeVisitSwizzle()
 
 - (CGFloat)derivedViewScaleFactor
 {
-    return [CCSetup sharedSetup].contentScale / [self deviceContentScaleFactor];
+    return [CCSetup sharedSetup].contentScale / [self windowContentScaleFactor];
 }
 
 - (void) setupSequenceHandler
@@ -4275,9 +4275,9 @@ typedef enum
         CCDirectorMac *dir = (CCDirectorMac *)[CCDirector sharedDirector];
 
         // check if DPI has changed
-        if (self.deviceContentScaleFactor != _baseContentScaleFactor) {
+        if (self.windowContentScaleFactor != _baseContentScaleFactor) {
             
-            _baseContentScaleFactor = self.deviceContentScaleFactor;
+            _baseContentScaleFactor = self.windowContentScaleFactor;
             [CCSetup sharedSetup].contentScale = dir.contentScaleFactor;
             
             [self updatePositionScaleFactor];
