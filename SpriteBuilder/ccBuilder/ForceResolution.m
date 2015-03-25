@@ -26,8 +26,6 @@
     CCTexture *texture = [CCTexture textureWithFile:file];
     texture.contentScale = contentScale;
     
-    NSLog(@"Loading: %@ (%p) with scale: %f, content size: %@, pixel size: %@", file, texture, contentScale, NSStringFromSize(texture.contentSize), NSStringFromSize(texture.sizeInPixels));
-    
     return texture;
 }
 
