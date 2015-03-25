@@ -26,6 +26,7 @@
 #import "CCSprite9Slice.h"
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
+#import "ForceResolution.h"
 
 @implementation StickyNote
 
@@ -41,7 +42,7 @@
     self.contentSizeType = CCSizeTypeUIPoints;
     //self.ignoreAnchorPointForPosition = NO;
     
-    bg = [CCSprite9Slice spriteWithImageNamed:@"notes-bg.png"];
+    bg = [CCSprite9Slice spriteWithImageNamed:@"notes-bg.png" contentScale:[CCTexture SBWidgetScale]];
     bg.anchorPoint = ccp(0,0);
     bg.positionType = CCPositionTypeUIPoints;
     bg.contentSizeType = CCSizeTypeUIPoints;

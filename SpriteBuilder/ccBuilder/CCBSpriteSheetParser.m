@@ -24,6 +24,7 @@
  */
 
 #import "CCBSpriteSheetParser.h"
+#import "CCSpriteFrameCache_Private.h"
 
 static NSInteger strSort(id num1, id num2, void *context)
 {

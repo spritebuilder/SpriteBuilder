@@ -14,6 +14,7 @@
 #import "NSArray+Query.h"
 #import "CCProgressNode.h"
 #import "InspectorController.h"
+#import "ForceResolution.h"
 
 const float kSegmentHandleDefaultRadius = 17.0f;
 
@@ -36,7 +37,7 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     self = [super init];
     if(self)
     {
-        handle  = [CCSprite spriteWithImageNamed:@"joint-pivot-handle-ref.png"];
+        handle  = [CCSprite spriteWithImageNamed:@"joint-pivot-handle-ref.png" contentScale:[CCTexture SBWidgetScale]];
         handle.anchorPoint = ccp(0.5f,0.0f);
         [self addChild:handle];
     }
@@ -151,8 +152,8 @@ const float kSegmentHandleDefaultRadius = 17.0f;
 
 -(void)setupBody
 {
-	joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png"];
-    jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png"];
+	joint = [CCSprite spriteWithImageNamed:@"joint-pivot.png" contentScale:[CCTexture SBWidgetScale]];
+    jointAnchor = [CCSprite spriteWithImageNamed:@"joint-anchor.png" contentScale:[CCTexture SBWidgetScale]];
     
     [scaleFreeNode addChild:joint];
     [scaleFreeNode addChild:jointAnchor];
@@ -162,14 +163,14 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     //Reference Angle
     referenceAngleHandle = [CCSegmentHandle node];
     [scaleFreeNode addChild:referenceAngleHandle];
-    referenceAngleHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-ref.png"];
+    referenceAngleHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-ref.png" contentScale:[CCTexture SBWidgetScale]];
     
     //Spring
     springNode = [CCNode node];
     [scaleFreeNode addChild:springNode];
     springRestAngleHandle = [CCSegmentHandle node];
     [springNode addChild:springRestAngleHandle];
-    springRestAngleHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-max.png"];
+    springRestAngleHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-max.png" contentScale:[CCTexture SBWidgetScale]];
     
     //Limit
     limitNode = [CCNode node];
@@ -181,11 +182,11 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     [limitNode addChild:limitSubtendingAngle];
     
     limitMaxHandle = [CCSegmentHandle node];
-    limitMaxHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-max.png"];
+    limitMaxHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-max.png" contentScale:[CCTexture SBWidgetScale]];
     [limitNode addChild:limitMaxHandle];
     
     limitMinHandle = [CCSegmentHandle node];
-    limitMinHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png"];
+    limitMinHandle.handle.spriteFrame = [CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png" contentScale:[CCTexture SBWidgetScale]];
     [limitNode addChild:limitMinHandle];
     
     //Ratched
@@ -193,11 +194,11 @@ const float kSegmentHandleDefaultRadius = 17.0f;
     [scaleFreeNode addChild:ratchetNode];
     ratchedValueHandle = [CCSegmentHandle node];
     [ratchetNode addChild:ratchedValueHandle];
-    ratchedValueHandle.handle.spriteFrame =[CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-ratchet.png"];
+    ratchedValueHandle.handle.spriteFrame =[CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-ratchet.png" contentScale:[CCTexture SBWidgetScale]];
 
     ratchedPhaseHandle = [CCSegmentHandle node];
     [ratchetNode addChild:ratchedPhaseHandle];
-    ratchedPhaseHandle.handle.spriteFrame =[CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png"];
+    ratchedPhaseHandle.handle.spriteFrame =[CCSpriteFrame frameWithImageNamed:@"joint-pivot-handle-min.png" contentScale:[CCTexture SBWidgetScale]];
 
     //Motor
     motorNode = [CCSprite spriteWithImageNamed:@"joint-pivot-motor.png"];
@@ -240,7 +241,7 @@ const float kRatchedRenderRadius = 30.0f;
                (currentAngle + cachedRatchedValue * self.ratchetPhase / 360.0f + cachedRatchedValue) <= 360.0f :
                (currentAngle - cachedRatchedValue * self.ratchetPhase / 360.0f + cachedRatchedValue) >= -360.0f))
         {
-            CCSprite * sprite = [CCSprite spriteWithImageNamed:@"joint-pivot-handle-ratchetmark.png"];
+            CCSprite * sprite = [CCSprite spriteWithImageNamed:@"joint-pivot-handle-ratchetmark.png" contentScale:[CCTexture SBWidgetScale]];
             sprite.anchorPoint = ccp(0.5f,0.0f);
             [ratchedTicks addChild:sprite];
             sprite.rotation = currentAngle;
@@ -515,8 +516,8 @@ const float kRatchedRenderRadius = 30.0f;
     for (int i =0; i < eLayoutButtonMax; i++) {
         NSString * title = i == eLayoutButtonSpring ? @"s" : (i == eLayoutButtonLimit ? @"l" : @"r");
 
-        CCSpriteFrame * offSpriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"joint-pivot-mode-%@-off.png",title]];
-        CCSpriteFrame * onSpriteFrame = [CCSpriteFrame frameWithImageNamed: [NSString stringWithFormat:@"joint-pivot-mode-%@-on.png",title]];
+        CCSpriteFrame * offSpriteFrame = [CCSpriteFrame frameWithImageNamed:[NSString stringWithFormat:@"joint-pivot-mode-%@-off.png",title] contentScale:[CCTexture SBWidgetScale]];
+        CCSpriteFrame * onSpriteFrame = [CCSpriteFrame frameWithImageNamed: [NSString stringWithFormat:@"joint-pivot-mode-%@-on.png",title] contentScale:[CCTexture SBWidgetScale]];
         
         CCButton * button = [CCButton buttonWithTitle:@"" spriteFrame:offSpriteFrame highlightedSpriteFrame:onSpriteFrame disabledSpriteFrame:offSpriteFrame];
         
@@ -529,7 +530,7 @@ const float kRatchedRenderRadius = 30.0f;
     }
     layoutButtons = buttons;
     
-    layoutBackground = [CCSprite spriteWithImageNamed:@"joint-pivot-mode-bg.png"];
+    layoutBackground = [CCSprite spriteWithImageNamed:@"joint-pivot-mode-bg.png" contentScale:[CCTexture SBWidgetScale]];
     layoutBackground.anchorPoint = ccp(0.0f,0.0f);
     [layoutBox addChild:layoutBackground z:-1];
     [layoutBox addChild:layoutControlBox];;

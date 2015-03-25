@@ -26,6 +26,7 @@
 #import "CCBGlobals.h"
 #import "CCTextureCache.h"
 #import "AppDelegate.h"
+#import "ForceResolution.h"
 
 static CGFloat const kCCBRulerWidth = 15.0;
 static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
@@ -46,10 +47,10 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 	[[CCTextureCache sharedTextureCache] removeTextureForKey:@"ruler-mark-major.png"];
 	[[CCTextureCache sharedTextureCache] removeTextureForKey:@"ruler-mark-minor.png"];
 	
-	bgVertical = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-vertical.png"];
+	bgVertical = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-vertical.png" contentScale:[CCTexture SBWidgetScale]];
 	bgVertical.anchorPoint = ccp(0,0);
 	
-	bgHorizontal = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-horizontal.png"];
+	bgHorizontal = [CCSprite9Slice spriteWithImageNamed:@"ruler-bg-horizontal.png" contentScale:[CCTexture SBWidgetScale]];
 	bgHorizontal.anchorPoint = ccp(0,0);
 	
 	[self addChild:bgVertical];
@@ -60,33 +61,33 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
 	[self addChild:marksVertical z:1];
 	[self addChild:marksHorizontal z:3];
 	
-	mouseMarkVertical = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
+	mouseMarkVertical = [CCSprite spriteWithImageNamed:@"ruler-guide.png" contentScale:[CCTexture SBWidgetScale]];
 	mouseMarkVertical.anchorPoint = ccp(0, 0.5f);
 	mouseMarkVertical.visible = NO;
     [mouseMarkVertical setColor:[CCColor colorWithRed:0.153 green:0.576 blue:1]];
 	[self addChild:mouseMarkVertical z:4];
 	
-	mouseMarkHorizontal = [CCSprite spriteWithImageNamed:@"ruler-guide.png"];
+	mouseMarkHorizontal = [CCSprite spriteWithImageNamed:@"ruler-guide.png" contentScale:[CCTexture SBWidgetScale]];
 	mouseMarkHorizontal.rotation = -90;
 	mouseMarkHorizontal.anchorPoint = ccp(0, 0.5f);
 	mouseMarkHorizontal.visible = NO;
     [mouseMarkHorizontal setColor:[CCColor colorWithRed:0.153 green:0.576 blue:1]];
 	[self addChild:mouseMarkHorizontal z:4];
 	
-	CCSprite* xyBg = [CCSprite spriteWithImageNamed:@"ruler-xy.png"];
+	CCSprite* xyBg = [CCSprite spriteWithImageNamed:@"ruler-xy.png" contentScale:[CCTexture SBWidgetScale]];
 	[self addChild:xyBg z:5];
 	xyBg.anchorPoint = ccp(0,0);
 	xyBg.position = ccp(0,0);
 	
 	//CGFloat scale = [CCDirector sharedDirector].contentScaleFactor;
-    lblX = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight];
+    lblX = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight contentScale:[CCTexture SBWidgetScale]];
     lblX.anchorPoint = ccp(1,0);
     lblX.positionType = CCPositionTypeUIPoints;
    	lblX.position = ccp(47,0);
    	lblX.visible = NO;
     [self addChild:lblX z:6];
 
-    lblY = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight];
+    lblY = [CCLabelBMFont labelWithString:@"-" fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentRight contentScale:[CCTexture SBWidgetScale]];
 	lblY.anchorPoint = ccp(1,0);
     lblY.positionType = CCPositionTypeUIPoints;
 	lblY.position = ccp(97,0);
@@ -146,17 +147,17 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
         BOOL addLabel = NO;
         if (yDist == 0)
         {
-            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-origin.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-origin.png" contentScale:[CCTexture SBWidgetScale]];
             addLabel = YES;
         }
         else if (yDist % 50 == 0)
         {
-            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-major.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-major.png" contentScale:[CCTexture SBWidgetScale]];
             addLabel = YES;
         }
         else
         {
-            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-minor.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-minor.png" contentScale:[CCTexture SBWidgetScale]];
         }
         mark.anchorPoint = ccp(0, 0.5f);
         mark.position = ccp(0, y);
@@ -172,7 +173,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
             {
                 NSString* ch = [str substringWithRange:NSMakeRange(i, 1)];
 
-                CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
+                CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:ch fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter contentScale:[CCTexture SBWidgetScale]];
                 lbl.anchorPoint = ccp(0,0);
                 lbl.position = ccp(2/viewScale, y + (8*(strLen - i - 1) /* - 1 */)/viewScale);
             
@@ -192,17 +193,17 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
         BOOL addLabel = NO;
         if (xDist == 0)
         {
-            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-origin.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-origin.png" contentScale:[CCTexture SBWidgetScale]];
             addLabel = YES;
         }
         else if (xDist % 50 == 0)
         {
-            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-major.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-major.png" contentScale:[CCTexture SBWidgetScale]];
             addLabel = YES;
         }
         else
         {
-            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-minor.png"];
+            mark = [CCSprite spriteWithImageNamed:@"ruler-mark-minor.png" contentScale:[CCTexture SBWidgetScale]];
         }
         mark.anchorPoint = ccp(0, 0.5f);
         mark.position = ccp(x, 0);
@@ -215,7 +216,7 @@ static NSString * const kRulerLabelsFontName = @"ruler-numbers.fnt";
             int displayDist = xDist / zoom;
             NSString* str = [NSString stringWithFormat:@"%d",displayDist];
 
-            CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter];
+            CCLabelBMFont  *lbl = [CCLabelBMFont labelWithString:str fntFile:kRulerLabelsFontName width:FLT_MAX alignment:CCTextAlignmentCenter contentScale:[CCTexture SBWidgetScale]];
             lbl.anchorPoint = ccp(0,0);
             lbl.position = ccp(x+1/viewScale, 0/* -1/viewScale*/);
             [marksHorizontal addChild:lbl z:1];

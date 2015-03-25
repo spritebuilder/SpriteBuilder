@@ -299,6 +299,10 @@ typedef void (^CompletionCallback) (BOOL success);
 
 @property (weak) IBOutlet MainWindow *window;
 
+// Content scale of the Mac window the editor is running in.
+@property (nonatomic, readonly) CGFloat windowContentScaleFactor;
+
+
 @property (weak, nonatomic,readonly) IBOutlet ResourceManagerOutlineView *outlineProject;
 
 @property (nonatomic, strong) IBOutlet InspectorController *inspectorController;
@@ -315,7 +319,7 @@ typedef void (^CompletionCallback) (BOOL success);
 @property (nonatomic,assign) BOOL defaultCanvasSize;
 @property (nonatomic,assign) BOOL canEditCustomClass;
 @property (nonatomic,assign) BOOL canEditStageSize;
-@property (nonatomic,assign) CGFloat derivedViewScaleFactor;
+@property (nonatomic,readonly) CGFloat derivedViewScaleFactor;
 
 @property (weak, nonatomic,readonly) CCNode* selectedNode;
 
