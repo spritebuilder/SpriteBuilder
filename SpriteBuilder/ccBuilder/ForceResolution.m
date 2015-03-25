@@ -14,8 +14,10 @@
 
 +(CGFloat)SBWidgetScale
 {
-    // Widgets always load retina quality assets even on non-retina Macs.
     AppDelegate *delegate = (AppDelegate *)[NSApplication sharedApplication].delegate;
+    
+    // Widgets always load as retina quality assets even on non-retina Macs.
+    // contentScale/windowScale converts to window points, 2x that makes it retina.
     return 2.0*[CCSetup sharedSetup].contentScale/delegate.windowContentScaleFactor;
 }
 
@@ -23,6 +25,9 @@
 {
     CCTexture *texture = [CCTexture textureWithFile:file];
     texture.contentScale = contentScale;
+    
+    NSLog(@"Loading: %@ (%p) with scale: %f, content size: %@, pixel size: %@", file, texture, contentScale, NSStringFromSize(texture.contentSize), NSStringFromSize(texture.sizeInPixels));
+    
     return texture;
 }
 
