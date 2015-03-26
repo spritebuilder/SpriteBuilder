@@ -22,6 +22,7 @@ static InspectorController *__sharedInstance = nil;
 @property (nonatomic, strong) NSMutableDictionary *currentInspectorValuesMap;
 @property (nonatomic, strong) NSView *inspectorDocumentView;
 @property (nonatomic, strong) NSView *inspectorCodeDocumentView;
+@property (nonatomic, weak) CCNode *lastSelected;
 
 @end
 
@@ -117,6 +118,13 @@ static InspectorController *__sharedInstance = nil;
 
 - (void)updateInspectorFromSelection
 {
+    if (self.lastSelected == _appDelegate.selectedNode) {
+        // don't rebuild if we selecting the same node
+        return;
+    }
+    
+    self.lastSelected = _appDelegate.selectedNode;
+
     [_currentInspectorValuesMap removeAllObjects];
 
     [self buildInspectorPaneWithDocumentView:_inspectorDocumentView
