@@ -974,6 +974,7 @@
 					"-lEGL",
 					"-lgles_apportable",
 					"-landroid",
+					"-lcxx",
 				);
 				PRODUCT_MODULE_NAME = PROJECTNAME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1022,6 +1023,7 @@
 					"-lEGL",
 					"-lgles_apportable",
 					"-landroid",
+					"-lcxx",
 				);
 				PRODUCT_MODULE_NAME = PROJECTNAME;
 				PRODUCT_NAME = "$(TARGET_NAME)";
