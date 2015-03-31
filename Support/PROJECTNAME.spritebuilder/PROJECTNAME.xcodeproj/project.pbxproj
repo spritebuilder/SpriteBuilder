@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14D8C3721A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C3711A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m */; };
+		14D8C3731A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C3711A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m */; };
+		14D8C3741A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D8C3711A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m */; };
 		5B121030197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B12102F197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m */; };
 		5B121038197487F2004C1E1D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B737893E1807617C0076A88C /* AppDelegate.m */; };
 		7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A046D7519E84C36004C4763 /* MainScene.swift */; };
@@ -96,7 +99,6 @@
 		BC5399DA1A44DCC90063F482 /* GLActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D51A44DCC90063F482 /* GLActivityKit.framework */; };
 		BC5399DB1A44DCC90063F482 /* JavaFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D61A44DCC90063F482 /* JavaFoundation.framework */; };
 		BC5399DC1A44DCC90063F482 /* JavaKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D71A44DCC90063F482 /* JavaKit.framework */; };
-		BCD00A8C1A44E83400DA5AD0 /* CoreJava.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5399D41A44DCC90063F482 /* CoreJava.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +147,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14D8C3701A7292FE00FD9BFF /* PROJECTIDENTIFIERController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PROJECTIDENTIFIERController.h; path = Source/PROJECTIDENTIFIERController.h; sourceTree = "<group>"; };
+		14D8C3711A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PROJECTIDENTIFIERController.m; path = Source/PROJECTIDENTIFIERController.m; sourceTree = "<group>"; };
 		5B12100919748273004C1E1D /* libEGL.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libEGL.so; path = /usr/lib/armv7a/libEGL.so; sourceTree = SDKROOT; };
 		5B12100F197483EE004C1E1D /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
 		5B121011197483EE004C1E1D /* ic_launcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_launcher.png; sourceTree = "<group>"; };
@@ -436,6 +440,8 @@
 				B7378992180767190076A88C /* MainScene.h */,
 				B7378993180767190076A88C /* MainScene.m */,
 				7A046D7519E84C36004C4763 /* MainScene.swift */,
+				14D8C3701A7292FE00FD9BFF /* PROJECTIDENTIFIERController.h */,
+				14D8C3711A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m */,
 				D352B48019EC608A00829775 /* MetalShaders */,
 			);
 			name = Source;
@@ -790,6 +796,7 @@
 				7A4036E819DE3F33007B6E8F /* MainScene.m in Sources */,
 				7A10CE5619F32FB0001673C3 /* MainScene.swift in Sources */,
 				7A40360419DDEE84007B6E8F /* main.m in Sources */,
+				14D8C3741A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m in Sources */,
 				7A59498E19E3941300F65F90 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -798,6 +805,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14D8C3731A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m in Sources */,
 				927F619E196C771E000F43EF /* MainScene.m in Sources */,
 				5B121030197484FA004C1E1D /* PROJECTIDENTIFIERActivity.m in Sources */,
 			);
@@ -810,6 +818,7 @@
 				B73789871807631A0076A88C /* main.m in Sources */,
 				7A046D8C19E8A20E004C4763 /* MainScene.m in Sources */,
 				7A046D7919E84ED5004C4763 /* MainScene.swift in Sources */,
+				14D8C3721A7292FE00FD9BFF /* PROJECTIDENTIFIERController.m in Sources */,
 				5B121038197487F2004C1E1D /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

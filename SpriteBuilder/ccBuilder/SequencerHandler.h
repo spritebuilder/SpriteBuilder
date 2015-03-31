@@ -109,4 +109,7 @@
 - (void) menuSetSequence:(id)sender;
 - (void) menuSetChainedSequence:(id)sender;
 
+/** Update current document to specified sequence id and point in time */
+- (void) setSequenceId:(int)seqId localTime:(float)time;
+
 @end

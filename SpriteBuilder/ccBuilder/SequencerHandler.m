@@ -1531,6 +1531,11 @@ static SequencerHandler* sharedSequencerHandler;
     }
 }
 
+- (void) setSequenceId:(int)seqId localTime:(float)time
+{
+    [self updatePropertiesToTimelinePositionForNode:[[CocosScene cocosScene] rootNode] sequenceId:seqId localTime:time];
+}
+
 - (void) updatePropertiesToTimelinePosition
 {
     [self updatePropertiesToTimelinePositionForNode:[[CocosScene cocosScene] rootNode] sequenceId:currentSequence.sequenceId localTime:currentSequence.timelinePosition];
@@ -1613,7 +1618,8 @@ static SequencerHandler* sharedSequencerHandler;
 
     return !(!node
              || !prop
-             || [node shouldDisableProperty:prop])
+             || [node shouldDisableProperty:prop]
+             || [node shouldDisableKeyframe:prop])
            && [[node.plugIn animatablePropertiesForNode:node] containsObject:prop];
 
 }

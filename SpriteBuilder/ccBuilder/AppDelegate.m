@@ -1874,30 +1874,17 @@ typedef enum
         
     [currentDocument.undoManager removeAllActions];
     currentDocument.lastEditedProperty = NULL;
-    
-    // Generate preview
-    
-    // Reset to first frame in first timeline in first resolution
-    float currentTime = sequenceHandler.currentSequence.timelinePosition;
-    int currentResolution = currentDocument.currentResolution;
-    SequencerSequence* currentSeq = sequenceHandler.currentSequence;
-    
-    sequenceHandler.currentSequence = [currentDocument.sequences objectAtIndex:0];
-    sequenceHandler.currentSequence.timelinePosition = 0;
-    [self reloadResources];
-    //[PositionPropertySetter refreshAllPositions];
-    
+
+    // move to first position to render preview
+    SequencerSequence* first = [currentDocument.sequences objectAtIndex:0];
+    [sequenceHandler setSequenceId:first.sequenceId localTime:0];
+
     // Save preview
     [[CocosScene cocosScene] savePreviewToFile:[fileName stringByAppendingPathExtension:PNG_PREVIEW_IMAGE_SUFFIX]];
-    
-    // Restore resolution and timeline
-    currentDocument.currentResolution = currentResolution;
-    sequenceHandler.currentSequence = currentSeq;
-    [self reloadResources];
-    //[PositionPropertySetter refreshAllPositions];
-    sequenceHandler.currentSequence.timelinePosition = currentTime;
-    
     [projectOutlineHandler updateSelectionPreview];
+    
+    // move back to correct sequence / time to reflect current UI position
+    [sequenceHandler updatePropertiesToTimelinePosition];
 }
 
 - (void) newFile:(NSString*) fileName type:(int)type resolutions: (NSMutableArray*) resolutions;
