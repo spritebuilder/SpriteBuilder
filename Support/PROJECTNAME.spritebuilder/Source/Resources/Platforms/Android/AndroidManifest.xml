@@ -5,6 +5,7 @@
     <uses-sdk android:targetSdkVersion="14" android:minSdkVersion="9"></uses-sdk>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <application
+        android:name="com.apportable.BasicRuntimeApplication"
         android:allowBackup="true"
         android:label="PROJECTNAME"
         android:debuggable="true"
