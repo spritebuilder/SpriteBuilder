@@ -13,6 +13,7 @@
 		05CA9CF41A5082C500265997 /* TabClose_Front_Pressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CEE1A5082C500265997 /* TabClose_Front_Pressed@2x.png */; };
 		05CA9CF51A5082C500265997 /* TabClose_Front_Rollover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CEF1A5082C500265997 /* TabClose_Front_Rollover@2x.png */; };
 		05CA9CF61A5082C500265997 /* TabClose_Front@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 05CA9CF01A5082C500265997 /* TabClose_Front@2x.png */; };
+		14F900801ACD7C3700C001BD /* Version.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 14F9007F1ACD7C3700C001BD /* Version.xcconfig */; };
 		4D0C1E7618F4760800B028CA /* SnapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C1E7318F472D600B028CA /* SnapLayer.m */; };
 		4D0C1E7918F49A3700B028CA /* CCNode+PositionExtentions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C1E7818F49A3700B028CA /* CCNode+PositionExtentions.m */; };
 		4DB7C95719083B9C00ECE19F /* NotificationNames.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DB7C95419083ACF00ECE19F /* NotificationNames.m */; };
@@ -1304,6 +1305,7 @@
 		05CA9CEE1A5082C500265997 /* TabClose_Front_Pressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Front_Pressed@2x.png"; path = "TabBar/res/TabClose_Front_Pressed@2x.png"; sourceTree = "<group>"; };
 		05CA9CEF1A5082C500265997 /* TabClose_Front_Rollover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Front_Rollover@2x.png"; path = "TabBar/res/TabClose_Front_Rollover@2x.png"; sourceTree = "<group>"; };
 		05CA9CF01A5082C500265997 /* TabClose_Front@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "TabClose_Front@2x.png"; path = "TabBar/res/TabClose_Front@2x.png"; sourceTree = "<group>"; };
+		14F9007F1ACD7C3700C001BD /* Version.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Version.xcconfig; sourceTree = "<group>"; };
 		4D0C1E7218F472D600B028CA /* SnapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SnapLayer.h; sourceTree = "<group>"; };
 		4D0C1E7318F472D600B028CA /* SnapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SnapLayer.m; sourceTree = "<group>"; };
 		4D0C1E7718F49A3700B028CA /* CCNode+PositionExtentions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+PositionExtentions.h"; sourceTree = "<group>"; };
@@ -5081,6 +5083,7 @@
 				E3B7BC9B15E3B7F100CF95EF /* NodePlugInsList.plist */,
 				E3B19F6C15E65229000B023E /* DefaultResourcesList.plist */,
 				83EDACF8193DC99100327B86 /* Features.plist */,
+				14F9007F1ACD7C3700C001BD /* Version.xcconfig */,
 			);
 			name = Configurations;
 			sourceTree = "<group>";
@@ -6748,6 +6751,7 @@
 				E37FCAEE175D2704009F81D6 /* ui-cogs.png in Resources */,
 				92CB085B19BA2E0800EFDCE3 /* EffectBlurControl.xib in Resources */,
 				92D9D48018F8AB3800F167C1 /* joint-connection-connected-1x.png in Resources */,
+				14F900801ACD7C3700C001BD /* Version.xcconfig in Resources */,
 				83F3CA011A422CA4003D8659 /* seq-visible-faint@2x.png in Resources */,
 				920994D1198717D20006F38D /* EffectGlassControl.xib in Resources */,
 				D342850D1AB2CA4F00CF3DE8 /* ruler-xy-1x.png in Resources */,
@@ -8126,6 +8130,7 @@
 /* Begin XCBuildConfiguration section */
 		7789ABDA133AA82000CEFCC7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14F9007F1ACD7C3700C001BD /* Version.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -8159,6 +8164,7 @@
 		};
 		7789ABDB133AA82000CEFCC7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14F9007F1ACD7C3700C001BD /* Version.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -8225,7 +8231,6 @@
 				PROVISIONING_PROFILE = "";
 				SB_DEBUG_PREPROCESSOR_DEFINES = "$(SB_SHARED_DEBUG_PREPROCESSOR_DEFINES) ";
 				SB_RELEASE_PREPROCESSOR_DEFINES = "$(SB_SHARED_RELEASE_PREPROCESSOR_DEFINES)";
-				SB_VERSION = 1.2.0;
 				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
@@ -8268,7 +8273,6 @@
 				PROVISIONING_PROFILE = "";
 				SB_DEBUG_PREPROCESSOR_DEFINES = "$(SB_SHARED_DEBUG_PREPROCESSOR_DEFINES) ";
 				SB_RELEASE_PREPROCESSOR_DEFINES = "$(SB_SHARED_RELEASE_PREPROCESSOR_DEFINES)";
-				SB_VERSION = 1.2.0;
 				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
@@ -8355,6 +8359,7 @@
 		};
 		8383315C196578F500E6EFB1 /* Testing */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14F9007F1ACD7C3700C001BD /* Version.xcconfig */;
 			buildSettings = {
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
@@ -8427,7 +8432,6 @@
 				PROVISIONING_PROFILE = "";
 				SB_DEBUG_PREPROCESSOR_DEFINES = "$(SB_SHARED_DEBUG_PREPROCESSOR_DEFINES) ";
 				SB_RELEASE_PREPROCESSOR_DEFINES = "$(SB_SHARED_RELEASE_PREPROCESSOR_DEFINES)";
-				SB_VERSION = 1.2.0;
 				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
