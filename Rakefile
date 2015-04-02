@@ -141,7 +141,7 @@ end
 namespace :package do
     desc "Create SpriteBuilder.app + zip app and symbols"
     task :app do
-        call_xctool "TARGET_BUILD_DIR=#{BUILD_DIR} CONFIGURATION_BUILD_DIR=#{BUILD_DIR} VERSION=#{DEFAULT_SB_VERSION} -configuration Release build"
+        call_xctool "TARGET_BUILD_DIR=#{BUILD_DIR} SB_VERSION='#{DEFAULT_SB_VERSION}' CONFIGURATION_BUILD_DIR=#{BUILD_DIR} VERSION=#{DEFAULT_SB_VERSION} -configuration Release build"
         app, symbols = "NONE"
 
         built_files = `find . -name SpriteBuilder.app`.chomp.split "\n"
@@ -164,7 +164,7 @@ namespace :package do
 
     desc "Create SpriteBuilder.xcarchive and zip"
     task :archive do
-        call_xctool "TARGET_BUILD_DIR=#{BUILD_DIR} VERSION='#{DEFAULT_SB_VERSION}' -configuration Release archive -archivePath #{BUILD_DIR}/SpriteBuilder"
+        call_xctool "TARGET_BUILD_DIR=#{BUILD_DIR} SB_VERSION='#{DEFAULT_SB_VERSION}' VERSION='#{DEFAULT_SB_VERSION}' -configuration Release archive -archivePath #{BUILD_DIR}/SpriteBuilder"
 
         Dir.chdir BUILD_DIR do
             sh "zip -r SpriteBuilder.xcarchive.zip SpriteBuilder.xcarchive"
