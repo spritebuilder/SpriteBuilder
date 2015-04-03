@@ -46,7 +46,6 @@
 @property (nonatomic, assign) int docDimensionsType;
 @property (nonatomic, assign) NSUInteger UUID;
 
-
 - (instancetype)initWithContentsOfFile:(NSString *)filePath;
 
 - (NSString *)formattedName;
@@ -55,4 +54,5 @@
 - (NSUInteger)getAndIncrementUUID;
 
 - (BOOL)store;
+
 @end

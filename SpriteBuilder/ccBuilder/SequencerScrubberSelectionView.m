@@ -36,6 +36,7 @@
 #import "SequencerCallbackChannel.h"
 #import "SequencerSoundChannel.h"
 #import "SequencerPopoverHandler.h"
+#import "PasteboardTypes.h"
 
 @implementation SequencerScrubberSelectionView
 
@@ -975,7 +976,7 @@
             if(item.action == @selector(menuPasteKeyframes:))
             {
                 NSPasteboard* cb = [NSPasteboard generalPasteboard];
-                NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
+                NSString* type = [cb availableTypeFromArray:@[PASTEBOARD_TYPE_KEYFRAMES, PASTEBOARD_TYPE_CHANNELKEYFRAMES]];
                 
                 //We've got a copy paste of a keyframe. Enable the Paste menuitem.
                 [item setEnabled:type != nil ? YES : NO];
@@ -995,7 +996,7 @@
             if(item.action == @selector(menuPasteKeyframes:))
             {
                 NSPasteboard* cb = [NSPasteboard generalPasteboard];
-                NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
+                NSString* type = [cb availableTypeFromArray:@[PASTEBOARD_TYPE_KEYFRAMES, PASTEBOARD_TYPE_CHANNELKEYFRAMES]];
                 
                 //We've got a copy paste of a keyframe. Enable the Paste menuitem.
                 [item setEnabled:type != nil ? YES : NO];

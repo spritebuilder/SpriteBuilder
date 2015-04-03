@@ -127,7 +127,7 @@
             for (RMResource* res in dir.any)
             {
                 if (res.type == kCCBResTypeImage ||
-                    res.type == kCCBResTypeCCBFile)
+                    res.type == kCCBResTypeSBFile)
                 {
                     if (isActiveDir) [imageResources addObject:res];
                     numImagesInDir++;
@@ -197,9 +197,9 @@
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasDoubleClickedAtIndex:(NSUInteger) index
 {
     RMResource* res = [imageResources objectAtIndex:index];
-    if (res.type == kCCBResTypeCCBFile)
+    if (res.type == kCCBResTypeSBFile)
     {
-        [[AppDelegate appDelegate] openFile:res.filePath];
+        [[AppDelegate appDelegate] openFile:res.filePath migrate:YES];
         return;
     }
     [super imageBrowser:aBrowser cellWasDoubleClickedAtIndex:index];

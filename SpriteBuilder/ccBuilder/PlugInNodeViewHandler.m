@@ -23,7 +23,7 @@
     return self;
 }
 
--(void) showNodePluginsForEngine:(CCBTargetEngine)engine
+- (void)showNodePlugins
 {
     PlugInManager* pim = [PlugInManager sharedManager];
     
@@ -33,13 +33,10 @@
     for (NSString* nodeName in nodeNames)
     {
 		PlugInNode* pluginNode = [pim plugInNodeNamed:nodeName];
-		if (pluginNode.targetEngine == engine)
-		{
-			[plugIns addObject:pluginNode];
-		}
+        [plugIns addObject:pluginNode];
     }
-    
-    [plugIns sortUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"ordering" ascending:YES]]];
+
+    [plugIns sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"ordering" ascending:YES]]];
     
     [collectionView setContent:plugIns];
 }

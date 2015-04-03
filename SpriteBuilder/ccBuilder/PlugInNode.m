@@ -25,7 +25,7 @@
 #import "PlugInNode.h"
 #import "AppDelegate.h"
 #import "CCNode+NodeInfo.h"
-#import "SBPasteboardTypes.h"
+#import "PasteboardTypes.h"
 
 
 @interface PlugInNode()
@@ -141,8 +141,6 @@
     // Load properties
     NSURL* propsURL = [bundle URLForResource:@"CCBPProperties" withExtension:@"plist"];
     NSMutableDictionary* props = [NSMutableDictionary dictionaryWithContentsOfURL:propsURL];
-    
-	_targetEngine = CCBTargetEngineCocos2d;
 
     nodeClassName = props[@"className"];
     nodeEditorClassName = props[@"editorClassName"];

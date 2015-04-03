@@ -47,7 +47,7 @@
     spriteSheet.type = kCCBResTypeDirectory;
     spriteSheet.data = _directory;
 
-    [_projectSettings addResourcePath:[self fullPathForFile:@"foo.spritebuilder/packages/baa.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"foo.spritebuilder/packages/baa.sbpack"] error:nil];
     [_projectSettings makeSmartSpriteSheet:spriteSheet];
 
     XCTAssertTrue([_directory isDynamicSpriteSheet]);

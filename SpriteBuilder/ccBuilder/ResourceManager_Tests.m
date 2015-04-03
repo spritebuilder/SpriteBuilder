@@ -15,10 +15,9 @@
 #import "ProjectSettings.h"
 #import "ResourceManagerUtil.h"
 #import "RMPackage.h"
-#import "SBAssserts.h"
 #import "FileSystemTestCase+Images.h"
 #import "ResourcePropertyKeys.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "ResourceManager+Publishing.h"
 
 @interface ResourceManager_Tests : FileSystemTestCase
@@ -42,7 +41,7 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"project/foo.ccbproj"];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"project/Packages/package1.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"project/Packages/package1.sbpack"] error:nil];
 }
 
 - (void)testResourceForRelativePath
@@ -172,8 +171,8 @@
     RMPackage *baaPackage = [_resourceManager packageForPath:[self fullPathForFile:@"project/Packages/baa.sbpack/spritesheets/deep/deeper/bottom.png"]];
     RMPackage *noPackage = [_resourceManager packageForPath:[self fullPathForFile:@"project/Packages/123.sbpack/images/resources-autp/sky.png"]];
 
-    SBAssertStringsEqual(fooPackage.fullPath, [self fullPathForFile:@"project/Packages/foo.sbpack"]);
-    SBAssertStringsEqual(baaPackage.fullPath, [self fullPathForFile:@"project/Packages/baa.sbpack"]);
+    XCTAssertEqualObjects(fooPackage.fullPath, [self fullPathForFile:@"project/Packages/foo.sbpack"]);
+    XCTAssertEqualObjects(baaPackage.fullPath, [self fullPathForFile:@"project/Packages/baa.sbpack"]);
 
     XCTAssertNil(noPackage);
 }
@@ -222,8 +221,8 @@
     NSArray *allPackages = [_resourceManager allPackages];
     for (RMPackage *aPackage in allPackages)
     {
-        SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:aPackage];
-        [packageSettings load];
+        PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:aPackage];
+        [packageSettings loadWithError:nil];
 
         packageSettings.resourceAutoScaleFactor = autoScaling;
         [packageSettings store];
@@ -243,7 +242,7 @@
     _projectSettings.projectPath = [self fullPathForFile:@"project/foo.ccbproj"];
     for (NSString *packagePath in packages)
     {
-        [_projectSettings addResourcePath:packagePath error:nil];
+        [_projectSettings addPackageWithFullPath:packagePath error:nil];
     }
 
     [self createFolders:packages];

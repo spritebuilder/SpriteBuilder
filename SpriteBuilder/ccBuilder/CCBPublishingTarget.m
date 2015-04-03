@@ -2,6 +2,7 @@
 #import "ProjectSettings.h"
 #import "PublishRenamedFilesLookup.h"
 #import "MiscConstants.h"
+#import "PublishResolutions.h"
 
 
 @implementation CCBPublishingTarget

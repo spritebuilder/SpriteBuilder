@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "CCBPublisherController.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "ProjectSettings.h"
 #import "RMPackage.h"
 #import "FileSystemTestCase+Images.h"
@@ -17,12 +17,13 @@
 #import "MiscConstants.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "NSNumber+ImageResolutions.h"
+#import "PublishResolutions.h"
 
 @interface CCBPublisherController_Tests : FileSystemTestCase
 
 @property (nonatomic, strong) CCBPublisherController *publisherController;
 @property (nonatomic, strong) ProjectSettings *projectSettings;
-@property (nonatomic, strong) SBPackageSettings *packageSettings;
+@property (nonatomic, strong) PackageSettings *packageSettings;
 @property (nonatomic, strong) RMPackage *package;
 
 @end
@@ -36,7 +37,7 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"baa.spritebuilder/publishtest.ccbproj"];
-    _projectSettings.publishDirectory = @"../Published-iOS";
+    _projectSettings.publishDirectoryIOS = @"../Published-iOS";
     _projectSettings.publishDirectoryAndroid = @"../Published-Android";
 
     self.publisherController = [[CCBPublisherController alloc] init];
@@ -57,25 +58,25 @@
 
 - (void)configureSinglePackagePublishSettingCase
 {
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"] error:nil];
 
     self.package = [[RMPackage alloc] init];
     _package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
 
-    self.packageSettings = [[SBPackageSettings alloc] initWithPackage:_package];
+    self.packageSettings = [[PackageSettings alloc] initWithPackage:_package];
     _packageSettings.publishToCustomOutputDirectory = NO;
     _packageSettings.publishToMainProject = NO;
     _packageSettings.publishToZip = YES;
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
-    iosSettings.resolution_4x = YES;
-    iosSettings.resolution_2x = YES;
-    iosSettings.resolution_1x = NO;
+    iosSettings.resolutions.resolution_4x = YES;
+    iosSettings.resolutions.resolution_2x = YES;
+    iosSettings.resolutions.resolution_1x = NO;
 
     PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
-    androidSettings.resolution_1x = YES;
-    androidSettings.resolution_2x = YES;
-    androidSettings.resolution_4x = NO;
+    androidSettings.resolutions.resolution_1x = YES;
+    androidSettings.resolutions.resolution_2x = YES;
+    androidSettings.resolutions.resolution_4x = NO;
 
     [self createFolders:@[@"baa.spritebuilder/Packages/foo.sbpack"]];
 
@@ -120,11 +121,14 @@
     _packageSettings.customOutputDirectory = @"../custom";
 
     PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
-    iosSettings.resolutions = @[];
+    iosSettings.resolutions.resolution_1x = NO;
+    iosSettings.resolutions.resolution_2x = NO;
+    iosSettings.resolutions.resolution_4x = NO;
 
     PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
-    androidSettings.resolutions = @[];
-    androidSettings.resolution_2x = YES;
+    androidSettings.resolutions.resolution_1x = NO;
+    androidSettings.resolutions.resolution_2x = YES;
+    androidSettings.resolutions.resolution_4x = NO;
 
     [_publisherController startAsync:NO];
 
@@ -134,7 +138,10 @@
 
     [self assertFilesDoNotExistRelativeToDirectory:@"custom" filesPaths:@[
             @"foo-Android-1x.zip",
-            @"foo-Android-4x.zip"
+            @"foo-Android-4x.zip",
+            @"foo-iOS-1x.zip",
+            @"foo-iOS-2x.zip",
+            @"foo-iOS-4x.zip"
     ]];
 
     [self assertFilesDoNotExistRelativeToDirectory:@"Published-iOS" filesPaths:@[
@@ -150,37 +157,101 @@
     ]];
 }
 
+- (void)testPackageExportWithContentsInspection
+{
+    [self configureSinglePackagePublishSettingCase];
+
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto/plane.png" width:10 height:2];
+
+    _packageSettings.publishToMainProject = NO;
+
+    PublishOSSettings *iosSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeIOS];
+    iosSettings.resolutions.resolution_1x = NO;
+    iosSettings.resolutions.resolution_2x = YES;
+    iosSettings.resolutions.resolution_4x = NO;
+
+    PublishOSSettings *androidSettings = [_packageSettings settingsForOsType:kCCBPublisherOSTypeAndroid];
+    androidSettings.resolutions.resolution_1x = NO;
+    androidSettings.resolutions.resolution_2x = NO;
+    androidSettings.resolutions.resolution_4x = NO;
+
+    [_publisherController startAsync:NO];
+
+    [self assertFileExists:@"baa.spritebuilder/Published-Packages/foo-iOS-2x.zip"];
+
+    XCTAssertTrue([self unzipPackageAt:@"baa.spritebuilder/Published-Packages/foo-iOS-2x.zip" to:@"package_test"]);
+
+    [self assertFilesExistRelativeToDirectory:@"package_test/foo-iOS-2x" filesPaths:@[
+            @"configCocos2d.plist",
+            @"fileLookup.plist",
+            @"plane-2x.png",
+            @"spriteFrameFileList.plist"
+    ]];
+}
+
+- (BOOL)unzipPackageAt:(NSString *)zipFile to:(NSString *)outputDir
+{
+    NSTask *task = [[NSTask alloc] init];
+
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager createDirectoryAtPath:[self fullPathForFile:outputDir] withIntermediateDirectories:YES attributes:nil error:nil];
+
+    [task setCurrentDirectoryPath:[self fullPathForFile:outputDir]];
+    [task setLaunchPath:@"/usr/bin/unzip"];
+
+    NSArray *args = @[@"-d", [self fullPathForFile:outputDir], [self fullPathForFile:zipFile]];
+    [task setArguments:args];
+
+    NSPipe *pipeStdOut = [NSPipe pipe];
+    [task setStandardOutput:pipeStdOut];
+
+    int status = 0;
+    @try
+    {
+        [task launch];
+        [task waitUntilExit];
+
+        status = [task terminationStatus];
+    }
+    @catch (NSException *exception)
+    {
+        return NO;
+    }
+
+    return status == 0;
+}
+
 - (void)testPublishMainProjectWithSomePackagesNotIncluded
 {
     [self createPNGAtPath:@"baa.spritebuilder/Packages/Menus.sbpack/resources-auto/button.png" width:4 height:4];
     [self createPNGAtPath:@"baa.spritebuilder/Packages/Characters.sbpack/resources-auto/hero.png" width:4 height:4];
     [self createPNGAtPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack/resources-auto/desert.png" width:4 height:4];
 
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Menus.sbpack"] error:nil];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Characters.sbpack"] error:nil];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"baa.spritebuilder/Packages/Backgrounds.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"baa.spritebuilder/Packages/Menus.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"baa.spritebuilder/Packages/Characters.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"baa.spritebuilder/Packages/Backgrounds.sbpack"] error:nil];
     _projectSettings.publishEnabledIOS = YES;
     _projectSettings.publishEnabledAndroid = YES;
 
     // Not included, therefor button.png should not be in result
-    SBPackageSettings *packageSettingsMenus = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Menus.sbpack"];
-    packageSettingsMenus.mainProject_resolution_4x = NO;
-    packageSettingsMenus.mainProject_resolution_2x = YES;
-    packageSettingsMenus.mainProject_resolution_1x = NO;
+    PackageSettings *packageSettingsMenus = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Menus.sbpack"];
+    packageSettingsMenus.mainProjectResolutions.resolution_4x = NO;
+    packageSettingsMenus.mainProjectResolutions.resolution_2x = YES;
+    packageSettingsMenus.mainProjectResolutions.resolution_1x = NO;
     packageSettingsMenus.publishToMainProject = NO;
     packageSettingsMenus.publishToZip = NO;
 
-    SBPackageSettings *packageSettingsCharacters = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Characters.sbpack"];
-    packageSettingsCharacters.mainProject_resolution_4x = YES;
-    packageSettingsCharacters.mainProject_resolution_2x = NO;
-    packageSettingsCharacters.mainProject_resolution_1x = YES;
+    PackageSettings *packageSettingsCharacters = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Characters.sbpack"];
+    packageSettingsCharacters.mainProjectResolutions.resolution_4x = YES;
+    packageSettingsCharacters.mainProjectResolutions.resolution_2x = NO;
+    packageSettingsCharacters.mainProjectResolutions.resolution_1x = YES;
     packageSettingsCharacters.publishToMainProject = YES;
     packageSettingsCharacters.publishToZip = NO;
 
-    SBPackageSettings *packageSettingsBackgrounds = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack"];
-    packageSettingsBackgrounds.mainProject_resolution_4x = NO;
-    packageSettingsBackgrounds.mainProject_resolution_2x = NO;
-    packageSettingsBackgrounds.mainProject_resolution_1x = YES;
+    PackageSettings *packageSettingsBackgrounds = [self createSettingsWithPath:@"baa.spritebuilder/Packages/Backgrounds.sbpack"];
+    packageSettingsBackgrounds.mainProjectResolutions.resolution_4x = NO;
+    packageSettingsBackgrounds.mainProjectResolutions.resolution_2x = NO;
+    packageSettingsBackgrounds.mainProjectResolutions.resolution_1x = YES;
     packageSettingsBackgrounds.publishToMainProject = YES;
     packageSettingsBackgrounds.publishToZip = NO;
 
@@ -241,12 +312,12 @@
 
 #pragma mark - helpers
 
-- (SBPackageSettings *)createSettingsWithPath:(NSString *)path
+- (PackageSettings *)createSettingsWithPath:(NSString *)path
 {
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [self fullPathForFile:path];
 
-    return [[SBPackageSettings alloc] initWithPackage:package];
+    return [[PackageSettings alloc] initWithPackage:package];
 }
 
 @end

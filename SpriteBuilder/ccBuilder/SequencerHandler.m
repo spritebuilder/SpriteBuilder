@@ -47,7 +47,7 @@
 #import "NSArray+Query.h"
 #import "CCBPhysicsJoint.h"
 #import "PlugInManager.h"
-#import "SBPasteboardTypes.h"
+#import "PasteboardTypes.h"
 #import "EffectsManager.h"
 #import "InspectorController.h"
 #import "NotificationNames.h"
@@ -90,7 +90,7 @@ static SequencerHandler* sharedSequencerHandler;
 	[outlineHierarchy registerForDraggedTypes:@[PASTEBOARD_TYPE_NODE,
 			PASTEBOARD_TYPE_TEXTURE,
 			PASTEBOARD_TYPE_TEMPLATE,
-			PASTEBOARD_TYPE_CCB,
+            PASTEBOARD_TYPE_SB,
 			PASTEBOARD_TYPE_PLUGINNODE,
 			PASTEBOARD_TYPE_WAVE,
 			PASTEBOARD_TYPE_JOINTBODY,
@@ -937,7 +937,7 @@ static SequencerHandler* sharedSequencerHandler;
 - (BOOL)acceptDropForCCBFiles:(id)item pasteboard:(NSPasteboard *)pasteboard
 {
 	BOOL addedObject = NO;;
-	NSArray* pbCCBs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_CCB];
+	NSArray* pbCCBs = [pasteboard propertyListsForType:PASTEBOARD_TYPE_SB];
 	for (NSDictionary* dict in pbCCBs)
     {
         [appDelegate dropAddCCBFileNamed:dict[@"ccbFile"] at:ccp(0, 0) parent:item];

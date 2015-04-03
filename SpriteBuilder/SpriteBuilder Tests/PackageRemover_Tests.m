@@ -12,7 +12,7 @@
 #import "ObserverTestHelper.h"
 #import "NotificationNames.h"
 #import "NSString+Packages.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "PackageRemover.h"
 #import "RMPackage.h"
 #import "MiscConstants.h"
@@ -68,7 +68,7 @@
     NSString *packagePath = [@"/package1" stringByAppendingPackageSuffix];
     [[[_fileManagerMock expect] andReturnValue:@(YES)] removeItemAtPath:packagePath error:[OCMArg anyObjectRef]];
 
-    [_projectSettings addResourcePath:packagePath error:nil];
+    [_projectSettings addPackageWithFullPath:packagePath error:nil];
 
     RMPackage *packageToRemove = [[RMPackage alloc] init];
     packageToRemove.dirPath = packagePath;
@@ -98,7 +98,7 @@
 
     NSArray *packagesToBeRemoved = @[packageWithGoodPath, packageWithBadPath];
 
-    [_projectSettings addResourcePath:packageWithGoodPath.dirPath error:nil];
+    [_projectSettings addPackageWithFullPath:packageWithGoodPath.dirPath error:nil];
 
     [[[_fileManagerMock expect] andReturnValue:@(YES)] removeItemAtPath:OCMOCK_ANY error:[OCMArg anyObjectRef]];
 

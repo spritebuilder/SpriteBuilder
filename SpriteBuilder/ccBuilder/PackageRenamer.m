@@ -1,7 +1,7 @@
 #import "PackageRenamer.h"
 #import "NSString+Packages.h"
 #import "RMPackage.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "NSError+SBErrors.h"
 #import "ProjectSettings.h"
 #import "ResourceManager.h"
@@ -38,11 +38,11 @@
 
     BOOL renameSuccessful = ([self canRenamePackage:package toName:newName error:error]
                             && [_fileManager moveItemAtPath:package.dirPath toPath:newFullPath error:error]
-                            && [_projectSettings moveResourcePathFrom:package.dirPath toPath:newFullPath error:error]);
+                            && [_projectSettings movePackageWithFullPathFrom:package.dirPath toFullPath:newFullPath error:error]);
 
     if (renameSuccessful)
     {
-        [_resourceManager setActiveDirectoriesWithFullReset:[_projectSettings absoluteResourcePaths]];
+        [_resourceManager setActiveDirectoriesWithFullReset:[_projectSettings absolutePackagePaths]];
         [[AppDelegate appDelegate] renamedResourcePathFrom:oldFullPath toPath:newFullPath];
         [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:package];
         return YES;
@@ -70,15 +70,15 @@
         return YES;
     }
 
-    if ([_projectSettings isResourcePathInProject:newFullPath])
+    if ([_projectSettings isPackageWithFullPathInProject:newFullPath])
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBDuplicateResourcePathError message:@"A package with this name already exists in the project"];
+        [NSError setNewErrorWithErrorPointer:error code:SBDuplicatePackageError message:@"A package with this name already exists in the project"];
         return NO;
     }
 
     if ([_fileManager fileExistsAtPath:newFullPath])
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBResourcePathExistsButNotInProjectError message:@"A package with this name already exists on the file system, but is not in the project."];
+        [NSError setNewErrorWithErrorPointer:error code:SBPackageExistsButNotInProjectError message:@"A package with this name already exists on the file system, but is not in the project."];
         return NO;
     }
 

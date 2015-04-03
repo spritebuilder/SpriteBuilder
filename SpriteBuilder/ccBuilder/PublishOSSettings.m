@@ -1,5 +1,6 @@
 #import "PublishOSSettings.h"
 #import "MiscConstants.h"
+#import "PublishResolutions.h"
 
 NSString *const KEY_RESOLUTIONS = @"resolutions";
 NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
@@ -13,7 +14,7 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     if (self)
     {
         self.audio_quality = DEFAULT_AUDIO_QUALITY;
-        self.resolutions = @[@(RESOLUTION_1X), @(RESOLUTION_2X), @(RESOLUTION_4X)];
+        self.resolutions = [[PublishResolutions alloc] init];
     }
 
     return self;
@@ -26,7 +27,7 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     if (self && dictionary)
     {
         self.audio_quality = [dictionary[KEY_AUDIO_QUALITY] integerValue];
-        self.resolutions = dictionary[KEY_RESOLUTIONS];
+        self.resolutions = [[PublishResolutions alloc] initWithData:dictionary[KEY_RESOLUTIONS]];
     }
 
     return self;
@@ -37,56 +38,9 @@ NSString *const KEY_AUDIO_QUALITY = @"audio_quality";
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
 
     result[KEY_AUDIO_QUALITY] = @(_audio_quality);
-    result[KEY_RESOLUTIONS] = self.resolutions;
+    result[KEY_RESOLUTIONS] = [self.resolutions serialize];
 
     return result;
-}
-
-- (NSArray *)resolutions
-{
-    NSMutableArray *result = [NSMutableArray array];
-
-    if (_resolution_1x)
-    {
-        [result addObject:@(RESOLUTION_1X)];
-    }
-
-    if (_resolution_2x)
-    {
-        [result addObject:@(RESOLUTION_2X)];
-    }
-
-    if (_resolution_4x)
-    {
-        [result addObject:@(RESOLUTION_4X)];
-    }
-
-    return result;
-}
-
-- (void)setResolutions:(NSArray *)resolutions
-{
-    self.resolution_1x = NO;
-    self.resolution_2x = NO;
-    self.resolution_4x = NO;
-
-    for (NSNumber *contentScale in resolutions)
-    {
-        if ([contentScale isEqualTo:@(RESOLUTION_1X)])
-        {
-            self.resolution_1x = YES;
-        }
-
-        if ([contentScale isEqualTo:@(RESOLUTION_2X)])
-        {
-            self.resolution_2x = YES;
-        }
-
-        if ([contentScale isEqualTo:@(RESOLUTION_4X)])
-        {
-            self.resolution_4x = YES;
-        }
-    }
 }
 
 @end

@@ -119,7 +119,7 @@
     ProjectSettings* projectSettings = [AppDelegate appDelegate].projectSettings;
     NSMutableArray* files = [NSMutableArray array];
     
-    for (NSString* dir in projectSettings.absoluteResourcePaths)
+    for (NSString* dir in projectSettings.absolutePackagePaths)
     {
         [self addFilesWithExtension:ext inDirectory:dir toArray:files subPath:@""];
     }

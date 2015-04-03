@@ -44,7 +44,7 @@
 #import "RMPackage.h"
 #import "ResourcePropertyKeys.h"
 #import "NotificationNames.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "ResourceManager+Publishing.h"
 
 @protocol ResourceManager_UndeclaredSelectors <NSObject>
@@ -170,7 +170,7 @@
 
 + (BOOL)isResolutionDependentFile:(NSString *)file
 {
-    if ([[file pathExtension] isEqualToString:@"ccb"])
+    if ([[file pathExtension] isEqualToString:@"sb"])
     {
         return NO;
     }
@@ -248,9 +248,9 @@
     {
         return kCCBResTypeAnimation;
     }
-    else if ([ext isEqualToString:@"ccb"])
+    else if ([ext isEqualToString:@"sb"] || [ext isEqualToString:@"ccb"])
     {
-        return kCCBResTypeCCBFile;
+        return kCCBResTypeSBFile;
     }
     else if ([ext isEqualToString:@"js"])
     {
@@ -373,7 +373,7 @@
                     || res.type == kCCBResTypeImage
                     || res.type == kCCBResTypeBMFont
                     || res.type == kCCBResTypeTTF
-                    || res.type == kCCBResTypeCCBFile
+                    || res.type == kCCBResTypeSBFile
                     || res.type == kCCBResTypeAudio
                     || res.type == kCCBResTypeGeneratedSpriteSheetDef)
                 {
@@ -470,7 +470,7 @@
             {
                 [dir.ttfFonts addObject:res];
             }
-            if (res.type == kCCBResTypeCCBFile
+            if (res.type == kCCBResTypeSBFile
                 || res.type == kCCBResTypeDirectory)
             {
                 [dir.ccbFiles addObject:res];
@@ -487,7 +487,7 @@
                 || res.type == kCCBResTypeAnimation
                 || res.type == kCCBResTypeBMFont
                 || res.type == kCCBResTypeTTF
-                || res.type == kCCBResTypeCCBFile
+                || res.type == kCCBResTypeSBFile
                 || res.type == kCCBResTypeDirectory
                 || res.type == kCCBResTypeJS
                 || res.type == kCCBResTypeJSON
@@ -857,7 +857,7 @@
 - (float)srcScaleForResource:(RMResource *)resource projectSettings:(ProjectSettings *)projectSettings packageSettings:(NSArray *)packageSettings
 {
     id srcScaleSetting = [projectSettings propertyForResource:resource andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
-    SBPackageSettings *aPackageSettings = [self packageSettingsForResource:resource packageSettings:packageSettings];
+    PackageSettings *aPackageSettings = [self packageSettingsForResource:resource packageSettings:packageSettings];
 
     if (srcScaleSetting)
     {
@@ -875,9 +875,9 @@
     }
 }
 
-- (SBPackageSettings *)packageSettingsForResource:(RMResource *)resource packageSettings:(NSArray *)packageSettings
+- (PackageSettings *)packageSettingsForResource:(RMResource *)resource packageSettings:(NSArray *)packageSettings
 {
-    for (SBPackageSettings *aPackageSettings in packageSettings)
+    for (PackageSettings *aPackageSettings in packageSettings)
     {
         if ([resource.filePath rangeOfString:aPackageSettings.package.dirPath].location != NSNotFound)
         {

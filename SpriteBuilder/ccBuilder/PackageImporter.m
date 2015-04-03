@@ -3,12 +3,19 @@
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
 #import "NSString+Packages.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "PackageUtil.h"
 #import "NotificationNames.h"
 #import "NSError+SBErrors.h"
 #import "MiscConstants.h"
 #import "RMPackage.h"
+#import "PackageSettings.h"
+#import "PackageSettingsMigrator.h"
+#import "MigrationController.h"
+#import "CCBToSBRenameMigrator.h"
+#import "AllPackageSettingsMigrator.h"
+#import "AllDocumentsMigrator.h"
+#import "CCBDictionaryReader.h"
 
 @implementation PackageImporter
 
@@ -80,7 +87,7 @@
 {
     return ^BOOL(RMPackage *packageToImport, NSError **localError)
     {
-        if ([_projectSettings isResourcePathInProject:packageToImport.dirPath])
+        if ([_projectSettings isPackageWithFullPathInProject:packageToImport.dirPath])
         {
             [NSError setNewErrorWithErrorPointer:localError code:SBPackageAlreayInProject message:@"Package already in project folder."];
             return NO;
@@ -89,21 +96,30 @@
         NSString *packageName = [[packageToImport.dirPath lastPathComponent] stringByDeletingPathExtension];
         NSString *newPathInPackagesFolder = [_projectSettings fullPathForPackageName:packageName];
 
-        if (![_projectSettings isPathInPackagesFolder:packageToImport.dirPath])
+        if (![_projectSettings isPathInPackagesFolder:packageToImport.dirPath]
+            && ![_fileManager copyItemAtPath:packageToImport.dirPath toPath:newPathInPackagesFolder error:localError])
         {
-            if (![_fileManager copyItemAtPath:packageToImport.dirPath toPath:newPathInPackagesFolder error:localError])
-            {
-                return NO;
-            }
+            return NO;
         }
 
-        if ([_projectSettings addResourcePath:newPathInPackagesFolder error:localError])
+        if (![_projectSettings addPackageWithFullPath:newPathInPackagesFolder error:localError])
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
-            return YES;
+            return NO;
         }
 
-        return NO;
+        MigrationController *migrationController = [[MigrationController alloc] init];
+        migrationController.migrators = @[
+            [[AllDocumentsMigrator alloc] initWithDirPath:newPathInPackagesFolder toVersion:kCCBDictionaryFormatVersion],
+            [[AllPackageSettingsMigrator alloc] initWithPackagePaths:@[newPathInPackagesFolder] toVersion:PACKAGE_SETTINGS_VERSION],
+            [[CCBToSBRenameMigrator alloc] initWithFilePath:newPathInPackagesFolder migratorData:nil]];
+
+        if (![migrationController migrateWithError:localError])
+        {
+            return NO;
+        }
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATHS_CHANGED object:self];
+        return YES;
     };
 }
 

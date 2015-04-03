@@ -6,4 +6,7 @@
 
 - (BOOL)undo:(NSError **)error;
 
+@optional
+- (void)tidyUp;
+
 @end

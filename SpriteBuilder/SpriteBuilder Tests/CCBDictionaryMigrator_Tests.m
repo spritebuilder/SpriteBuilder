@@ -8,12 +8,17 @@
 
 #import <XCTest/XCTest.h>
 #import "CCBDictionaryMigrator.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "CCBDictionaryKeys.h"
 #import "CCBDictionaryMigrationProtocol.h"
 #import "NSError+SBErrors.h"
+#import "CCBDictionaryReader.h"
+#import "FileSystemTestCase.h"
 
-@interface CCBDictionaryMigrator_Tests : XCTestCase
+
+static NSString *DOCUMENT_FILENAME = @"document.ccb";
+
+@interface CCBDictionaryMigrator_Tests : FileSystemTestCase
 
 @end
 
@@ -22,93 +27,147 @@
 
 - (void)testMigrateCCBWithoutVersion
 {
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:@{}];
+    NSDictionary *dictOriginal = [self createDocumentOnDisk:@{}];
+
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithFilepath:[self fullPathForFile:DOCUMENT_FILENAME]
+                                                                            toVersion:kCCBDictionaryFormatVersion];
 
     NSError *error;
-    NSDictionary *migratedCCB = [migrator migrate:&error];
-
-    XCTAssertNil(migratedCCB);
+    XCTAssertFalse([migrator migrateWithError:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBCCBMigrationNoVersionFoundError);
-};
+
+    [self assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
+}
 
 - (void)testMigrateCCBWithEmptyMigrationStepClassPrefixError
 {
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:@{}];
+    NSDictionary *dictOriginal = [self createDocumentOnDisk:@{}];
+
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithFilepath:[self fullPathForFile:DOCUMENT_FILENAME]
+                                                                            toVersion:kCCBDictionaryFormatVersion];
+
     migrator.migrationStepClassPrefix = nil;
 
     NSError *error;
-    NSDictionary *migratedCCB = [migrator migrate:&error];
-
-    XCTAssertNil(migratedCCB);
+    XCTAssertFalse([migrator migrateWithError:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBCCBMigrationNoMigrationStepClassPrefixError);
-};
+
+    [self assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
+}
 
 - (void)testMigrateUpdatingVersionOnly
 {
-    NSDictionary *ccb = @{
-        CCB_DICTIONARY_KEY_FILEVERSION : @2
-    };
+    NSDictionary *dictOriginal = [self createDocumentOnDisk:@{
+            CCB_DICTIONARY_KEY_FILEVERSION : @2
+    }];
 
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithFilepath:[self fullPathForFile:DOCUMENT_FILENAME]
+                                                                            toVersion:5];
+
+    // this is mainly to not use any existing migration classes with this simple case
     migrator.migrationStepClassPrefix = @"SurelyNotExistingButThatsOk";
-    migrator.ccbMigrationVersionTarget = 5;
 
     NSError *error;
-    NSDictionary *migratedCCB = [migrator migrate:&error];
-
-    XCTAssertNotNil(migratedCCB);
-    XCTAssertEqualObjects(migratedCCB[CCB_DICTIONARY_KEY_FILEVERSION], @5);
+    XCTAssertTrue([migrator migrateWithError:&error]);
     XCTAssertNil(error);
+
+    NSDictionary *migratedCCB = [self loadDocument];
+    XCTAssertEqualObjects(migratedCCB[CCB_DICTIONARY_KEY_FILEVERSION], @5);
+
+    XCTAssertNotEqualObjects(dictOriginal, migratedCCB);
 }
 
 - (void)testMigrate
 {
-    NSDictionary *ccb = @{
+    NSDictionary *dictOriginal = [self createDocumentOnDisk:@{
         CCB_DICTIONARY_KEY_FILEVERSION : @1,
         @"payload" : @{
             @"foo" : @"baa"
         }
-    };
+    }];
 
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithFilepath:[self fullPathForFile:DOCUMENT_FILENAME]
+                                                                            toVersion:3];
+
     // See below for class stub
     migrator.migrationStepClassPrefix = @"CCBTestMigrationStep";
-    migrator.ccbMigrationVersionTarget = 3;
 
     NSError *error;
-    NSDictionary *migratedCCB = [migrator migrate:&error];
+    XCTAssertTrue([migrator migrateWithError:&error]);
+    NSDictionary *migratedCCB = [self loadDocument];
 
-    XCTAssertNotNil(migratedCCB);
     XCTAssertEqualObjects(migratedCCB[CCB_DICTIONARY_KEY_FILEVERSION], @3);
     XCTAssertEqualObjects(migratedCCB[@"payload"], @"done!");
     XCTAssertNil(error);
+
+    XCTAssertNotEqualObjects(dictOriginal, migratedCCB);
 };
 
 - (void)testMigrateFailingWithUnderlyingError
 {
-    NSDictionary *ccb = @{
+    NSDictionary *dictOriginal = [self createDocumentOnDisk:@{
         CCB_DICTIONARY_KEY_FILEVERSION : @4
-    };
+    }];
 
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:ccb];
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithFilepath:[self fullPathForFile:DOCUMENT_FILENAME]
+                                                                            toVersion:5];
+
     // See below for class stub
     migrator.migrationStepClassPrefix = @"CCBTestMigrationFailingStep";
-    migrator.ccbMigrationVersionTarget = 5;
 
     NSError *error;
-    NSDictionary *migratedCCB = [migrator migrate:&error];
-
-    XCTAssertNil(migratedCCB);
+    XCTAssertFalse([migrator migrateWithError:&error]);
     XCTAssertNotNil(error);
     XCTAssertEqual(error.code, SBCCBMigrationError);
 
-    NSLog(@"%@", error);
-
     NSError *underlyingError = error.userInfo[NSUnderlyingErrorKey];
     XCTAssertNotNil(underlyingError);
+    // Error code generated in class stub CCBTestMigrationFailingStep below
     XCTAssertEqual(underlyingError.code, 1234567);
+
+    [self assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
+}
+
+- (void)testRollback
+{
+    NSDictionary *dictOriginal = [self createDocumentOnDisk:@{
+        CCB_DICTIONARY_KEY_FILEVERSION : @1,
+        @"payload" : @{
+            @"foo" : @"baa"
+        }
+    }];
+
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithFilepath:[self fullPathForFile:DOCUMENT_FILENAME]
+                                                                            toVersion:3];
+    migrator.migrationStepClassPrefix = @"CCBTestMigrationStep";
+
+    NSError *error;
+    XCTAssertTrue([migrator migrateWithError:&error]);
+
+    [migrator rollback];
+
+    [self assertEqualObjectsWithDiff:dictOriginal objectB:[self loadDocument]];
+}
+
+
+#pragma mark - helpers
+
+- (NSDictionary *)loadDocument
+{
+    NSDictionary *document = [NSDictionary dictionaryWithContentsOfFile:[self fullPathForFile:DOCUMENT_FILENAME]];
+    XCTAssertNotNil(document);
+
+    return document;
+}
+
+- (NSDictionary *)createDocumentOnDisk:(NSDictionary *)contentsOfFile
+{
+    [contentsOfFile writeToFile:[self fullPathForFile:DOCUMENT_FILENAME] atomically:YES];
+    [self assertFileExists:DOCUMENT_FILENAME];
+
+    return contentsOfFile;
 }
 
 @end

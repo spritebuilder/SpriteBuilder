@@ -11,7 +11,7 @@
 
 #import "ProjectSettings.h"
 #import "NSString+Packages.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "RMPackage.h"
 #import "ResourceManager.h"
 #import "PackageRenamer.h"
@@ -46,11 +46,11 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [@"/project/pack_old" stringByAppendingPackageSuffix];
 
-    [_projectSettings addResourcePath:[@"/project/pack_new" stringByAppendingPackageSuffix] error:nil];
+    [_projectSettings addPackageWithFullPath:[@"/project/pack_new" stringByAppendingPackageSuffix] error:nil];
 
     NSError *error;
     XCTAssertFalse([_packageRenamer canRenamePackage:package toName:@"pack_new" error:&error]);
-    XCTAssertEqual(error.code, SBDuplicateResourcePathError);
+    XCTAssertEqual(error.code, SBDuplicatePackageError);
 }
 
 - (void)testCanRenamePackageToEmptyName
@@ -58,7 +58,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [@"/project/pack_old" stringByAppendingPackageSuffix];
 
-    [_projectSettings addResourcePath:[@"/project/pack_new" stringByAppendingPackageSuffix] error:nil];
+    [_projectSettings addPackageWithFullPath:[@"/project/pack_new" stringByAppendingPackageSuffix] error:nil];
 
     NSError *error;
     XCTAssertFalse([_packageRenamer canRenamePackage:package toName:nil error:&error]);
@@ -82,7 +82,7 @@
 
     NSError *error;
     XCTAssertFalse([_packageRenamer canRenamePackage:package toName:@"pack_new" error:&error]);
-    XCTAssertEqual(error.code, SBResourcePathExistsButNotInProjectError);
+    XCTAssertEqual(error.code, SBPackageExistsButNotInProjectError);
 
     [_fileManagerMock verify];
 }
@@ -112,7 +112,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [@"/project/pack_old" stringByAppendingPackageSuffix];
 
-    [_projectSettings addResourcePath:package.dirPath error:nil];
+    [_projectSettings addPackageWithFullPath:package.dirPath error:nil];
 
     id resourceManagerMock = [OCMockObject niceMockForClass:[ResourceManager class]];
     _packageRenamer.resourceManager = resourceManagerMock;

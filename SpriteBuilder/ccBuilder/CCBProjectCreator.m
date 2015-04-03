@@ -44,7 +44,7 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
 
 @implementation CCBProjectCreator
 
-- (BOOL)createDefaultProjectAtPath:(NSString *)fileName engine:(CCBTargetEngine)engine programmingLanguage:(CCBProgrammingLanguage)programmingLanguage
+- (BOOL)createDefaultProjectAtPath:(NSString *)fileName programmingLanguage:(SBProgrammingLanguage)language;
 {
     NSError *error = nil;
     NSFileManager *fm = [NSFileManager defaultManager];
@@ -87,7 +87,7 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     [self setName:identifier inFile:pbxprojFile search:substitutableProjectIdentifier];
 
     NSArray *filesToRemove;
-    if (programmingLanguage == CCBProgrammingLanguageObjectiveC)
+    if (language == SBProgrammingLanguageObjectiveC)
     {
         [self setName:@"IPHONEOS_DEPLOYMENT_TARGET = 6.0"
                inFile:pbxprojFile
@@ -98,7 +98,7 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
         [self removeLinesMatching:@".*MainScene[.]swift.*" inFile:pbxprojFile];
         filesToRemove = @[@"Source/MainScene.swift"];
     }
-    else if (programmingLanguage == CCBProgrammingLanguageSwift)
+    else if (language == SBProgrammingLanguageSwift)
     {
         [self removeLinesMatching:@".*MainScene[.][hm].*" inFile:pbxprojFile];
         filesToRemove = @[@"Source/MainScene.h", @"Source/MainScene.m"];

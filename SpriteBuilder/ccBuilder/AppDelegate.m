@@ -107,13 +107,11 @@
 #import <ExceptionHandling/NSExceptionHandler.h>
 #import <objc/runtime.h>
 #import <objc/message.h>
-#import <MacTypes.h>
 #import "PlugInNodeCollectionView.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "NSArray+Query.h"
-#import "Cocos2dUpdater.h"
 #import "OALSimpleAudio.h"
-#import "SBUserDefaultsKeys.h"
+#import "UserDefaultsKeys.h"
 #import "MiscConstants.h"
 #import "FeatureToggle.h"
 #import "AnimationPlaybackManager.h"
@@ -125,7 +123,7 @@
 #import "PackageImporter.h"
 #import "PackageCreator.h"
 #import "ResourceCommandController.h"
-#import "ProjectMigrator.h"
+#import "MigrationController.h"
 #import "ProjectSettings+Convenience.h"
 #import "CCBDocumentDataCreator.h"
 #import "CCBPublisherCacheCleaner.h"
@@ -134,11 +132,14 @@
 #import "CCNode+NodeInfo.h"
 #import "PreviewContainerViewController.h"
 #import "InspectorController.h"
-#import "SBOpenPathsController.h"
+#import "OpenPathsController.h"
 #import "LightingHandler.h"
 #import "NSAlert+Convenience.h"
 #import "SecurityScopedBookmarksStore.h"
 #import "CCDirector_Private.h"
+#import "PasteboardTypes.h"
+#import "Migrator.h"
+#import "Cocos2dUpdaterController.h"
 
 static const int CCNODE_INDEX_LAST = -1;
 
@@ -607,8 +608,6 @@ typedef enum
 #ifdef TESTING
 	return;
 #endif
-	
-
     // Open registration window
     BOOL alreadyRegistered = (BOOL)([[NSUserDefaults standardUserDefaults] objectForKey:kSbRegisteredEmail]);
 
@@ -1174,7 +1173,7 @@ typedef enum
     
     if (type == kCCBDocDimensionsTypeNode)
     {
-        if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+        if (projectSettings.designTarget == kSBDesignTargetFlexible)
         {
             [updatedResolutions addObject:[ResolutionSetting settingIPhone]];
             [updatedResolutions addObject:[ResolutionSetting settingIPad]];
@@ -1188,14 +1187,14 @@ typedef enum
     {
         ResolutionSetting* settingDefault = [resolutions objectAtIndex:0];
         
-        if (projectSettings.designTarget == kCCBDesignTargetFixed)
+        if (projectSettings.designTarget == kSBDesignTargetFixed)
         {
             settingDefault.name = @"Fixed";
             settingDefault.scale = 2;
             settingDefault.ext = @"tablet phonehd";
             [updatedResolutions addObject:settingDefault];
         }
-        else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+        else if (projectSettings.designTarget == kSBDesignTargetFlexible)
         {
             settingDefault.name = @"Phone";
             settingDefault.scale = 1;
@@ -1211,14 +1210,14 @@ typedef enum
     }
     else if (type == kCCBDocDimensionsTypeFullScreen)
     {
-        if (projectSettings.defaultOrientation == kCCBOrientationLandscape)
+        if (projectSettings.defaultOrientation == kSBOrientationLandscape)
         {
             // Full screen landscape
-            if (projectSettings.designTarget == kCCBDesignTargetFixed)
+            if (projectSettings.designTarget == kSBDesignTargetFixed)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingFixedLandscape]];
             }
-            else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+            else if (projectSettings.designTarget == kSBDesignTargetFlexible)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Landscape]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadLandscape]];
@@ -1228,11 +1227,11 @@ typedef enum
         else
         {
             // Full screen portrait
-            if (projectSettings.designTarget == kCCBDesignTargetFixed)
+            if (projectSettings.designTarget == kSBDesignTargetFixed)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingFixedPortrait]];
             }
-            else if (projectSettings.designTarget == kCCBDesignTargetFlexible)
+            else if (projectSettings.designTarget == kSBDesignTargetFlexible)
             {
                 [updatedResolutions addObject:[ResolutionSetting settingIPhone5Portrait]];
                 [updatedResolutions addObject:[ResolutionSetting settingIPadPortrait]];
@@ -1246,33 +1245,15 @@ typedef enum
 
 - (void) replaceDocumentData:(NSMutableDictionary*)doc
 {
-//    SceneGraph* g = [SceneGraph instance];
-    
     [loadedSelectedNodes removeAllObjects];
-    
-    BOOL centered = [[doc objectForKey:@"centeredOrigin"] boolValue];
-    
+
     // Check for jsControlled
     jsControlled = [doc[@"jsControlled"] boolValue];
     
     int docDimType = [doc[@"docDimensionsType"] intValue];
-    if (docDimType == kCCBDocDimensionsTypeNode)
-    {
-        centered = YES;
-    }
-    else
-    {
-        centered = NO;
-    }
+    BOOL centered = docDimType == kCCBDocDimensionsTypeNode ? YES : NO;
 
-    if (docDimType == kCCBDocDimensionsTypeLayer)
-    {
-        self.canEditStageSize = YES;
-    }
-    else
-    {
-        self.canEditStageSize = NO;
-    }
+    self.canEditStageSize = docDimType == kCCBDocDimensionsTypeLayer ? YES : NO;
 
     // Setup stage & resolutions
     NSMutableArray* serializedResolutions = doc[@"resolutions"];
@@ -1291,17 +1272,15 @@ typedef enum
         currentDocument.docDimensionsType = docDimType;
         int currentResolution = [doc[@"currentResolution"] intValue];
         currentResolution = (int) clampf(currentResolution, 0, resolutions.count - 1);
-        ResolutionSetting* resolution = resolutions[currentResolution];
+        ResolutionSetting* resolution = resolutions[(NSUInteger) currentResolution];
         
         // Save in current document
         currentDocument.resolutions = resolutions;
         currentDocument.currentResolution = currentResolution;
         
         [self updatePositionScaleFactor];
-        
-        // Update CocosScene
+
         [[CocosScene cocosScene] setStageSize:CGSizeMake(resolution.width, resolution.height) centeredOrigin: centered];
-        
     }
     else
     {
@@ -1323,7 +1302,7 @@ typedef enum
     }
     [self updateResolutionMenu];
     
-    ResolutionSetting* resolution = currentDocument.resolutions[currentDocument.currentResolution];
+    ResolutionSetting* resolution = currentDocument.resolutions[(NSUInteger) currentDocument.currentResolution];
     
     // Stage border
     [[CocosScene cocosScene] setStageBorder:[doc[@"stageBorder"] intValue]];
@@ -1337,25 +1316,20 @@ typedef enum
     }
     else
     {
-        if (currentDocument.docDimensionsType == kCCBDocDimensionsTypeNode)
-        {
-            stageColor = kCCBCanvasColorGray;
-        }
-        else
-        {
-            stageColor = kCCBCanvasColorBlack;
-        }
+        stageColor = currentDocument.docDimensionsType == kCCBDocDimensionsTypeNode
+            ? kCCBCanvasColorGray
+            : kCCBCanvasColorBlack;
     }
     currentDocument.stageColor = stageColor;
     [self updateCanvasColor];
     [menuItemStageColor setEnabled: currentDocument.docDimensionsType != kCCBDocDimensionsTypeFullScreen];
 
     // Setup sequencer timelines
-    NSMutableArray* serializedSequences = [doc objectForKey:@"sequences"];
+    NSMutableArray* serializedSequences = doc[@"sequences"];
     if (serializedSequences)
     {
         // Load from the file
-        int currentSequenceId = [[doc objectForKey:@"currentSequenceId"] intValue];
+        int currentSequenceId = [doc[@"currentSequenceId"] intValue];
         SequencerSequence* currentSeq = NULL;
         
         NSMutableArray* sequences = [NSMutableArray array];
@@ -1482,7 +1456,10 @@ typedef enum
 
 - (void) switchToDocument:(CCBDocument*) document forceReload:(BOOL)forceReload
 {
-    if (!forceReload && [document.filePath isEqualToString:currentDocument.filePath]) return;
+    if (!forceReload && [document.filePath isEqualToString:currentDocument.filePath])
+    {
+        return;
+    }
 
     [animationPlaybackManager stop];
 
@@ -1496,7 +1473,6 @@ typedef enum
     
     [self updateResolutionMenu];
     [self updateTimelineMenu];
-    //[self updateStateOriginCenteredMenu];
     
     CocosScene* cs = [CocosScene cocosScene];
     [cs setStageZoom:document.stageZoom];
@@ -1571,23 +1547,29 @@ typedef enum
 - (CCBDocument*) findDocumentFromFile:(NSString*)file
 {
     NSArray* items = [tabView tabViewItems];
-    for (int i = 0; i < [items count]; i++)
+    for (NSUInteger i = 0; i < [items count]; i++)
     {
         CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if ([doc.filePath isEqualToString:file]) return doc;
+        if ([doc.filePath isEqualToString:file])
+        {
+            return doc;
+        }
     }
-    return NULL;
+    return nil;
 }
 
 - (NSTabViewItem*) tabViewItemFromDoc:(CCBDocument*)docRef
 {
     NSArray* items = [tabView tabViewItems];
-    for (int i = 0; i < [items count]; i++)
+    for (NSUInteger i = 0; i < [items count]; i++)
     {
-        CCBDocument* doc = [(NSTabViewItem*)[items objectAtIndex:i] identifier];
-        if (doc == docRef) return [items objectAtIndex:i];
+        CCBDocument *doc = [(NSTabViewItem *) [items objectAtIndex:i] identifier];
+        if (doc == docRef)
+        {
+            return [items objectAtIndex:i];
+        }
     }
-    return NULL;
+    return nil;
 }
 
 // A path can be a folder not only a file. Set includeViewWithinFolderPath to YES to return
@@ -1643,7 +1625,7 @@ typedef enum
 
 - (void) updateResourcePathsFromProjectSettings
 {
-    [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absoluteResourcePaths]];
+    [[ResourceManager sharedManager] setActiveDirectoriesWithFullReset:[projectSettings absolutePackagePaths]];
 }
 
 - (void) closeProject
@@ -1686,7 +1668,6 @@ typedef enum
     self.securityScopedProjectFolderResource = nil;
 }
 
-
 - (BOOL)openProjectWithProjectPath:(NSString *)projectPath
 {
     [self closeProject];
@@ -1696,30 +1677,20 @@ typedef enum
 
     //Find .ccbproj file
     NSArray *projectContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:projectPath error:nil];
-    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj'"];
+    NSPredicate *ccbprojExtension = [NSPredicate predicateWithFormat:@"SELF ENDSWITH '.ccbproj' OR SELF ENDSWITH '.sbproj'"];
     NSString *ccbprojFileName = (NSString*)[[projectContents filteredArrayUsingPredicate:ccbprojExtension] firstObject];
 
     projectPath = [projectPath stringByAppendingPathComponent:ccbprojFileName];
 
-    // Load the project file
-    NSMutableDictionary* projectDict = [NSMutableDictionary dictionaryWithContentsOfFile:projectPath];
-    if (!projectDict)
+    ProjectSettings *upToDateProjectSettings = [Migrator migrateFullProjectWithProjectSettingsFilePath:projectPath];
+    if (!upToDateProjectSettings)
     {
-        [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File may be missing or invalid."];
+        [self closeProject];
         return NO;
     }
-
-    ProjectSettings *prjctSettings = [[ProjectSettings alloc] initWithSerialization:projectDict];
-    if (!prjctSettings)
-    {
-        [self modalDialogTitle:@"Invalid Project File" message:@"Failed to open the project. File is invalid or is created with a newer version of SpriteBuilder."];
-        return NO;
-    }
-    prjctSettings.projectPath = projectPath;
-    [prjctSettings store];
 
     // inject new project settings
-    self.projectSettings = prjctSettings;
+    self.projectSettings = upToDateProjectSettings;
     _resourceCommandController.projectSettings = projectSettings;
     projectOutlineHandler.projectSettings = projectSettings;
     [ResourceManager sharedManager].projectSettings = projectSettings;
@@ -1729,26 +1700,22 @@ typedef enum
     [self updateResourcePathsFromProjectSettings];
 
     // Update Node Plugins list
-	[plugInNodeViewHandler showNodePluginsForEngine:prjctSettings.engine];
+	[plugInNodeViewHandler showNodePlugins];
 
     BOOL success = [self checkForTooManyDirectoriesInCurrentProject];
     if (!success)
     {
         return NO;
     }
-
-    ProjectMigrator *migrator = [[ProjectMigrator alloc] initWithProjectSettings:projectSettings];
-    [migrator migrate];
-
     // Load or create language file
     NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
     localizationEditorHandler.managedFile = langFile;
 
     // Update the title of the main window
-    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
+    [window setTitle:[NSString stringWithFormat:@"%@ - SpriteBuilder", [[upToDateProjectSettings.projectPath stringByDeletingLastPathComponent] lastPathComponent]]];
 
     // Open ccb file for project if there is only one
-    NSArray* resPaths = prjctSettings.absoluteResourcePaths;
+    NSArray* resPaths = upToDateProjectSettings.absolutePackagePaths;
     if (resPaths.count > 0)
     {
         NSString* resPath = resPaths[0];
@@ -1770,18 +1737,17 @@ typedef enum
 
         if (numCCBFiles == 1)
         {
-            // Open the ccb file
-            [self openFile:[resPath stringByAppendingPathComponent:ccbFile]];
+            [self openFile:[resPath stringByAppendingPathComponent:ccbFile] migrate:NO];
         }
     }
 
     [self updateWarningsButton];
     [self updateSmallTabBarsEnabled];
 
-    Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
-    [cocos2dUpdater updateAndBypassIgnore:NO];
+    Cocos2dUpdaterController *cocos2dUpdaterController = [[Cocos2dUpdaterController alloc] initWithAppDelegate:self projectSettings:projectSettings];
+    [cocos2dUpdaterController updateAndBypassIgnore:NO];
 
-    self.window.representedFilename = [projectPath stringByDeletingLastPathComponent];
+    self.window.representedFilename = [projectSettings.projectPath stringByDeletingLastPathComponent];
 
     return YES;
 }
@@ -1851,21 +1817,31 @@ typedef enum
     }];
 }
 
-- (void) openFile:(NSString*)filePath
+- (void)openFile:(NSString *)filePath migrate:(BOOL)migrate
 {
-	[(CCViewMacGL *)[[CCDirector sharedDirector] view] lockOpenGLContext];
+	[[[CCDirector currentDirector] view] lockOpenGLContext];
     
     // Check if file is already open
     CCBDocument* openDoc = [self findDocumentFromFile:filePath];
     if (openDoc)
     {
         [tabView selectTabViewItem:[self tabViewItemFromDoc:openDoc]];
+        [[[CCDirector currentDirector] view] unlockOpenGLContext];
         return;
     }
-    
+
+    CCBDocument *newDoc = migrate
+        ? [Migrator migrateDocumentWithFilePath:filePath projectSettings:projectSettings]
+        : [[CCBDocument alloc] initWithContentsOfFile:filePath];
+
+    if (!newDoc)
+    {
+        [[[CCDirector currentDirector] view] unlockOpenGLContext];
+        return;
+    }
+
+
     [self prepareForDocumentSwitch];
-    
-    CCBDocument *newDoc = [[CCBDocument alloc] initWithContentsOfFile:filePath];
 
     [self switchToDocument:newDoc];
      
@@ -1878,7 +1854,7 @@ typedef enum
     physicsHandler.selectedNodePhysicsBody = NULL;
     [self setSelectedNodes:NULL];
     
-	[(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
+	[[[CCDirector currentDirector] view] unlockOpenGLContext];
 }
 
 - (void) saveFile:(NSString*) fileName
@@ -2511,10 +2487,10 @@ typedef enum
             return;
         }
         
-        NSString* clipType = kClipboardKeyFrames;
+        NSString* clipType = PASTEBOARD_TYPE_KEYFRAMES;
         if (hasChannelKeyframes)
         {
-            clipType = kClipboardChannelKeyframes;
+            clipType = PASTEBOARD_TYPE_CHANNELKEYFRAMES;
         }
         
         // Serialize keyframe
@@ -2525,7 +2501,7 @@ typedef enum
         }
         NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:serKeyframes];
         NSPasteboard* cb = [NSPasteboard generalPasteboard];
-        [cb declareTypes:[NSArray arrayWithObject:clipType] owner:self];
+        [cb declareTypes:@[clipType] owner:self];
         [cb setData:clipData forType:clipType];
         
         return;
@@ -2543,9 +2519,9 @@ typedef enum
     NSMutableDictionary* clipDict = [CCBDictionaryWriter serializeNode:self.selectedNode];
     NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    
-    [cb declareTypes:[NSArray arrayWithObjects:@"com.cocosbuilder.node", nil] owner:self];
-    [cb setData:clipData forType:@"com.cocosbuilder.node"];
+
+    [cb declareTypes:@[PASTEBOARD_TYPE_NODE] owner:self];
+    [cb setData:clipData forType:PASTEBOARD_TYPE_NODE];
 }
 
 -(void)updateUUIDs:(CCNode*)node
@@ -2561,7 +2537,7 @@ typedef enum
 - (void) doPasteAsChild:(BOOL)asChild
 {
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:@"com.cocosbuilder.node", nil]];
+    NSString* type = [cb availableTypeFromArray:@[PASTEBOARD_TYPE_NODE]];
     
     if (type)
     {
@@ -2592,11 +2568,11 @@ typedef enum
     
     // Paste keyframes
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
-    NSString* type = [cb availableTypeFromArray:[NSArray arrayWithObjects:kClipboardKeyFrames, kClipboardChannelKeyframes, nil]];
+    NSString* type = [cb availableTypeFromArray:@[PASTEBOARD_TYPE_KEYFRAMES, PASTEBOARD_TYPE_CHANNELKEYFRAMES]];
     
     if (type)
     {
-        if (!self.selectedNode && [type isEqualToString:kClipboardKeyFrames])
+        if (!self.selectedNode && [type isEqualToString:PASTEBOARD_TYPE_KEYFRAMES])
         {
             [self modalDialogTitle:@"Paste Failed" message:@"You need to select a node to paste keyframes"];
             return;
@@ -2628,11 +2604,11 @@ typedef enum
             keyframe.time = [seq alignTimeToResolution:keyframe.time - firstTime + seq.timelinePosition];
             
             // Add the keyframe
-            if ([type isEqualToString:kClipboardKeyFrames])
+            if ([type isEqualToString:PASTEBOARD_TYPE_KEYFRAMES])
             {
                 [self.selectedNode addKeyframe:keyframe forProperty:keyframe.name atTime:keyframe.time sequenceId:seq.sequenceId];
             }
-            else if ([type isEqualToString:kClipboardChannelKeyframes])
+            else if ([type isEqualToString:PASTEBOARD_TYPE_CHANNELKEYFRAMES])
             {
                 if (keyframe.type == kCCBKeyframeTypeCallbacks)
                 {
@@ -2805,7 +2781,7 @@ typedef enum
                 [tabView removeTabViewItem:[self tabViewItemFromDoc:currentDocument]];
                 
                 // Open newly created document
-                [self openFile:filename];
+                [self openFile:filename migrate:NO];
                 
                 [(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
             });
@@ -2967,46 +2943,6 @@ typedef enum
     [CCBPublisherCacheCleaner cleanWithProjectSettings:projectSettings];
 }
 
-// Temporary utility function until new publish system is in place
-- (IBAction)menuUpdateCCBsInDirectory:(id)sender
-{
-    NSOpenPanel* openDlg = [NSOpenPanel openPanel];
-    [openDlg setCanChooseFiles:NO];
-    [openDlg setCanChooseDirectories:YES];
-    
-    [openDlg beginSheetModalForWindow:window completionHandler:^(NSInteger result){
-        if (result == NSOKButton)
-        {
-            NSArray* files = [openDlg URLs];
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
-                           dispatch_get_main_queue(), ^{
-                [(CCViewMacGL *)[[CCDirector sharedDirector] view] lockOpenGLContext];
-                
-                for (int i = 0; i < [files count]; i++)
-                {
-                    NSString* dirName = [[files objectAtIndex:i] path];
-                    
-                    NSArray* arr = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dirName error:NULL];
-                    for(NSString* file in arr)
-                    {
-                        if ([file hasSuffix:@".ccb"])
-                        {
-                            NSString* absPath = [dirName stringByAppendingPathComponent:file];
-                            [self openFile:absPath];
-                            [self saveFile:absPath];
-                            //[self publishDocument:NULL];
-                            [self performClose:sender];
-                        }
-                    }
-                }
-                
-                [(CCViewMacGL *)[[CCDirector sharedDirector] view] unlockOpenGLContext];
-            });
-        }
-    }];
-}
-
 - (IBAction)menuOpenProjectInXCode:(id)sender
 {
     NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
@@ -3084,18 +3020,18 @@ typedef enum
 
 - (IBAction)updateCocos2d:(id)sender
 {
-    Cocos2dUpdater *cocos2dUpdater = [[Cocos2dUpdater alloc] initWithAppDelegate:self projectSettings:projectSettings];
-    [cocos2dUpdater updateAndBypassIgnore:YES];
+    Cocos2dUpdaterController *cocos2dUpdaterController = [[Cocos2dUpdaterController alloc] initWithAppDelegate:self projectSettings:projectSettings];
+    [cocos2dUpdaterController updateAndBypassIgnore:YES];
 }
 
 -(void)updateLanguageHint
 {
     switch (saveDlgLanguagePopup.selectedItem.tag)
     {
-        case CCBProgrammingLanguageObjectiveC:
+        case SBProgrammingLanguageObjectiveC:
             saveDlgLanguageHint.title = @"All supported platforms";
             break;
-        case CCBProgrammingLanguageSwift:
+        case SBProgrammingLanguageSwift:
             saveDlgLanguageHint.title = @"iOS7+ and OSX 10.10+ only";
             break;
         default:
@@ -3105,19 +3041,19 @@ typedef enum
     }
 }
 
--(void) createNewProjectTargetting:(CCBTargetEngine)engine
+- (void)createNewProject
 {
     // Accepted create document, prompt for place for file
     NSSavePanel* saveDlg = [NSSavePanel savePanel];
-    [saveDlg setAllowedFileTypes:[NSArray arrayWithObject:@"spritebuilder"]];
+    [saveDlg setAllowedFileTypes:@[@"spritebuilder"]];
     //saveDlg.message = @"Save your project file in the same directory as your projects resources.";
 
     // Configure the accessory view
     [saveDlg setAccessoryView:saveDlgAccessoryView];
     [saveDlgLanguagePopup removeAllItems];
     [saveDlgLanguagePopup addItemsWithTitles:@[@"Objective-C", @"Swift"]];
-    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.firstObject).tag = CCBProgrammingLanguageObjectiveC;
-    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.lastObject).tag = CCBProgrammingLanguageSwift;
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.firstObject).tag = SBProgrammingLanguageObjectiveC;
+    ((NSMenuItem*)saveDlgLanguagePopup.itemArray.lastObject).tag = SBProgrammingLanguageSwift;
     saveDlgLanguagePopup.target = self;
     saveDlgLanguagePopup.action = @selector(updateLanguageHint);
     [self updateLanguageHint];
@@ -3151,7 +3087,8 @@ typedef enum
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_main_queue(), ^{
                                    CCBProjectCreator * creator = [[CCBProjectCreator alloc] init];
-                                   if ([creator createDefaultProjectAtPath:fileName engine:engine programmingLanguage:saveDlgLanguagePopup.selectedItem.tag])
+                                   if ([creator createDefaultProjectAtPath:fileName programmingLanguage:saveDlgLanguagePopup.selectedItem
+                                                                                                                            .tag])
                                    {
                                        [self openProject:[fileNameRaw stringByAppendingPathExtension:@"spritebuilder"]];
                                    }
@@ -3171,7 +3108,7 @@ typedef enum
 
 - (IBAction) menuNewProject:(id)sender
 {
-	[self createNewProjectTargetting:CCBTargetEngineCocos2d];
+    [self createNewProject];
 }
 
 - (IBAction) menuNewPackage:(id)sender
@@ -4498,7 +4435,7 @@ typedef enum
 	id row = [outlineView itemAtRow:idx];
 	if([row isKindOfClass:[RMDirectory class]])
 	{
-		fullpath = [row dirPath];
+		fullpath = [row path];
 	}
 	else if([row isKindOfClass:[RMResource class]])
 	{

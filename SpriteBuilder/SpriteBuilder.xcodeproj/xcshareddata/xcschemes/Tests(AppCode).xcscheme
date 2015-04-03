@@ -32,7 +32,19 @@
                   Identifier = "CCAnimation_Tests">
                </Test>
                <Test
+                  Identifier = "CCBDictionaryReader_Tests/testNodeGraphFromDocumentDict_bmfont">
+               </Test>
+               <Test
                   Identifier = "CCBReader_EffectsTest">
+               </Test>
+               <Test
+                  Identifier = "InspectoreController_Tests/testUpdateInspectorFromSelectionForCCLabelBMFont">
+               </Test>
+               <Test
+                  Identifier = "MigrationController_Tests">
+               </Test>
+               <Test
+                  Identifier = "MigrationIntegration_Tests">
                </Test>
             </SkippedTests>
          </TestableReference>

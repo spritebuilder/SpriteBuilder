@@ -1,6 +1,6 @@
 #import "PackageRemover.h"
 
-#import "SBErrors.h"
+#import "Errors.h"
 #import "PackageUtil.h"
 #import "ProjectSettings.h"
 #import "NotificationNames.h"
@@ -24,7 +24,7 @@
 {
     PackagePathBlock block = ^BOOL(RMPackage *package, NSError **localError)
     {
-        if ([_projectSettings removeResourcePath:package.dirPath error:localError])
+        if ([_projectSettings removePackageWithFullPath:package.dirPath error:localError])
         {
             [[NSNotificationCenter defaultCenter] postNotificationName:RESOURCE_PATH_REMOVED
                                                                 object:self

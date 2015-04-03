@@ -19,11 +19,13 @@
 #import "CCNode+NodeInfo.h"
 #import "CCControl.h"
 #import "CCLayoutBox.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "CCBDictionaryKeys.h"
+#import "FileSystemTestCase.h"
+#import "CCBDictionaryMigrator.h"
 
 
-@interface CCBDictionaryReader_Tests : XCTestCase
+@interface CCBDictionaryReader_Tests : FileSystemTestCase
 
 @end
 
@@ -63,28 +65,12 @@
     XCTAssertNil(error);
 }
 
-- (void)testNodeGraphFromDocumentDict_migrationFailure
-{
-    NSDictionary *document = @{
-            CCB_DICTIONARY_KEY_FILETYPE : @"CocosBuilder",
-            CCB_DICTIONARY_KEY_FILEVERSION : @(kCCBDictionaryFormatVersion - 1)
-    };
-
-    NSError *error;
-    CCNode *node = [CCBDictionaryReader nodeGraphFromDocumentData:document parentSize:CGSizeMake(1024.0, 1024.0) error:&error];
-
-    XCTAssertNil(node);
-    XCTAssertNotNil(error);
-    XCTAssertEqual(error.code, SBCCBReadingError);
-    XCTAssertNotNil(error.userInfo[NSUnderlyingErrorKey]);
-}
-
 - (void)testNodeGraphFromDocumentDict_versionTooOld
 {
     NSDictionary *document = @{
-            CCB_DICTIONARY_KEY_FILETYPE : @"CocosBuilder",
-            CCB_DICTIONARY_KEY_FILEVERSION : @(1),
-            CCB_DICTIONARY_KEY_NODEGRAPH : @{},
+        CCB_DICTIONARY_KEY_FILETYPE : @"CocosBuilder",
+        CCB_DICTIONARY_KEY_FILEVERSION : @(1),
+        CCB_DICTIONARY_KEY_NODEGRAPH : @{},
     };
 
     NSError *error;
@@ -98,9 +84,9 @@
 - (void)testNodeGraphFromDocumentDict_fileTypeNonCocosBuilder
 {
     NSDictionary *document = @{
-            CCB_DICTIONARY_KEY_FILETYPE : @"fooBuilder",
-            CCB_DICTIONARY_KEY_FILEVERSION : @(kCCBDictionaryFormatVersion),
-            CCB_DICTIONARY_KEY_NODEGRAPH : @{}
+        CCB_DICTIONARY_KEY_FILETYPE : @"fooBuilder",
+        CCB_DICTIONARY_KEY_FILEVERSION : @(kCCBDictionaryFormatVersion),
+        CCB_DICTIONARY_KEY_NODEGRAPH : @{}
     };
 
     NSError *error;
@@ -124,9 +110,9 @@
 - (void)testNodeGraphFromDocumentDict_fileVersionHigherThanSpriterBuilderSupports
 {
     NSDictionary *document = @{
-            CCB_DICTIONARY_KEY_FILETYPE : @"CocosBuilder",
-            CCB_DICTIONARY_KEY_FILEVERSION : @(kCCBDictionaryFormatVersion + 1),
-            CCB_DICTIONARY_KEY_NODEGRAPH : @{}
+        CCB_DICTIONARY_KEY_FILETYPE : @"CocosBuilder",
+        CCB_DICTIONARY_KEY_FILEVERSION : @(kCCBDictionaryFormatVersion + 1),
+        CCB_DICTIONARY_KEY_NODEGRAPH : @{}
     };
 
     NSError *error;
@@ -551,10 +537,17 @@
 
 - (NSDictionary *)loadCCBFile:(NSString *)ccbName
 {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *path = [bundle pathForResource:ccbName ofType:@"ccb"];
+    NSString *path = [self fullPathForFile:[NSString stringWithFormat:@"tests/%@.sb", ccbName]];
+    [self copyTestingResource:[ccbName stringByAppendingPathExtension:@"sb"] toFolder:@"tests"];
 
-    XCTAssertNotNil(path, @"CCB file loading failed, no path found for ccb %@.ccb", ccbName);
+    [self assertFileExists:path];
+
+    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithFilepath:path
+                                                                            toVersion:kCCBDictionaryFormatVersion];
+
+    NSError *error;
+    XCTAssertTrue([migrator migrateWithError:&error]);
+    XCTAssertNil(error);
 
     return [NSDictionary dictionaryWithContentsOfFile:path];
 }

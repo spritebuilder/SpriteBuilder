@@ -14,7 +14,9 @@
     NSString* ccbChacheDir = [paths[0] stringByAppendingPathComponent:PUBLISHER_CACHE_DIRECTORY_NAME];
     [[NSFileManager defaultManager] removeItemAtPath:ccbChacheDir error:NULL];
 
+    #if !TESTING
     NSLog(@"[PUBLISH] Cache directory cleaned: %@", ccbChacheDir);
+    #endif
 }
 
 @end

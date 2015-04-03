@@ -43,7 +43,7 @@
 #import "CCBDictionaryKeys.h"
 #import "CCBDictionaryMigrator.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
 
 // Old positioning constants
 enum
@@ -637,27 +637,12 @@ __strong NSDictionary* renamedProperties = nil;
         return nil;
     }
 
-    CCBDictionaryMigrator *migrator = [[CCBDictionaryMigrator alloc] initWithCCB:documentData];
-
-    NSError *migrationError;
-    NSDictionary *migratedCCB = [migrator migrate:&migrationError];
-    if (!migratedCCB)
-    {
-        [NSError setNewErrorWithErrorPointer:error
-                                        code:SBCCBReadingError
-                                    userInfo:@{
-                                            NSLocalizedDescriptionKey : @"Migration failed",
-                                            NSUnderlyingErrorKey : migrationError
-                                    }];
-        return nil;
-    };
-
-    if (![self isFileTypeValid:migratedCCB[CCB_DICTIONARY_KEY_FILETYPE] error:error])
+    if (![self isFileTypeValid:documentData[CCB_DICTIONARY_KEY_FILETYPE] error:error])
     {
         return nil;
     }
 
-    NSDictionary *nodeGraph = migratedCCB[CCB_DICTIONARY_KEY_NODEGRAPH];
+    NSDictionary *nodeGraph = documentData[CCB_DICTIONARY_KEY_NODEGRAPH];
     CCNode *node = [CCBDictionaryReader nodeGraphFromNodeGraphData:nodeGraph parentSize:parentSize withParentGraph:nil];
     if (node)
     {

@@ -11,40 +11,41 @@
 #import "ObserverTestHelper.h"
 #import "NSString+Packages.h"
 #import "NotificationNames.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "ProjectSettings.h"
 #import "PackageImporter.h"
-#import "SBAssserts.h"
 #import "MiscConstants.h"
 #import "ProjectSettings+Packages.h"
+#import "FileSystemTestCase.h"
 
-@interface PackageImporter_Tests : XCTestCase
+@interface PackageImporter_Tests : FileSystemTestCase
+
+@property (nonatomic, strong) id fileManagerMock;
+@property (nonatomic, strong) PackageImporter *packageImporter;
+@property (nonatomic, strong) ProjectSettings *projectSettings;
 
 @end
 
+
 @implementation PackageImporter_Tests
-{
-    PackageImporter *_packageImporter;
-    ProjectSettings *_projectSettings;
-    id _fileManagerMock;
-}
 
 - (void)setUp
 {
     [super setUp];
 
-    _packageImporter = [[PackageImporter alloc] init];
+    self.packageImporter = [[PackageImporter alloc] init];
 
-    _projectSettings = [[ProjectSettings alloc] init];
-    _projectSettings.projectPath = @"/packagestests.ccbproj";
+    self.projectSettings = [self createProjectSettingsFileWithName:@"foo.spritebuilder/foo"];
     _packageImporter.projectSettings = _projectSettings;
 
-    _fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
+    self.fileManagerMock = [OCMockObject niceMockForClass:[NSFileManager class]];
     _packageImporter.fileManager = _fileManagerMock;
 }
 
 - (void)testImportPackageWithName
 {
+    [self createFolders:@[@"foo.spritebuilder/Packages/foo.sbpack"]];
+
     [[[_fileManagerMock expect] andReturnValue:@(YES)] copyItemAtPath:OCMOCK_ANY toPath:OCMOCK_ANY error:[OCMArg anyObjectRef]];
 
     NSError *error;
@@ -56,6 +57,8 @@
 // The other one already is in the project
 - (void)testImportPackagesWithTwoPackages
 {
+    [self createFolders:@[@"foo.spritebuilder/Packages/notYetInProject.sbpack"]];
+
     id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePathNotInProject = [@"/notYetInProject" stringByAppendingPackageSuffix];
@@ -64,7 +67,7 @@
 
     [[[_fileManagerMock expect] andReturnValue:@(YES)] copyItemAtPath:OCMOCK_ANY toPath:OCMOCK_ANY error:[OCMArg anyObjectRef]];
 
-    [_projectSettings addResourcePath:packagePathInProject error:nil];
+    [_projectSettings addPackageWithFullPath:packagePathInProject error:nil];
 
     NSError *error;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:packagePaths error:&error]);
@@ -81,6 +84,8 @@
 
 - (void)testImportPackageSuccessfully
 {
+    [self createFolders:@[@"foo.spritebuilder/Packages/foo.sbpack"]];
+
     id observerMock = [ObserverTestHelper observerMockForNotification:RESOURCE_PATHS_CHANGED];
 
     NSString *packagePath = [@"/somewhere/foo" stringByAppendingPackageSuffix];
@@ -94,7 +99,7 @@
     XCTAssertNil(error);
     [ObserverTestHelper verifyAndRemoveObserverMock:observerMock];
 
-    XCTAssertTrue([_projectSettings isResourcePathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.resourcePaths);
+    XCTAssertTrue([_projectSettings isPackageWithFullPathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.packages);
 
     [_fileManagerMock verify];
 }
@@ -112,13 +117,15 @@
     XCTAssertFalse([_packageImporter importPackagesWithPaths:@[packagePath] error:&error]);
     XCTAssertNotNil(error);
 
-    XCTAssertFalse([_projectSettings isResourcePathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.resourcePaths);
+    XCTAssertFalse([_projectSettings isPackageWithFullPathInProject:importedPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", importedPackagePath, _projectSettings.packages);
 
     [_fileManagerMock verify];
 }
 
 - (void)testReImportPackageInPackageFolderButNotInProject
 {
+    [self createFolders:@[@"foo.spritebuilder/Packages/foo.sbpack"]];
+
     _fileManagerMock = [OCMockObject mockForClass:[NSFileManager class]];
 
     NSString *toImportPackagePath = [_projectSettings fullPathForPackageName:@"foo"];
@@ -127,7 +134,7 @@
     XCTAssertTrue([_packageImporter importPackagesWithPaths:@[toImportPackagePath] error:&error]);
     XCTAssertNil(error);
 
-    XCTAssertTrue([_projectSettings isResourcePathInProject:toImportPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", toImportPackagePath, _projectSettings.resourcePaths);
+    XCTAssertTrue([_projectSettings isPackageWithFullPathInProject:toImportPackagePath], @"imported package's path should be: %@, but it was not found in project settings. Paths in settings: %@", toImportPackagePath, _projectSettings.packages);
 
     [_fileManagerMock verify];
 }
@@ -137,17 +144,40 @@
     NSError *error1;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:nil error:&error1]);
     XCTAssertNotNil(error1);
-    XCTAssertEqual(error1.code, SBNoPackagePathsToImport, @"error code should be set to SBNoPackagePathsToImport");
+    XCTAssertEqual(error1.code, SBNoPackagePathsToImport);
 
     NSError *error2;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:@[] error:&error2]);
     XCTAssertNotNil(error2);
-    XCTAssertEqual(error2.code, SBNoPackagePathsToImport, @"error code should be set to SBNoPackagePathsToImport");
+    XCTAssertEqual(error2.code, SBNoPackagePathsToImport);
 
     NSError *error3;
     XCTAssertFalse([_packageImporter importPackagesWithPaths:@[@"/foo/package"] error:&error3]);
     XCTAssertNotNil(error3);
-    XCTAssertEqual(error3.code, SBPathWithoutPackageSuffix, @"error code should be set to SBPathWithoutPackageSuffix");
+    XCTAssertEqual(error3.code, SBPathWithoutPackageSuffix);
+}
+
+- (void)testImportPackageRealCase
+{
+    [self createFolders:@[@"foo.spritebuilder/Packages"]];
+    [self createEmptyFilesRelativeToDirectory:@"toimport/baa.sbpack" files:@[
+        @"images/resources-auto/sky.png",
+        @"sounds/rain.wav"
+    ]];
+
+    _packageImporter.fileManager = [NSFileManager defaultManager];
+
+    NSError *error;
+    XCTAssertTrue([_packageImporter importPackagesWithPaths:@[[self fullPathForFile:@"toimport/baa.sbpack"]] error:&error]);
+    XCTAssertNil(error);
+
+    [self assertFilesExistRelativeToDirectory:@"foo.spritebuilder/Packages/baa.sbpack" filesPaths:@[
+        @"images/resources-auto/sky.png",
+        @"sounds/rain.wav",
+        @"Package.plist"
+    ]];
+
+    XCTAssertTrue([_projectSettings isPackageWithFullPathInProject:[self fullPathForFile:@"foo.spritebuilder/Packages/baa.sbpack"]]);
 }
 
 @end

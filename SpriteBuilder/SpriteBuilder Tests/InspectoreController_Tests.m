@@ -16,7 +16,6 @@
 #import "PlugInManager.h"
 #import "NodeInfo.h"
 #import "PlugInNode.h"
-#import "SBAssserts.h"
 #import "SequencerSequence.h"
 
 
@@ -203,7 +202,7 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
 
     [_inspectorController refreshProperty:@"name"];
 
-    SBAssertEqualStrings([textfield stringValue], node.name, @"change to node.name was not updated in inspector view");
+    XCTAssertEqualObjects([textfield stringValue], node.name, @"change to node.name was not updated in inspector view");
 }
 
 - (void)testRefreshPropertyForType
@@ -224,8 +223,7 @@ static NSString *const CODE_CONNECTION_NAMES_KEY = @"codeConnectionNames";
 
     [_inspectorController refreshPropertiesOfType:@"Text"];
 
-    SBAssertEqualStrings([[textView textStorage] string], label.string, @"change to label.string was not updated in inspector view");
-
+    XCTAssertEqualObjects([[textView textStorage] string], label.string, @"change to label.string was not updated in inspector view");
 }
 
 - (void)testUpdateInspectorFromSelectionForNoSelection

@@ -8,7 +8,7 @@
 
 #import "ProjectSettingsWindowController.h"
 #import "ProjectSettings.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "RMPackage.h"
 #import "ResourceManager.h"
 #import "NSString+RelativePath.h"
@@ -49,8 +49,8 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 {
     for (RMPackage *package in [[ResourceManager sharedManager] allPackages])
     {
-        SBPackageSettings *packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:package];
-        [packagePublishSettings load];
+        PackageSettings *packagePublishSettings = [[PackageSettings alloc] initWithPackage:package];
+        [packagePublishSettings loadWithError:nil];
 
         [_settingsList addObject:packagePublishSettings];
     }
@@ -58,14 +58,14 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
-    SBPackageSettings *packageSettings = [self selectedPackageSettings];
+    PackageSettings *packageSettings = [self selectedPackageSettings];
     if (packageSettings)
     {
         [self loadDetailViewForPackage:packageSettings];
     }
 }
 
-- (SBPackageSettings *)selectedPackageSettings
+- (PackageSettings *)selectedPackageSettings
 {
     return _settingsList[(NSUInteger) _tableView.selectedRow];
 }
@@ -78,7 +78,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
     }
 }
 
-- (void)loadDetailViewForPackage:(SBPackageSettings *)settings
+- (void)loadDetailViewForPackage:(PackageSettings *)settings
 {
     NSAssert(settings != nil, @"packagePublishSettings must not be nil");
     self.currentPackageSettings = settings;
@@ -111,7 +111,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (void)saveAllSettings
 {
-    for (SBPackageSettings *packageSettings in _settingsList)
+    for (PackageSettings *packageSettings in _settingsList)
     {
         [packageSettings store];
     }
@@ -120,9 +120,9 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (IBAction)selectPublishDirectoryIOS:(id)sender
 {
-    [self selectPublishCurrentPath:_projectSettings.publishDirectory
+    [self selectPublishCurrentPath:_projectSettings.publishDirectoryIOS
                     dirSetterBlock:^(NSString *directoryPath) {
-        _projectSettings.publishDirectory = directoryPath;
+        _projectSettings.publishDirectoryIOS = directoryPath;
     }];
 }
 
@@ -137,7 +137,7 @@ typedef void (^DirectorySetterBlock)(NSString *directoryPath);
 
 - (IBAction)selectPackagePublishingCustomDirectory:(id)sender;
 {
-    SBPackageSettings *packageSettings = [self selectedPackageSettings];
+    PackageSettings *packageSettings = [self selectedPackageSettings];
     if (!packageSettings)
     {
         return;

@@ -53,8 +53,8 @@
 
         self.filePath = filePath;
         self.data = dictionary;
-        self.exportPath = [dictionary objectForKey:@"exportPath"];
-        self.exportPlugIn = [dictionary objectForKey:@"exportPlugIn"];
+        self.exportPath = dictionary[@"exportPath"];
+        self.exportPlugIn = dictionary[@"exportPlugIn"];
         self.UUID = [dictionary[@"UUID"] unsignedIntegerValue];
 
         [self fixupUUID];

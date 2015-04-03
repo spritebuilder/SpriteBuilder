@@ -41,7 +41,7 @@
 
     self.projectSettings = [[ProjectSettings alloc] init];
     _projectSettings.projectPath = [self fullPathForFile:@"project.spritebuilder/abc.ccbproj"];
-    [_projectSettings addResourcePath:[self fullPathForFile:@"project.spritebuilder/Packages/foo.sbpack"] error:nil];
+    [_projectSettings addPackageWithFullPath:[self fullPathForFile:@"project.spritebuilder/Packages/foo.sbpack"] error:nil];
     [_projectSettings clearAllDirtyMarkers];
 
     self.resourceManager = [ResourceManager sharedManager];

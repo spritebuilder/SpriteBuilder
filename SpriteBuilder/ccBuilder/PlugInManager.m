@@ -144,7 +144,7 @@
     // Load PlugIn exporters
     for (int i = 0; i < [plugInPaths count]; i++)
     {
-        NSURL* plugInPath = [plugInPaths objectAtIndex:i];
+        NSURL* plugInPath = plugInPaths[i];
         
         // Verify that this is an exporter plug-in
         if (![[plugInPath pathExtension] isEqualToString:@"ccbPlugExport"]) continue;
@@ -232,7 +232,7 @@
     NSMutableArray* arr = [NSMutableArray array];
     for (int i = 0; i < [plugInsExporters count]; i++)
     {
-        PlugInExport* plugIn = [plugInsExporters objectAtIndex:i];
+        PlugInExport* plugIn = plugInsExporters[i];
         [arr addObject:plugIn.pluginName];
     }
     return arr;
@@ -240,14 +240,14 @@
 
 - (PlugInExport*) plugInExportForIndex:(int)idx
 {
-    return [plugInsExporters objectAtIndex:idx];
+    return plugInsExporters[(NSUInteger) idx];
 }
 
 - (PlugInExport*) plugInExportForExtension:(NSString*)ext
 {
     for (int i = 0; i < [plugInsExporters count]; i++)
     {
-        PlugInExport* plugIn = [plugInsExporters objectAtIndex:i];
+        PlugInExport* plugIn = plugInsExporters[i];
         if ([[plugIn extension] isEqualToString:ext])
         {
             return plugIn;

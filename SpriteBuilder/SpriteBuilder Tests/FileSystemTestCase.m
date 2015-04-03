@@ -1,4 +1,5 @@
 #import <XCTest/XCTest.h>
+#import <OCMock/OCMock.h>
 #import "FileSystemTestCase.h"
 #import "ProjectSettings.h"
 
@@ -117,12 +118,18 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     {
         [self createIntermediateDirectoriesForFilPath:relFilePath];
 
-        NSData *content = filesWithContents[relFilePath];
+        id content = filesWithContents[relFilePath];
         NSString *fullPathForFile = [self fullPathForFile:relFilePath];
 
-        NSError *error;
-        XCTAssertTrue([content writeToFile:fullPathForFile options:NSDataWritingAtomic error:&error],
-                              @"Could not create file \"%@\", error: %@", fullPathForFile, error);
+        if ([content isKindOfClass:[NSString class]])
+        {
+            NSError *error;
+            XCTAssertTrue([content writeToFile:fullPathForFile atomically:YES encoding:NSUTF8StringEncoding error:&error], @"Error writing string: %@", error);
+        }
+        else
+        {
+            XCTAssertTrue([content writeToFile:fullPathForFile atomically:YES], @"Could not write file at '%@'", fullPathForFile);
+        }
     }
 }
 
@@ -139,11 +146,74 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
     }
 }
 
-- (void)createProjectSettingsFileWithName:(NSString *)name
+- (ProjectSettings *)createProjectSettingsFileWithName:(NSString *)name
 {
+    NSString *filename;
+    if ([[name pathExtension] isEqualToString:@"ccbproj"] || [[name pathExtension] isEqualToString:@"sbproj"])
+    {
+        filename = name;
+    }
+    else
+    {
+        filename = [NSString stringWithFormat:@"%@.sbproj", name];
+    }
+
     ProjectSettings *projectSettings = [[ProjectSettings alloc] init];
-    projectSettings.projectPath = [_testDirecotoryPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.ccbproj", name]];
+    projectSettings.projectPath = [_testDirecotoryPath stringByAppendingPathComponent:filename];
+
+    [self createIntermediateDirectoriesForFilPath:projectSettings.projectPath];
+
     XCTAssertTrue([projectSettings store], @"Could not create project file at \"%@\"", projectSettings.projectPath);
+
+    return projectSettings;
+}
+
+- (void)assertContentsOfFilesNotEqual:(NSDictionary *)filenameAndExpectation
+{
+    for (NSString *filePath in filenameAndExpectation)
+    {
+        NSError *error;
+        id contentsOfFile = [self contentsOfFilePath:[self fullPathForFile:filePath] inferTypeFromData:filenameAndExpectation[filePath] error:&error];
+
+        XCTAssertNotNil(contentsOfFile);
+        XCTAssertNil(error);
+
+        XCTAssertNotEqualObjects(filenameAndExpectation[filePath], contentsOfFile);
+    }
+}
+
+- (void)assertContentsOfFilesEqual:(NSDictionary *)filenameAndExpectation
+{
+    for (NSString *filePath in filenameAndExpectation)
+    {
+        NSError *error;
+        id contentsOfFile = [self contentsOfFilePath:[self fullPathForFile:filePath] inferTypeFromData:filenameAndExpectation[filePath] error:&error];
+
+        XCTAssertNotNil(contentsOfFile);
+        XCTAssertNil(error);
+
+        [self assertEqualObjectsWithDiff:filenameAndExpectation[filePath] objectB:contentsOfFile];
+    }
+}
+
+- (id)contentsOfFilePath:(NSString *)filepath inferTypeFromData:(id)data error:(NSError **)error
+{
+    if ([data isKindOfClass:[NSString class]])
+    {
+        return [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:error];
+    }
+
+    if ([data isKindOfClass:[NSDictionary class]])
+    {
+        return [NSDictionary dictionaryWithContentsOfFile:filepath];
+    }
+
+    if ([data isKindOfClass:[NSArray class]])
+    {
+        return [NSArray arrayWithContentsOfFile:filepath];
+    }
+
+    return [NSData dataWithContentsOfFile:[self fullPathForFile:filepath] options:0 error:error];
 }
 
 - (void)copyTestingResource:(NSString *)resourceName toRelPath:(NSString *)toRelPath
@@ -213,11 +283,56 @@ NSString *const TEST_PATH = @"com.spritebuilder.tests";
 
 - (NSString *)fullPathForFile:(NSString *)filePath
 {
+    if ([filePath hasPrefix:@"/"])
+    {
+        return filePath;
+    }
+
     if (![filePath hasPrefix:_testDirecotoryPath])
     {
         return [_testDirecotoryPath stringByAppendingPathComponent:filePath];
     }
+
     return filePath;
+}
+
+- (void)assertEqualObjectsWithDiff:(id)objectA objectB:(id)objectB
+{
+    BOOL equal = [objectA isEqualTo:objectB];
+    XCTAssertTrue(equal);
+    if (equal)
+    {
+        return;
+    }
+
+    NSTask *task = [[NSTask alloc] init];
+    [task setCurrentDirectoryPath:NSTemporaryDirectory()];
+    [task setLaunchPath:@"/bin/bash"];
+
+    NSArray *args = @[@"-c", [NSString stringWithFormat:@"/usr/bin/diff <(echo \"%@\") <(echo \"%@\")", objectA, objectB]];
+    [task setArguments:args];
+
+    @try
+    {
+        [task launch];
+        [task waitUntilExit];
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"assertEqualObjectsWithDiff failed with exception %@", exception);
+    }
+}
+
+- (void)assertArraysAreEqualIgnoringOrder:(NSArray *)arrayA arrayB:(NSArray *)arrayB
+{
+    NSMutableArray *arrayAMutable = [arrayA mutableCopy];
+    NSMutableArray *arrayBMutable = [arrayB mutableCopy];
+
+    NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+    [arrayAMutable sortUsingDescriptors:@[highestToLowest]];
+    [arrayBMutable sortUsingDescriptors:@[highestToLowest]];
+
+    XCTAssertEqualObjects(arrayAMutable, arrayBMutable);
 }
 
 @end

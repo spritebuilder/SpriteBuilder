@@ -2,17 +2,18 @@
 #import "CCBWarnings.h"
 
 @class PublishRenamedFilesLookup;
+@class PublishResolutions;
 
 
 @interface CCBPublishingTarget : NSObject
 
 @property (nonatomic) BOOL useMainProjectResolutionsOfInputPackages;
 
-@property (nonatomic, strong) NSArray *inputPackages;
+@property (nonatomic, copy) NSArray *inputPackages;
 @property (nonatomic, copy) NSString *outputDirectory;
 @property (nonatomic, copy) NSString *directoryToClean;
 @property (nonatomic) CCBPublisherOSType osType;
-@property (nonatomic, strong) NSArray *resolutions;
+@property (nonatomic, strong) PublishResolutions *resolutions;
 @property (nonatomic) CCBPublishEnvironment publishEnvironment;
 
 @property (nonatomic, copy) NSString *zipOutputPath;

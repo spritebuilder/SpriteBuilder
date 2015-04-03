@@ -42,8 +42,8 @@
 {
     // Setup menu
     NSString* sf = [selection extraPropForKey:propertyName];
-    
-    [ResourceManagerUtil populateResourcePopup:popup resType:kCCBResTypeCCBFile allowSpriteFrames:NO selectedFile:sf selectedSheet:NULL target:self];
+
+    [ResourceManagerUtil populateResourcePopup:popup resType:kCCBResTypeSBFile allowSpriteFrames:NO selectedFile:sf selectedSheet:NULL target:self];
 }
 
 - (void) selectedResource:(id)sender
@@ -59,7 +59,7 @@
     {
         RMResource* res = item;
         
-        if (res.type == kCCBResTypeCCBFile)
+        if (res.type == kCCBResTypeSBFile)
         {
             ccbFile = [ResourceManagerUtil relativePathFromAbsolutePath:res.filePath];
             [ResourceManagerUtil setTitle:ccbFile forPopup:popup];

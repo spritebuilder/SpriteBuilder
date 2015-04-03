@@ -17,6 +17,6 @@
 
 - (id) initWithCollectionView:(NSCollectionView*)cv;
 
--(void) showNodePluginsForEngine:(CCBTargetEngine)engine;
+- (void)showNodePlugins;
 
 @end

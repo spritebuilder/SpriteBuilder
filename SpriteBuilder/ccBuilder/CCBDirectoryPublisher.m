@@ -42,6 +42,7 @@
 #import "PublishCCBOperation.h"
 #import "PublishImageOperation.h"
 #import "DateCache.h"
+#import "PublishResolutions.h"
 #import "NSString+Publishing.h"
 #import "PublishGeneratedFilesOperation.h"
 #import "PublishRenamedFilesLookup.h"
@@ -287,8 +288,7 @@
         return YES;
     }
 
-    if ([self isFileSupportedByPublishing:fileName]
-        && !_projectSettings.onlyPublishCCBs)
+    if ([self isFileSupportedByPublishing:fileName])
     {
         NSString *dstFilePath = [outputDir stringByAppendingPathComponent:fileName];
 
@@ -357,13 +357,6 @@
 
     // Skip the empty folder
     if ([[fileManager contentsOfDirectoryAtPath:dirPath error:NULL] count] == 0)
-    {
-        return;
-    }
-
-    // Skip the fold no .ccb files when onlyPublishCCBs is true
-    if (_projectSettings.onlyPublishCCBs
-        && ![dirPath containsCCBFile])
     {
         return;
     }

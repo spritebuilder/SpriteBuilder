@@ -12,7 +12,7 @@
 #import "EffectViewController.h"
 #import "EffectsManager.h"
 #import "MiscConstants.h"
-#import "SBPasteboardTypes.h"
+#import "PasteboardTypes.h"
 #import "UsageManager.h"
 
 @interface InspectorEffectControl ()

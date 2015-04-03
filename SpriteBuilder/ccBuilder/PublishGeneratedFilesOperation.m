@@ -49,11 +49,11 @@
     NSMutableDictionary* configCocos2d = [NSMutableDictionary dictionary];
 
     NSString* screenMode = @"";
-    if (_projectSettings.designTarget == kCCBDesignTargetFixed)
+    if (_projectSettings.designTarget == kSBDesignTargetFixed)
     {
         screenMode = @"CCScreenModeFixed";
     }
-    else if (_projectSettings.designTarget == kCCBDesignTargetFlexible)
+    else if (_projectSettings.designTarget == kSBDesignTargetFlexible)
     {
         screenMode = @"CCScreenModeFlexible";
     }
@@ -61,11 +61,11 @@
     configCocos2d[@"CCSetupScreenMode"] = screenMode;
 
     NSString *screenOrientation = @"";
-    if (_projectSettings.defaultOrientation == kCCBOrientationLandscape)
+    if (_projectSettings.defaultOrientation == kSBOrientationLandscape)
 	{
 		screenOrientation = @"CCScreenOrientationLandscape";
 	}
-	else if (_projectSettings.defaultOrientation == kCCBOrientationPortrait)
+	else if (_projectSettings.defaultOrientation == kSBOrientationPortrait)
 	{
 		screenOrientation = @"CCScreenOrientationPortrait";
 	}

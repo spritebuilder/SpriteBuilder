@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 
+@class ProjectSettings;
+
 @interface FileSystemTestCase : XCTestCase
 
 @property (nonatomic, copy, readonly) NSString *testDirecotoryPath;
@@ -21,13 +23,30 @@
 - (void)createEmptyFilesRelativeToDirectory:(NSString *)relativeDirectory files:(NSArray *)files;
 
 // create files, dictionary structure: key: relativeFilePath
-// value has to be of type NSData *
+// value has to be of type NSData
 // Example for parameter:
-// NSDictionary *foo = @{@"path/to/file.txt": [NSDate data]};
+// NSDictionary *foo = @{@"path/to/file.txt": [NSData data]};
 - (void)createFilesWithContents:(NSDictionary *)filesWithContents;
 
 // Creates a .ccbproj file with default initialized values in testDirecotoryPath
-- (void)createProjectSettingsFileWithName:(NSString *)name;
+// Returns an instance of the newly created project Setitngs
+- (ProjectSettings *)createProjectSettingsFileWithName:(NSString *)name;
+
+// asserts the contents of given files matches the given values
+// Depending on the type of the value given the file is loaded as a certain class, supported: NSString, NSDictionary, NSArray, the rest is treated as NSData
+// If a file does not exist the assertion will fail
+// Example for parameter:
+//   * NSDictionary *foo = @{@"path/to/image.png": [NSData data]};
+//   * NSDictionary *foo = @{@"path/to/file.txt": @"hello"};
+- (void)assertContentsOfFilesEqual:(NSDictionary *)filenameAndExpectation;
+
+// asserts the contents of given files are not equal to the given values
+// Depending on the type of the value given the file is loaded as a certain class, supported: NSString, NSDictionary, NSArray, the rest is treated as NSData
+// If a file does not exist the assertion will fail
+// Example for parameter:
+//   * NSDictionary *foo = @{@"path/to/image.png": [NSData data]};
+//   * NSDictionary *foo = @{@"path/to/file.txt": @"hello"};
+- (void)assertContentsOfFilesNotEqual:(NSDictionary *)filenameAndExpectation;
 
 - (NSDate *)modificationDateOfFile:(NSString *)filePath;
 - (void)setModificationTime:(NSDate *)date forFiles:(NSArray *)files;
@@ -51,5 +70,13 @@
 // Copies a resource in the bundle to the relative path, add new filename
 // Add resource for the SB test target in the copy bundle phase of the xcode project settings
 - (void)copyTestingResource:(NSString *)resourceName toRelPath:(NSString *)toRelPath;
+
+// This method will actually sort both arrays with the same sort descriptor and then compare so
+// original ordering is not significant for comparison reasons.
+- (void)assertArraysAreEqualIgnoringOrder:(NSArray *)arrayA arrayB:(NSArray *)arrayB;
+
+// Works like XCTAssertEqualObjects but is intended to work with larger data structures or strings
+// which will clutter your log if both objects are not the same. This method will only dump a diff to log.
+- (void)assertEqualObjectsWithDiff:(id)objectA objectB:(id)objectB;
 
 @end

@@ -25,7 +25,7 @@
 #import "MainWindow.h"
 #import "AppDelegate.h"
 #import "CCBSplitHorizontalView.h"
-#import "SBUserDefaultsKeys.h"
+#import "UserDefaultsKeys.h"
 
 @implementation MainWindow
 

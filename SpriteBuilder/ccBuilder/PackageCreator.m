@@ -1,11 +1,11 @@
 #import "PackageCreator.h"
 #import "NSError+SBErrors.h"
 #import "NotificationNames.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "ProjectSettings.h"
 #import "ProjectSettings+Packages.h"
 #import "RMPackage.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 
 @implementation PackageCreator
 
@@ -24,9 +24,9 @@
 {
     NSString *fullPath = [_projectSettings fullPathForPackageName:packageName];
 
-    if ([_projectSettings isResourcePathInProject:fullPath])
+    if ([_projectSettings isPackageWithFullPathInProject:fullPath])
     {
-        [NSError setNewErrorWithErrorPointer:error code:SBDuplicateResourcePathError message:[NSString stringWithFormat:@"Package %@ already in project", packageName]];
+        [NSError setNewErrorWithErrorPointer:error code:SBDuplicatePackageError message:[NSString stringWithFormat:@"Package %@ already in project", packageName]];
         return nil;
     }
 
@@ -36,7 +36,7 @@
         && underlyingErrorCreate.code == NSFileWriteFileExistsError)
     {
         [NSError setNewErrorWithErrorPointer:error
-                                        code:SBResourcePathExistsButNotInProjectError
+                                        code:SBPackageExistsButNotInProjectError
                                      message:[NSString stringWithFormat:@"Package %@ already exists on disk but is not in project", packageName]];
         return nil;
     }
@@ -47,7 +47,7 @@
     }
 
     NSError *underlyingErrorAddResPath;
-    BOOL addResPathSuccess = [_projectSettings addResourcePath:fullPath error:&underlyingErrorAddResPath];
+    BOOL addResPathSuccess = [_projectSettings addPackageWithFullPath:fullPath error:&underlyingErrorAddResPath];
     if(addResPathSuccess)
     {
         [self createPackageSettings:fullPath];
@@ -78,7 +78,7 @@
     NSString *fullPath = [_projectSettings fullPathForPackageName:baseName];
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    return [_projectSettings isResourcePathInProject:fullPath]
+    return [_projectSettings isPackageWithFullPathInProject:fullPath]
                     || [fileManager fileExistsAtPath:fullPath];
 }
 
@@ -87,7 +87,7 @@
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = fullPath;
 
-    SBPackageSettings *packagePublishSettings = [[SBPackageSettings alloc] initWithPackage:package];
+    PackageSettings *packagePublishSettings = [[PackageSettings alloc] initWithPackage:package];
     [packagePublishSettings store];
 }
 

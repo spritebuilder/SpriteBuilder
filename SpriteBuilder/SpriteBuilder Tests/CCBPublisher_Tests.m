@@ -22,7 +22,7 @@
 #import "ResourcePropertyKeys.h"
 #import "MiscConstants.h"
 #import "RMPackage.h"
-#import "SBPackageSettings.h"
+#import "PackageSettings.h"
 #import "CCBPublisherCacheCleaner.h"
 #import "NSNumber+ImageResolutions.h"
 
@@ -50,11 +50,11 @@
 
     RMPackage *package = [[RMPackage alloc] init];
     package.dirPath = [self fullPathForFile:@"baa.spritebuilder/Packages/foo.sbpack"];
-    [_projectSettings addResourcePath:package.dirPath error:nil];
+    [_projectSettings addPackageWithFullPath:package.dirPath error:nil];
 
     [CCBPublisherCacheCleaner cleanWithProjectSettings:_projectSettings];
 
-    SBPackageSettings *packageSettings = [[SBPackageSettings alloc] initWithPackage:package];
+    PackageSettings *packageSettings = [[PackageSettings alloc] initWithPackage:package];
 
     self.warnings = [[CCBWarnings alloc] init];
     self.publisher = [[CCBPublisher alloc] initWithProjectSettings:_projectSettings
@@ -93,8 +93,8 @@
     [self copyTestingResource:@"blank.wav" toFolder:@"baa.spritebuilder/Packages/foo.sbpack"];
     [self copyTestingResource:@"photoshop.psd" toFolder:@"baa.spritebuilder/Packages/foo.sbpack/resources-auto"];
 
-    _projectSettings.designTarget = kCCBDesignTargetFixed;
-    _projectSettings.defaultOrientation = kCCBOrientationPortrait;
+    _projectSettings.designTarget = kSBDesignTargetFixed;
+    _projectSettings.defaultOrientation = kSBOrientationPortrait;
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
@@ -181,7 +181,7 @@
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
-    [self assertFileExists:@"Published-iOS/mainScene.ccbi"];
+    [self assertFileExists:@"Published-iOS/mainScene.sbi"];
 }
 
 - (void)testCustomScalingFactorsForImages
@@ -371,8 +371,8 @@
     [self createFolders:@[@"baa.spritebuilder/Packages/foo.sbpack/images/resources-auto"]];
     [self copyTestingResource:@"greyscale.png" toFolder:@"baa.spritebuilder/Packages/foo.sbpack/images/resources-auto"];
 
-    _projectSettings.designTarget = kCCBDesignTargetFixed;
-    _projectSettings.defaultOrientation = kCCBOrientationPortrait;
+    _projectSettings.designTarget = kSBDesignTargetFixed;
+    _projectSettings.defaultOrientation = kSBOrientationPortrait;
 
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];

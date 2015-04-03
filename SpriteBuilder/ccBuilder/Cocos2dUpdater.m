@@ -11,11 +11,12 @@
 #import "AppDelegate.h"
 #import "ProjectSettings.h"
 #import "copyfile.h"
-#import "SBErrors.h"
+#import "Errors.h"
+#import "Cocos2dUpdateDelegate.h"
 #import "NSError+SBErrors.h"
-#import "NSAlert+Convenience.h"
 #import "SemanticVersioning.h"
 #import "CCBFileUtil.h"
+#import "NSString+Misc.h"
 
 // Debug option: Some verbosity on the console, 1 to enable 0 to turn off
 #define Cocos2UpdateLogging 0
@@ -39,14 +40,8 @@ typedef enum
     Cocos2dVersionProjectVersionUnknown,
 } Cocos2dVersionComparisonResult;
 
-typedef enum {
-   UpdateActionUpdate = 0,
-   UpdateActionNothingToDo,
-   UpdateActionIgnoreVersion,
-} UpdateActions;
-
 static NSString *const REL_DEFAULT_COCOS2D_FOLDER_PATH = @"Source/libs/cocos2d-iphone/";
-static NSString *const BASE_COCOS2D_BACKUP_NAME = @"cocos2d-iphone.backup";
+static NSString *const COCOS2D_BACKUP_EXTENSION = @"backup";
 static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuilder.com/update/";
 
 
@@ -153,11 +148,17 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     }
     else if (compareResult == Cocos2dVersionIncompatible)
     {
-        return [self showUpdateDialogWithText:@"Your project is not using the latest version of Cocos2D. It's recommended that you update."];
+        return  [_delegate updateAction:@"Your project is not using the latest version of Cocos2D. It's recommended that you update."
+                 projectsCocos2dVersion:_projectsCocos2dVersion
+           spriteBuildersCocos2dVersion:_spritebuildersCocos2dVersion
+                             backupPath:_backupFolderPath];
     }
     else if ([self doesProjectsCocos2dFolderExistAndHasNoVersionfile])
     {
-        return [self showUpdateDialogWithText:@"Your project is probably not using the latest version of Cocos2D (the version file is missing, which indicates that you are using an old version). It's recommended that you update."];
+        return  [_delegate updateAction:@"Your project is probably not using the latest version of Cocos2D (the version file is missing, which indicates that you are using an old version). It's recommended that you update."
+                 projectsCocos2dVersion:_projectsCocos2dVersion
+           spriteBuildersCocos2dVersion:_spritebuildersCocos2dVersion
+                             backupPath:_backupFolderPath];
     }
     else
     {
@@ -191,7 +192,6 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
         [self finishWithUpdateResult:updateResult error:error];
     });
 
-
     __weak id weakSelf = self;
     [_appDelegate modalStatusWindowStartWithTitle:@"Updating Cocos2D..." isIndeterminate:YES onCancelBlock:^
     {
@@ -201,7 +201,7 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
 
 - (void)setBackupFolderPath
 {
-    self.backupFolderPath = [self cocos2dBackupFolderPath:[self defaultProjectsCocos2DFolderPath]];
+    self.backupFolderPath = [[self defaultProjectsCocos2DFolderPath] availabeFileNameWithRollingNumberAndExtraExtension:COCOS2D_BACKUP_EXTENSION];
 }
 
 - (void)finishWithUpdateResult:(BOOL)status error:(NSError *)error
@@ -216,7 +216,8 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
             _projectSettings.canUpdateCocos2D = NO;
             [_projectSettings.cocos2dUpdateIgnoredVersions removeObject:self.spritebuildersCocos2dVersion];
             [self openBrowserWithCocos2dUpdateInformation];
-            [self showUpdateSuccessDialog];
+
+            [_delegate updateSucceeded];
         }
         else
         {
@@ -236,25 +237,32 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     }
     else
     {
-		
+        #if !TESTING
 		CFRunLoopPerformBlock(([[NSRunLoop mainRunLoop] getCFRunLoop]), (__bridge CFStringRef)NSModalPanelRunLoopMode, ^{
             block();
         });
+        #else
+        // For whatever reason the other run on main thread version does not complete the tests
+        dispatch_async(dispatch_get_main_queue(), ^{
+           block();
+        });
+        #endif
     }
 }
 
 - (void)openBrowserWithCocos2dUpdateInformation
 {
+    #if !TESTING
     NSWorkspace *workspace = [NSWorkspace sharedWorkspace];
     [workspace openURL:[NSURL URLWithString:URL_COCOS2D_UPDATE_INFORMATION]];
+    #endif
 }
 
 - (void)showUpdateErrorDialog:(NSError *)error
 {
     if (!self.isCancelled)
     {
-        [NSAlert showModalDialogWithTitle:@"Error updating Cocos2D"
-                                  message:[NSString stringWithFormat:@"An error occured while updating. Rolling back. \nError: %@\n\nBackup folder restored.", error.localizedDescription]];
+        [_delegate updateFailedWithError:error];
     }
 }
 
@@ -424,12 +432,6 @@ static NSString *const URL_COCOS2D_UPDATE_INFORMATION = @"http://www.spritebuild
     return YES;
 }
 
-- (void)showUpdateSuccessDialog
-{
-    [NSAlert showModalDialogWithTitle:@"Cocos2D Update Complete"
-                              message:@"Your project has been updated to use the latest version of Cocos2D.\n\nPlease test your Xcode project. If you encounter any issues check spritebuilder.com for more information."];
-}
-
 - (NSString *)readSpriteBuildersCocos2dVersionFile
 {
     NSString *versionFilePath = [[NSBundle mainBundle] pathForResource:@"cocos2d_version" ofType:@"txt" inDirectory:@"Generated"];
@@ -564,92 +566,6 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
     return YES;  // No soft link is needed
 }
 
-
-- (NSString *)cocos2dBackupFolderPath:(NSString *)defaultCocos2DFolderPath
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *result = [[defaultCocos2DFolderPath stringByDeletingLastPathComponent]
-                                                  stringByAppendingPathComponent:BASE_COCOS2D_BACKUP_NAME];
-
-    if ([fileManager fileExistsAtPath:result])
-    {
-        return [self cocos2dBackupFolderNameWithCounterPostfix:defaultCocos2DFolderPath cocos2dBackupFolderPath:result];
-    }
-    return result;
-}
-
-- (NSString *)cocos2dBackupFolderNameWithCounterPostfix:(NSString *)defaultCocos2DFolderPath cocos2dBackupFolderPath:(NSString *)cocos2dBackupName
-{
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSUInteger maxCounter = 0;
-
-    NSString *libsFolder = [defaultCocos2DFolderPath stringByAppendingPathComponent:@".."];
-    NSArray *dirContents = [fileManager contentsOfDirectoryAtPath:libsFolder error:nil];
-
-    for (NSString *directoryName in dirContents)
-    {
-        maxCounter = [self highestBackupDirCounterPostfixCurrentCount:maxCounter directoryName:directoryName];
-    }
-    return [cocos2dBackupName stringByAppendingString:[NSString stringWithFormat:@".%lu", maxCounter]];
-}
-
-- (NSUInteger)highestBackupDirCounterPostfixCurrentCount:(NSUInteger)currentCounter directoryName:(NSString *)directoryName
-{
-    NSNumber *number = [self parseNumberPostfixInBackupDir:directoryName];
-
-    if (number
-        && ([number unsignedIntegerValue] > currentCounter))
-    {
-        currentCounter = [number unsignedIntegerValue] + 1;
-    }
-
-    return currentCounter;
-}
-
-- (NSNumber *)parseNumberPostfixInBackupDir:(NSString *)directoryName
-{
-    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
-
-    NSString *pattern = [NSString stringWithFormat:@"%@.", BASE_COCOS2D_BACKUP_NAME];
-    NSString *counterOnlyString = [directoryName stringByReplacingOccurrencesOfString:pattern withString:@""];
-    return [numberFormatter numberFromString:counterOnlyString];
-}
-
-- (UpdateActions)showUpdateDialogWithText:(NSString *)text
-{
-    NSMutableString *informativeText = [NSMutableString string];
-    [informativeText appendString:text];
-    [informativeText appendFormat:@"\n\nBefore updating we will make a backup of your old Cocos2D folder and rename it to \"%@\".", [self.backupFolderPath lastPathComponent]];
-
-    if (self.projectsCocos2dVersion)
-    {
-        [informativeText appendFormat:@"\n\nUpdate from version %@ to %@?", self.projectsCocos2dVersion, self.spritebuildersCocos2dVersion];
-    }
-    else
-    {
-        [informativeText appendFormat:@"\n\nUpdate to version %@?", self.spritebuildersCocos2dVersion];
-    }
-
-    NSAlert *alert = [[NSAlert alloc] init];
-    alert.informativeText = informativeText;
-    alert.messageText = @"Cocos2D Automatic Updater";
-
-    // beware: return value is depending on the position of the button
-    [alert addButtonWithTitle:@"Update"];
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert addButtonWithTitle:@"Ignore this version"];
-
-    NSInteger returnValue = [alert runModal];
-    switch (returnValue)
-    {
-        case NSAlertFirstButtonReturn: return UpdateActionUpdate;
-        case NSAlertSecondButtonReturn: return UpdateActionNothingToDo;
-        case NSAlertThirdButtonReturn: return UpdateActionIgnoreVersion;
-        default: return UpdateActionNothingToDo;
-    }
-}
-
 - (Cocos2dVersionComparisonResult)compareProjectsCocos2dVersionWithSpriteBuildersVersion
 {
     LocalLog(@"[COCO2D-UPDATER] [INFO] Comparing version - SB: %@ with project: %@ ...", self.spritebuildersCocos2dVersion, self.projectsCocos2dVersion);
@@ -693,10 +609,12 @@ static int copyFileCallback(int currentState, int stage, copyfile_state_t state,
                                                            encoding:NSUTF8StringEncoding
                                                               error:&error];
 
-    NSRange cocos2dTextPosition = [submodulesContent rangeOfString:@"cocos2d-iphone.git" options:NSCaseInsensitiveSearch];
-    BOOL result = cocos2dTextPosition.location != NSNotFound;
+    NSRange cocos2diPhoneTextPosition = [submodulesContent rangeOfString:@"cocos2d-iphone.git" options:NSCaseInsensitiveSearch];
+    NSRange cocos2dSwiftTextPosition = [submodulesContent rangeOfString:@"cocos2d-swift.git" options:NSCaseInsensitiveSearch];
+    BOOL result = cocos2diPhoneTextPosition.location != NSNotFound
+                  || cocos2dSwiftTextPosition.location != NSNotFound;
 
-    LocalLog(@"[COCO2D-UPDATER] [INFO] .gitmodules file found, contains cocos2d-iphone.git? %d", result);
+    LocalLog(@"[COCO2D-UPDATER] [INFO] .gitmodules file found, contains cocos2d-iphone.git or cocos2d-swift.git? %d", result);
 
     return result;
 }

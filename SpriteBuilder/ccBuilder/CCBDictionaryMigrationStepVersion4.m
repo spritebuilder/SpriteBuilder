@@ -2,7 +2,8 @@
 #import "CCBDictionaryMigrationStepVersion4.h"
 #import "CCBDictionaryKeys.h"
 #import "NSError+SBErrors.h"
-#import "SBErrors.h"
+#import "Errors.h"
+#import "CCBDocumentManipulator.h"
 
 
 /*
@@ -63,36 +64,21 @@
     }
 
     NSMutableDictionary *mutableCCB = CFBridgingRelease(CFPropertyListCreateDeepCopy(NULL, (__bridge CFPropertyListRef)(ccb), kCFPropertyListMutableContainersAndLeaves));
-    NSMutableDictionary *nodeGraph = mutableCCB[CCB_DICTIONARY_KEY_NODEGRAPH];
 
-    [self traverseChildrenAndMigrate:@[nodeGraph]];
+    CCBDocumentManipulator *manipulator = [[CCBDocumentManipulator alloc] initWithDocument:mutableCCB];
+    [manipulator processAllProperties:^NSDictionary *(NSDictionary *property, NSDictionary *child)
+    {
+        if ([property[CCB_DICTIONARY_KEY_PROPERTY_NAME] isEqualToString:@"blendFunc"])
+        {
+            return [self migrateOldBlendFuncToNewBlendMode:property];
+        }
+        return property;
+    }];
 
     return mutableCCB;
 }
 
-- (void)traverseChildrenAndMigrate:(NSArray *)children
-{
-    for (NSMutableDictionary *child in children)
-    {
-        NSMutableArray *nodeGraphProps = child[CCB_DICTIONARY_KEY_PROPERTIES];
-
-        for (NSUInteger i = 0; i < nodeGraphProps.count; ++i)
-        {
-            NSMutableDictionary *property = nodeGraphProps[i];
-            if ([property[CCB_DICTIONARY_KEY_PROPERTY_NAME] isEqualToString:@"blendFunc"])
-            {
-                nodeGraphProps[i] = [self migrateOldBlendFuncToNewBlendMode:property];
-            }
-        }
-
-        if ([child[CCB_DICTIONARY_KEY_CHILDREN] isKindOfClass:[NSArray class]])
-        {
-            [self traverseChildrenAndMigrate:child[CCB_DICTIONARY_KEY_CHILDREN]];
-        }
-    }
-}
-
-- (NSDictionary *)migrateOldBlendFuncToNewBlendMode:(NSMutableDictionary *)property
+- (NSDictionary *)migrateOldBlendFuncToNewBlendMode:(NSDictionary *)property
 {
     id value = property[CCB_DICTIONARY_KEY_PROPERTY_VALUE];
     if ([value isKindOfClass:[NSArray class]]

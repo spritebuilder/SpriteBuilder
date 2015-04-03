@@ -14,7 +14,7 @@
 #import "EffectsManager.h"
 #import "CCEffect.h"
 #import "NotificationNames.h"
-#import "SBPasteboardTypes.h"
+#import "PasteboardTypes.h"
 #import "MiscConstants.h"
 
 @implementation OutletButton
@@ -258,7 +258,7 @@
 																 options:0
 																   error:NULL];
 		
-		[pasteboard setData:data forType:@"com.cocosbuilder.jointBody"];
+		[pasteboard setData:data forType:PASTEBOARD_TYPE_JOINTBODY];
 	}
 	
 	if(self.dragType == DragTypeEffectSprite)
@@ -272,7 +272,7 @@
 																 options:0
 																   error:NULL];
 		
-		[pasteboard setData:data forType:@"com.cocosbuilder.effectSprite"];
+		[pasteboard setData:data forType:PASTEBOARD_TYPE_EFFECTSPRITE];
 	}
 }
 

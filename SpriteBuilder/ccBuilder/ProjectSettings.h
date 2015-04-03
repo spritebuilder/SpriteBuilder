@@ -25,30 +25,37 @@
 #import <Foundation/Foundation.h>
 #import "CCBPublisherTypes.h"
 
-#define kCCBProjectSettingsVersion 1
-#define kCCBDefaultExportPlugIn @"ccbi"
+#define kCCBProjectSettingsVersion 2
+#define kCCBDefaultExportPlugIn @"sbi"
+
+extern NSString *const PROJECTSETTINGS_KEY_FILEVERSION;
+extern NSString *const PROJECTSETTINGS_KEY_RESOURCEPROPERTIES;
+extern NSString *const PROJECTSETTINGS_KEY_PACKAGES;
+extern NSString *const PROJECTSETTINGS_KEY_PUBLISHDIR_IOS;
+extern NSString *const PROJECTSETTINGS_KEY_PUBLISHDIR_ANDROID;
+
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_RESOURCESPATHS;
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_ONLYPUBLISHCCBS;
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_ENGINE;
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_PUBLISHDIR_IOS;
+extern NSString *const PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION;
 
 typedef enum
 {
-    kCCBDesignTargetFlexible = 0,
-    kCCBDesignTargetFixed = 1,
-} CCBDesignTarget;
+    kSBDesignTargetFlexible = 0,
+    kSBDesignTargetFixed = 1,
+} SBDesignTarget;
 
 typedef enum
 {
-    kCCBOrientationLandscape = 0,
-    kCCBOrientationPortrait = 1,
-} CCBOrientation;
+    kSBOrientationLandscape = 0,
+    kSBOrientationPortrait = 1,
+} SBOrientation;
 
-typedef NS_ENUM(int8_t, CCBTargetEngine)
+typedef NS_ENUM(int8_t, SBProgrammingLanguage)
 {
-	CCBTargetEngineCocos2d = 0,
-};
-
-typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
-{
-    CCBProgrammingLanguageObjectiveC = 0,
-    CCBProgrammingLanguageSwift = 1,
+    SBProgrammingLanguageObjectiveC = 0,
+    SBProgrammingLanguageSwift = 1,
 };
 
 @class RMResource;
@@ -61,54 +68,53 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 
 // Full path to the project's root folder, according to -projectPath example: /foo/baa.spritebuilder/
 @property (nonatomic, readonly) NSString* projectPathDir;
-
-@property (nonatomic, strong, readonly) NSArray *allResourcesRelativePaths;
-
 @property (nonatomic, readonly) NSString* projectPathHashed;
-@property (nonatomic, strong) NSMutableArray* resourcePaths;
+
+@property (nonatomic, strong) NSMutableArray *packages;
+@property (nonatomic, readonly) NSArray*absolutePackagePaths;
 
 @property (nonatomic,assign) BOOL publishEnabledIOS;
 @property (nonatomic,assign) BOOL publishEnabledAndroid;
 
-@property (nonatomic, copy) NSString* publishDirectory;
-@property (nonatomic, copy) NSString* publishDirectoryAndroid;
+@property (nonatomic, copy) NSString *publishDirectoryIOS;
+@property (nonatomic, copy) NSString *publishDirectoryAndroid;
 
 @property (nonatomic, assign) BOOL publishToZipFile;
-@property (nonatomic, assign) BOOL onlyPublishCCBs;
-@property (nonatomic, readonly) NSArray* absoluteResourcePaths;
+@property (nonatomic, assign) CCBPublishEnvironment publishEnvironment;
+
 @property (nonatomic, copy) NSString* exporter;
 @property (nonatomic, strong) NSMutableArray* availableExporters;
+
 @property (nonatomic, readonly) NSString* displayCacheDirectory;
 @property (nonatomic, readonly) NSString* tempSpriteSheetCacheDirectory;
+
 @property (nonatomic, assign) BOOL deviceOrientationPortrait;
 @property (nonatomic, assign) BOOL deviceOrientationUpsideDown;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeLeft;
 @property (nonatomic, assign) BOOL deviceOrientationLandscapeRight;
-@property (nonatomic, assign) CCBPublishEnvironment publishEnvironment;
+
+@property (nonatomic, assign) SBDesignTarget designTarget;
+@property (nonatomic, assign) int defaultOrientation;
+@property (nonatomic, assign) int deviceScaling;
+@property (nonatomic, assign) float tabletPositionScaleFactor;
 
 // *** Temporary property, do not persist ***
 @property (nonatomic) BOOL canUpdateCocos2D;
 
 @property (nonatomic, strong) NSMutableArray *cocos2dUpdateIgnoredVersions;
-@property (nonatomic) BOOL excludedFromPackageMigration;
 
 @property (nonatomic, copy) NSString* versionStr;
 @property (nonatomic, assign) BOOL needRepublish;
 
-@property (nonatomic, assign) int designTarget;
-@property (nonatomic, assign) int defaultOrientation;
-@property (nonatomic, assign) int deviceScaling;
-@property (nonatomic, assign) float tabletPositionScaleFactor;
-
 @property (nonatomic, strong) CCBWarnings* lastWarnings;
 
-@property (nonatomic, readonly) CCBTargetEngine engine;
+// Returns an instance of ProjectSettings with projectPath already set
+- (instancetype)initWithFilepath:(NSString *)filepath;
 
-
+// Returns an instance of ProjectSettings. NOTE: You will have to set the projectPath property manually afterwards
 - (id) initWithSerialization:(id)dict;
 - (BOOL) store;
 - (id) serialize;
-
 
 // *** Smart Sprite Sheets ***
 - (void) makeSmartSpriteSheet:(RMResource*) res;
@@ -141,26 +147,26 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 
 - (void)movedResourceFrom:(NSString *)relPathOld to:(NSString *)relPathNew fromFullPath:(NSString *)fromFullPath toFullPath:(NSString *)toFullPath;
 
-// *** Resource Paths ***
-// Adds a full resourcePath to the project, provide full filePath
-// Returns NO if resource path could not be added.
-// Returns SBDuplicateResourcePathError if given resource path is already present,
-- (BOOL)addResourcePath:(NSString *)path error:(NSError **)error;
+// *** Packages ***
+// Adds a full package to the project, provide full filePath
+// Returns NO if package could not be added.
+// Returns SBDuplicatePackageError if given full package path is already present,
+- (BOOL)addPackageWithFullPath:(NSString *)fullPath error:(NSError **)error;
 
-// Tests if a given full resource path is already in the project, provide full filePath
-- (BOOL)isResourcePathInProject:(NSString *)resourcePath;
+// Tests if a given full package path is already in the project, provide full filePath
+- (BOOL)isPackageWithFullPathInProject:(NSString *)fullPath;
 
-// Removes a full resourcePath from the project, provide full filePath
-// Returns NO if resource path could not be removed.
-// Returns SBResourcePathNotInProjectError if given resource path does not exist,
-- (BOOL)removeResourcePath:(NSString *)path error:(NSError **)error;
+// Removes a package from the project, provide full filePath
+// Returns NO if package could not be removed.
+// Returns SBPackageNotInProjectError if given full package path does not exist,
+- (BOOL)removePackageWithFullPath:(NSString *)fullPath error:(NSError **)error;
 
-// Changes the path component of a resourcePath, provide full paths
-// Returns NO if resource path could not be moved.
-// Returns SBDuplicateResourcePathError if resource path toPath already exists
-- (BOOL)moveResourcePathFrom:(NSString *)fromPath toPath:(NSString *)toPath error:(NSError **)error;
+// Changes the path component of a package, provide full paths
+// Returns NO if package could not be moved.
+// Returns SBDuplicatePackageError if package toFullPath already exists
+- (BOOL)movePackageWithFullPathFrom:(NSString *)fromPath toFullPath:(NSString *)toFullPath error:(NSError **)error;
 
-- (NSString *)fullPathForResourcePathDict:(NSMutableDictionary *)resourcePathDict;
+- (NSString *)fullPathForPackageDict:(NSMutableDictionary *)packageDict;
 
 // *** Misc ***
 - (NSString* ) getVersion;
@@ -172,5 +178,6 @@ typedef NS_ENUM(int8_t, CCBProgrammingLanguage)
 // If no package include the given absolutePath nil is returned
 - (NSString *)findRelativePathInPackagesForAbsolutePath:(NSString *)absolutePath;
 
+- (NSString *)projectName;
 
 @end

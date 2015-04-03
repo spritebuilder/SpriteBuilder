@@ -7,7 +7,7 @@
 //
 
 #import "SecurityScopedBookmarksStore.h"
-#import "SBUserDefaultsKeys.h"
+#import "UserDefaultsKeys.h"
 
 @implementation SecurityScopedBookmarksStore
 

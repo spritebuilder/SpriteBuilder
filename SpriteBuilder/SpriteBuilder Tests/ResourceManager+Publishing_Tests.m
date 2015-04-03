@@ -11,8 +11,7 @@
 #import "FileSystemTestCase.h"
 #import "RMPackage.h"
 #import "ResourceManager+Publishing.h"
-#import "SBPackageSettings.h"
-#import "SBAssserts.h"
+#import "PackageSettings.h"
 
 @interface ResourceManager_Publishing_Tests : FileSystemTestCase
 
@@ -46,12 +45,12 @@
 
     RMPackage *package1 = [[RMPackage alloc] init];
     package1.dirPath = [self fullPathForFile:@"foo.spritebuilder/Packages/package1.sbpack"];
-    SBPackageSettings *packagePublishSettings1 = [[SBPackageSettings alloc] initWithPackage:package1];
+    PackageSettings *packagePublishSettings1 = [[PackageSettings alloc] initWithPackage:package1];
     [packagePublishSettings1 store];
 
     RMPackage *package2 = [[RMPackage alloc] init];
     package2.dirPath = [self fullPathForFile:@"foo.spritebuilder/Packages/package2.sbpack"];
-    SBPackageSettings *packagePublishSettings2 = [[SBPackageSettings alloc] initWithPackage:package2];
+    PackageSettings *packagePublishSettings2 = [[PackageSettings alloc] initWithPackage:package2];
     [packagePublishSettings2 store];
 }
 
@@ -61,9 +60,9 @@
 
     XCTAssertEqual([packageSettings count], 2);
 
-    for (SBPackageSettings *setting in packageSettings)
+    for (PackageSettings *setting in packageSettings)
     {
-        XCTAssertTrue([setting isKindOfClass:[SBPackageSettings class]]);
+        XCTAssertTrue([setting isKindOfClass:[PackageSettings class]]);
     }
 }
 

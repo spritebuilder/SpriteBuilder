@@ -52,6 +52,7 @@
 #import "GeometryUtil.h"
 #import "NSPasteboard+CCB.h"
 #import "InspectorController.h"
+#import "PasteboardTypes.h"
 
 #define kCCBSelectionOutset 3
 #define kCCBSinglePointSelectionRadius 23
@@ -1010,7 +1011,7 @@ static NSString * kZeroContentSizeImage = @"sel-round.png";
     
     // Textures
 	
-	NSArray* pbSprites = [pb propertyListsForType:@"com.cocosbuilder.effectSprite"];
+	NSArray* pbSprites = [pb propertyListsForType:PASTEBOARD_TYPE_EFFECTSPRITE];
 
 	if(pbSprites.count > 0)
 	{

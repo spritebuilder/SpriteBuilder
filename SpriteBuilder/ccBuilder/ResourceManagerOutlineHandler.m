@@ -30,7 +30,7 @@
 #import "CCBWarnings.h"
 #import "ProjectSettings.h"
 #import "MiscConstants.h"
-#import "SBErrors.h"
+#import "Errors.h"
 #import "RMResource.h"
 #import "ResourceTypes.h"
 #import "RMDirectory.h"
@@ -42,6 +42,7 @@
 #import "PackageRenamer.h"
 #import "PackageImporter.h"
 #import "PreviewViewControllerProtocol.h"
+#import "PasteboardTypes.h"
 
 @interface ResourceManagerOutlineHandler ()
 @property (nonatomic, strong) id <PreviewViewControllerProtocol> previewController;
@@ -76,7 +77,7 @@
         [resourceList setTarget:self];
         [resourceList setDoubleAction:@selector(doubleClicked:)];
 
-        [outlineView registerForDraggedTypes:@[@"com.cocosbuilder.RMResource", NSFilenamesPboardType]];
+        [outlineView registerForDraggedTypes:@[PASTEBOARD_TYPE_RMRESOURCE, NSFilenamesPboardType]];
     }
     return self;
 }
@@ -403,7 +404,7 @@
     BOOL movedOrImportedFiles = NO;
     
     // Move files
-    NSArray* pbRes = [pasteboard propertyListsForType:@"com.cocosbuilder.RMResource"];
+    NSArray* pbRes = [pasteboard propertyListsForType:PASTEBOARD_TYPE_RMRESOURCE];
     for (NSDictionary* dict in pbRes)
     {
         NSString* srcPath = dict[@"filePath"];
@@ -474,7 +475,7 @@
     NSArray *errors = error.userInfo[@"errors"];
     for (NSError *anError in errors)
     {
-        if (anError.code != SBDuplicateResourcePathError)
+        if (anError.code != SBDuplicatePackageError)
         {
             [errorMessage appendFormat:@"%@\n", anError.localizedDescription];
         }
@@ -512,9 +513,9 @@
     if ([item isKindOfClass:[RMResource class]])
     {
         RMResource* res = (RMResource*) item;
-        if (res.type == kCCBResTypeCCBFile)
+        if (res.type == kCCBResTypeSBFile)
         {
-            [[AppDelegate appDelegate] openFile: res.filePath];
+            [[AppDelegate appDelegate] openFile:res.filePath migrate:YES];
         }
     }
 }
