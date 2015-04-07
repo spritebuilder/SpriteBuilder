@@ -425,7 +425,8 @@
                                 attributes:nil
                                      error:nil];
         
-        NSString *intermediateFileLookupPath = [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPathWithRes] stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
+        NSString *intermediateFileLookupPath = [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPathWithRes]
+                stringByAppendingPathComponent:INTERMEDIATE_FILE_LOOKUP_NAME];
         [_renamedFilesLookup addIntermediateLookupPath:intermediateFileLookupPath];
 
 		if ([self spriteSheetExistsAndUpToDate:srcSpriteSheetDate spriteSheetFile:spriteSheetFile subPath:subPathWithRes])
@@ -474,16 +475,19 @@
                                                                                           packageSettings:_packageSettings
                                                                                                  warnings:_warnings
                                                                                            statusProgress:_publishingTaskStatusProgress];
+
+    NSString *spriteSheetCacheDir = [_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath];
+    NSString *resolutionCacheDir = [spriteSheetCacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]];
+
     operation.publishDirectory = publishDirectory;
     operation.publishedPNGFiles = _publishedPNGFiles;
     operation.srcSpriteSheetDate = srcSpriteSheetDate;
     operation.resolution = resolution;
-    operation.srcDirs = @[
-            [[_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]],
-            [_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath]];
+    operation.srcDirs = @[resolutionCacheDir, spriteSheetCacheDir];
     operation.spriteSheetFile = spriteSheetFile;
     operation.subPath = subPath;
     operation.osType = _osType;
+
     return operation;
 }
 

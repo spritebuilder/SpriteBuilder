@@ -298,7 +298,10 @@ NSString *const PROJECTSETTINGS_KEY_DEPRECATED_EXCLUDEFROMPACKAGEMIGRATION = @"e
 - (NSString*) tempSpriteSheetCacheDirectory
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    return [[paths[0] stringByAppendingPathComponent:PUBLISHER_CACHE_DIRECTORY_NAME] stringByAppendingPathComponent:@"spritesheet"];
+    NSString *cacheDir = [paths[0] stringByAppendingPathComponent:PUBLISHER_CACHE_DIRECTORY_NAME];
+    NSString *projectDir = [NSString stringWithFormat:@"%@-spritesheet", [_projectPath lastPathComponent]];
+
+    return [cacheDir stringByAppendingPathComponent:projectDir];
 }
 
 - (void) _storeDelayed
