@@ -340,7 +340,14 @@ __strong NSDictionary* renamedProperties = nil;
     else if ([type isEqualToString:@"Blendmode"])
     {
         CCBlendMode *blendMode = [CCBDictionaryReader deserializeBlendMode:serializedValue];
-        [node setValue:blendMode forKey:name];
+        if([node respondsToSelector:NSSelectorFromString(name)])
+        {
+            [node setValue:blendMode forKey:name];
+        }
+        else
+        {
+            NSLog(@"WARNING! Trying to set non existant property %@ on node of type %@", name, [node class]);
+        }
     }
     else if ([type isEqualToString:@"FntFile"])
     {

@@ -2141,6 +2141,9 @@
 		D2E0168618D783F800927430 /* SpriteBuilder.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = SpriteBuilder.sdef; sourceTree = SOURCE_ROOT; };
 		D2F06F9E1A3EA6F4000283CB /* effect-outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "effect-outline.png"; path = "Resources/effect-outline.png"; sourceTree = "<group>"; };
 		D35E589D18E391DA008571EC /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		D3B2B0DD1AC1DBF900DE905E /* ForceResolution.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForceResolution.m; sourceTree = "<group>"; };
+		D3B2B0E31AC1DC6D00DE905E /* ForceResolution.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForceResolution.h; sourceTree = "<group>"; };
+		D3B2B0E41AC1F08800DE905E /* select-physics-corner-1x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select-physics-corner-1x.png"; sourceTree = "<group>"; };
 		DC68033A189168390060BE39 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		E312972D16CC33B200A09155 /* SequencerPopoverBlock.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SequencerPopoverBlock.xib; sourceTree = "<group>"; };
 		E312973116CC377700A09155 /* SequencerPopoverBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SequencerPopoverBlock.h; sourceTree = "<group>"; };
@@ -2873,7 +2876,6 @@
 		E525FEDBFC68A96C09F6BCC9 /* test_ccbreader_node_customClass_customProperties.sb */ = {isa = PBXFileReference; lastKnownFileType = file.ccb; path = test_ccbreader_node_customClass_customProperties.sb; sourceTree = "<group>"; };
 		E525FEE3806A0098CA045D95 /* Cocos2dUpdateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cocos2dUpdateDelegate.h; sourceTree = "<group>"; };
 		E525FEF3CEC7DF31D88EFD78 /* PackageSettingsMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PackageSettingsMigrator.m; sourceTree = "<group>"; };
-		E525FEFB9DD4C68B41FF4F1F /* ruler-numbers.fnt */ = {isa = PBXFileReference; lastKnownFileType = file.fnt; path = "ruler-numbers.fnt"; sourceTree = "<group>"; };
 		E525FEFBAEFBE0162647D84C /* NSNumber+ImageResolutions_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+ImageResolutions_Tests.m"; sourceTree = "<group>"; };
 		E525FF18D2784BB119B2882A /* RMResource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMResource.m; sourceTree = "<group>"; };
 		E525FF20A3DA94C3BDBA97C7 /* CreateDirectoryFileCommand_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateDirectoryFileCommand_Tests.m; sourceTree = "<group>"; };
@@ -6778,7 +6780,6 @@
 				B7096E2E180CD98E00164A8A /* doc-sprite@2x.png in Resources */,
 				E3E8B49015791FFB00373983 /* seq-tl-mark-origin.png in Resources */,
 				E3E8B4921579326A00373983 /* seq-timedisplay-bg.png in Resources */,
-				83F3CA191A422CD6003D8659 /* ruler-bg-vertical.png in Resources */,
 				B73788F71804D8200076A88C /* sbproj.icns in Resources */,
 				83F3CA9F1A423B8A003D8659 /* EffectLightingControl.xib in Resources */,
 				E3E8B49915793AF800373983 /* seq-btn-play.png in Resources */,
@@ -7064,7 +7065,6 @@
 				920994C119870EF90006F38D /* EffectTest1.ccb in Resources */,
 				92F85F37194F70CA0076B343 /* AnimationTest4.ccb in Resources */,
 				92F85F34194F6AD80076B343 /* AnimationTest3.ccb in Resources */,
-				B7E6BB5519F868F000619A58 /* select-physics-corner@2x.png in Resources */,
 				E525F5C7E24AE5085670D43B /* test_ccbreader_textfield.sb in Resources */,
 				E525F7417672EF139D91F2BB /* test_ccbreader_slider.sb in Resources */,
 				E525F4675E32F33E1962C71B /* test_ccbreader_nodegradient.sb in Resources */,
@@ -8317,7 +8317,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = libs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -8350,7 +8350,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = libs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -8546,7 +8546,7 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "";
 				FRAMEWORK_SEARCH_PATHS = libs;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
