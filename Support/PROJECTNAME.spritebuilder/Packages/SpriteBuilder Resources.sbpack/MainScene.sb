@@ -22,7 +22,7 @@
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
-	<integer>4</integer>
+	<integer>5</integer>
 	<key>gridspaceHeight</key>
 	<integer>64</integer>
 	<key>gridspaceWidth</key>
