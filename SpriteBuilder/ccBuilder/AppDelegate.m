@@ -1704,7 +1704,7 @@ typedef enum
         return NO;
     }
     // Load or create language file
-    NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.ccbLang"];
+    NSString* langFile = [[ResourceManager sharedManager].mainActiveDirectoryPath stringByAppendingPathComponent:@"Strings.sbLang"];
     localizationEditorHandler.managedFile = langFile;
 
     // Update the title of the main window
