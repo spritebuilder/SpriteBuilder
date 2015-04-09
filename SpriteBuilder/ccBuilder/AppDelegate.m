@@ -3078,7 +3078,7 @@ typedef enum
                 
                 // Create project file
                 NSString* projectName = [fileNameRaw lastPathComponent];
-                fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"ccbproj"];
+                fileName = [[fileName stringByAppendingPathComponent:projectName] stringByAppendingPathExtension:@"sbproj"];
                 
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0),
                                dispatch_get_main_queue(), ^{
