@@ -18,26 +18,27 @@
 	<false/>
 	<key>deviceScaling</key>
 	<integer>0</integer>
-	<key>engine</key>
-	<integer>0</integer>
-	<key>excludedFromPackageMigration</key>
-	<false/>
 	<key>exporter</key>
-	<string>ccbi</string>
+	<string>sbi</string>
 	<key>fileType</key>
 	<string>CocosBuilderProject</string>
 	<key>fileVersion</key>
-	<integer>1</integer>
-	<key>onlyPublishCCBs</key>
-	<false/>
+	<integer>2</integer>
+	<key>packages</key>
+	<array>
+		<dict>
+			<key>path</key>
+			<string>Packages/SpriteBuilder Resources.sbpack</string>
+		</dict>
+	</array>
 	<key>publishAudioQuality_android</key>
 	<integer>4</integer>
 	<key>publishAudioQuality_ios</key>
 	<integer>4</integer>
-	<key>publishDirectory</key>
-	<string>Source/Resources/Published-iOS</string>
 	<key>publishDirectoryAndroid</key>
 	<string>Source/Resources/Published-Android</string>
+	<key>publishDirectoryIOS</key>
+	<string>Source/Resources/Published-iOS</string>
 	<key>publishEnabledAndroid</key>
 	<true/>
 	<key>publishEnablediPhone</key>
@@ -64,13 +65,6 @@
 	<false/>
 	<key>resourceAutoScaleFactor</key>
 	<integer>4</integer>
-	<key>resourcePaths</key>
-	<array>
-		<dict>
-			<key>path</key>
-			<string>Packages/SpriteBuilder Resources.sbpack</string>
-		</dict>
-	</array>
 	<key>resourceProperties</key>
 	<dict>
 		<key></key>
@@ -80,87 +74,65 @@
 		</dict>
 		<key>Sprites</key>
 		<dict/>
-		<key>ccbResources</key>
+		<key>Resources</key>
 		<dict>
 			<key>previewFolderHidden</key>
 			<true/>
 		</dict>
-		<key>ccbResources/ccbButtonHighlighted.png</key>
+		<key>Resources/ButtonHighlighted.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>2</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbButtonNormal.png</key>
+		<key>Resources/ButtonNormal.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>2</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbParticleFire.png</key>
+		<key>Resources/ParticleFire.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>1</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbParticleMagic.png</key>
+		<key>Resources/ParticleMagic.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>1</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbParticleSmoke.png</key>
+		<key>Resources/ParticleSmoke.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>1</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbParticleSnow.png</key>
+		<key>Resources/ParticleSnow.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>1</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbParticleStars.png</key>
+		<key>Resources/ParticleStars.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>1</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbSliderBgHighlighted.png</key>
+		<key>Resources/SliderBgHighlighted.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>2</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbSliderBgNormal.png</key>
+		<key>Resources/SliderBgNormal.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>2</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbSliderHandle.png</key>
+		<key>Resources/SliderHandle.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>2</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
-		<key>ccbResources/ccbTextField.png</key>
+		<key>Resources/TextField.png</key>
 		<dict>
 			<key>scaleFrom</key>
 			<integer>2</integer>
-			<key>tabletScale</key>
-			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>versionStr</key>
