@@ -87,7 +87,8 @@
 
         self.modifiedDatesCache = [[DateCache alloc] init];
 
-        self.supportedFileExtensions = @[@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt", @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang"];
+        self.supportedFileExtensions = @[@"jpg", @"png", @"psd", @"pvr", @"ccz", @"plist", @"fnt",
+                @"ttf",@"js", @"json", @"wav",@"mp3",@"m4a",@"caf",@"ccblang", @"sblang"];
 	}
 
     return self;
