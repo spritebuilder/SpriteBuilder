@@ -1,17 +1,13 @@
 #import "ProjectSettingsMigrator.h"
-#import "ResourcePathToPackageMigrator.h"
 #import "ResourcePropertyKeys.h"
 #import "BackupFileCommand.h"
 #import "NSError+SBErrors.h"
 #import "Errors.h"
 #import "MoveFileCommand.h"
 #import "MiscConstants.h"
-#import "MoveFileCommand.h"
 #import "NSString+Misc.h"
 #import "MigrationLogger.h"
 #import "MigratorData.h"
-#import "CCEffect_Private.h"
-#import "CCRendererBasicTypes_Private.h"
 #import "ProjectSettings.h"
 
 static NSString *const LOGGER_SECTION = @"ProjectSettings";
@@ -277,7 +273,8 @@ static NSString *const LOGGER_ROLLBACK = @"Rollback";
         return YES;
     }
 
-    [_logger log:[NSString stringWithFormat:@"Could not rename project settings file at '%@' to '%@' with error %@", _filePath, newFileName, *error] section:@[LOGGER_SECTION, LOGGER_ERROR]];
+    [_logger log:[NSString stringWithFormat:@"Could not rename project settings file at '%@' to '%@' with error %@",
+                    _migratorData.projectSettingsPath, newFileName, *error] section:@[LOGGER_SECTION, LOGGER_ERROR]];
 
     return NO;
 }
