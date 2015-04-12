@@ -6361,7 +6361,7 @@
 						DevelopmentTeam = U2K5E32W7G;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
