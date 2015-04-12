@@ -80,7 +80,7 @@
 - (void)testPublishingProject
 {
     // Language files are just copied
-    [self createEmptyFiles:@[@"baa.spritebuilder/Packages/foo.sbpack/Strings.ccbLang"]];
+    [self createEmptyFiles:@[@"baa.spritebuilder/Packages/foo.sbpack/Strings.sbLang"]];
     [self createEmptyFiles:@[@"baa.spritebuilder/Packages/foo.sbpack/Package.plist"]];
 
     [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/ccbResources/resources-auto/ccbButtonHighlighted.png"
@@ -99,7 +99,7 @@
     [_publisher addPublishingTarget:_targetIOS];
     [_publisher start];
 
-    [self assertFileExists:@"Published-iOS/Strings.ccbLang"];
+    [self assertFileExists:@"Published-iOS/Strings.sbLang"];
 
     for (NSNumber *resolution in @[@(1), @(2), @(4)])
     {

@@ -69,9 +69,9 @@ static NSString *substitutableProjectIdentifier = @"PROJECTIDENTIFIER";
     [zipTask launch];
     [zipTask waitUntilExit];
 
-    // Rename ccbproj
-    NSString *ccbproj = [NSString stringWithFormat:@"%@.ccbproj", substitutableProjectName];
-    [fm moveItemAtPath:[parentPath stringByAppendingPathComponent:ccbproj] toPath:fileName error:NULL];
+    // Rename sbproj
+    NSString *sbproj = [NSString stringWithFormat:@"%@.sbproj", substitutableProjectName];
+    [fm moveItemAtPath:[parentPath stringByAppendingPathComponent:sbproj] toPath:fileName error:NULL];
 
     // Update the Xcode project
     NSString *xcodeproj = [NSString stringWithFormat:@"%@.xcodeproj", substitutableProjectName];
