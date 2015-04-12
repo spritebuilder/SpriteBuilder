@@ -59,7 +59,8 @@
     XCTAssertTrue([migrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([migrator migrateWithError:&error]);
+    BOOL result = [migrator migrateWithError:&error];
+    XCTAssert(result, @"Error in migration: %@",error.localizedDescription);
     XCTAssertNil(error);
 
     ProjectSettings *projectSettingsMigrated = [[ProjectSettings alloc] initWithFilepath:projectSettings.projectPath];
