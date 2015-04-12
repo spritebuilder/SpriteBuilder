@@ -4,6 +4,8 @@ checkout:
 
 test:
     override:
+        - rake clobber
+        - xctool clean
         - rake test
     post:
         - mkdir -p $CIRCLE_TEST_REPORTS/junit/
