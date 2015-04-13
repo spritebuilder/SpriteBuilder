@@ -289,6 +289,9 @@
         return YES;
     }
 
+    BOOL hasCCBSuffix = [[fileName lowercaseString] hasSuffix:@"ccb"];
+    BOOL hasSBSuffix = [[fileName lowercaseString] hasSuffix:@"sb"];
+
     if ([self isFileSupportedByPublishing:fileName])
     {
         NSString *dstFilePath = [outputDir stringByAppendingPathComponent:fileName];
@@ -307,8 +310,7 @@
             [self publishRegularFile:filePath to:dstFilePath];
         }
     }
-    else if (!isGeneratedSpriteSheet
-             && [[fileName lowercaseString] hasSuffix:@"ccb"])
+    else if (!isGeneratedSpriteSheet && (hasCCBSuffix || hasSBSuffix))
     {
         [self publishCCB:fileName filePath:filePath outputDir:outputDir];
     }
