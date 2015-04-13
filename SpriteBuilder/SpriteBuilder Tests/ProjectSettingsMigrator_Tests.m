@@ -55,11 +55,14 @@
 
     // Assertions
     ProjectSettingsMigrator *migrator = [[ProjectSettingsMigrator alloc] initWithMigratorData:migratorData toVersion:2];
-
+    MigrationLogger *testLogger = [[MigrationLogger alloc] initWithLogToConsole:NO];
+    [migrator setLogger:testLogger];
     XCTAssertTrue([migrator isMigrationRequired]);
 
     NSError *error;
-    XCTAssertTrue([migrator migrateWithError:&error]);
+    BOOL result = [migrator migrateWithError:&error];
+
+    XCTAssert(result, @"Error in migration: %@ \n Log:%@",error.localizedDescription, testLogger.log);
     XCTAssertNil(error);
 
     ProjectSettings *projectSettingsMigrated = [[ProjectSettings alloc] initWithFilepath:projectSettings.projectPath];
