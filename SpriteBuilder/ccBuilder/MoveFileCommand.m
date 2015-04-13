@@ -23,7 +23,11 @@
 {
     NSAssert(_fromPath != nil, @"fromPath must be set");
     NSAssert(_toPath != nil, @"toPath must be set");
-    NSAssert(![_fromPath isEqualToString:_toPath], @"Source and destination cannot be identical");
+    
+    if([_fromPath isEqualToString:_toPath])
+    {
+        return YES;
+    }
 
     NSFileManager *fileManager = [NSFileManager defaultManager];
     return [fileManager moveItemAtPath:_fromPath toPath:_toPath error:error];
