@@ -2941,9 +2941,23 @@ typedef enum
 
 - (IBAction)menuOpenProjectInXCode:(id)sender
 {
-    NSString *xcodePrjPath = [projectSettings.projectPath stringByReplacingOccurrencesOfString:@".ccbproj" withString:@".xcodeproj"];
-    
-    [[NSWorkspace sharedWorkspace] openFile:xcodePrjPath withApplication:@"Xcode"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *files = [fileManager contentsOfDirectoryAtPath:[projectSettings.projectPath stringByDeletingLastPathComponent]
+                                                      error:nil];
+    NSString *xcodePrjName = [[files filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF ENDSWITH 'xcodeproj'"]] firstObject];
+
+
+    if (xcodePrjName)
+    {
+        NSString *xcodePrjPath = [[projectSettings.projectPath stringByDeletingLastPathComponent]
+                stringByAppendingPathComponent:xcodePrjName];
+
+        [[NSWorkspace sharedWorkspace] openFile:xcodePrjPath withApplication:@"Xcode"];
+    }
+    else
+    {
+        [self modalDialogTitle:@"Open in Xcode Failed" message:@"Could not detect the xcodeproj file, please check your project is configured correctly"];
+    }
 }
 
 - (IBAction)menuProjectSettings:(id)sender
