@@ -31,10 +31,6 @@
 			<string>Packages/SpriteBuilder Resources.sbpack</string>
 		</dict>
 	</array>
-	<key>publishAudioQuality_android</key>
-	<integer>4</integer>
-	<key>publishAudioQuality_ios</key>
-	<integer>4</integer>
 	<key>publishDirectoryAndroid</key>
 	<string>Source/Resources/Published-Android</string>
 	<key>publishDirectoryIOS</key>
@@ -45,26 +41,8 @@
 	<true/>
 	<key>publishEnvironment</key>
 	<integer>0</integer>
-	<key>publishResolution_android_phone</key>
-	<true/>
-	<key>publishResolution_android_phonehd</key>
-	<true/>
-	<key>publishResolution_android_tablet</key>
-	<true/>
-	<key>publishResolution_android_tablethd</key>
-	<true/>
-	<key>publishResolution_ios_phone</key>
-	<true/>
-	<key>publishResolution_ios_phonehd</key>
-	<true/>
-	<key>publishResolution_ios_tablet</key>
-	<true/>
-	<key>publishResolution_ios_tablethd</key>
-	<true/>
 	<key>publishToZipFile</key>
 	<false/>
-	<key>resourceAutoScaleFactor</key>
-	<integer>4</integer>
 	<key>resourceProperties</key>
 	<dict>
 		<key></key>
@@ -72,8 +50,6 @@
 			<key>previewFolderHidden</key>
 			<true/>
 		</dict>
-		<key>Sprites</key>
-		<dict/>
 		<key>Resources</key>
 		<dict>
 			<key>previewFolderHidden</key>
@@ -134,11 +110,12 @@
 			<key>scaleFrom</key>
 			<integer>2</integer>
 		</dict>
+		<key>Sprites</key>
+		<dict/>
 	</dict>
 	<key>versionStr</key>
-	<string>revision : badc23d2d6
-sku : default
-version : 1.4
+	<string>version : 1.4.9
+revision : e7794b4c07
 </string>
 </dict>
 </plist>
