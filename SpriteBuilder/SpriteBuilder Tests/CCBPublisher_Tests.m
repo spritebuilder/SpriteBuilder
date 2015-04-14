@@ -83,10 +83,10 @@
     [self createEmptyFiles:@[@"baa.spritebuilder/Packages/foo.sbpack/Strings.sbLang"]];
     [self createEmptyFiles:@[@"baa.spritebuilder/Packages/foo.sbpack/Package.plist"]];
 
-    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/ccbResources/resources-auto/ccbButtonHighlighted.png"
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/Resources/resources-auto/ButtonHighlighted.png"
                     width:4
                    height:12];
-    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/ccbResources/resources-auto/ccbButtonHighlighted2.png"
+    [self createPNGAtPath:@"baa.spritebuilder/Packages/foo.sbpack/Resources/resources-auto/ButtonHighlighted2.png"
                     width:20
                    height:8];
 
