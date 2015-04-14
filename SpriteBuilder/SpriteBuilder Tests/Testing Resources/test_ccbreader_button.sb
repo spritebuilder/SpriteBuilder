@@ -190,7 +190,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonNormal.png</string>
+							<string>Resources/ButtonNormal.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -243,7 +243,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonHighlighted.png</string>
+							<string>Resources/ButtonHighlighted.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -296,7 +296,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonNormal.png</string>
+							<string>Resources/ButtonNormal.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -349,7 +349,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonNormal.png</string>
+							<string>Resources/ButtonNormal.png</string>
 						</array>
 					</dict>
 					<dict>

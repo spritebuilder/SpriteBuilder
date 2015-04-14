@@ -142,7 +142,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbTextField.png</string>
+							<string>Resources/TextField.png</string>
 						</array>
 					</dict>
 					<dict>

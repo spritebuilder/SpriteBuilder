@@ -142,7 +142,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbSliderBgNormal.png</string>
+							<string>Resources/SliderBgNormal.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -153,7 +153,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbSliderHandle.png</string>
+							<string>Resources/SliderHandle.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -164,7 +164,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbParticleStars.png</string>
+							<string>Resources/ParticleStars.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -175,7 +175,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbTextField.png</string>
+							<string>Resources/TextField.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -186,7 +186,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbParticleSmoke.png</string>
+							<string>Resources/ParticleSmoke.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -197,7 +197,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbParticleStars.png</string>
+							<string>Resources/ParticleStars.png</string>
 						</array>
 					</dict>
 				</array>

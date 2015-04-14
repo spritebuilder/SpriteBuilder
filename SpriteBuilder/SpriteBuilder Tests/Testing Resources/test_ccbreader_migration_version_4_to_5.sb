@@ -441,7 +441,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbButtonNormal.png</string>
+							<string>Resources/ButtonNormal.png</string>
 						</array>
 					</dict>
 					<dict>

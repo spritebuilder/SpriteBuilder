@@ -322,7 +322,7 @@
 						<key>type</key>
 						<string>Texture</string>
 						<key>value</key>
-						<string>ccbResources/ccbParticleFire.png</string>
+						<string>Resources/ParticleFire.png</string>
 					</dict>
 				</array>
 				<key>selected</key>

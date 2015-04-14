@@ -200,7 +200,7 @@
     CCSprite *sprite = container.children[0];
     XCTAssertTrue([container.children[0] isKindOfClass:[CCSprite class]]);
 
-    XCTAssertEqualObjects([sprite.userObject extraProps][@"spriteFrame"], @"ccbResources/ccbParticleSnow.png");
+    XCTAssertEqualObjects([sprite.userObject extraProps][@"spriteFrame"], @"Resources/ParticleSnow.png");
 
     [self assertColor:[sprite color] red:1.0 green:0.0 blue:0.66666 alpha:0.5];
 
@@ -309,7 +309,7 @@
 
     XCTAssertEqual(particleSystem.emitterMode, CCParticleSystemModeGravity);
 
-    XCTAssertEqualObjects([particleSystem.userObject extraProps][@"texture"], @"ccbResources/ccbParticleFire.png");
+    XCTAssertEqualObjects([particleSystem.userObject extraProps][@"texture"], @"Resources/ParticleFire.png");
 
     [self assertPoint:particleSystem.posVar x:40.0 y:20.0];
 
@@ -398,10 +398,10 @@
     XCTAssertEqualWithAccuracy([button labelOpacityForState:CCControlStateDisabled], 1.87, 0.001);
     XCTAssertEqualWithAccuracy([button labelOpacityForState:CCControlStateSelected], 0.7, 0.001);
 
-    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Normal"], @"ccbResources/ccbButtonNormal.png");
-    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Disabled"], @"ccbResources/ccbButtonNormal.png");
-    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Selected"], @"ccbResources/ccbButtonNormal.png");
-    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Highlighted"], @"ccbResources/ccbButtonHighlighted.png");
+    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Normal"], @"Resources/ButtonNormal.png");
+    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Disabled"], @"Resources/ButtonNormal.png");
+    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Selected"], @"Resources/ButtonNormal.png");
+    XCTAssertEqualObjects([button.userObject extraProps][@"backgroundSpriteFrame|Highlighted"], @"Resources/ButtonHighlighted.png");
 
     XCTAssertEqualObjects([button.userObject extraProps][@"continuous"], @YES);
     XCTAssertEqualObjects([button.userObject extraProps][@"block"], @"doit");
@@ -425,7 +425,7 @@
     XCTAssertEqualObjects([textField.userObject extraProps][@"userInteractionEnabled"], @1);
     XCTAssertEqualObjects([textField.userObject extraProps][@"padding"], @7);
     XCTAssertEqualObjects([textField.userObject extraProps][@"paddingType"], @0);
-    XCTAssertEqualObjects([textField.userObject extraProps][@"backgroundSpriteFrame"], @"ccbResources/ccbTextField.png");
+    XCTAssertEqualObjects([textField.userObject extraProps][@"backgroundSpriteFrame"], @"Resources/TextField.png");
 }
 
 // FAILING until blendMode is available in bmfont class
@@ -446,12 +446,12 @@
     CCSlider *slider = node.children[0];
     XCTAssertTrue([node.children[0] isKindOfClass:[CCSlider class]]);
 
-    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Disabled"], @"ccbResources/ccbParticleSmoke.png");
-    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Highlighted"], @"ccbResources/ccbParticleStars.png");
-    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Normal"], @"ccbResources/ccbSliderBgNormal.png");
-    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Disabled"], @"ccbResources/ccbParticleStars.png");
-    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Highlighted"], @"ccbResources/ccbTextField.png");
-    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Normal"], @"ccbResources/ccbSliderHandle.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Disabled"], @"Resources/ParticleSmoke.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Highlighted"], @"Resources/ParticleStars.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"backgroundSpriteFrame|Normal"], @"Resources/SliderBgNormal.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Disabled"], @"Resources/ParticleStars.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Highlighted"], @"Resources/TextField.png");
+    XCTAssertEqualObjects([slider.userObject extraProps][@"handleSpriteFrame|Normal"], @"Resources/SliderHandle.png");
 }
 
 - (void)testNodeGraphFromDocumentDict_scrollview

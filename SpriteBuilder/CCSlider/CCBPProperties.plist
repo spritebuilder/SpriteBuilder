@@ -82,7 +82,7 @@
 			<key>default</key>
 			<array>
 				<string></string>
-				<string>ccbResources/ccbSliderBgNormal.png</string>
+				<string>Resources/SliderBgNormal.png</string>
 			</array>
 			<key>affectsProperties</key>
 			<array>
@@ -99,7 +99,7 @@
 			<key>default</key>
 			<array>
 				<string></string>
-				<string>ccbResources/ccbSliderHandle.png</string>
+				<string>Resources/SliderHandle.png</string>
 			</array>
 			<key>affectsProperties</key>
 			<array>
@@ -126,7 +126,7 @@
 			<key>default</key>
 			<array>
 				<string></string>
-				<string>ccbResources/ccbSliderBgHighlighted.png</string>
+				<string>Resources/SliderBgHighlighted.png</string>
 			</array>
 			<key>affectsProperties</key>
 			<array>

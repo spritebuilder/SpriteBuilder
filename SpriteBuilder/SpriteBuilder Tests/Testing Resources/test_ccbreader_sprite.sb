@@ -110,7 +110,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>ccbResources/ccbParticleSnow.png</string>
+							<string>Resources/ParticleSnow.png</string>
 						</array>
 					</dict>
 					<dict>

@@ -82,7 +82,7 @@
 			<key>default</key>
 			<array>
 				<string></string>
-				<string>ccbResources/ccbTextField.png</string>
+				<string>Resources/TextField.png</string>
 			</array>
 			<key>affectsProperties</key>
 			<array>

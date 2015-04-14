@@ -104,8 +104,8 @@
     for (NSNumber *resolution in @[@(1), @(2), @(4)])
     {
         [self assertFilesExistRelativeToDirectory:@"Published-iOS" filesPaths:@[
-                [NSString stringWithFormat:@"ccbResources/ccbButtonHighlighted%@.png", [resolution resolutionTag]],
-                [NSString stringWithFormat:@"ccbResources/ccbButtonHighlighted2%@.png", [resolution resolutionTag]],
+                [NSString stringWithFormat:@"Resources/ButtonHighlighted%@.png", [resolution resolutionTag]],
+                [NSString stringWithFormat:@"Resources/ButtonHighlighted2%@.png", [resolution resolutionTag]],
                 [NSString stringWithFormat:@"photoshop%@.png", [resolution resolutionTag]]
         ]];
     }
@@ -125,12 +125,12 @@
     [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"blank.wav" renamedName:@"blank.caf"];
     [self assertRenamingRuleInfFileLookup:@"Published-iOS/fileLookup.plist" originalName:@"photoshop.psd" renamedName:@"photoshop.png"];
 
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted-1x.png" hasWidth:1 hasHeight:3];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted2-1x.png" hasWidth:5 hasHeight:2];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted-2x.png" hasWidth:2 hasHeight:6];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted2-2x.png" hasWidth:10 hasHeight:4];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted-4x.png" hasWidth:4 hasHeight:12];
-    [self assertPNGAtPath:@"Published-iOS/ccbResources/ccbButtonHighlighted2-4x.png" hasWidth:20 hasHeight:8];
+    [self assertPNGAtPath:@"Published-iOS/Resources/ButtonHighlighted-1x.png" hasWidth:1 hasHeight:3];
+    [self assertPNGAtPath:@"Published-iOS/Resources/ButtonHighlighted2-1x.png" hasWidth:5 hasHeight:2];
+    [self assertPNGAtPath:@"Published-iOS/Resources/ButtonHighlighted-2x.png" hasWidth:2 hasHeight:6];
+    [self assertPNGAtPath:@"Published-iOS/Resources/ButtonHighlighted2-2x.png" hasWidth:10 hasHeight:4];
+    [self assertPNGAtPath:@"Published-iOS/Resources/ButtonHighlighted-4x.png" hasWidth:4 hasHeight:12];
+    [self assertPNGAtPath:@"Published-iOS/Resources/ButtonHighlighted2-4x.png" hasWidth:20 hasHeight:8];
 
     [self assertFileDoesNotExist:@"Published-iOS/Package.plist"];
 }

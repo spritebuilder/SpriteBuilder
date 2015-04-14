@@ -127,7 +127,7 @@
 			<key>default</key>
 			<array>
 				<string></string>
-				<string>ccbResources/ccbButtonNormal.png</string>
+				<string>Resources/ButtonNormal.png</string>
 			</array>
 			<key>affectsProperties</key>
 			<array>
@@ -222,7 +222,7 @@
 			<key>default</key>
 			<array>
 				<string></string>
-				<string>ccbResources/ccbButtonHighlighted.png</string>
+				<string>Resources/ButtonHighlighted.png</string>
 			</array>
 			<key>affectsProperties</key>
 			<array>
@@ -310,7 +310,7 @@
 			<key>default</key>
 			<array>
 				<string></string>
-				<string>ccbResources/ccbButtonNormal.png</string>
+				<string>Resources/ButtonNormal.png</string>
 			</array>
 			<key>affectsProperties</key>
 			<array>
@@ -403,7 +403,7 @@
 			<key>default</key>
 			<array>
 				<string></string>
-				<string>ccbResources/ccbButtonNormal.png</string>
+				<string>Resources/ButtonNormal.png</string>
 			</array>
 			<key>affectsProperties</key>
 			<array>

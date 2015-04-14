@@ -160,51 +160,51 @@
          @"":@{
             @"previewFolderHidden":@(YES)
          },
-         @"ccbResources/ccbSliderBgHighlighted.png":@{
+         @"Resources/SliderBgHighlighted.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
-         @"ccbResources/ccbButtonHighlighted.png":@{
+         @"Resources/ButtonHighlighted.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"Sprites" : @{},
-         @"ccbResources/ccbSliderBgNormal.png":@{
+         @"Resources/SliderBgNormal.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
-         @"ccbResources/ccbTextField.png":@{
+         @"Resources/TextField.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
-         @"ccbResources/ccbParticleFire.png":@{
+         @"Resources/ParticleFire.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
          @"ccbResources":@{
             @"previewFolderHidden":@(YES)
          },
-         @"ccbResources/ccbParticleMagic.png":@{
+         @"Resources/ParticleMagic.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
-         @"ccbResources/ccbButtonNormal.png":@{
+         @"Resources/ButtonNormal.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
-         @"ccbResources/ccbParticleStars.png":@{
+         @"Resources/ParticleStars.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
-         @"ccbResources/ccbSliderHandle.png":@{
+         @"Resources/SliderHandle.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
-         @"ccbResources/ccbParticleSmoke.png":@{
+         @"Resources/ParticleSmoke.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          },
-         @"ccbResources/ccbParticleSnow.png":@{
+         @"Resources/ParticleSnow.png":@{
                    RESOURCE_PROPERTY_IMAGE_SCALE_FROM:@(2),
                    RESOURCE_PROPERTY_IMAGE_USEUISCALE:@(YES)
          }
@@ -259,10 +259,10 @@
     XCTAssertFalse(project.publishToZipFile);
     XCTAssertEqual(project.publishEnvironment, kCCBPublishEnvironmentDevelop);
 
-    NSNumber *scaleFrom = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
+    NSNumber *scaleFrom = [project propertyForRelPath:@"Resources/SliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_SCALE_FROM];
     XCTAssertTrue([scaleFrom isEqualToNumber:@(2)]);
 
-    NSNumber *useUIScale = [project propertyForRelPath:@"ccbResources/ccbSliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
+    NSNumber *useUIScale = [project propertyForRelPath:@"Resources/SliderBgNormal.png" andKey:RESOURCE_PROPERTY_IMAGE_USEUISCALE];
     XCTAssertTrue([useUIScale boolValue]);
 }
 
