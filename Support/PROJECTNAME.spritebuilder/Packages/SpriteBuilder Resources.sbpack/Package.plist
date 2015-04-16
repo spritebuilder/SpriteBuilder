@@ -5,6 +5,8 @@
 	<key>mainProjectResolutions</key>
 	<array>
 		<integer>4</integer>
+		<integer>2</integer>
+		<integer>1</integer>
 	</array>
 	<key>osSettings</key>
 	<dict>
