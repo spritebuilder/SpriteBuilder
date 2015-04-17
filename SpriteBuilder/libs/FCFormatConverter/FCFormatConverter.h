@@ -41,6 +41,7 @@ typedef enum {
                    dither:(BOOL)dither
                  compress:(BOOL)compress
             isSpriteSheet:(BOOL)isSpriteSheet
+            isAutoScaled:(BOOL)isAutoScaled
            outputFilename:(NSString**)outputFilename
                     error:(NSError**)error;
 
