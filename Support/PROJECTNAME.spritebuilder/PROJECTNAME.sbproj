@@ -114,8 +114,8 @@
 		<dict/>
 	</dict>
 	<key>versionStr</key>
-	<string>version : 1.4.9
-revision : e7794b4c07
+	<string>version : 2.0.0
+revision : 4fd68fb2bf
 </string>
 </dict>
 </plist>
