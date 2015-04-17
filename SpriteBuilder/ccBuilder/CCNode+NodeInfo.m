@@ -33,7 +33,7 @@
 #import "SequencerSequence.h"
 #import "PositionPropertySetter.h"
 #import "TexturePropertySetter.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "CCBDictionaryReader.h"
 #import "CCBDocument.h"
 #import "CustomPropSetting.h"
@@ -362,7 +362,7 @@ NSString * kAnimationOfPhysicsWarning = @"kAnimationOfPhysicsWarning";
     else if (type == kCCBKeyframeTypeColor3)
     {
         CCColor* colorValue = [self valueForKey:name];
-        return [CCBDictionaryWriter serializeColor4:colorValue];
+        return [CCSBDictionaryWriter serializeColor4:colorValue];
     }
     else if (type == kCCBKeyframeTypeSpriteFrame)
     {

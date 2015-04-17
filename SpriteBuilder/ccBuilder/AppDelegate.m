@@ -30,7 +30,7 @@
 #import "NSFlippedView.h"
 #import "CCBGlobals.h"
 #import "cocos2d.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "CCBDictionaryReader.h"
 #import "CCBDocument.h"
 #import "NewDocWindowController.h"
@@ -2512,7 +2512,7 @@ typedef enum
         return;
     
     // Serialize selected node
-    NSMutableDictionary* clipDict = [CCBDictionaryWriter serializeNode:self.selectedNode];
+    NSMutableDictionary* clipDict = [CCSBDictionaryWriter serializeNode:self.selectedNode];
     NSData* clipData = [NSKeyedArchiver archivedDataWithRootObject:clipDict];
     NSPasteboard* cb = [NSPasteboard generalPasteboard];
 

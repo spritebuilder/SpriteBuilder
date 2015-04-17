@@ -23,7 +23,7 @@
  */
 
 #import "CCBXCocos2diPhone.h"
-#import "CCBBinaryWriter.h"
+#import "CCSBBinaryWriter.h"
 
 @implementation CCBXCocos2diPhone
 
@@ -34,7 +34,7 @@
 
 - (NSData *)exportDocument:(NSDictionary *)doc
 {
-    CCBBinaryWriter * writer = [[CCBBinaryWriter alloc] init];
+    CCSBBinaryWriter * writer = [[CCSBBinaryWriter alloc] init];
     writer.serializedProjectSettings = serializedProjectSettings;
     writer.delegate = self.delegate;
     [writer writeDocument:doc];

@@ -10,7 +10,7 @@
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
 #import "HashValue.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "CCBDictionaryReader.h"
 
 @implementation PropertyInspectorTemplate
@@ -43,7 +43,7 @@
     {
         if ([[propInfo objectForKey:@"saveInTemplate"] boolValue])
         {
-            id serializedValue = [CCBDictionaryWriter serializePropertyOfNode:node propInfo:propInfo excludeProps:NULL];
+            id serializedValue = [CCSBDictionaryWriter serializePropertyOfNode:node propInfo:propInfo excludeProps:NULL];
             
             NSMutableDictionary* serProp = [NSMutableDictionary dictionary];
             [serProp setObject:serializedValue forKey:@"value"];

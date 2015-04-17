@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "CCBBinaryWriter.h"
+#import "CCSBBinaryWriter.h"
 #import "CCBReader_Private.h"
 #import "Cocos2dTestHelpers.h"
 

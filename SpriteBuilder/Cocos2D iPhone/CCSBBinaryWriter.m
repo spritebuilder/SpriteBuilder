@@ -22,14 +22,14 @@
  * THE SOFTWARE.
  */
 
-#import "CCBBinaryWriter.h"
+#import "CCSBBinaryWriter.h"
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
 #import "CustomPropSetting.h"
 #import "NSArray+Query.h"
 #import "CCRendererBasicTypes.h"
 
-@implementation CCBBinaryWriter
+@implementation CCSBBinaryWriter
 
 @synthesize data;
 @synthesize serializedProjectSettings;
