@@ -11,7 +11,7 @@
 #import "CCBXCocos2diPhone.h"
 #import "PlugInManager.h"
 #import "PlugInExport.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 #import "CCAnimationManager.h"
 #import "CCAnimationManager_Private.h"
 #import "CCBSequence.h"
@@ -129,7 +129,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	if(!animData)
 		return;
 
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
 	
 	CCNode * node0 = rootNode.children[0];
@@ -190,7 +190,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	if(!animData)
 		return;
 
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
 	
 	CCBSequence * seq = rootNode.animationManager.sequences[0];
@@ -246,7 +246,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	if(!animData)
 		return;
 
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackTest];
 	CCNode * node0 = rootNode.children[0];
 	
@@ -386,7 +386,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	if(!animData)
 		return;
 
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:callbackHelper];
 	CCNode * node0 = rootNode.children[0];
 	
@@ -449,7 +449,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	if(!animData)
 		return;
 
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:nil];
 	CCNode * node0 = rootNode.children[0];
 	
@@ -520,7 +520,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	if(!animData)
 		return;
 	
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:nil];
 	
 	const CGFloat kAnimationDuration = 1.0f;
@@ -549,7 +549,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	if(!animData)
 		return;
 	
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:nil];
 
 	CCNode * node0 = rootNode.children[0];
@@ -581,7 +581,7 @@ void dynamicMethodIMP(CCAnimationDelegateTester * self, SEL _cmd)
 	if(!animData)
 		return;
 	
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	CCNode * rootNode = [reader loadWithData:animData owner:nil];
 	
 	CCNode * node0 = rootNode.children[0];

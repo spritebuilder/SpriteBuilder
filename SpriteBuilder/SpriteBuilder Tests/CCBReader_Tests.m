@@ -1,5 +1,5 @@
 //
-//  CCBReader.m
+//  CCSBReader.m
 //  SpriteBuilder
 //
 //  Created by Nicky Weber on 20.05.14.
@@ -31,7 +31,7 @@
 
 - (void)testCCBVersionCompatibility
 {
-    XCTAssertEqual(kCCBVersion, kCCBBinaryVersion, @"CCB version %d read by CCBReader is incompatible with version %d written by SpriteBuilder. Is cocos2d up to date?", kCCBVersion, kCCBBinaryVersion);
+    XCTAssertEqual(kCCBVersion, kCCBBinaryVersion, @"CCB version %d read by CCSBReader is incompatible with version %d written by SpriteBuilder. Is cocos2d up to date?", kCCBVersion, kCCBBinaryVersion);
 }
 
 @end
