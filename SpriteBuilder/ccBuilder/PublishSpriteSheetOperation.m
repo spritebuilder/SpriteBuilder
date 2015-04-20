@@ -56,7 +56,7 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 {
     NSAssert(_spriteSheetFile != nil, @"spriteSheetFile should not be nil");
     NSAssert(_subPath != nil, @"subPath should not be nil");
-    NSAssert(_srcDirs != nil, @"srcDirs should not be nil");
+    NSAssert(_srcDir != nil, @"srcDir should not be nil");
     NSAssert(_resolution != nil, @"resolution should not be nil");
     NSAssert(_srcSpriteSheetDate != nil, @"srcSpriteSheetDate should not be nil");
     NSAssert(_publishDirectory != nil, @"publishDirectory should not be nil");
@@ -73,7 +73,8 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
     [self configurePacker];
 
-    NSArray *createdFiles = [_packer createTextureAtlasFromDirectoryPaths:_srcDirs];
+    NSString *suffix = [NSString stringWithFormat:@"-%dx", self.resolution.intValue];
+    NSArray *createdFiles = [_packer createTextureAtlasFromDirectoryPath:_srcDir withSuffix:suffix];
 
     [self addCreatedPNGFilesToCreatedFilesSet:createdFiles];
 
@@ -190,8 +191,8 @@ static NSMutableSet *__spriteSheetPreviewsGenerated;
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"file: %@, res: %@, osType: %i, filefull: %@, srcdirs: %@, publishDirectory: %@, date: %@",
-                                      [_spriteSheetFile lastPathComponent], _resolution, _osType, _spriteSheetFile, _srcDirs, _publishDirectory, _srcSpriteSheetDate];
+    return [NSString stringWithFormat:@"file: %@, res: %@, osType: %i, filefull: %@, srcdir: %@, publishDirectory: %@, date: %@",
+                                      [_spriteSheetFile lastPathComponent], _resolution, _osType, _spriteSheetFile, _srcDir, _publishDirectory, _srcSpriteSheetDate];
 }
 
 
