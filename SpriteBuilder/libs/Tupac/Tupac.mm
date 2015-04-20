@@ -471,6 +471,7 @@ typedef struct _PVRTexHeader
                                       dither:dither_
                                     compress:compress_
                                isSpriteSheet:YES
+                                isAutoScaled:NO
                               outputFilename:&textureFileName
                                        error:&error])
     {

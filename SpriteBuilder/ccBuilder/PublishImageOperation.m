@@ -131,6 +131,7 @@
                                            dither:_dither
                                          compress:_compress
                                     isSpriteSheet:_isSpriteSheet
+                                    isAutoScaled:NO
                                    outputFilename:&dstPathConverted
                                             error:&error])
         {
@@ -183,6 +184,7 @@
                                            dither:_dither
                                          compress:_compress
                                     isSpriteSheet:_isSpriteSheet
+                                     isAutoScaled:NO
                                    outputFilename:&dstPathConverted
                                             error:&error])
         {
