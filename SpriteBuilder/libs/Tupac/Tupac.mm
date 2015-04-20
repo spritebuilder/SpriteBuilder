@@ -92,6 +92,7 @@ typedef struct _PVRTexHeader
         self.outputFormat = TupacOutputFormatCocos2D;
         self.maxTextureSize = 2048;
         self.padding = 1;
+        self.divisor = 1;
         self.trim = YES;
     }
     return self;
@@ -210,6 +211,13 @@ TrimSuffix(NSString *filename, NSString *suffix)
     return [basename stringByAppendingPathExtension:ext];
 }
 
+// Pad a size and round the result up to a multiple of the divisor
+static int
+PadSize(int size, int padding, int divisor)
+{
+    return (size + padding + divisor - 1)/divisor*divisor;
+}
+
 - (NSArray *)createTextureAtlasTrimSuffix:(NSString *)suffix
 {
     // Reset the error message
@@ -322,7 +330,7 @@ TrimSuffix(NSString *filename, NSString *suffix)
     BOOL packingError = NO;
     while (!packingError && !allFitted)
     {
-        MaxRectsBinPack bin(outW, outH);
+        MaxRectsBinPack bin(outW - self.padding, outH - self.padding);
         
         std::vector<TPRectSize> inRects;
         
@@ -332,8 +340,8 @@ TrimSuffix(NSString *filename, NSString *suffix)
             NSRect trimRect = [imageInfo[@"trimRect"] rectValue];
             
             inRects.push_back(TPRectSize());
-            inRects[numImages].width = (int) (trimRect.size.width + self.padding * 2);
-            inRects[numImages].height = (int) (trimRect.size.height + self.padding * 2);
+            inRects[numImages].width = PadSize(trimRect.size.width, self.padding, self.divisor);
+            inRects[numImages].height = PadSize(trimRect.size.height, self.padding, self.divisor);
             inRects[numImages].idx = numImages;
             
             numImages++;
