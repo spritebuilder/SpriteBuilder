@@ -71,6 +71,7 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
                    dither:(BOOL)dither
                  compress:(BOOL)compress
             isSpriteSheet:(BOOL)isSpriteSheet
+            isAutoScaled:(BOOL)isAutoScaled
            outputFilename:(NSString**)outputFilename
                     error:(NSError**)error;
 {
@@ -191,7 +192,16 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
             hasError = YES;
         }
         
-       
+        if(isAutoScaled && !hasError && !pvrtexture::GenerateMIPMaps(*pvrTexture, pvrtexture::eResizeLinear)){
+            if (error)
+			{
+				NSString * errorMessage = [NSString stringWithFormat:@"Failure to generate mipmaps: %@", srcPath];
+				NSDictionary * userInfo __attribute__((unused)) =@{NSLocalizedDescriptionKey:errorMessage};
+				*error = [NSError errorWithDomain:kErrorDomain code:EPERM userInfo:userInfo];
+			}
+            hasError = YES;
+        }
+        
         if(!hasError && !Transcode(*pvrTexture, pixelType, variableType, ePVRTCSpacelRGB, pvrtexture::ePVRTCBest, dither))
         {
             if (error)
@@ -235,7 +245,7 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
             // Create compressed file (ccz)
             self.zipTask = [[NSTask alloc] init];
             [_zipTask setCurrentDirectoryPath:dstDir];
-            [_zipTask setLaunchPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"ccz"]];
+            [_zipTask setLaunchPath:@"/usr/bin/gzip"];
             NSMutableArray* args = [NSMutableArray arrayWithObjects:dstPath, nil];
             [_zipTask setArguments:args];
             [_zipTask launch];
@@ -246,7 +256,7 @@ static NSString * kErrorDomain = @"com.apportable.SpriteBuilder";
             [[NSFileManager defaultManager] removeItemAtPath:dstPath error:NULL];
             
             // Update name of texture file
-            dstPath = [dstPath stringByAppendingPathExtension:@"ccz"];
+            dstPath = [dstPath stringByAppendingPathExtension:@"gz"];
         }
         
         if ([fm fileExistsAtPath:dstPath])

@@ -11,7 +11,7 @@
 @property (nonatomic, copy) NSString *spriteSheetFile;
 @property (nonatomic) CCBPublisherOSType osType;
 @property (nonatomic, copy) NSString *subPath;
-@property (nonatomic, strong) NSArray *srcDirs;
+@property (nonatomic, copy) NSString *srcDir;
 @property (nonatomic, copy) NSNumber *resolution;
 @property (nonatomic, copy) NSDate *srcSpriteSheetDate;
 @property (nonatomic, copy) NSString *publishDirectory;

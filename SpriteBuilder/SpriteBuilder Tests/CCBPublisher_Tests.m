@@ -262,9 +262,9 @@
     // The resolutions tests may be a bit too much here, but there are no
     // Tupac tests at the moment
     [self assertFileExists:@"Published-iOS/sheet-2x.plist"];
-    [self assertPNGAtPath:@"Published-iOS/sheet-2x.png" hasWidth:32 hasHeight:16];
+    [self assertPNGAtPath:@"Published-iOS/sheet-2x.png" hasWidth:16 hasHeight:16];
     [self assertFileExists:@"Published-iOS/sheet-4x.plist"];
-    [self assertPNGAtPath:@"Published-iOS/sheet-4x.png" hasWidth:32 hasHeight:32];
+    [self assertPNGAtPath:@"Published-iOS/sheet-4x.png" hasWidth:32 hasHeight:16];
     [self assertFileExists:@"Published-iOS/sheet-1x.plist"];
     [self assertPNGAtPath:@"Published-iOS/sheet-1x.png" hasWidth:16 hasHeight:8];
 

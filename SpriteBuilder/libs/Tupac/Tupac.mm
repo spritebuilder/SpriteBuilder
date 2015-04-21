@@ -92,6 +92,7 @@ typedef struct _PVRTexHeader
         self.outputFormat = TupacOutputFormatCocos2D;
         self.maxTextureSize = 2048;
         self.padding = 1;
+        self.divisor = 1;
         self.trim = YES;
     }
     return self;
@@ -200,7 +201,24 @@ typedef struct _PVRTexHeader
     return NSMakeRect(x, y, wTrimmed, hTrimmed);
 }
 
-- (NSArray *)createTextureAtlas
+static NSString *
+TrimSuffix(NSString *filename, NSString *suffix)
+{
+    NSString *basename = [filename stringByDeletingPathExtension];
+    if([basename hasSuffix:suffix]) basename = [basename substringToIndex:basename.length - suffix.length];
+    NSString *ext = [filename pathExtension];
+    
+    return [basename stringByAppendingPathExtension:ext];
+}
+
+// Pad a size and round the result up to a multiple of the divisor
+static int
+PadSize(int size, int padding, int divisor)
+{
+    return (size + padding + divisor - 1)/divisor*divisor;
+}
+
+- (NSArray *)createTextureAtlasTrimSuffix:(NSString *)suffix
 {
     // Reset the error message
     if (errorMessage)
@@ -312,7 +330,7 @@ typedef struct _PVRTexHeader
     BOOL packingError = NO;
     while (!packingError && !allFitted)
     {
-        MaxRectsBinPack bin(outW, outH);
+        MaxRectsBinPack bin(outW - self.padding, outH - self.padding);
         
         std::vector<TPRectSize> inRects;
         
@@ -322,8 +340,8 @@ typedef struct _PVRTexHeader
             NSRect trimRect = [imageInfo[@"trimRect"] rectValue];
             
             inRects.push_back(TPRectSize());
-            inRects[numImages].width = (int) (trimRect.size.width + self.padding * 2);
-            inRects[numImages].height = (int) (trimRect.size.height + self.padding * 2);
+            inRects[numImages].width = PadSize(trimRect.size.width, self.padding, self.divisor);
+            inRects[numImages].height = PadSize(trimRect.size.height, self.padding, self.divisor);
             inRects[numImages].idx = numImages;
             
             numImages++;
@@ -471,6 +489,7 @@ typedef struct _PVRTexHeader
                                       dither:dither_
                                     compress:compress_
                                isSpriteSheet:YES
+                                isAutoScaled:NO
                               outputFilename:&textureFileName
                                        error:&error])
     {
@@ -503,7 +522,7 @@ typedef struct _PVRTexHeader
         {
             // Get info about the image
             NSString* filename = self.filenames[(NSUInteger) outRects[index].idx];
-            NSString* exportFilename = [filename lastPathComponent];
+            NSString* exportFilename = TrimSuffix([filename lastPathComponent], suffix);
             if (directoryPrefix_) exportFilename = [directoryPrefix_ stringByAppendingPathComponent:exportFilename];
             NSDictionary* imageInfo = imageInfos[(NSUInteger) outRects[index].idx];
             
@@ -539,7 +558,7 @@ typedef struct _PVRTexHeader
                     @"sourceSize" : NSStringFromSize(NSMakeSize(wSrc, hSrc))};
         }
         
-        metadata[@"textureFileName"] = textureFileName;
+        metadata[@"textureFileName"] = TrimSuffix(textureFileName, suffix);
         metadata[@"format"] = @2;
         metadata[@"size"] = NSStringFromSize(NSMakeSize(outW, outH));
 
@@ -573,52 +592,33 @@ typedef struct _PVRTexHeader
     }
 }
 
-- (NSArray *) createTextureAtlasFromDirectoryPaths:(NSArray *)dirs
+- (NSArray *) createTextureAtlasFromDirectoryPath:(NSString *)dir withSuffix:(NSString *)suffix;
 {
     NSFileManager* fm = [NSFileManager defaultManager];
     
-    // Build a list of all file names from all directories
-    NSMutableSet* allFiles = [NSMutableSet set];
-    
-    for (NSString* dir in dirs)
-    {
-        NSArray* files = [fm contentsOfDirectoryAtPath:dir error:NULL];
-
-        if (cancelled_)
-        {
-            return nil;
-        }
-
-        for (NSString* file in files)
-        {
-				    NSString *lower = [[file pathExtension] lowercaseString];
-            if ([lower isEqualToString:@"png"] || [lower isEqualToString:@"psd"])
-            {
-                [allFiles addObject:[file lastPathComponent]];
-            }
-        }
-    }
-    
     // Add all the absolute file names to an array from the correct directories
     NSMutableArray* absoluteFilepaths = [NSMutableArray array];
-    for (NSString* file in allFiles)
+    
+    NSArray* files = [fm contentsOfDirectoryAtPath:dir error:NULL];
+
+    if (cancelled_)
     {
-        for (NSString* dir in dirs)
+        return nil;
+    }
+
+    for (NSString* file in files)
+    {
+        NSString *ext = [[file pathExtension] lowercaseString];
+        NSString *basename = [file stringByDeletingPathExtension];
+        if ([basename hasSuffix:suffix] && ([ext isEqualToString:@"png"] || [ext isEqualToString:@"psd"]))
         {
-            NSString* absFilepath = [dir stringByAppendingPathComponent:file];
-            
-            if ([fm fileExistsAtPath:absFilepath])
-            {
-                [absoluteFilepaths addObject:absFilepath];
-                //foundFile = YES;
-                break;
-            }
+            [absoluteFilepaths addObject:[dir stringByAppendingPathComponent:file]];
         }
     }
     
     // Generate the sprite sheet
     self.filenames = absoluteFilepaths;
-    return [self createTextureAtlas];
+    return [self createTextureAtlasTrimSuffix:suffix];
 }
 
 - (void)cancel

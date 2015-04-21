@@ -41,6 +41,7 @@
 @property(nonatomic,copy) NSString* directoryPrefix;
 @property(nonatomic,assign) int maxTextureSize;
 @property(nonatomic,assign) int padding;
+@property(nonatomic,assign) int divisor;
 @property(nonatomic,assign) BOOL dither;
 @property(nonatomic,assign) BOOL compress;
 @property(nonatomic,assign) BOOL trim;
@@ -50,8 +51,8 @@
 
 + (NSRect) trimmedRectForImage:(CGImageRef)image;
 
-- (NSArray *)createTextureAtlasFromDirectoryPaths:(NSArray *)dirs;
-- (NSArray *)createTextureAtlas;
+- (NSArray *)createTextureAtlasFromDirectoryPath:(NSString *)dir withSuffix:(NSString *)suffix;
+- (NSArray *)createTextureAtlasTrimSuffix:(NSString *)suffix;
 
 - (void)cancel;
 

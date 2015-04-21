@@ -480,13 +480,12 @@
                                                                                            statusProgress:_publishingTaskStatusProgress];
 
     NSString *spriteSheetCacheDir = [_projectSettings.tempSpriteSheetCacheDirectory stringByAppendingPathComponent:subPath];
-    NSString *resolutionCacheDir = [spriteSheetCacheDir stringByAppendingPathComponent:[NSString stringWithFormat:@"resources-%@", resolution]];
 
     operation.publishDirectory = publishDirectory;
     operation.publishedPNGFiles = _publishedPNGFiles;
     operation.srcSpriteSheetDate = srcSpriteSheetDate;
     operation.resolution = resolution;
-    operation.srcDirs = @[resolutionCacheDir, spriteSheetCacheDir];
+    operation.srcDir = spriteSheetCacheDir;
     operation.spriteSheetFile = spriteSheetFile;
     operation.subPath = subPath;
     operation.osType = _osType;

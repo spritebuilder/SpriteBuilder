@@ -98,6 +98,11 @@
     {
         [_warnings addWarningWithDescription:@"Could not write fileLookup.plist."];
     }
+    
+    if (![_fileLookup TEMPwriteMetadataToFileAtomically:[_outputDir stringByAppendingPathComponent:@"metadata.plist"]])
+    {
+        [_warnings addWarningWithDescription:@"Could not write metadata.plist."];
+    }
 }
 
 - (NSString *)description

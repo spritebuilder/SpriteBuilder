@@ -50,6 +50,20 @@
     return [plist writeToFile:filePath atomically:YES];
 }
 
+- (BOOL)TEMPwriteMetadataToFileAtomically:(NSString *)filePath
+{
+    NSMutableDictionary *intermediateLookups = [self loadAndMergeIntermediateLookups];
+    [_lookup addEntriesFromDictionary:intermediateLookups];
+    
+    NSMutableDictionary *data = [NSMutableDictionary dictionary];
+    for(NSString *alias in _lookup){
+        data[alias] = @{@"filename": _lookup[alias]};
+    }
+    
+    NSDictionary *metadata = @{@"data": data};
+    return [metadata writeToFile:filePath atomically:YES];
+}
+
 - (NSMutableDictionary *)loadAndMergeIntermediateLookups
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
