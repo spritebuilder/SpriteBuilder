@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "FileSystemTestCase.h"
 #import "PlugInManager.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 
 @interface CCBDictionaryWriter_Tests : FileSystemTestCase
 
@@ -25,7 +25,7 @@
 
     [node addChild:sprite];
 
-    NSMutableDictionary *result =  [CCBDictionaryWriter serializeNode:node];
+    NSMutableDictionary *result =  [CCSBDictionaryWriter serializeNode:node];
 
     NSDictionary *expectedDict =
     @{

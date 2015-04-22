@@ -8,7 +8,7 @@
 
 #import "CCBPEffectColorChannelOffset.h"
 #import "CCBDictionaryReader.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "EffectsUndoHelper.h"
 
 @implementation CCBPEffectColorChannelOffset
@@ -22,9 +22,9 @@
 
 - (id)serialize
 {
-    return @[@{@"name" : @"redOffsetWithPoint",   @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:self.redOffset] },
-             @{@"name" : @"greenOffsetWithPoint", @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:self.greenOffset] },
-             @{@"name" : @"blueOffsetWithPoint",  @"type" : @"Point", @"value": [CCBDictionaryWriter serializePoint:self.blueOffset] },
+    return @[@{@"name" : @"redOffsetWithPoint",   @"type" : @"Point", @"value": [CCSBDictionaryWriter serializePoint:self.redOffset] },
+             @{@"name" : @"greenOffsetWithPoint", @"type" : @"Point", @"value": [CCSBDictionaryWriter serializePoint:self.greenOffset] },
+             @{@"name" : @"blueOffsetWithPoint",  @"type" : @"Point", @"value": [CCSBDictionaryWriter serializePoint:self.blueOffset] },
              ];
 }
 

@@ -23,7 +23,7 @@
  */
 
 #import "InspectorColor4.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 
 @implementation InspectorColor4
 
@@ -36,7 +36,7 @@
     CCColor* colorValue = [CCColor colorWithRed:r green:g blue:b alpha:a];
     [self setPropertyForSelection:colorValue];
     
-    [self updateAnimateablePropertyValue: [CCBDictionaryWriter serializeColor4:colorValue]];
+    [self updateAnimateablePropertyValue: [CCSBDictionaryWriter serializeColor4:colorValue]];
     
 }
 

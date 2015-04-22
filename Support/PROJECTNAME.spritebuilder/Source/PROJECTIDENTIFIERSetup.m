@@ -34,7 +34,7 @@
 -(CCScene *)createFirstScene
 {
     // This method is responsible for creating and returning the initial scene when the app starts up.
-    return [CCBReader loadAsScene:@"MainScene"];
+    return [CCSBReader loadAsScene:@"MainScene"];
 }
 
 #if __CC_PLATFORM_IOS

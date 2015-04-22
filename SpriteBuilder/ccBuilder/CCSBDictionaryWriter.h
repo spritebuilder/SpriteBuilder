@@ -23,39 +23,20 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "CCBPublishDelegate.h"
+#import "cocos2d.h"
 
-#define kCCBXTempBufferSize 8
-#define kCCBBinaryVersion 11
+#define kCCBUseRegularFile @"Use regular file"
 
-enum {
-    kCCBXFloat0 = 0,
-    kCCBXFloat1,
-    kCCBXFloatMinus1,
-    kCCBXFloat05,
-    kCCBXFloatInteger,
-    kCCBXFloatFull
-};
+@interface CCSBDictionaryWriter : NSObject
 
-@interface CCBBinaryWriter : NSObject
-{
-    NSDictionary* serializedProjectSettings;
-    
-    NSMutableData* data;
-    
-    NSMutableArray* propTypes;
-    NSMutableDictionary* stringCacheLookup;
-    NSMutableArray* stringCache;
-    
-    char temp[kCCBXTempBufferSize];
-    int tempBit;
-    int tempByte;
-}
++ (id)serializePropertyOfNode:(CCNode *)node propInfo:(NSMutableDictionary *)propInfo excludeProps:(NSArray *)excludeProps;
 
-@property (nonatomic,readonly) NSMutableData* data;
-@property (nonatomic,strong) NSDictionary* serializedProjectSettings;
-@property (nonatomic,strong) id<CCBPublishDelegate> delegate;
++ (NSMutableDictionary *)serializeNode:(CCNode *)node;
 
-- (void) writeDocument:(NSDictionary*)doc;
++ (id)serializePoint:(CGPoint)pt;
+
++ (id)serializeColor4:(CCColor *)c;
+
++ (id)serializeSpriteFrame:(NSString *)spriteFile sheet:(NSString *)spriteSheetFile;
 
 @end

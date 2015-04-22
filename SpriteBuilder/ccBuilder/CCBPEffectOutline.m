@@ -27,7 +27,7 @@
 -(id)serialize
 {
     return @[SERIALIZE_PROPERTY(outlineWidth,Integer),
-             @{@"name" : @"outlineColor", @"type" : @"Color4", @"value": [CCBDictionaryWriter serializeColor4:self.outlineColor] },
+             @{@"name" : @"outlineColor", @"type" : @"Color4", @"value": [CCSBDictionaryWriter serializeColor4:self.outlineColor] },
              ];
 }
 

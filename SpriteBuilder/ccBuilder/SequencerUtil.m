@@ -33,7 +33,7 @@
 #import "SequencerKeyframe.h"
 #import "SequencerKeyframeEasing.h"
 #import "SequencerNodeProperty.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "RMSpriteFrame.h"
 #import "ResourceTypes.h"
 #import "RMResource.h"

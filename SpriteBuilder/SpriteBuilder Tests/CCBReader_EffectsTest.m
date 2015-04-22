@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "Cocos2dTestHelpers.h"
-#import "CCBReader.h"
+#import "CCSBReader.h"
 
 @interface CCBReader_EffectsTest : XCTestCase
 
@@ -35,7 +35,7 @@
 	if(!animData)
 		return;
 	
-	CCBReader * reader = [CCBReader reader];
+	CCSBReader * reader = [CCSBReader reader];
 	[reader loadWithData:animData owner:nil];
 
 

@@ -8,7 +8,7 @@
 
 #import "CCBPEffectLighting.h"
 #import "CCBDictionaryReader.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "EffectsManager.h"
 #import "EffectsUndoHelper.h"
 
@@ -31,7 +31,7 @@
     
     return @[SERIALIZE_PROPERTY(shininess,Float),
              @{@"name" : @"groups", @"type" : @"TokenArray", @"value": groups },
-             @{@"name" : @"specularColor", @"type" : @"Color4", @"value": [CCBDictionaryWriter serializeColor4:self.specularColor] },
+             @{@"name" : @"specularColor", @"type" : @"Color4", @"value": [CCSBDictionaryWriter serializeColor4:self.specularColor] },
              ];
 }
 

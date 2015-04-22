@@ -28,7 +28,7 @@
 #import "NodeInfo.h"
 #import "CCNode+NodeInfo.h"
 #import "PlugInNode.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "CCBDictionaryReader.h"
 #import "SequencerExpandBtnCell.h"
 #import "SequencerStructureCell.h"
@@ -564,7 +564,7 @@ static SequencerHandler* sharedSequencerHandler;
 	NSMutableArray *array = [NSMutableArray array];
 	for (CCNode *node in items)
 	{
-		NSMutableDictionary *clipDict = [CCBDictionaryWriter serializeNode:node];
+		NSMutableDictionary *clipDict = [CCSBDictionaryWriter serializeNode:node];
         [clipDict setObject:@((long long) node) forKey:ORIGINAL_NODE_POINTER_KEY];
 
 		[array addObject:clipDict];

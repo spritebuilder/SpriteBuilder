@@ -28,7 +28,7 @@
 #import "CocosScene.h"
 #import "AppDelegate.h"
 #import "TexturePropertySetter.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "CCBSpriteSheetParser.h"
 #import "ResourceManagerUtil.h"
 #import "ResourceManager.h"

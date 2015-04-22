@@ -26,7 +26,7 @@
 #import "PlugInManager.h"
 #import "PlugInNode.h"
 #import "NodeInfo.h"
-#import "CCBDictionaryWriter.h"
+#import "CCSBDictionaryWriter.h"
 #import "TexturePropertySetter.h"
 #import "CCBGlobals.h"
 #import "AppDelegate.h"
