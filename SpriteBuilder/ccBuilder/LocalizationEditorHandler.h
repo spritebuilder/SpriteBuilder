@@ -37,6 +37,7 @@
 - (LocalizationEditorLanguage*) getLanguageByIsoLangCode:(NSString*)code;
 - (void) addActiveLanguage:(LocalizationEditorLanguage*) lang;
 - (void) removeActiveLangage:(LocalizationEditorLanguage*) lang;
+- (void) setDefaultLanguage:(LocalizationEditorLanguage*) lang;
 - (void) setEdited;
 
 - (NSString*) translationForKey:(NSString*)key;

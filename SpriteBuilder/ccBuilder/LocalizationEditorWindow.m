@@ -23,6 +23,7 @@
 {
     [tableTranslations registerForDraggedTypes:@[PASTEBOARD_TYPE_LOCALIZATIONEDITORTRANSLATION]];
     [self populateLanguageAddMenu];
+    [self populateLanguageSetDefaultMenu];
     [tableLanguages reloadData];
     [self updateLanguageSelectionMenu];
     [self addLanguageColumns];
@@ -39,6 +40,37 @@
         [langTitles addObject:lang.name];
     }
     [popLanguageAdd addItemsWithTitles:langTitles];
+}
+
+- (void) populateLanguageSetDefaultMenu
+{
+    [popLanguageSetDefault removeAllItems];
+    
+    NSArray* langs = [AppDelegate appDelegate].localizationEditorHandler.activeLanguages;
+    
+    int defaultLanguageIndex = -1;
+    NSString* firstItem = @"Set Default Language";
+    
+    NSMutableArray* langTitles = [NSMutableArray array];
+    int currentLanguageIndex = 0;
+    for (LocalizationEditorLanguage* lang in langs)
+    {
+        [langTitles addObject:lang.name];
+        if (lang.defaultLanguage)
+        {
+            firstItem = [NSString stringWithFormat:@"Default: %@", lang.name];
+            defaultLanguageIndex = currentLanguageIndex;
+        }
+        currentLanguageIndex++;
+    }
+    [langTitles addObject:@"None"];
+    if (defaultLanguageIndex == -1) {
+        defaultLanguageIndex = currentLanguageIndex;
+    }
+    [langTitles insertObject:firstItem atIndex:0];
+    [popLanguageSetDefault addItemsWithTitles:langTitles];
+    defaultLanguageIndex++;
+    [[popLanguageSetDefault itemAtIndex:defaultLanguageIndex] setState:NSOnState];
 }
 
 - (void) updateLanguageSelectionMenu
@@ -176,6 +208,7 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
+    [self populateLanguageSetDefaultMenu];
 }
 
 #pragma mark Actions
@@ -209,7 +242,22 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
+    [self populateLanguageSetDefaultMenu];
     
+    [handler setEdited];
+}
+
+- (IBAction)selectedSetDefaultLanguage:(id)sender
+{
+    NSString* name = popLanguageSetDefault.selectedItem.title;
+    LocalizationEditorHandler* handler = [AppDelegate appDelegate].localizationEditorHandler;
+    LocalizationEditorLanguage* lang = nil;
+    if (![@"None" isEqualToString:name])
+    {
+        lang = [handler getLanguageByName:name];
+    }
+    [handler setDefaultLanguage:lang];
+    [self populateLanguageSetDefaultMenu];
     [handler setEdited];
 }
 
@@ -228,6 +276,7 @@
     [self updateLanguageSelectionMenu];
     [self updateQuickEditLangs];
     [self updateInspector];
+    [self populateLanguageSetDefaultMenu];
     
     [handler setEdited];
 }
