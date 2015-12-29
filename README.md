@@ -1,6 +1,6 @@
 # SpriteBuilder
 
-SpriteBuilder is the first game development suite for rapidly building native iOS and Android games with Objective-C and Xcode. SpriteBuilder is free and open source (MIT licensed).
+SpriteBuilder is the first game development suite for rapidly building native iOS games with Objective-C and Xcode. SpriteBuilder is free and open source (MIT licensed).
 Core Features:
 
 * Designer-friendly UI
@@ -15,12 +15,12 @@ Core Features:
 
 Change directory into the top (this) directory of SpriteBuilder and run:
 
-    git clone https://github.com/apportable/SpriteBuilder
+    git clone https://github.com/KAMIKAZEUA/SpriteBuilder
     cd SpriteBuilder
     git submodule update --init --recursive
     cd scripts
-    ./build_distribution.py --version 1.4.x
-	compile in Xcode 
+    ./build_distribution.py --version 1.4.9 
+	open SpriteBuilder.xcodeproj and run it
 	
 You need to use the BuildDistribution.sh script the first time you build SpriteBuilder, after that you can build it from within Xcode.
 
