@@ -60,17 +60,17 @@ static CGFloat IMAGE_PADDING_RIGHT = 3.0;
 - copyWithZone:(NSZone *)zone
 {
     ImageAndTextCell *cell = (ImageAndTextCell *)[super copyWithZone:zone];
-    cell.image = _image;
-    cell.imageAlt = _imageAlt;
+    cell.image = self.image;
+    cell.imageAlt = self.imageAlt;
     return cell;
 }
 
 - (NSRect)imageAltFrameForCellFrame:(NSRect)cellFrame
 {
-    if (_imageAlt != nil)
+    if (self.imageAlt != nil)
 	{
         NSRect imageFrame;
-        imageFrame.size = [_imageAlt size];
+        imageFrame.size = [self.imageAlt size];
         imageFrame.origin = cellFrame.origin;
         imageFrame.origin.x += cellFrame.size.width - 14.0;
         imageFrame.origin.y += ceil((cellFrame.size.height - imageFrame.size.height) / 2);
@@ -85,14 +85,14 @@ static CGFloat IMAGE_PADDING_RIGHT = 3.0;
 - (void)editWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject event:(NSEvent *)theEvent
 {
     NSRect titleRect = [self titleRectForBounds:aRect];
-    titleRect.origin.x += [_image size].width;
+    titleRect.origin.x += [self.image size].width;
     [super editWithFrame:titleRect inView:controlView editor:textObj delegate:anObject event:theEvent];
 }
 
 - (void)selectWithFrame:(NSRect)aRect inView:(NSView *)controlView editor:(NSText *)textObj delegate:(id)anObject start:(NSInteger)selStart length:(NSInteger)selLength
 {
     NSRect titleRect = [self titleRectForBounds:aRect];
-    titleRect.origin.x += [_image size].width;
+    titleRect.origin.x += [self.image size].width;
     [super selectWithFrame:titleRect inView:controlView editor:textObj delegate:anObject start:selStart length:selLength];
 }
 
@@ -106,23 +106,23 @@ static CGFloat IMAGE_PADDING_RIGHT = 3.0;
 
 - (void)drawImageAlt:(NSRect)cellFrame controlView:(NSView *)controlView
 {
-    if (_imageAlt == nil)
+    if (self.imageAlt == nil)
     {
         return;
     }
 
-    [_imageAlt setFlipped:[controlView isFlipped]];
-    [_imageAlt drawAtPoint:[self imageAltFrameForCellFrame:cellFrame].origin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    [self.imageAlt setFlipped:[controlView isFlipped]];
+    [self.imageAlt drawAtPoint:[self imageAltFrameForCellFrame:cellFrame].origin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 }
 
 - (void)drawImage:(NSRect *)cellFrame controlView:(NSView *)controlView
 {
-    if (_image == nil)
+    if (self.image == nil)
 	{
         return;
     }
 
-    NSSize imageSize = [_image size];
+    NSSize imageSize = [self.image size];
     NSRect imageFrame;
     NSDivideRect((*cellFrame), &imageFrame, cellFrame, IMAGE_PADDING_RIGHT + imageSize.width, NSMinXEdge);
 
@@ -135,8 +135,8 @@ static CGFloat IMAGE_PADDING_RIGHT = 3.0;
     imageFrame.origin.x += IMAGE_PADDING_RIGHT;
     imageFrame.origin.y += 2;
 
-    [_image setFlipped:[controlView isFlipped]];
-    [_image drawAtPoint:imageFrame.origin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+    [self.image setFlipped:[controlView isFlipped]];
+    [self.image drawAtPoint:imageFrame.origin fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 }
 
 - (NSRect)titleRectForBounds:(NSRect)theRect
@@ -182,7 +182,7 @@ static CGFloat IMAGE_PADDING_RIGHT = 3.0;
 - (NSSize)cellSize
 {
     NSSize cellSize = [super cellSize];
-    cellSize.width += (_image ? [_image size].width : 0) + IMAGE_PADDING_RIGHT;
+    cellSize.width += (self.image ? [self.image size].width : 0) + IMAGE_PADDING_RIGHT;
     return cellSize;
 }
 

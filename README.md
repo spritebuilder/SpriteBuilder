@@ -1,7 +1,6 @@
 # SpriteBuilder
 
-SpriteBuilder is the first game development suite for rapidly building native iOS and Android games with Objective-C and Xcode. SpriteBuilder is free and open source (MIT licensed) and available for download in the [Mac App Store](https://itunes.apple.com/us/app/spritebuilder/id784912885?mt=12).
-
+SpriteBuilder is the first game development suite for rapidly building native iOS and Android games with Objective-C and Xcode. SpriteBuilder is free and open source (MIT licensed).
 Core Features:
 
 * Designer-friendly UI
@@ -11,7 +10,6 @@ Core Features:
 * Asset management & sprite sheet generation
 * Tools for localization
 
-For more info, please visit [spritebuilder.com](http://spritebuilder.com).
 
 ## Getting started with the source
 
@@ -21,17 +19,12 @@ Change directory into the top (this) directory of SpriteBuilder and run:
     cd SpriteBuilder
     git submodule update --init --recursive
     cd scripts
-    ./build_distribution.py --version 1.x
-
+    ./build_distribution.py --version 1.4.x
+	compile in Xcode 
+	
 You need to use the BuildDistribution.sh script the first time you build SpriteBuilder, after that you can build it from within Xcode.
 
-## Still having trouble compiling SpriteBuilder?
 
-It is most likely still a problem with the submodules. Edit the .git/config file and remove the lines that are referencing submodules. Then change directory into the top directory and run:
-
-    git submodule update --init
-
-When building SpriteBuilder, make sure that "SpriteBuilder" is the selected target (it may be some of the plug-in targets by default).
 
 ## License (MIT)
 Copyright © 2011 Viktor Lidholt
